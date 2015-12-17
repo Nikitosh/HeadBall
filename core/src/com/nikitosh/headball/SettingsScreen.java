@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.awt.dnd.DragGestureEvent;
 
@@ -25,7 +26,7 @@ public class SettingsScreen implements Screen {
 
     public SettingsScreen(final Game game) {
         this.game = game;
-        stage = new Stage();
+        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
         Gdx.input.setInputProcessor(stage);
 
         table = new Table();

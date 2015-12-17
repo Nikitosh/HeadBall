@@ -52,13 +52,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        //Gdx.app.log("GameScreen", Integer.toString(buttonsTable.getZIndex()));
-        //Gdx.app.log("GameScreen", Integer.toString(gameWorld.getGroup().getZIndex()));
         Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.app.log("GameScreen", Float.toString(hitButton.getX()));
-        Gdx.app.log("GameScreen", Float.toString(hitButton.getY()));
-        Gdx.app.log("GameScreen", Float.toString(jumpButton.getX()));
-        Gdx.app.log("GameScreen", Float.toString(jumpButton.getY()));
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gameWorld.update(delta, players[0].getMove(), players[1].getMove());
         stage.act(delta);

@@ -6,10 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class SplashScreen implements Screen {
@@ -33,13 +30,12 @@ public class SplashScreen implements Screen {
         batch = new SpriteBatch();
         camera = new OrthographicCamera(width, height);
         camera.setToOrtho(false, width, height);
-        splashBallTexture = new Texture(Gdx.files.internal("images/splashBall.jpg"));
-        TextureRegion region = new TextureRegion(splashBallTexture);
-        //region.flip(false, true);
-        sprite = new Sprite(region);
+
+        Texture splashTexture = new Texture(Gdx.files.internal("images/splashScreen.jpg"));
+        sprite = new Sprite(splashTexture);
         sprite.setSize(width, height);
 
-        font = new BitmapFont();
+        AssetLoader.loadFont();
     }
 
     @Override
@@ -47,6 +43,7 @@ public class SplashScreen implements Screen {
         AssetLoader.load();
         Gdx.app.log("SplashScreen", "show splashScreen");
         startTime = TimeUtils.millis();
+        game.setScreen(new MenuScreen(game));
     }
 
     @Override
@@ -57,10 +54,15 @@ public class SplashScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         sprite.draw(batch);
-        font.draw(batch, "Loading! Wait for a while!", width / 2, height / 2);
+
+        String waitText = "Loading! Wait for a while!";
+
+        GlyphLayout layout = new GlyphLayout(AssetLoader.font, waitText);
+
+        AssetLoader.font.draw(batch, layout, width / 2 - layout.width / 2, 6 * height / 7 - layout.height / 2);
         batch.end();
 
-        if (TimeUtils.millis() > startTime + 500) {
+        if (TimeUtils.millis() > startTime + 1000) {
             game.setScreen(new MenuScreen(game));
         }
     }

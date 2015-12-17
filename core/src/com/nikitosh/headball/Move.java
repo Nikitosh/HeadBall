@@ -1,5 +1,12 @@
 package com.nikitosh.headball;
 
+import com.badlogic.gdx.Gdx;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 public class Move {
     private boolean isHit = false;
     private boolean isJump = false;
@@ -45,4 +52,37 @@ public class Move {
         this.isRight = isRight;
     }
 
+    public void serialize(DataOutputStream outputStream) {
+        try {
+            outputStream.writeUTF((isHit ? "1" : "0") + (isJump ? "1" : "0") + (isLeft ? "1" : "0") + (isRight ? "1" : "0") + "\n");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Move deserialize(DataInputStream inputStream) {
+        int b = 0;
+        try {
+            String moveString = inputStream.readUTF();
+            Move move = new Move(false, false, false, false);
+            if (moveString.charAt(0) == '1') {
+                move.isHit = true;
+            }
+            if (moveString.charAt(1) == '1') {
+                move.isJump = true;
+            }
+            if (moveString.charAt(2) == '1') {
+                move.isLeft = true;
+            }
+            if (moveString.charAt(3) == '1') {
+                move.isRight = true;
+            }
+            return move;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

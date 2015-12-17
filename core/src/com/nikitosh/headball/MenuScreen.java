@@ -33,8 +33,11 @@ public class MenuScreen implements Screen {
         table = new Table();
         table.setBounds(0, 0, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
 
-        Button playTextButton = new GameTextButton("Play");
-        table.add(playTextButton).row();
+        Button singlePlayerTextButton = new GameTextButton("Singleplayer");
+        table.add(singlePlayerTextButton).row();
+
+        Button multiPlayerTextButton = new GameTextButton("Multiplayer");
+        table.add(multiPlayerTextButton).row();
 
         Button settingsTextButton = new GameTextButton("Settings");
         table.add(settingsTextButton).row();
@@ -42,7 +45,7 @@ public class MenuScreen implements Screen {
         stage.addActor(table);
 
         Gdx.input.setInputProcessor(stage);
-        playTextButton.addListener(new ChangeListener() {
+        singlePlayerTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(new GameScreen(game));
@@ -51,7 +54,13 @@ public class MenuScreen implements Screen {
         settingsTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen( new SettingsScreen(game));
+                game.setScreen(new SettingsScreen(game));
+            }
+        });
+        multiPlayerTextButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new MultiPlayerScreen(game));
             }
         });
     }

@@ -111,21 +111,17 @@ public class Footballer extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
-        batch.end();
+        Box2DSprite box2DSprite = new Box2DSprite(AssetLoader.footballerTexture);
+        box2DSprite.draw(batch,
+                body.getPosition().x * Constants.BOX_TO_WORLD,
+                body.getPosition().y * Constants.BOX_TO_WORLD,
+                2 * FOOTBALLER_RADIUS,
+                2 * FOOTBALLER_RADIUS,
+                body.getAngle());
 
-        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
-        shapeRenderer.translate(getX(), getY(), 0);
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.circle(body.getPosition().x * Constants.BOX_TO_WORLD, body.getPosition().y * Constants.BOX_TO_WORLD, FOOTBALLER_RADIUS);
-        shapeRenderer.end();
-
-        batch.begin();
 
         Vector2 vector = position(rectangleFixture);
-        Box2DSprite box2DSprite = new Box2DSprite(AssetLoader.legTexture);
+        box2DSprite = new Box2DSprite(AssetLoader.legTexture);
         box2DSprite.draw(batch,
                 vector.x * Constants.BOX_TO_WORLD,
                 vector.y * Constants.BOX_TO_WORLD,
