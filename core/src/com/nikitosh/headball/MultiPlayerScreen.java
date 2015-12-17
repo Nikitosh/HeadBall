@@ -15,7 +15,7 @@ import java.net.Socket;
 public class MultiPlayerScreen implements Screen {
 
     private static final int PORT = 2345;
-    private static final String SERVER_ADDRESS = "127.0.0.1";
+    private static final String SERVER_ADDRESS = "192.168.43.9";
     private DataInputStream in;
     private DataOutputStream out;
 
