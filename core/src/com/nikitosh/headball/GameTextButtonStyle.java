@@ -5,10 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 public class GameTextButtonStyle extends TextButton.TextButtonStyle {
     public GameTextButtonStyle() {
         super();
-        up = AssetLoader.skin.getDrawable("blue_button00");
-        down = AssetLoader.skin.getDrawable("blue_button01");
-        pressedOffsetX = 1;
-        pressedOffsetY = -1;
+        up = AssetLoader.skin.getDrawable("blue_button05");
+        down = AssetLoader.skin.getDrawable("blue_button05");
         font = AssetLoader.font;
     }
 }

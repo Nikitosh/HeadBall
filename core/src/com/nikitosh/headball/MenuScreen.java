@@ -33,13 +33,13 @@ public class MenuScreen implements Screen {
         table = new Table();
         table.setBounds(0, 0, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
 
-        Button singlePlayerTextButton = new GameTextButton("Singleplayer");
+        Button singlePlayerTextButton = new GameTextButtonTouchable("Singleplayer");
         table.add(singlePlayerTextButton).row();
 
-        Button multiPlayerTextButton = new GameTextButton("Multiplayer");
+        Button multiPlayerTextButton = new GameTextButtonTouchable("Multiplayer");
         table.add(multiPlayerTextButton).row();
 
-        Button settingsTextButton = new GameTextButton("Settings");
+        Button settingsTextButton = new GameTextButtonTouchable("Settings");
         table.add(settingsTextButton).row();
 
         stage.addActor(table);
@@ -48,19 +48,22 @@ public class MenuScreen implements Screen {
         singlePlayerTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game));
-            }
-        });
-        settingsTextButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new SettingsScreen(game));
+                dispose();
+                game.setScreen(new SinglePlayerScreen(game));
             }
         });
         multiPlayerTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                dispose();
                 game.setScreen(new MultiPlayerScreen(game));
+            }
+        });
+        settingsTextButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dispose();
+                game.setScreen(new SettingsScreen(game));
             }
         });
     }
@@ -99,6 +102,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }

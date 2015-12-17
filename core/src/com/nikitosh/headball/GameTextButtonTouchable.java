@@ -7,11 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-public class GameTextButton extends TextButton {
+public class GameTextButtonTouchable extends TextButton {
     protected Rectangle bounds;
 
-    public GameTextButton(String text) {
-        super(text, AssetLoader.gameTextButtonStyle);
+    public GameTextButtonTouchable(String text) {
+        super(text, AssetLoader.gameTextButtonTouchableStyle);
     }
 
     @Override

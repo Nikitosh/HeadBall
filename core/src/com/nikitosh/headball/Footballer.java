@@ -93,10 +93,12 @@ public class Footballer extends Actor {
         if (move.isLeft() && !move.isRight()) {
             Gdx.app.log("Footballer", "Left");
             body.setLinearVelocity(-FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, body.getLinearVelocity().y);
+            body2.setLinearVelocity(-FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, body2.getLinearVelocity().y);
         }
         if (move.isRight() && !move.isLeft()) {
             Gdx.app.log("Footballer", "Right");
             body.setLinearVelocity(FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, body.getLinearVelocity().y);
+            body2.setLinearVelocity(FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, body2.getLinearVelocity().y);
         }
         if (!move.isLeft() && !move.isRight()) {
             Gdx.app.log("Footballer", "Stop");

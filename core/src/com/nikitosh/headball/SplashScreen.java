@@ -43,7 +43,6 @@ public class SplashScreen implements Screen {
         AssetLoader.load();
         Gdx.app.log("SplashScreen", "show splashScreen");
         startTime = TimeUtils.millis();
-        game.setScreen(new MenuScreen(game));
     }
 
     @Override
@@ -63,6 +62,7 @@ public class SplashScreen implements Screen {
         batch.end();
 
         if (TimeUtils.millis() > startTime + 1000) {
+            dispose();
             game.setScreen(new MenuScreen(game));
         }
     }

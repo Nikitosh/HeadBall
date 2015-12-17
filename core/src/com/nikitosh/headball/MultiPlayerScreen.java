@@ -12,23 +12,17 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class MultiPlayerScreen implements Screen {
+public class MultiPlayerScreen extends GameScreen {
 
     private static final int PORT = 2345;
     private static final String SERVER_ADDRESS = "192.168.43.9";
     private DataInputStream in;
     private DataOutputStream out;
 
-    private final Game game;
-    private GameWorld gameWorld;
-    private Player[] players;
-    private Stage stage;
-    private Table buttonsTable;
-    private GameTextButton hitButton, jumpButton, leftButton, rightButton;
     private int playerNumber;
 
     public MultiPlayerScreen(Game game) {
-
+        super(game);
         try {
             InetAddress ipAddress = InetAddress.getByName(SERVER_ADDRESS);
             System.out.println("Any of you heard of a socket with IP address " + SERVER_ADDRESS + " and port " + PORT + "?");
@@ -47,38 +41,13 @@ public class MultiPlayerScreen implements Screen {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        this.game = game;
-        gameWorld = new GameWorld();
-        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
-
-        hitButton = new GameTextButton("Hit");
-        jumpButton = new GameTextButton("Jump");
-        leftButton = new GameTextButton("Left");
-        rightButton = new GameTextButton("Right");
-
-        buttonsTable = new Table();
-        buttonsTable.setBounds(0, 0, Constants.VIRTUAL_WIDTH, Constants.BUTTONS_HEIGHT);
-        buttonsTable.add(hitButton).expand().fillX();
-        buttonsTable.add(jumpButton).expand().fillX();
-        buttonsTable.add(leftButton).expand().fillX();
-        buttonsTable.add(rightButton).expand().fillX();
-        //buttonsTable.setDebug(true);
-
-        players = new Player[2];
-        players[playerNumber] = new LocalHumanPlayer(hitButton, jumpButton, leftButton, rightButton);
-        players[1 - playerNumber] = new RemoteHumanPlayer(in);
-
-        Gdx.input.setInputProcessor(stage);
-
-        stage.addActor(gameWorld.getGroup());
-        stage.addActor(buttonsTable);
-
+        initializePlayers();
     }
 
     @Override
-    public void show(){
-
+    protected void initializePlayers() {
+        players[playerNumber] = new LocalHumanPlayer(hitButton, jumpButton, leftButton, rightButton);
+        players[1 - playerNumber] = new RemoteHumanPlayer(in);
     }
 
     @Override
@@ -97,40 +66,17 @@ public class MultiPlayerScreen implements Screen {
             e.printStackTrace();
         }
         Gdx.app.log("Multi", "render4");
-        if (playerNumber == 0) {
-            gameWorld.update(delta, myMove, players[1].getMove());
-        }
-        else {
-            gameWorld.update(delta, players[0].getMove(), myMove);
+        if (gameState == GameState.GAME_RUNNING) {
+            if (playerNumber == 0) {
+                gameWorld.update(delta, myMove, players[1].getMove());
+            }
+            else {
+                gameWorld.update(delta, players[0].getMove(), myMove);
+            }
         }
         Gdx.app.log("Multi", "render5");
         stage.act(delta);
         Gdx.app.log("Multi", "render6");
         stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
     }
 }

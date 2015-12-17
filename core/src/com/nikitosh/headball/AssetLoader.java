@@ -13,10 +13,14 @@ public class AssetLoader {
     public static TextureAtlas atlas;
     public static Skin skin;
     public static GameTextButtonStyle gameTextButtonStyle;
+    public static GameTextButtonTouchableStyle gameTextButtonTouchableStyle;
+    public static GameLabelStyle gameLabelStyle;
     public static Sound goalSound;
     public static Texture legTexture;
     public static Texture ballTexture;
     public static Texture footballerTexture;
+    public static Texture windowBackground;
+    public static GameWindowStyle gameWindowStyle;
 
     public static void loadFont() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Animated.ttf"));
@@ -31,12 +35,17 @@ public class AssetLoader {
         skin = new Skin(atlas);
 
         gameTextButtonStyle = new GameTextButtonStyle();
+        gameTextButtonTouchableStyle = new GameTextButtonTouchableStyle();
+        gameLabelStyle = new GameLabelStyle();
 
         goalSound = Gdx.audio.newSound(Gdx.files.internal("sounds/goal.wav"));
 
         legTexture = new Texture(Gdx.files.internal("images/splashScreen.jpg"));
         ballTexture = new Texture(Gdx.files.internal("images/ball.png"));
-        footballerTexture = new Texture(Gdx.files.internal("images/ball.png"));
+        footballerTexture = new Texture(Gdx.files.internal("images/footballHead.png"));
+        windowBackground = new Texture(Gdx.files.internal("images/windowBackground.jpg"));
+        gameWindowStyle = new GameWindowStyle();
+
 
         GameSettings.intialize();
     }

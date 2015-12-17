@@ -17,7 +17,6 @@ import java.awt.dnd.DragGestureEvent;
 public class SettingsScreen implements Screen {
     private Stage stage;
     private Table table;
-    private static final int INDENT = 20;
 
     private final Game game;
     private Drawable[] drawables;
@@ -37,7 +36,7 @@ public class SettingsScreen implements Screen {
         drawables[1] = AssetLoader.skin.getDrawable("blue_boxCross");
 
         Button backButton = new GameTextButton("Back");
-        backButton.setBounds(INDENT, Constants.VIRTUAL_HEIGHT - INDENT - backButton.getHeight(), backButton.getWidth(), backButton.getHeight());
+        backButton.setBounds(Constants.BUTTON_INDENT, Constants.VIRTUAL_HEIGHT - Constants.BUTTON_INDENT - backButton.getHeight(), backButton.getWidth(), backButton.getHeight());
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -51,20 +50,21 @@ public class SettingsScreen implements Screen {
                 } else {
                     GameSettings.putBoolean("music", false);
                 }
+                dispose();
                 game.setScreen(new MenuScreen(game));
             }
         });
 
         stage.addActor(backButton);
 
-        Button soundTextButton = new GameTextButton("Sound", false);
+        Button soundTextButton = new GameTextButton("Sound");
         table.add(soundTextButton);
 
         final Button soundButton = new Button(new GameButtonStyle("blue_boxCheckmark"));
         soundButton.getStyle().up = drawables[soundState];
         table.add(soundButton).row();
 
-        Button musicTextButton = new GameTextButton("Music", false);
+        Button musicTextButton = new GameTextButton("Music");
         table.add(musicTextButton);
 
         final Button musicButton = new Button(new GameButtonStyle("blue_boxCheckmark"));
@@ -125,6 +125,6 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }
