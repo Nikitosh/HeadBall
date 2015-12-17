@@ -8,4 +8,8 @@ public class Constants {
     public static final int BUTTONS_HEIGHT = 100;
     public static final int FIELD_WIDTH = VIRTUAL_WIDTH;
     public static final int FIELD_HEIGHT = VIRTUAL_HEIGHT - BUTTONS_HEIGHT;
+    public static final float GOALS_HEIGHT = 80;
+    public static final float GOALS_WIDTH = 60;
+    public static final float CROSSBAR_HEIGHT = 5;
+
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 public class Goals extends Actor {
     private float width;
@@ -50,18 +51,15 @@ public class Goals extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.end();
 
-        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
-        shapeRenderer.translate(getX(), getY(), 0);
+        Box2DSprite box2DSprite = new Box2DSprite(AssetLoader.goalsTexture);
+        box2DSprite.draw(batch,
+                body.getPosition().x * Constants.BOX_TO_WORLD,
+                body.getPosition().y * Constants.BOX_TO_WORLD - Constants.GOALS_HEIGHT / 2,
+                width,
+                Constants.GOALS_HEIGHT + height,
+                body.getAngle());
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.rect(body.getPosition().x * Constants.BOX_TO_WORLD - width / 2, body.getPosition().y * Constants.BOX_TO_WORLD - height / 2, width, height);
-        shapeRenderer.end();
-
-        batch.begin();
     }
 
     public boolean contains(Vector2 point) {
