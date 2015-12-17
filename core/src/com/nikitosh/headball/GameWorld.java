@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class GameWorld {
     public static final float BOUNDS_WIDTH = 30;
-    public static final float GOALS_HEIGHT = 80;
 
     private World box2dWorld;
     private Group group;
@@ -42,8 +41,8 @@ public class GameWorld {
         initializeBall();
 
         goals = new Goals[2];
-        goals[0] = new Goals(box2dWorld, BOUNDS_WIDTH, BOUNDS_WIDTH + GOALS_HEIGHT, 60, 5, true);
-        goals[1] = new Goals(box2dWorld, Constants.FIELD_WIDTH - BOUNDS_WIDTH - 60, BOUNDS_WIDTH + GOALS_HEIGHT, 60, 5, false);
+        goals[0] = new Goals(box2dWorld, BOUNDS_WIDTH, BOUNDS_WIDTH + Constants.GOALS_HEIGHT, Constants.GOALS_WIDTH, Constants.CROSSBAR_HEIGHT, true);
+        goals[1] = new Goals(box2dWorld, Constants.FIELD_WIDTH - BOUNDS_WIDTH - Constants.GOALS_WIDTH, BOUNDS_WIDTH + Constants.GOALS_HEIGHT, Constants.GOALS_WIDTH, Constants.CROSSBAR_HEIGHT, false);
 
         for (int i = 0; i < 2; i++) {
             group.addActor(goals[i]);

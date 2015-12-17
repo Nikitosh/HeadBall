@@ -48,18 +48,6 @@ public class Ball extends Actor {
                 2 * BALL_RADIUS,
                 body.getAngle());
 
-/*        batch.end();
-
-        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
-        shapeRenderer.translate(getX(), getY(), 0);
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.WHITE);
-        shapeRenderer.circle(body.getPosition().x * Constants.BOX_TO_WORLD, body.getPosition().y * Constants.BOX_TO_WORLD, BALL_RADIUS);
-        shapeRenderer.end();
-
-        batch.begin();*/
     }
 
     public Vector2 getPosition() {

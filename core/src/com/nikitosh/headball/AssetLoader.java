@@ -21,6 +21,7 @@ public class AssetLoader {
     public static Texture footballerTexture;
     public static Texture windowBackground;
     public static GameWindowStyle gameWindowStyle;
+    public static Texture goalsTexture;
 
     public static void loadFont() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Animated.ttf"));
@@ -42,10 +43,10 @@ public class AssetLoader {
 
         legTexture = new Texture(Gdx.files.internal("images/splashScreen.jpg"));
         ballTexture = new Texture(Gdx.files.internal("images/ball.png"));
-        footballerTexture = new Texture(Gdx.files.internal("images/footballHead.png"));
         windowBackground = new Texture(Gdx.files.internal("images/windowBackground.jpg"));
         gameWindowStyle = new GameWindowStyle();
-
+        footballerTexture = new Texture(Gdx.files.internal("images/footballerHead.png"));
+        goalsTexture = new Texture(Gdx.files.internal("images/goals.png"));
 
         GameSettings.intialize();
     }
