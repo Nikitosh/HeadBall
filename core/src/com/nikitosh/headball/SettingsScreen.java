@@ -35,7 +35,7 @@ public class SettingsScreen implements Screen {
         drawables[0] = AssetLoader.skin.getDrawable("blue_boxCheckmark");
         drawables[1] = AssetLoader.skin.getDrawable("blue_boxCross");
 
-        Button backButton = new GameTextButton("Back");
+        Button backButton = new GameTextButtonTouchable("Back");
         backButton.setBounds(Constants.BUTTON_INDENT, Constants.VIRTUAL_HEIGHT - Constants.BUTTON_INDENT - backButton.getHeight(), backButton.getWidth(), backButton.getHeight());
         backButton.addListener(new ChangeListener() {
             @Override
