@@ -39,8 +39,8 @@ public class Footballer extends Actor {
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(FOOTBALLER_RADIUS * Constants.WORLD_TO_BOX);
         fixtureDef.shape = circleShape;
-        fixtureDef.density = 1f;
-        fixtureDef.friction = 0.9f;
+        fixtureDef.density = 2f;
+        fixtureDef.friction = 0.1f;
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(this);
         circleShape.dispose();
@@ -92,11 +92,15 @@ public class Footballer extends Actor {
         Gdx.app.log("Footballer", "update");
         if (move.isLeft() && !move.isRight()) {
             Gdx.app.log("Footballer", "Left");
-            body.applyForceToCenter(-FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, 0f, true);
+            body.setLinearVelocity(-FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, body.getLinearVelocity().y);
         }
         if (move.isRight() && !move.isLeft()) {
             Gdx.app.log("Footballer", "Right");
-            body.applyForceToCenter(FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, 0f, true);
+            body.setLinearVelocity(FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, body.getLinearVelocity().y);
+        }
+        if (!move.isLeft() && !move.isRight()) {
+            Gdx.app.log("Footballer", "Stop");
+            body.setLinearVelocity(body.getLinearVelocity().x / 2, body.getLinearVelocity().y);
         }
         if (inJump == false && move.isJump()) {
             inJump = true;

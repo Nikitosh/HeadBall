@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/Никита/Documents/Programming/AU/2%20year/Course%20work/HeadBall/android/res/values/strings.xml -->
+    <!-- From: file:/C:/ABC/Прога/2015-2016/AU-AU/Курсач/HeadBall/android/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">Headball</string>
-    <!-- From: file:/C:/Users/Никита/Documents/Programming/AU/2%20year/Course%20work/HeadBall/android/res/values/styles.xml -->
+    <!-- From: file:/C:/ABC/Прога/2015-2016/AU-AU/Курсач/HeadBall/android/res/values/styles.xml -->
     <eat-comment/>
     <style name="GdxTheme" parent="android:Theme">
 		<item name="android:windowBackground">@android:color/transparent</item>

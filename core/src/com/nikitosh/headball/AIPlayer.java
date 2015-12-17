@@ -8,7 +8,7 @@ public class AIPlayer extends Player {
     private int footballerNumber;
 
     private static final float HIT_RADIUS = 0.2f * Constants.WORLD_TO_BOX;
-    private static final float JUMP_RADIUS = 1f * Constants.WORLD_TO_BOX;
+    private static final float JUMP_RADIUS = 5f * Constants.WORLD_TO_BOX;
 
 
     public AIPlayer(GameWorld gameWorld, int footballerNumber) {
@@ -37,7 +37,9 @@ public class AIPlayer extends Player {
             ballPositionX = ball.getPosition().x;
             myPositionX = footballers[footballerNumber].getPosition().x;
         }
-        if (ballPositionY < myPositionY - Footballer.getFootballerRadius() * Constants.WORLD_TO_BOX) {
+        //System.out.println(ballPositionY+"\n"+(myPositionY - Footballer.getFootballerRadius()));
+        //System.out.println(ballPositionX+"\n"+myPositionX);
+        if (ballPositionY < myPositionY - Footballer.getFootballerRadius()) {
             move.setLeft(true);
         }
         else {
