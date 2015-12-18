@@ -48,6 +48,10 @@ public class Ball extends Actor {
         return body.getPosition();
     }
 
+    public static float getBallRadius() {
+        return BALL_RADIUS;
+    }
+
     public Body getBody() {
         return body;
     }

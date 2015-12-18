@@ -11,8 +11,8 @@ public class AIPlayer extends Player {
     private GameWorld gameWorld;
     private int footballerNumber;
 
-    private static final float HIT_RADIUS = 0.2f * Constants.WORLD_TO_BOX;
-    private static final float JUMP_RADIUS = 5f * Constants.WORLD_TO_BOX;
+    private static final float HIT_RADIUS = 15f * Constants.WORLD_TO_BOX;
+    private static final float JUMP_RADIUS = 45f * Constants.WORLD_TO_BOX;
 
 
     public AIPlayer(GameWorld gameWorld, int footballerNumber) {
@@ -46,7 +46,7 @@ public class AIPlayer extends Player {
         }
         else {
             if (ballPositionX < myPositionX) {
-                if (myPositionX - ballPositionX < JUMP_RADIUS) {
+                if (myPositionX - ballPositionX < JUMP_RADIUS && myPositionY > ballPositionY) {
                     move.setJump(true);
                     move.setLeft(true);
                 }
@@ -55,9 +55,12 @@ public class AIPlayer extends Player {
                 }
             }
             else {
-                if (ballPositionX - myPositionX < HIT_RADIUS && ballPositionY == myPositionY) {
+                if (ballPositionX - myPositionX < HIT_RADIUS) {
                     move.setHit(true);
                     move.setRight(true);
+                }
+                else if (ballPositionX - myPositionX < JUMP_RADIUS && ballPositionY > myPositionY) {
+                    move.setLeft(true);
                 }
                 else {
                     move.setRight(true);

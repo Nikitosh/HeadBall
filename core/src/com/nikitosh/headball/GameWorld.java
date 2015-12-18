@@ -12,8 +12,11 @@ import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.utils.GameSettings;
 
+import java.util.ArrayList;
+
 public class GameWorld {
     public static final float BOUNDS_WIDTH = 30;
+    public static final int WALLS_COUNT = 4;
 
     private World box2dWorld;
     private Group group;
@@ -38,14 +41,14 @@ public class GameWorld {
         footballers = new Footballer[2];
         initializeFootballers();
 
-        walls = new Wall[10];
+        walls = new Wall[WALLS_COUNT];
         walls[0] = new RectangleWall(box2dWorld, 0, 0, Constants.FIELD_WIDTH, BOUNDS_WIDTH);
         walls[1] = new RectangleWall(box2dWorld, 0, BOUNDS_WIDTH, BOUNDS_WIDTH, Constants.FIELD_HEIGHT - BOUNDS_WIDTH);
         walls[2] = new RectangleWall(box2dWorld, Constants.FIELD_WIDTH - BOUNDS_WIDTH, BOUNDS_WIDTH, BOUNDS_WIDTH, Constants.FIELD_HEIGHT - BOUNDS_WIDTH);
         walls[3] = new RectangleWall(box2dWorld, BOUNDS_WIDTH, Constants.FIELD_HEIGHT - BOUNDS_WIDTH, Constants.FIELD_WIDTH - 2 * BOUNDS_WIDTH, BOUNDS_WIDTH);
         groundWall = walls[0];
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < WALLS_COUNT; i++)
             group.addActor(walls[i]);
 
         initializeBall();
@@ -99,8 +102,8 @@ public class GameWorld {
     }
 
     public void update(float delta, Move firstMove, Move secondMove) {
-        footballers[0].update(firstMove);
-        footballers[1].update(secondMove);
+        footballers[0].update(firstMove, ball);
+        footballers[1].update(secondMove, ball);
 
         for (int i = 0; i < 2; i++) {
             if (goals[i].contains(ball.getPosition())) {
@@ -163,5 +166,9 @@ public class GameWorld {
 
     public Ball getBall() {
         return ball;
+    }
+
+    public int[] getScore() {
+        return score;
     }
 }

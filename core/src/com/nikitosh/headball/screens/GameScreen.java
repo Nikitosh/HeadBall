@@ -30,6 +30,7 @@ public abstract class GameScreen implements Screen {
 
     protected enum GameState {GAME_RUNNING, GAME_PAUSED, GAME_OVER};
     protected GameState gameState = GameState.GAME_RUNNING;
+    protected Label resultLabel;
 
     protected Window pauseScreen, gameOverScreen;
 
@@ -107,14 +108,14 @@ public abstract class GameScreen implements Screen {
             }
         });
 
-        Label gameOverLabel = new Label("Game over", AssetLoader.gameLabelStyle);
+        Label gameOverLabel = new Label("Game over!", AssetLoader.gameLabelStyle);
 
         gameOverScreen = new Window("", AssetLoader.gameWindowStyle);
         gameOverScreen.setMovable(false);
-        Label resultLabel = new Label("", AssetLoader.gameLabelStyle);
-        gameOverScreen.add(gameOverLabel);
-        gameOverScreen.add(resultLabel);
-        gameOverScreen.add(gameOverExitButton);
+        resultLabel = new Label("", AssetLoader.gameLabelStyle);
+        gameOverScreen.add(gameOverLabel).row();
+        gameOverScreen.add(resultLabel).row();
+        gameOverScreen.add(gameOverExitButton).row();
         gameOverScreen.setBounds(Constants.VIRTUAL_WIDTH / 4, Constants.VIRTUAL_HEIGHT / 4, Constants.VIRTUAL_WIDTH / 2, Constants.VIRTUAL_HEIGHT / 2);
 
         GameTextButtonTouchable pauseButton = new GameTextButtonTouchable("Pause");
@@ -147,9 +148,6 @@ public abstract class GameScreen implements Screen {
         if (gameState == GameState.GAME_RUNNING) {
             gameDuration += delta;
         }
-        if (gameDuration > Constants.GAME_DURATION) {
-            finishGame();
-        }
     }
 
     @Override
@@ -180,9 +178,10 @@ public abstract class GameScreen implements Screen {
 
     protected abstract void initializePlayers();
 
-    private void finishGame() {
+    protected void finishGame() {
         stage.addActor(gameOverScreen);
         gameState = GameState.GAME_OVER;
+
     }
 
     private void pauseGame() {

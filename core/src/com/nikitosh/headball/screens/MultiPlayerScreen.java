@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.nikitosh.headball.players.LocalHumanPlayer;
 import com.nikitosh.headball.Move;
 import com.nikitosh.headball.players.RemoteHumanPlayer;
+import com.nikitosh.headball.utils.Constants;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -72,7 +73,25 @@ public class MultiPlayerScreen extends GameScreen {
                 gameWorld.update(delta, players[0].getMove(), myMove);
             }
         }
-        stage.act(delta);
+        if (gameDuration > Constants.GAME_DURATION) {
+            finishGame();
+        }
         stage.draw();
+    }
+
+    @Override
+    protected void finishGame() {
+        int[] score = gameWorld.getScore();
+        String scoreString = Integer.toString(score[0]) + ":" + Integer.toString(score[1]);
+        if (score[0] == score[1]) {
+            resultLabel.setText("Draw! " + scoreString);
+        }
+        else if (score[playerNumber] < score[1 - playerNumber]) {
+            resultLabel.setText("You lose! " + scoreString);
+        }
+        else {
+            resultLabel.setText("You win! " + scoreString);
+        }
+        super.finishGame();
     }
 }
