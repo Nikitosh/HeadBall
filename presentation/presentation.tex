@@ -1,0 +1,185 @@
+\documentclass[12pt]{beamer}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsthm, amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{datetime}
+\usepackage{cmap}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage{picture}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usetikzlibrary{positioning,shadows,arrows}
+
+\usepackage{bold-extra}
+
+\def\EPS{\varepsilon}
+\def\SO{\Rightarrow}
+\def\EQ{\Leftrightarrow}
+\def\t{\texttt}
+
+\usetheme{Warsaw}
+
+\let\Tiny=\tiny
+\useoutertheme{infolines}
+
+\tikzset {
+    fact/.style={rectangle, draw=none, rounded corners=1mm, fill=blue, drop shadow,
+        text centered, anchor=north, text=white},
+    new/.style={circle, draw=none, fill=orange, circular drop shadow,
+        text centered, anchor=north, text=white},
+    state/.style={circle, draw=none, fill=red, circular drop shadow,
+        text centered, anchor=north, text=white},
+    leaf/.style={rectangle, draw=black,
+    minimum width=0.5em, minimum height=0.5em},
+    cur/.style={circle, draw=none, fill=green, circular drop shadow,
+        text centered, anchor=north, text=black},
+    level distance=1.0cm, anchor=south
+}
+
+\begin{document}
+
+\title{HeadBall Game}
+
+\author[]{
+    Подгузов Никита \\
+    Степанов Владимир \\
+}
+\institute[]{Санкт-Петербургский Академический университет}
+\date{18 декабря 2015 года}
+
+\frame{\titlepage}
+
+\begin{frame}{Описание приложения}
+
+    \begin{itemize}
+
+        \item <1-> Футбольная 2D-игра, вид сбоку
+        
+        \item <2-> Существующие аналоги: Big Head Football (flash, android), Dvadi (flash)
+
+        \item <3-> Особенности: 
+        
+        \begin{itemize}
+            \item Порт под Android
+            
+            \item Изменение базовой механики
+            
+            \item Режим игры по сети
+
+            \item Умный AI
+
+        \end{itemize}
+
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Использованные средства}
+
+    \begin{itemize}
+
+        \item <1-> Игру на чистом Android-е делать сложно
+
+        \item <2-> Игровой движок libGDX
+
+        \item <3-> Физический движок Box2D
+
+        \item <4-> Git для совместной работы
+
+        \item <5-> Множество сторонних программ: Paint.NET, Photoshop, TexturePacker, BitmapFontGenerator
+
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Внутреннее устройство}
+
+    \begin{itemize}
+
+        \item <1-> UI реализован с помощью стандартных элементов libGDX
+
+        \item <2-> Пакет Scene2D (Stage и Actors): удобная отрисовка и управление игровыми объектами
+
+        %Сначала реализовали похожую функциональность руками, потом поняли, что это излишне.
+
+        \item <3-> Минимальный обсчет физики: все внутри Box2D 
+         
+        \item <4-> Для каждой игровой сущности собственный класс (наследник Actor) 
+
+        \item <5-> Client-Server (написаны на Java Sockets)
+
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Возникшие сложности}
+
+    \begin{itemize}
+
+        \item <1-> Не очень подробная документация
+
+        %Но при этом множество примеров (правда, порой устаревших) и достаточно большое сообщество
+
+        \item <2-> Хостинг сервера
+
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Выводы}
+
+    \begin{itemize}
+
+        \item <1-> Работа с новой технологией: приходится тратить много времени по пустякам
+
+        %Пример: функция setAsBox(width, height), задающая объекту геометрическую форму, принимает _половину_ ширины и высоты.
+
+        \item <2-> Работа с развивающейся библиотекой: некоторые ответы становятся неактуальными
+        
+        \item <3-> Специфика разработки игры: много посторонней работы
+
+        %Кроме программирования приходится заниматься рисованием / поиском спрайтов или звуков / обучаться работать в других программах
+
+    \end{itemize}
+
+\end{frame}    
+
+\begin{frame}{Результаты}
+
+    \begin{itemize}
+    
+        \item <1-> Реализованная игра с базовыми настройками 
+
+        \item <2-> Режим игры по сети 
+
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Дальнейшее развитие}
+    \begin{itemize}
+        \item <1-> Усовершенствование алгоритма AI
+
+        \item <2-> Добавление новых режимов и уровней         
+    \end{itemize}
+
+\end{frame}       
+
+\begin{frame}{Ссылки}
+
+    \url{https://github.com/Nikitosh/HeadBall}
+
+\end{frame}
+
+\begin{frame}{}
+
+    Вопросы?
+
+\end{frame}
+
+\end{document}
