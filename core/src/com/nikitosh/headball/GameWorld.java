@@ -6,6 +6,11 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.nikitosh.headball.actors.*;
+import com.nikitosh.headball.ui.GameLabelStyle;
+import com.nikitosh.headball.utils.AssetLoader;
+import com.nikitosh.headball.utils.Constants;
+import com.nikitosh.headball.utils.GameSettings;
 
 public class GameWorld {
     public static final float BOUNDS_WIDTH = 30;
@@ -65,8 +70,6 @@ public class GameWorld {
             public void beginContact(Contact contact) {
                 Object contactA = contact.getFixtureA().getUserData();
                 Object contactB = contact.getFixtureB().getUserData();
-                Gdx.app.log("ContactListener", contact.getFixtureA().toString());
-                Gdx.app.log("ContactListener", contact.getFixtureB().toString());
                 if (contactA == null || contactB == null) {
                     return;
                 }
