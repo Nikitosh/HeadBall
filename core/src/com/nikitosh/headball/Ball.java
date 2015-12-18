@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 public class Ball extends Actor {
-    private static final float BALL_RADIUS = 5;
+    private static final float BALL_RADIUS = 15;
 
     private Body body;
     private ShapeRenderer shapeRenderer;

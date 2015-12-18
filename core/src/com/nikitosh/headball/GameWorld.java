@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class GameWorld {
@@ -24,6 +25,10 @@ public class GameWorld {
         box2dWorld = new World(new Vector2(0f, -100f * Constants.WORLD_TO_BOX), true);
         group = new Group();
         group.setBounds(0, Constants.BUTTONS_HEIGHT, Constants.FIELD_WIDTH, Constants.FIELD_HEIGHT);
+
+        Image field = new Image(AssetLoader.fieldTexture);
+        field.setBounds(BOUNDS_WIDTH, BOUNDS_WIDTH, Constants.FIELD_WIDTH - 2 * BOUNDS_WIDTH, Constants.FIELD_HEIGHT - 2 * BOUNDS_WIDTH);
+        group.addActor(field);
 
         footballers = new Footballer[2];
         initializeFootballers();
@@ -127,16 +132,18 @@ public class GameWorld {
     }
 
     private void initializeFootballers() {
-        footballers[0] = new Footballer(box2dWorld, Constants.FIELD_WIDTH / 4, BOUNDS_WIDTH);
-        footballers[1] = new Footballer(box2dWorld, 3 * Constants.FIELD_WIDTH / 4, BOUNDS_WIDTH);
+        footballers[0] = new Footballer(box2dWorld, Constants.FIELD_WIDTH / 4, BOUNDS_WIDTH, true);
+        footballers[1] = new Footballer(box2dWorld, 3 * Constants.FIELD_WIDTH / 4, BOUNDS_WIDTH, false);
         for (int i = 0; i < 2; i++) {
             group.addActor(footballers[i]);
+            footballers[i].setZIndex(1);
         }
     }
 
     private void initializeBall() {
         ball = new Ball(box2dWorld, Constants.FIELD_WIDTH / 2, Constants.FIELD_HEIGHT / 2);
         group.addActor(ball);
+        ball.setZIndex(1);
     }
 
     public World getBox2dWorld() {

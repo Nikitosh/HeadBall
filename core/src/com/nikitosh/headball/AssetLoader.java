@@ -9,19 +9,28 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class AssetLoader {
+
     public static BitmapFont font;
     public static TextureAtlas atlas;
     public static Skin skin;
+
     public static GameTextButtonStyle gameTextButtonStyle;
     public static GameTextButtonTouchableStyle gameTextButtonTouchableStyle;
     public static GameLabelStyle gameLabelStyle;
-    public static Sound goalSound;
+    public static GameWindowStyle gameWindowStyle;
+
     public static Texture legTexture;
     public static Texture ballTexture;
     public static Texture footballerTexture;
+    public static Texture reversedFootballerTexture;
     public static Texture windowBackground;
-    public static GameWindowStyle gameWindowStyle;
     public static Texture goalsTexture;
+    public static Texture reversedGoalsTexture;
+    public static Texture menuTexture;
+    public static Texture fieldTexture;
+    public static Texture backgroundTexture;
+
+    public static Sound goalSound;
 
     public static void loadFont() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Animated.ttf"));
@@ -43,10 +52,15 @@ public class AssetLoader {
 
         legTexture = new Texture(Gdx.files.internal("images/splashScreen.jpg"));
         ballTexture = new Texture(Gdx.files.internal("images/ball.png"));
-        windowBackground = new Texture(Gdx.files.internal("images/windowBackground.jpg"));
+        windowBackground = new Texture(Gdx.files.internal("images/pauseBackground.jpg"));
         gameWindowStyle = new GameWindowStyle();
         footballerTexture = new Texture(Gdx.files.internal("images/footballerHead.png"));
+        reversedFootballerTexture = new Texture(Gdx.files.internal("images/reversedFootballerHead.png"));
         goalsTexture = new Texture(Gdx.files.internal("images/goals.png"));
+        reversedGoalsTexture = new Texture(Gdx.files.internal("images/reversedGoals.png"));
+        menuTexture = new Texture(Gdx.files.internal("images/menu.jpg"));
+        fieldTexture = new Texture(Gdx.files.internal("images/fieldBackground.jpg"));
+        backgroundTexture = new Texture(Gdx.files.internal("images/background.jpg"));
 
         GameSettings.intialize();
     }

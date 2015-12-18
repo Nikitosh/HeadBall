@@ -11,7 +11,7 @@ public class LocalHumanPlayer extends Player {
 
     private Move move;
 
-    public LocalHumanPlayer(GameTextButton hitButton, GameTextButton jumpButton, GameTextButton leftButton, GameTextButton rightButton) {
+    public LocalHumanPlayer(GameTextButtonTouchable hitButton, GameTextButtonTouchable jumpButton, GameTextButtonTouchable leftButton, GameTextButtonTouchable rightButton) {
         move = new Move(false, false, false, false);
         hitButton.addListener(new ClickListener() {
             @Override

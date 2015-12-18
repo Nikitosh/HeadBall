@@ -45,7 +45,7 @@ public class RectangleWall extends Wall {
         shapeRenderer.translate(getX(), getY(), 0);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.BROWN);
+        shapeRenderer.setColor(Color.BLACK);
         shapeRenderer.rect(body.getPosition().x * Constants.BOX_TO_WORLD - width / 2, body.getPosition().y * Constants.BOX_TO_WORLD - height / 2, width, height);
         shapeRenderer.end();
 

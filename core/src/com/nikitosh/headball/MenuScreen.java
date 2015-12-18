@@ -76,7 +76,10 @@ public class MenuScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        //stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.getBatch().begin();
+        stage.getBatch().draw(AssetLoader.menuTexture, 0, 0, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
+        stage.getBatch().end();
         stage.draw();
     }
 

@@ -32,8 +32,8 @@ public class SettingsScreen implements Screen {
         table.setBounds(0, 0, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
 
         drawables = new Drawable[2];
-        drawables[0] = AssetLoader.skin.getDrawable("blue_boxCheckmark");
-        drawables[1] = AssetLoader.skin.getDrawable("blue_boxCross");
+        drawables[0] = AssetLoader.skin.getDrawable("red_boxCheckmark");
+        drawables[1] = AssetLoader.skin.getDrawable("red_boxCross");
 
         Button backButton = new GameTextButtonTouchable("Back");
         backButton.setBounds(Constants.BUTTON_INDENT, Constants.VIRTUAL_HEIGHT - Constants.BUTTON_INDENT - backButton.getHeight(), backButton.getWidth(), backButton.getHeight());
@@ -60,14 +60,14 @@ public class SettingsScreen implements Screen {
         Button soundTextButton = new GameTextButton("Sound");
         table.add(soundTextButton);
 
-        final Button soundButton = new Button(new GameButtonStyle("blue_boxCheckmark"));
+        final Button soundButton = new Button(new GameButtonStyle("red_boxCheckmark"));
         soundButton.getStyle().up = drawables[soundState];
         table.add(soundButton).row();
 
         Button musicTextButton = new GameTextButton("Music");
         table.add(musicTextButton);
 
-        final Button musicButton = new Button(new GameButtonStyle("blue_boxCheckmark"));
+        final Button musicButton = new Button(new GameButtonStyle("red_boxCheckmark"));
         musicButton.getStyle().up = drawables[musicState];
         table.add(musicButton).row();
 
@@ -99,7 +99,9 @@ public class SettingsScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.getBatch().begin();
+        stage.getBatch().draw(AssetLoader.menuTexture, 0, 0, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
+        stage.getBatch().end();
         stage.draw();
     }
 

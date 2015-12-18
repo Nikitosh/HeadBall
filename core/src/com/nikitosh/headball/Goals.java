@@ -51,15 +51,19 @@ public class Goals extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-
-        Box2DSprite box2DSprite = new Box2DSprite(AssetLoader.goalsTexture);
+        Box2DSprite box2DSprite;
+        if (side == Side.LEFT) {
+            box2DSprite = new Box2DSprite(AssetLoader.goalsTexture);
+        }
+        else {
+            box2DSprite = new Box2DSprite(AssetLoader.reversedGoalsTexture);
+        }
         box2DSprite.draw(batch,
-                body.getPosition().x * Constants.BOX_TO_WORLD,
-                body.getPosition().y * Constants.BOX_TO_WORLD - Constants.GOALS_HEIGHT / 2,
-                width,
-                Constants.GOALS_HEIGHT + height,
-                body.getAngle());
-
+                    body.getPosition().x * Constants.BOX_TO_WORLD,
+                    body.getPosition().y * Constants.BOX_TO_WORLD - Constants.GOALS_HEIGHT / 2,
+                    width,
+                    Constants.GOALS_HEIGHT + height,
+                    body.getAngle());
     }
 
     public boolean contains(Vector2 point) {
