@@ -25,9 +25,9 @@ public class Ball extends Actor {
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(BALL_RADIUS * Constants.WORLD_TO_BOX);
         fixtureDef.shape = circleShape;
-        fixtureDef.density = 1f;
+        fixtureDef.density = 10f;
         fixtureDef.friction = 0.1f;
-        fixtureDef.restitution = 0.5f;
+        fixtureDef.restitution = 0.6f;
         body.createFixture(fixtureDef);
         circleShape.dispose();
     }

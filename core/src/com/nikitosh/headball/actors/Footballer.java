@@ -17,7 +17,7 @@ import static net.dermetfan.gdx.physics.box2d.Box2DUtils.width;
 public class Footballer extends Actor {
     private static final float FOOTBALLER_RADIUS = 35;
     private static final float FOOTBALLER_SPEED = 100;
-    private static final float FOOTBALLER_JUMP = 100;
+    private static final float FOOTBALLER_JUMP = 200;
 
     private Body body;
     private boolean inJump = false;
@@ -36,7 +36,7 @@ public class Footballer extends Actor {
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(FOOTBALLER_RADIUS * Constants.WORLD_TO_BOX);
         fixtureDef.shape = circleShape;
-        fixtureDef.density = 0.35f;
+        fixtureDef.density = 45f;
         fixtureDef.friction = 0.1f;
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(this);
@@ -74,7 +74,7 @@ public class Footballer extends Actor {
         }
         if (move.isHit()) {
             if (this.getPosition().dst(ball.getPosition()) <= (FOOTBALLER_RADIUS + Ball.getBallRadius() + 1) * Constants.WORLD_TO_BOX) {
-                ball.getBody().applyForceToCenter(0.1f, 0.5f, false);
+                ball.getBody().applyForceToCenter(3f, 10f, false);
             }
         }
     }

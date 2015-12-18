@@ -12,6 +12,6 @@ public class Constants {
     public static final float GOALS_HEIGHT = 120;
     public static final float GOALS_WIDTH = 70;
     public static final float CROSSBAR_HEIGHT = 10;
-    public static final int GAME_DURATION = 60;
+    public static final int GAME_DURATION = 30;
     public static final int SPLASH_DURATION = 1000;
 }

@@ -30,7 +30,7 @@ public class GameWorld {
     private Label scoreLabel;
 
     public GameWorld() {
-        box2dWorld = new World(new Vector2(0f, -100f * Constants.WORLD_TO_BOX), true);
+        box2dWorld = new World(new Vector2(0f, -300f * Constants.WORLD_TO_BOX), true);
         group = new Group();
         group.setBounds(0, Constants.BUTTONS_HEIGHT, Constants.FIELD_WIDTH, Constants.FIELD_HEIGHT);
 
