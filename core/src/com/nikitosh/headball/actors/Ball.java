@@ -11,7 +11,7 @@ import com.nikitosh.headball.utils.Constants;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 public class Ball extends Actor {
-    private static final float BALL_RADIUS = 15;
+    private static final float BALL_RADIUS = 10;
 
     private Body body;
 
@@ -34,6 +34,10 @@ public class Ball extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        //TextureRegion region = new TextureRegion(AssetLoader.ballTexture);
+
+        //batch.draw(region, body.getPosition().x * Constants.BOX_TO_WORLD, body.getPosition().y * Constants.BOX_TO_WORLD, 2 * BALL_RADIUS, 2 * BALL_RADIUS);
+
         Box2DSprite box2DSprite = new Box2DSprite(AssetLoader.ballTexture);
         box2DSprite.draw(batch,
                 body.getPosition().x * Constants.BOX_TO_WORLD,

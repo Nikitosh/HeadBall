@@ -15,7 +15,7 @@ import static net.dermetfan.gdx.physics.box2d.Box2DUtils.position;
 import static net.dermetfan.gdx.physics.box2d.Box2DUtils.width;
 
 public class Footballer extends Actor {
-    private static final float FOOTBALLER_RADIUS = 35;
+    private static final float FOOTBALLER_RADIUS = 20;
     private static final float FOOTBALLER_SPEED = 100;
     private static final float FOOTBALLER_JUMP = 200;
 

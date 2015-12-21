@@ -80,7 +80,7 @@ public class MultiPlayerScreen extends GameScreen {
     }
 
     @Override
-    protected void finishGame() {
+    public void finishGame() {
         int[] score = gameWorld.getScore();
         String scoreString = Integer.toString(score[0]) + ":" + Integer.toString(score[1]);
         if (score[0] == score[1]) {
@@ -93,5 +93,11 @@ public class MultiPlayerScreen extends GameScreen {
             resultLabel.setText("You win! " + scoreString);
         }
         super.finishGame();
+    }
+
+    @Override
+    public void restartGame() {
+        dispose();
+        game.setScreen(new MultiPlayerScreen(game));
     }
 }

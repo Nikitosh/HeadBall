@@ -24,18 +24,16 @@ public class MenuScreen implements Screen {
         stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
 
         table = new Table();
-        table.setBounds(0, 0, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
+        table.setFillParent(true);
 
         Button singlePlayerTextButton = new GameTextButtonTouchable("Singleplayer");
-        table.add(singlePlayerTextButton).row();
+        table.add(singlePlayerTextButton).pad(Constants.BUTTON_INDENT).row();
 
         Button multiPlayerTextButton = new GameTextButtonTouchable("Multiplayer");
-        table.add(multiPlayerTextButton).row();
+        table.add(multiPlayerTextButton).pad(Constants.BUTTON_INDENT).row();
 
         Button settingsTextButton = new GameTextButtonTouchable("Settings");
-        table.add(settingsTextButton).row();
-
-        stage.addActor(table);
+        table.add(settingsTextButton).pad(Constants.BUTTON_INDENT).row();
 
         Gdx.input.setInputProcessor(stage);
         singlePlayerTextButton.addListener(new ChangeListener() {
@@ -59,6 +57,8 @@ public class MenuScreen implements Screen {
                 game.setScreen(new SettingsScreen(game));
             }
         });
+
+        stage.addActor(table);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -20,7 +21,8 @@ import com.nikitosh.headball.ui.GameTextButtonTouchable;
 
 public class SettingsScreen implements Screen {
     private Stage stage;
-    private Table table;
+    private Table settingsTable;
+    private Table backButtonTable;
 
     private final Game game;
     private Drawable[] drawables;
@@ -32,15 +34,10 @@ public class SettingsScreen implements Screen {
         stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
         Gdx.input.setInputProcessor(stage);
 
-        table = new Table();
-        table.setBounds(0, 0, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
-
-        drawables = new Drawable[2];
-        drawables[0] = AssetLoader.skin.getDrawable("red_boxCheckmark");
-        drawables[1] = AssetLoader.skin.getDrawable("red_boxCross");
+        backButtonTable = new Table();
+        backButtonTable.setFillParent(true);
 
         Button backButton = new GameTextButtonTouchable("Back");
-        backButton.setBounds(Constants.BUTTON_INDENT, Constants.VIRTUAL_HEIGHT - Constants.BUTTON_INDENT - backButton.getHeight(), backButton.getWidth(), backButton.getHeight());
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -59,23 +56,29 @@ public class SettingsScreen implements Screen {
             }
         });
 
-        stage.addActor(backButton);
+        backButtonTable.top().left();
+        backButtonTable.add(backButton).top().left().pad(Constants.BUTTON_INDENT).row();
+
+        settingsTable = new Table();
+        settingsTable.setFillParent(true);
+
+        drawables = new Drawable[2];
+        drawables[0] = AssetLoader.skin.getDrawable("red_boxCheckmark");
+        drawables[1] = AssetLoader.skin.getDrawable("red_boxCross");
 
         Button soundTextButton = new GameTextButton("Sound");
-        table.add(soundTextButton);
+        settingsTable.add(soundTextButton).pad(Constants.BUTTON_INDENT);
 
         final Button soundButton = new Button(new GameButtonStyle("red_boxCheckmark"));
         soundButton.getStyle().up = drawables[soundState];
-        table.add(soundButton).row();
+        settingsTable.add(soundButton).pad(Constants.BUTTON_INDENT).row();
 
         Button musicTextButton = new GameTextButton("Music");
-        table.add(musicTextButton);
+        settingsTable.add(musicTextButton).pad(Constants.BUTTON_INDENT);
 
         final Button musicButton = new Button(new GameButtonStyle("red_boxCheckmark"));
         musicButton.getStyle().up = drawables[musicState];
-        table.add(musicButton).row();
-
-        stage.addActor(table);
+        settingsTable.add(musicButton).pad(Constants.BUTTON_INDENT).row();
 
         soundButton.addListener(new ChangeListener() {
             @Override
@@ -92,6 +95,11 @@ public class SettingsScreen implements Screen {
             }
         });
 
+        Stack stack = new Stack();
+        stack.setFillParent(true);
+        stage.addActor(stack);
+        stack.addActor(backButtonTable);
+        stack.addActor(settingsTable);
     }
 
     @Override
@@ -111,7 +119,7 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 
     @Override

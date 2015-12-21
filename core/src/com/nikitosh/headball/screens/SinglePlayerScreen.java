@@ -38,7 +38,7 @@ public class SinglePlayerScreen extends GameScreen {
     }
 
     @Override
-    protected void finishGame() {
+    public void finishGame() {
         int[] score = gameWorld.getScore();
         String scoreString = Integer.toString(score[0]) + ":" + Integer.toString(score[1]);
         if (score[0] == score[1]) {
@@ -53,4 +53,9 @@ public class SinglePlayerScreen extends GameScreen {
         super.finishGame();
     }
 
+    @Override
+    public void restartGame() {
+        dispose();
+        game.setScreen(new SinglePlayerScreen(game));
+    }
 }

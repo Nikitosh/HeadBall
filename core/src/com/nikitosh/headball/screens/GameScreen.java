@@ -6,10 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nikitosh.headball.utils.AssetLoader;
@@ -25,14 +22,17 @@ public abstract class GameScreen implements Screen {
     protected GameWorld gameWorld;
     protected Player[] players;
     protected Stage stage;
-    protected Table buttonsTable;
+    protected Table uiTable;
+    protected Table gameplayTable;
+    protected Table pauseButtonTable;
     protected GameTextButtonTouchable hitButton, jumpButton, leftButton, rightButton;
 
     protected enum GameState {GAME_RUNNING, GAME_PAUSED, GAME_OVER};
     protected GameState gameState = GameState.GAME_RUNNING;
     protected Label resultLabel;
 
-    protected Window pauseScreen, gameOverScreen;
+    protected Window pauseScreen;
+    protected Window gameOverScreen;
 
     protected float gameDuration = 0;
 
@@ -42,8 +42,11 @@ public abstract class GameScreen implements Screen {
         gameWorld = new GameWorld();
         stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
 
+        uiTable = new Table();
+        //uiTable.setFillParent(true);
+
         Image background = new Image(AssetLoader.backgroundTexture);
-        background.setBounds(0, 0, stage.getWidth(), stage.getHeight());
+        background.setFillParent(true);
         stage.addActor(background);
 
         hitButton = new GameTextButtonTouchable("Hit");
@@ -51,78 +54,27 @@ public abstract class GameScreen implements Screen {
         leftButton = new GameTextButtonTouchable("Left");
         rightButton = new GameTextButtonTouchable("Right");
 
-        buttonsTable = new Table();
-        buttonsTable.setBounds(0, 0, Constants.VIRTUAL_WIDTH, Constants.BUTTONS_HEIGHT);
-        buttonsTable.add(hitButton).expand().fillX().height(Constants.BUTTONS_HEIGHT);
-        buttonsTable.add(jumpButton).expand().fillX().height(Constants.BUTTONS_HEIGHT);
-        buttonsTable.add(leftButton).expand().fillX().height(Constants.BUTTONS_HEIGHT);
-        buttonsTable.add(rightButton).expand().fillX().height(Constants.BUTTONS_HEIGHT);
-        hitButton.setHeight(Constants.BUTTONS_HEIGHT);
-        jumpButton.setHeight(Constants.BUTTONS_HEIGHT);
-        leftButton.setHeight(Constants.BUTTONS_HEIGHT);
-        rightButton.setHeight(Constants.BUTTONS_HEIGHT);
+        uiTable.add(hitButton).expand().fillX().bottom();
+        uiTable.add(jumpButton).expand().fillX().bottom();
+        uiTable.add(leftButton).expand().fillX().bottom();
+        uiTable.add(rightButton).expand().fillX().bottom();
 
-        players = new Player[2];
+        pauseScreen = new PauseScreen(this);
+        pauseScreen.setBounds(Constants.VIRTUAL_WIDTH / 4,
+                Constants.VIRTUAL_HEIGHT / 4,
+                Constants.VIRTUAL_WIDTH / 2,
+                Constants.VIRTUAL_HEIGHT / 2);
 
-        GameTextButtonTouchable continueButton = new GameTextButtonTouchable("Continue");
-        continueButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                resumeGame();
-            }
-        });
+        gameOverScreen = new GameOverScreen(this);
+        gameOverScreen.setBounds(Constants.VIRTUAL_WIDTH / 4,
+                Constants.VIRTUAL_HEIGHT / 4,
+                Constants.VIRTUAL_WIDTH / 2,
+                Constants.VIRTUAL_HEIGHT / 2);
 
-        GameTextButtonTouchable restartButton = new GameTextButtonTouchable("Restart");
-        restartButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                GameScreen.this.dispose();
-                game.setScreen(new SinglePlayerScreen(game));
-            }
-        });
-        GameTextButtonTouchable exitButton = new GameTextButtonTouchable("Exit");
-        exitButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                GameScreen.this.dispose();
-                game.setScreen(new MenuScreen(game));
-            }
-        });
-
-        Label pauseLabel = new Label("Pause", AssetLoader.gameLabelStyle);
-
-        pauseScreen = new Window("", AssetLoader.gameWindowStyle);
-        pauseScreen.setMovable(false);
-        pauseScreen.add(pauseLabel).row();
-        pauseScreen.add(continueButton).row();
-        pauseScreen.add(restartButton).row();
-        pauseScreen.add(exitButton).row();
-        pauseScreen.setBounds(Constants.VIRTUAL_WIDTH / 4, Constants.VIRTUAL_HEIGHT / 4, Constants.VIRTUAL_WIDTH / 2, Constants.VIRTUAL_HEIGHT / 2);
-
-        GameTextButtonTouchable gameOverExitButton = new GameTextButtonTouchable("Exit");
-        gameOverExitButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                GameScreen.this.dispose();
-                game.setScreen(new MenuScreen(game));
-            }
-        });
-
-        Label gameOverLabel = new Label("Game over!", AssetLoader.gameLabelStyle);
-
-        gameOverScreen = new Window("", AssetLoader.gameWindowStyle);
-        gameOverScreen.setMovable(false);
-        resultLabel = new Label("", AssetLoader.gameLabelStyle);
-        gameOverScreen.add(gameOverLabel).row();
-        gameOverScreen.add(resultLabel).row();
-        gameOverScreen.add(gameOverExitButton).row();
-        gameOverScreen.setBounds(Constants.VIRTUAL_WIDTH / 4, Constants.VIRTUAL_HEIGHT / 4, Constants.VIRTUAL_WIDTH / 2, Constants.VIRTUAL_HEIGHT / 2);
+        pauseButtonTable = new Table();
+        pauseButtonTable.setFillParent(true);
 
         GameTextButtonTouchable pauseButton = new GameTextButtonTouchable("Pause");
-        pauseButton.setBounds(Constants.VIRTUAL_WIDTH - pauseButton.getWidth() - Constants.BUTTON_INDENT,
-                Constants.VIRTUAL_HEIGHT - pauseButton.getHeight() - Constants.BUTTON_INDENT,
-                pauseButton.getWidth(),
-                pauseButton.getHeight());
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -130,11 +82,27 @@ public abstract class GameScreen implements Screen {
             }
         });
 
+        pauseButtonTable.top().right();
+        pauseButtonTable.add(pauseButton).top().right().pad(Constants.BUTTON_INDENT).row();
+
         Gdx.input.setInputProcessor(stage);
 
-        stage.addActor(gameWorld.getGroup());
-        stage.addActor(buttonsTable);
-        stage.addActor(pauseButton);
+        players = new Player[2];
+
+        Stack stack = new Stack();
+        stack.setFillParent(true);
+
+        Table mainTable = new Table();
+        mainTable.setFillParent(true);
+        mainTable.top();
+        mainTable.add(gameWorld.getGroup()).top().expand().fillX().height(Constants.FIELD_HEIGHT);
+        mainTable.bottom();
+        mainTable.add(uiTable).bottom().fill().expand();
+
+        stack.addActor(mainTable);
+        stack.addActor(pauseButtonTable);
+        Gdx.app.log("HEY", Float.toString(mainTable.getY()));
+        stage.addActor(stack);
     }
 
     @Override
@@ -178,19 +146,27 @@ public abstract class GameScreen implements Screen {
 
     protected abstract void initializePlayers();
 
-    protected void finishGame() {
+    public void finishGame() {
         stage.addActor(gameOverScreen);
         gameState = GameState.GAME_OVER;
 
     }
 
-    private void pauseGame() {
+    public void pauseGame() {
         stage.addActor(pauseScreen);
         gameState = GameState.GAME_PAUSED;
     }
 
-    private void resumeGame() {
+    public void resumeGame() {
         gameState = GameState.GAME_RUNNING;
         pauseScreen.remove();
+    }
+
+    public void restartGame() {
+    }
+
+    public void exitGame() {
+        dispose();
+        game.setScreen(new MenuScreen(game));
     }
 }

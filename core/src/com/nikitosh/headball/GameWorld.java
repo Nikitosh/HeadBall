@@ -6,6 +6,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.nikitosh.headball.actors.*;
 import com.nikitosh.headball.ui.GameLabelStyle;
 import com.nikitosh.headball.utils.AssetLoader;
@@ -32,7 +34,7 @@ public class GameWorld {
     public GameWorld() {
         box2dWorld = new World(new Vector2(0f, -300f * Constants.WORLD_TO_BOX), true);
         group = new Group();
-        group.setBounds(0, Constants.BUTTONS_HEIGHT, Constants.FIELD_WIDTH, Constants.FIELD_HEIGHT);
+        //group.setFillParent(true);
 
         Image field = new Image(AssetLoader.fieldTexture);
         field.setBounds(BOUNDS_WIDTH, BOUNDS_WIDTH, Constants.FIELD_WIDTH - 2 * BOUNDS_WIDTH, Constants.FIELD_HEIGHT - 2 * BOUNDS_WIDTH);
