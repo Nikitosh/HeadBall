@@ -18,19 +18,17 @@ public class MultiPlayerScreen extends GameScreen {
     private DataInputStream in;
     private DataOutputStream out;
 
-    private int playerNumber;
-
     public MultiPlayerScreen(Game game) {
         super(game);
         try {
             InetAddress ipAddress = InetAddress.getByName(SERVER_ADDRESS);
-            System.out.println("Any of you heard of a socket with IP address " + SERVER_ADDRESS + " and port " + PORT + "?");
+            Gdx.app.log("MultiPlayerScreen", "Any of you heard of a socket with IP address " + SERVER_ADDRESS + " and port " + PORT + "?");
             Socket socket = new Socket(ipAddress, PORT);
-            System.out.println("Yes! I just got hold of the program.");
+            Gdx.app.log("MultiPlayerScreen", "Yes! I just got hold of the program.");
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
             String s = in.readUTF();
-            Gdx.app.log("MultiPlayer", s);
+            Gdx.app.log("MultiPlayerScreen", s);
             if (s.charAt(0) == '0') {
                 playerNumber = 0;
             } else {
@@ -73,26 +71,7 @@ public class MultiPlayerScreen extends GameScreen {
                 gameWorld.update(delta, players[0].getMove(), myMove);
             }
         }
-        if (gameDuration > Constants.GAME_DURATION) {
-            finishGame();
-        }
         stage.draw();
-    }
-
-    @Override
-    public void finishGame() {
-        int[] score = gameWorld.getScore();
-        String scoreString = Integer.toString(score[0]) + ":" + Integer.toString(score[1]);
-        if (score[0] == score[1]) {
-            resultLabel.setText("Draw! " + scoreString);
-        }
-        else if (score[playerNumber] < score[1 - playerNumber]) {
-            resultLabel.setText("You lose! " + scoreString);
-        }
-        else {
-            resultLabel.setText("You win! " + scoreString);
-        }
-        super.finishGame();
     }
 
     @Override

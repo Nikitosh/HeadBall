@@ -29,12 +29,13 @@ public class GameWorld {
     private Ball ball;
     private Goals[] goals;
     private int[] score;
-    private Label scoreLabel;
+    private boolean isGoal = false;
+    private boolean isEnded = false;
+    private float gameDuration = 0;
 
     public GameWorld() {
         box2dWorld = new World(new Vector2(0f, -300f * Constants.WORLD_TO_BOX), true);
         group = new Group();
-        //group.setFillParent(true);
 
         Image field = new Image(AssetLoader.fieldTexture);
         field.setBounds(BOUNDS_WIDTH, BOUNDS_WIDTH, Constants.FIELD_WIDTH - 2 * BOUNDS_WIDTH, Constants.FIELD_HEIGHT - 2 * BOUNDS_WIDTH);
@@ -65,10 +66,6 @@ public class GameWorld {
 
         score = new int[2];
         score[0] = score[1] = 0;
-
-        scoreLabel = new Label("", new GameLabelStyle());
-        scoreLabel.setPosition(Constants.FIELD_WIDTH / 2 - scoreLabel.getWidth() / 2, 2 * Constants.FIELD_HEIGHT / 3 - scoreLabel.getHeight() / 2);
-        group.addActor(scoreLabel);
 
         box2dWorld.setContactListener(new ContactListener() {
             @Override
@@ -104,22 +101,32 @@ public class GameWorld {
     }
 
     public void update(float delta, Move firstMove, Move secondMove) {
+        isGoal = false;
         footballers[0].update(firstMove, ball);
         footballers[1].update(secondMove, ball);
 
         for (int i = 0; i < 2; i++) {
             if (goals[i].contains(ball.getPosition())) {
                 score[1 - i]++;
-                if (GameSettings.getBoolean("sound")) {
-                    AssetLoader.goalSound.play();
-                }
+                isGoal = true;
                 startNewRound();
             }
         }
-        scoreLabel.setText(Integer.toString(score[0]) + " : " + Integer.toString(score[1]));
-        scoreLabel.setPosition(Constants.FIELD_WIDTH / 2 - scoreLabel.getWidth() / 2, 2 * Constants.FIELD_HEIGHT / 3 - scoreLabel.getHeight() / 2);
 
-        box2dWorld.step(1f / 60f, 6, 2);
+        box2dWorld.step(1 / 60f, 6, 2);
+        gameDuration += delta;
+
+        if (gameDuration > Constants.GAME_DURATION) {
+            isEnded = true;
+        }
+    }
+
+    public boolean isGoal() {
+        return isGoal;
+    }
+
+    public boolean isEnded() {
+        return isEnded;
     }
 
     public void startNewRound() {
@@ -172,5 +179,9 @@ public class GameWorld {
 
     public int[] getScore() {
         return score;
+    }
+
+    public float getGameDuration() {
+        return gameDuration;
     }
 }

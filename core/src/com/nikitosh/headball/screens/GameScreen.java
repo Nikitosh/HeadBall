@@ -14,6 +14,7 @@ import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.GameWorld;
 import com.nikitosh.headball.players.Player;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
+import com.nikitosh.headball.utils.GameSettings;
 
 public abstract class GameScreen implements Screen {
 
@@ -21,19 +22,23 @@ public abstract class GameScreen implements Screen {
 
     protected GameWorld gameWorld;
     protected Player[] players;
+
     protected Stage stage;
     protected Table uiTable;
-    protected Table gameplayTable;
     protected Table pauseButtonTable;
+    protected Table hudTable;
     protected GameTextButtonTouchable hitButton, jumpButton, leftButton, rightButton;
+
+    private Label scoreLabel;
+    private Label timerLabel;
 
     protected enum GameState {GAME_RUNNING, GAME_PAUSED, GAME_OVER};
     protected GameState gameState = GameState.GAME_RUNNING;
-    protected Label resultLabel;
 
     protected Window pauseScreen;
-    protected Window gameOverScreen;
+    protected GameOverScreen gameOverScreen;
 
+    protected int playerNumber;
     protected float gameDuration = 0;
 
     public GameScreen(Game newGame) {
@@ -85,12 +90,13 @@ public abstract class GameScreen implements Screen {
         pauseButtonTable.top().right();
         pauseButtonTable.add(pauseButton).top().right().pad(Constants.BUTTON_INDENT).row();
 
-        Gdx.input.setInputProcessor(stage);
+        scoreLabel = new Label("", AssetLoader.gameLabelStyle);
+        timerLabel = new Label("", AssetLoader.gameLabelStyle);
 
-        players = new Player[2];
-
-        Stack stack = new Stack();
-        stack.setFillParent(true);
+        hudTable = new Table();
+        hudTable.setFillParent(true);
+        hudTable.add(timerLabel).pad(Constants.BUTTON_INDENT).row();
+        hudTable.add(scoreLabel).pad(Constants.BUTTON_INDENT).row();
 
         Table mainTable = new Table();
         mainTable.setFillParent(true);
@@ -99,9 +105,16 @@ public abstract class GameScreen implements Screen {
         mainTable.bottom();
         mainTable.add(uiTable).bottom().fill().expand();
 
+        Gdx.input.setInputProcessor(stage);
+
+        players = new Player[2];
+
+        Stack stack = new Stack();
+        stack.setFillParent(true);
+
         stack.addActor(mainTable);
         stack.addActor(pauseButtonTable);
-        Gdx.app.log("HEY", Float.toString(mainTable.getY()));
+        stack.addActor(hudTable);
         stage.addActor(stack);
     }
 
@@ -113,9 +126,13 @@ public abstract class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if (gameState == GameState.GAME_RUNNING) {
-            gameDuration += delta;
+        if (gameWorld.isGoal() && GameSettings.getBoolean("sound")) {
+            AssetLoader.goalSound.play();
         }
+        if (gameWorld.isEnded()) {
+            finishGame();
+        }
+        updateHUD();
     }
 
     @Override
@@ -148,6 +165,7 @@ public abstract class GameScreen implements Screen {
 
     public void finishGame() {
         stage.addActor(gameOverScreen);
+        gameOverScreen.updateResult();
         gameState = GameState.GAME_OVER;
 
     }
@@ -168,5 +186,19 @@ public abstract class GameScreen implements Screen {
     public void exitGame() {
         dispose();
         game.setScreen(new MenuScreen(game));
+    }
+
+    public int[] getScore() {
+        return gameWorld.getScore();
+    }
+
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
+
+    private void updateHUD() {
+        int[] score = gameWorld.getScore();
+        scoreLabel.setText(Integer.toString(score[0]) + " : "+ Integer.toString(score[1]));
+        timerLabel.setText(String.format("%02d", Constants.GAME_DURATION - (int) gameWorld.getGameDuration()));
     }
 }
