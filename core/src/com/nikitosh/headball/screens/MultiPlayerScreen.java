@@ -43,8 +43,9 @@ public class MultiPlayerScreen extends GameScreen {
 
     @Override
     protected void initializePlayers() {
-        players[playerNumber] = new LocalHumanPlayer(hitButton, jumpButton, leftButton, rightButton);
+        //players[playerNumber] = new LocalHumanPlayer(hitButton, jumpButton, leftButton, rightButton);
         players[1 - playerNumber] = new RemoteHumanPlayer(in);
+        super.initializePlayers();
     }
 
     @Override
@@ -72,6 +73,7 @@ public class MultiPlayerScreen extends GameScreen {
             }
         }
         stage.draw();
+        stage.act(delta);
     }
 
     @Override

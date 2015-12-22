@@ -27,13 +27,13 @@ public class MenuScreen implements Screen {
         table.setFillParent(true);
 
         Button singlePlayerTextButton = new GameTextButtonTouchable("Singleplayer");
-        table.add(singlePlayerTextButton).pad(Constants.BUTTON_INDENT).row();
+        table.add(singlePlayerTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();
 
         Button multiPlayerTextButton = new GameTextButtonTouchable("Multiplayer");
-        table.add(multiPlayerTextButton).pad(Constants.BUTTON_INDENT).row();
+        table.add(multiPlayerTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();
 
         Button settingsTextButton = new GameTextButtonTouchable("Settings");
-        table.add(settingsTextButton).pad(Constants.BUTTON_INDENT).row();
+        table.add(settingsTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();
 
         Gdx.input.setInputProcessor(stage);
         singlePlayerTextButton.addListener(new ChangeListener() {
@@ -73,6 +73,7 @@ public class MenuScreen implements Screen {
         stage.getBatch().draw(AssetLoader.menuTexture, 0, 0, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
         stage.getBatch().end();
         stage.draw();
+        stage.act(delta);
     }
 
     @Override

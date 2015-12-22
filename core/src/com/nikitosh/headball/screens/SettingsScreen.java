@@ -6,9 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -28,6 +26,7 @@ public class SettingsScreen implements Screen {
     private Drawable[] drawables;
     private int soundState = GameSettings.getBoolean("sound") ? 0 : 1;
     private int musicState = GameSettings.getBoolean("music") ? 0 : 1;
+    private SelectBox<String> selectBox;
 
     public SettingsScreen(final Game game) {
         this.game = game;
@@ -51,13 +50,14 @@ public class SettingsScreen implements Screen {
                 } else {
                     GameSettings.putBoolean("music", false);
                 }
+                GameSettings.putString("control", selectBox.getSelected());
                 dispose();
                 game.setScreen(new MenuScreen(game));
             }
         });
 
         backButtonTable.top().left();
-        backButtonTable.add(backButton).top().left().pad(Constants.BUTTON_INDENT).row();
+        backButtonTable.add(backButton).top().left().pad(Constants.UI_ELEMENTS_INDENT).row();
 
         settingsTable = new Table();
         settingsTable.setFillParent(true);
@@ -67,18 +67,18 @@ public class SettingsScreen implements Screen {
         drawables[1] = AssetLoader.skin.getDrawable("red_boxCross");
 
         Button soundTextButton = new GameTextButton("Sound");
-        settingsTable.add(soundTextButton).pad(Constants.BUTTON_INDENT);
+        settingsTable.add(soundTextButton).pad(Constants.UI_ELEMENTS_INDENT);
 
         final Button soundButton = new Button(new GameButtonStyle("red_boxCheckmark"));
         soundButton.getStyle().up = drawables[soundState];
-        settingsTable.add(soundButton).pad(Constants.BUTTON_INDENT).row();
+        settingsTable.add(soundButton).pad(Constants.UI_ELEMENTS_INDENT).row();
 
         Button musicTextButton = new GameTextButton("Music");
-        settingsTable.add(musicTextButton).pad(Constants.BUTTON_INDENT);
+        settingsTable.add(musicTextButton).pad(Constants.UI_ELEMENTS_INDENT);
 
         final Button musicButton = new Button(new GameButtonStyle("red_boxCheckmark"));
         musicButton.getStyle().up = drawables[musicState];
-        settingsTable.add(musicButton).pad(Constants.BUTTON_INDENT).row();
+        settingsTable.add(musicButton).pad(Constants.UI_ELEMENTS_INDENT).row();
 
         soundButton.addListener(new ChangeListener() {
             @Override
@@ -95,9 +95,19 @@ public class SettingsScreen implements Screen {
             }
         });
 
+
+        Button controlButton = new GameTextButton("Control");
+        settingsTable.add(controlButton).pad(Constants.UI_ELEMENTS_INDENT);
+
+        selectBox = new SelectBox<String>(AssetLoader.defaultSkin);
+        selectBox.setItems(new String[] {"Buttons", "Joystick"});
+        selectBox.setSelected(GameSettings.getString("control"));
+        settingsTable.add(selectBox).pad(Constants.UI_ELEMENTS_INDENT);
+
         Stack stack = new Stack();
         stack.setFillParent(true);
         stage.addActor(stack);
+        stack.addActor(new Image(AssetLoader.menuTexture));
         stack.addActor(backButtonTable);
         stack.addActor(settingsTable);
     }
@@ -111,9 +121,10 @@ public class SettingsScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.getBatch().begin();
-        stage.getBatch().draw(AssetLoader.menuTexture, 0, 0, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
-        stage.getBatch().end();
+        //stage.getBatch().begin();
+        //stage.getBatch().draw(AssetLoader.menuTexture, 0, 0, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
+        //stage.getBatch().end();
+        stage.act(delta);
         stage.draw();
     }
 

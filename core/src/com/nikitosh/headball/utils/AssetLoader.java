@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.nikitosh.headball.ui.GameLabelStyle;
 import com.nikitosh.headball.ui.GameTextButtonStyle;
 import com.nikitosh.headball.ui.GameTextButtonTouchableStyle;
@@ -17,6 +19,7 @@ public class AssetLoader {
     public static BitmapFont font;
     public static TextureAtlas atlas;
     public static Skin skin;
+    public static Skin defaultSkin;
 
     public static GameTextButtonStyle gameTextButtonStyle;
     public static GameTextButtonTouchableStyle gameTextButtonTouchableStyle;
@@ -34,6 +37,9 @@ public class AssetLoader {
     public static Texture fieldTexture;
     public static Texture backgroundTexture;
 
+    public static Drawable touchpadBackgroundDrawable;
+    public static Drawable touchpadKnobDrawable;
+
     public static Sound goalSound;
 
     public static void loadFont() {
@@ -47,6 +53,8 @@ public class AssetLoader {
     public static void load() {
         atlas = new TextureAtlas("ui/spritesheet.pack");
         skin = new Skin(atlas);
+
+        defaultSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         gameTextButtonStyle = new GameTextButtonStyle();
         gameTextButtonTouchableStyle = new GameTextButtonTouchableStyle();
@@ -65,6 +73,8 @@ public class AssetLoader {
         menuTexture = new Texture(Gdx.files.internal("images/menu.jpg"));
         fieldTexture = new Texture(Gdx.files.internal("images/fieldBackground.jpg"));
         backgroundTexture = new Texture(Gdx.files.internal("images/background.jpg"));
+        touchpadBackgroundDrawable = new Image(new Texture(Gdx.files.internal("images/touchpadBackground.png"))).getDrawable();
+        touchpadKnobDrawable = new Image(new Texture(Gdx.files.internal("images/touchpadKnob.png"))).getDrawable();
 
         GameSettings.intialize();
     }

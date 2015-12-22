@@ -1,6 +1,5 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -40,9 +39,9 @@ public class PauseScreen extends Window {
         Label pauseLabel = new Label("Pause", AssetLoader.gameLabelStyle);
 
 
-        add(pauseLabel).pad(Constants.BUTTON_INDENT).row();
-        add(continueButton).pad(Constants.BUTTON_INDENT).row();
-        add(restartButton).pad(Constants.BUTTON_INDENT).row();
-        add(exitButton).pad(Constants.BUTTON_INDENT).row();
+        add(pauseLabel).pad(Constants.UI_ELEMENTS_INDENT).row();
+        add(continueButton).pad(Constants.UI_ELEMENTS_INDENT).row();
+        add(restartButton).pad(Constants.UI_ELEMENTS_INDENT).row();
+        add(exitButton).pad(Constants.UI_ELEMENTS_INDENT).row();
     }
 }

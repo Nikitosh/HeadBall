@@ -13,6 +13,9 @@ public class Move {
     private boolean isLeft = false;
     private boolean isRight = false;
 
+    public Move() {
+    }
+
     public Move(boolean isHit, boolean isJump, boolean isLeft, boolean isRight) {
         this.isHit = isHit;
         this.isJump = isJump;

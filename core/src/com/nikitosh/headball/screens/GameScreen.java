@@ -9,6 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.nikitosh.headball.ButtonsInputController;
+import com.nikitosh.headball.InputController;
+import com.nikitosh.headball.TouchpadInputController;
+import com.nikitosh.headball.players.LocalHumanPlayer;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.GameWorld;
@@ -24,10 +28,10 @@ public abstract class GameScreen implements Screen {
     protected Player[] players;
 
     protected Stage stage;
-    protected Table uiTable;
     protected Table pauseButtonTable;
     protected Table hudTable;
-    protected GameTextButtonTouchable hitButton, jumpButton, leftButton, rightButton;
+
+    protected InputController inputController;
 
     private Label scoreLabel;
     private Label timerLabel;
@@ -47,22 +51,9 @@ public abstract class GameScreen implements Screen {
         gameWorld = new GameWorld();
         stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
 
-        uiTable = new Table();
-        //uiTable.setFillParent(true);
-
         Image background = new Image(AssetLoader.backgroundTexture);
         background.setFillParent(true);
         stage.addActor(background);
-
-        hitButton = new GameTextButtonTouchable("Hit");
-        jumpButton = new GameTextButtonTouchable("Jump");
-        leftButton = new GameTextButtonTouchable("Left");
-        rightButton = new GameTextButtonTouchable("Right");
-
-        uiTable.add(hitButton).expand().fillX().bottom();
-        uiTable.add(jumpButton).expand().fillX().bottom();
-        uiTable.add(leftButton).expand().fillX().bottom();
-        uiTable.add(rightButton).expand().fillX().bottom();
 
         pauseScreen = new PauseScreen(this);
         pauseScreen.setBounds(Constants.VIRTUAL_WIDTH / 4,
@@ -88,23 +79,29 @@ public abstract class GameScreen implements Screen {
         });
 
         pauseButtonTable.top().right();
-        pauseButtonTable.add(pauseButton).top().right().pad(Constants.BUTTON_INDENT).row();
+        pauseButtonTable.add(pauseButton).top().right().pad(Constants.UI_ELEMENTS_INDENT).row();
 
         scoreLabel = new Label("", AssetLoader.gameLabelStyle);
         timerLabel = new Label("", AssetLoader.gameLabelStyle);
 
         hudTable = new Table();
         hudTable.setFillParent(true);
-        hudTable.add(timerLabel).pad(Constants.BUTTON_INDENT).row();
-        hudTable.add(scoreLabel).pad(Constants.BUTTON_INDENT).row();
+        hudTable.add(timerLabel).pad(Constants.UI_ELEMENTS_INDENT).row();
+        hudTable.add(scoreLabel).pad(Constants.UI_ELEMENTS_INDENT).row();
+
+        if (GameSettings.getString("control").equals("Buttons")) {
+            inputController = new ButtonsInputController();
+        }
+        else {
+            inputController = new TouchpadInputController();
+        }
 
         Table mainTable = new Table();
         mainTable.setFillParent(true);
         mainTable.top();
         mainTable.add(gameWorld.getGroup()).top().expand().fillX().height(Constants.FIELD_HEIGHT);
         mainTable.bottom();
-        mainTable.add(uiTable).bottom().fill().expand();
-
+        mainTable.add(inputController.getTable()).bottom().fill().expand().row();
         Gdx.input.setInputProcessor(stage);
 
         players = new Player[2];
@@ -124,7 +121,7 @@ public abstract class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (gameWorld.isGoal() && GameSettings.getBoolean("sound")) {
             AssetLoader.goalSound.play();
@@ -161,7 +158,10 @@ public abstract class GameScreen implements Screen {
         stage.dispose();
     }
 
-    protected abstract void initializePlayers();
+    protected void initializePlayers() {
+        players[playerNumber] = new LocalHumanPlayer(inputController);
+    }
+
 
     public void finishGame() {
         stage.addActor(gameOverScreen);

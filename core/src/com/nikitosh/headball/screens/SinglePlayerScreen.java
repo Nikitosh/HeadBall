@@ -16,8 +16,9 @@ public class SinglePlayerScreen extends GameScreen {
     @Override
     protected void initializePlayers() {
         playerNumber = 0;
-        players[0] = new LocalHumanPlayer(hitButton, jumpButton, leftButton, rightButton);
+        //players[0] = new LocalHumanPlayer(hitButton, jumpButton, leftButton, rightButton);
         players[1] = new AIPlayer(gameWorld, 1);
+        super.initializePlayers();
     }
 
     @Override
@@ -33,6 +34,7 @@ public class SinglePlayerScreen extends GameScreen {
         }
         Gdx.app.log("Single", Float.toString(gameDuration));
         stage.draw();
+        stage.act(delta);
     }
 
     @Override
