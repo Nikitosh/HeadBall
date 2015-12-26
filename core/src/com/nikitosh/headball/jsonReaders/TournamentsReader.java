@@ -36,13 +36,11 @@ public class TournamentsReader {
     }
 
     public Tournament getTournament(int index) {
-        if (index < 0 || index >= tournaments.size())
-            throw new IndexOutOfBoundsException();
-        JSONObject tournament = (JSONObject) tournaments.get(index);
-        if (tournament.get("type") == "League") {
+        JSONObject tournament = getJSONTournament(index);
+        if (tournament.get("type").equals("League")) {
             return new LeagueTournament((JSONObject) tournament.get("info"));
         }
-        if (tournament.get("type") == "PlayOff") {
+        if (tournament.get("type").equals("PlayOff")) {
             return new PlayOffTournament((JSONObject) tournament.get("info"));
         }
         return null;
