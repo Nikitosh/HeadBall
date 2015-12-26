@@ -1,0 +1,82 @@
+{
+  "tournaments": [
+    {
+      "type": "league",
+      "info": {
+        "name": "Europa League",
+        "icon": "europaLeague",
+        "participants": [
+          "Lokomotiv",
+          "Rubin",
+          "Borussia",
+          "Spartak"
+        ]
+      }
+    },
+    {
+      "type": "league",
+      "info": {
+        "name": "Champions League",
+        "icon": "championsLeague",
+        "participants": [
+          "Zenit",
+          "CSKA",
+          "Barcelona",
+          "Real Madrid"
+        ]
+      }
+    },
+    {
+      "type": "league",
+      "info": {
+        "name": "RFPL",
+        "icon": "rfplLeague",
+        "participants": [
+          "Zenit",
+          "CSKA",
+          "Lokomotiv",
+          "Rubin"
+        ]
+      }
+    },
+    {
+      "type": "league",
+      "info": {
+        "name": "Europa League",
+        "icon": "europaLeague",
+        "participants": [
+          "Lokomotiv",
+          "Rubin",
+          "Borussia",
+          "Spartak"
+        ]
+      }
+    },
+    {
+      "type": "league",
+      "info": {
+        "name": "Champions League",
+        "icon": "championsLeague",
+        "participants": [
+          "Zenit",
+          "CSKA",
+          "Barcelona",
+          "Real Madrid"
+        ]
+      }
+    },
+    {
+      "type": "league",
+      "info": {
+        "name": "RFPL",
+        "icon": "rfplLeague",
+        "participants": [
+          "Zenit",
+          "CSKA",
+          "Lokomotiv",
+          "Rubin"
+        ]
+      }
+    }
+  ]
+}

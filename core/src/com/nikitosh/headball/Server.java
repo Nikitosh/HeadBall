@@ -1,6 +1,4 @@
-/**
- * Created by Wowember on 15.12.2015.
- */
+package com.nikitosh.headball;
 
 import java.net.*;
 import java.io.*;

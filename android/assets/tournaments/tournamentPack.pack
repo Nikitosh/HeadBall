@@ -1,0 +1,26 @@
+
+tournamentPack.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+championsLeague
+  rotate: false
+  xy: 0, 0
+  size: 292, 280
+  orig: 292, 280
+  offset: 0, 0
+  index: -1
+rfplLeague
+  rotate: false
+  xy: 292, 0
+  size: 280, 280
+  orig: 280, 280
+  offset: 0, 0
+  index: -1
+europaLeague
+  rotate: false
+  xy: 572, 0
+  size: 213, 280
+  orig: 213, 280
+  offset: 0, 0
+  index: -1

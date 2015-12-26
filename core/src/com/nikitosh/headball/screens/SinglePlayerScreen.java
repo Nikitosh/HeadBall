@@ -32,7 +32,6 @@ public class SinglePlayerScreen extends GameScreen {
         if (gameState == GameState.GAME_RUNNING) {
             gameWorld.update(delta, players[0].getMove(), players[1].getMove());
         }
-        Gdx.app.log("Single", Float.toString(gameDuration));
         stage.draw();
         stage.act(delta);
     }

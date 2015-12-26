@@ -40,7 +40,7 @@ public class MenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
-                game.setScreen(new SinglePlayerScreen(game));
+                game.setScreen(new TournamentChoosingScreen(game));
             }
         });
         multiPlayerTextButton.addListener(new ChangeListener() {

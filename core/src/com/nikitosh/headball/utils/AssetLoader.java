@@ -17,9 +17,9 @@ import com.nikitosh.headball.ui.GameWindowStyle;
 public class AssetLoader {
 
     public static BitmapFont font;
-    public static TextureAtlas atlas;
     public static Skin skin;
     public static Skin defaultSkin;
+    public static Skin tournamentsSkin;
 
     public static GameTextButtonStyle gameTextButtonStyle;
     public static GameTextButtonTouchableStyle gameTextButtonTouchableStyle;
@@ -51,8 +51,11 @@ public class AssetLoader {
     }
 
     public static void load() {
-        atlas = new TextureAtlas("ui/spritesheet.pack");
+        TextureAtlas atlas = new TextureAtlas("ui/spritesheet.pack");
         skin = new Skin(atlas);
+
+        TextureAtlas tournamentsAtlas = new TextureAtlas("tournaments/tournamentPack.pack");
+        tournamentsSkin = new Skin(tournamentsAtlas);
 
         defaultSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
