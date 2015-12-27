@@ -8,9 +8,13 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
+import com.nikitosh.headball.utils.Utilities;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 public class Goals extends Actor {
+    private static final float GOALS_DENSITY = 1f;
+    private static final float GOALS_FRICTION = 1f;
+    private static final float GOALS_RESTITUTION = 0f;
     private float width;
     private float height;
 
@@ -23,20 +27,10 @@ public class Goals extends Actor {
         this.width = width;
         this.height = height;
 
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set((x + width / 2) * Constants.WORLD_TO_BOX, (y + height / 2) * Constants.WORLD_TO_BOX);
-        body = world.createBody(bodyDef);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(width * Constants.WORLD_TO_BOX / 2, height * Constants.WORLD_TO_BOX / 2);
-        fixtureDef.shape = polygonShape;
-        fixtureDef.density = 1f;
-        fixtureDef.friction = 1f;
-        Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
-        polygonShape.dispose();
+        body = Utilities.getRectangularBody(world, x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX,
+                width * Constants.WORLD_TO_BOX, height * Constants.WORLD_TO_BOX, GOALS_DENSITY, GOALS_FRICTION, GOALS_RESTITUTION);
+        body.setType(BodyDef.BodyType.StaticBody);
+        body.getFixtureList().get(0).setUserData(this);
 
         if (left) {
             side = Side.LEFT;

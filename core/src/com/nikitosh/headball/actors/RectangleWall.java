@@ -6,8 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.*;
 import com.nikitosh.headball.utils.Constants;
+import com.nikitosh.headball.utils.Utilities;
 
 public class RectangleWall extends Wall {
+    private final static float RECTANGLE_WALL_DENSITY = 1f;
+    private final static float RECTANGLE_WALL_FRICTION = 1f;
+    private final static float RECTANGLE_WALL_RESTITUTION = 0f;
     private float width;
     private float height;
 
@@ -17,20 +21,16 @@ public class RectangleWall extends Wall {
         this.width = width;
         this.height = height;
 
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(x * Constants.WORLD_TO_BOX + width / 2 * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX + height / 2 * Constants.WORLD_TO_BOX);
-        body = world.createBody(bodyDef);
+        body = Utilities.getRectangularBody(world, x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX,
+                width * Constants.WORLD_TO_BOX, height * Constants.WORLD_TO_BOX,
+                RECTANGLE_WALL_DENSITY, RECTANGLE_WALL_FRICTION, RECTANGLE_WALL_RESTITUTION);
+        body.setType(BodyDef.BodyType.StaticBody);
+        body.getFixtureList().get(0).setUserData(this);
+        Filter filter = new Filter();
+        filter.maskBits = 1;
+        filter.categoryBits = 1;
+        body.getFixtureList().get(0).setFilterData(filter);
 
-        FixtureDef fixtureDef = new FixtureDef();
-        PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(width * Constants.WORLD_TO_BOX / 2, height * Constants.WORLD_TO_BOX / 2);
-        fixtureDef.shape = polygonShape;
-        fixtureDef.density = 1f;
-        fixtureDef.friction = 1f;
-        Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
-        polygonShape.dispose();
 
         shapeRenderer = new ShapeRenderer();
     }

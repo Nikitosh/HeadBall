@@ -2,12 +2,17 @@ package com.nikitosh.headball.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.Move;
+import com.nikitosh.headball.utils.Utilities;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 import static net.dermetfan.gdx.physics.box2d.Box2DUtils.height;
@@ -18,29 +23,53 @@ public class Footballer extends Actor {
     private static final float FOOTBALLER_RADIUS = 20;
     private static final float FOOTBALLER_SPEED = 100;
     private static final float FOOTBALLER_JUMP = 200;
+    private static final float FOOTBALLER_DENSITY = 45f;
+    private static final float FOOTBALLER_FRICION = 0.1f;
+    private static final float FOOTBALLER_RESTITUTION = 0f;
 
     private Body body;
+    private Body leg;
+    private RevoluteJoint revoluteJoint;
+
     private boolean inJump = false;
     private boolean left;
 
     public Footballer(World world, float x, float y, boolean left) {
         this.left = left;
 
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.fixedRotation = true;
-        bodyDef.position.set(x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX);
-        body = world.createBody(bodyDef);
+        body = Utilities.getCircleBody(world, x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX,
+                FOOTBALLER_RADIUS * Constants.WORLD_TO_BOX, FOOTBALLER_DENSITY, FOOTBALLER_FRICION, FOOTBALLER_RESTITUTION);
+        body.setFixedRotation(true);
+        body.getFixtureList().get(0).setUserData(this);
+        Filter filter = new Filter();
+        filter.maskBits = 1;
+        filter.categoryBits = 1;
+        body.getFixtureList().get(0).setFilterData(filter);
 
-        FixtureDef fixtureDef = new FixtureDef();
-        CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(FOOTBALLER_RADIUS * Constants.WORLD_TO_BOX);
-        fixtureDef.shape = circleShape;
-        fixtureDef.density = 45f;
-        fixtureDef.friction = 0.1f;
-        Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
-        circleShape.dispose();
+        Body rotator = Utilities.getRectangularBody(world, (x - 2) * Constants.WORLD_TO_BOX, (y - 2) * Constants.WORLD_TO_BOX,
+                4 * Constants.WORLD_TO_BOX, 4 * Constants.WORLD_TO_BOX, 45, 0, 0);
+        filter = new Filter();
+        filter.categoryBits = 2;
+        rotator.getFixtureList().get(0).setFilterData(filter);
+
+        leg = Utilities.getRectangularBody(world, (x + FOOTBALLER_RADIUS + 1) * Constants.WORLD_TO_BOX, (y - 3) * Constants.WORLD_TO_BOX,
+                10 * Constants.WORLD_TO_BOX, 6 * Constants.WORLD_TO_BOX, 150, 0, 0);
+        filter = new Filter();
+        filter.categoryBits = 2;
+        leg.getFixtureList().get(0).setFilterData(filter);
+
+
+        RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
+        revoluteJointDef.initialize(body, rotator, body.getWorldCenter());
+        revoluteJointDef.enableLimit = true;
+        revoluteJointDef.lowerAngle = -(float) Math.PI / 2;
+        revoluteJointDef.upperAngle = 0;
+
+        WeldJointDef weldJointDef = new WeldJointDef();
+        weldJointDef.initialize(rotator, leg, rotator.getWorldCenter());
+
+        revoluteJoint = (RevoluteJoint) world.createJoint(revoluteJointDef);
+        world.createJoint(weldJointDef);
     }
 
     public Vector2 getPosition() {
@@ -55,7 +84,7 @@ public class Footballer extends Actor {
         return FOOTBALLER_RADIUS * Constants.WORLD_TO_BOX;
     }
 
-    public void update(Move move, Ball ball) {
+    public void update(Move move) {
         if (move == null) {
             return;
         }
@@ -73,9 +102,16 @@ public class Footballer extends Actor {
             body.setLinearVelocity(body.getLinearVelocity().x, FOOTBALLER_JUMP * Constants.WORLD_TO_BOX);
         }
         if (move.isHit()) {
-            if (this.getPosition().dst(ball.getPosition()) <= (FOOTBALLER_RADIUS + Ball.getBallRadius() + 1) * Constants.WORLD_TO_BOX) {
-                ball.getBody().applyForceToCenter(3f, 10f, false);
-            }
+            leg.setAngularVelocity(30f);
+        }
+        else {
+            leg.setAngularVelocity(-30f);
+        }
+        if (revoluteJoint.getJointAngle() < revoluteJoint.getLowerLimit()) {
+            leg.setAngularVelocity(30f);
+        }
+        if (revoluteJoint.getJointAngle() > revoluteJoint.getUpperLimit()) {
+            leg.setAngularVelocity(-30f);
         }
     }
 
@@ -95,6 +131,12 @@ public class Footballer extends Actor {
                 2 * FOOTBALLER_RADIUS,
                 2 * FOOTBALLER_RADIUS,
                 body.getAngle());
+        box2DSprite = new Box2DSprite(AssetLoader.footballerTexture);
+        box2DSprite.draw(batch,
+                leg.getPosition().x * Constants.BOX_TO_WORLD,
+                leg.getPosition().y * Constants.BOX_TO_WORLD,
+                10, 6,
+                leg.getAngle());
     }
 
     public void setInJump(boolean inJump) {

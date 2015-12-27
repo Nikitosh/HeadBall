@@ -102,8 +102,9 @@ public class GameWorld {
 
     public void update(float delta, Move firstMove, Move secondMove) {
         isGoal = false;
-        footballers[0].update(firstMove, ball);
-        footballers[1].update(secondMove, ball);
+        box2dWorld.step(1 / 60f, 6, 2);
+        footballers[0].update(firstMove);
+        footballers[1].update(secondMove);
 
         for (int i = 0; i < 2; i++) {
             if (goals[i].contains(ball.getPosition())) {
@@ -113,12 +114,12 @@ public class GameWorld {
             }
         }
 
-        box2dWorld.step(1 / 60f, 6, 2);
         gameDuration += delta;
 
         if (gameDuration > Constants.GAME_DURATION) {
             isEnded = true;
         }
+
     }
 
     public boolean isGoal() {
