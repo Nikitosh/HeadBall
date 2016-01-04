@@ -53,7 +53,7 @@ public class Footballer extends Actor {
         rotator.getFixtureList().get(0).setFilterData(filter);
 
         leg = Utilities.getRectangularBody(world, (x + FOOTBALLER_RADIUS + 1) * Constants.WORLD_TO_BOX, (y - 3) * Constants.WORLD_TO_BOX,
-                10 * Constants.WORLD_TO_BOX, 6 * Constants.WORLD_TO_BOX, 150, 0, 0);
+                10 * Constants.WORLD_TO_BOX, 6 * Constants.WORLD_TO_BOX, 5, 0, 0);
         filter = new Filter();
         filter.categoryBits = 2;
         leg.getFixtureList().get(0).setFilterData(filter);

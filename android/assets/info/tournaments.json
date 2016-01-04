@@ -1,16 +1,17 @@
 {
   "tournaments": [
     {
-      "type": "league",
+      "type": "playoff",
       "info": {
         "name": "Europa League",
         "icon": "europaLeague",
         "participants": [
-          "Lokomotiv",
+          "Loko",
           "Rubin",
-          "Borussia",
-          "Spartak"
-        ]
+          "Schalke",
+          "Chelsea"
+        ],
+        "lapNumber": 3
       }
     },
     {
@@ -23,7 +24,8 @@
           "CSKA",
           "Barcelona",
           "Real Madrid"
-        ]
+        ],
+        "lapNumber": 2
       }
     },
     {
@@ -36,7 +38,8 @@
           "CSKA",
           "Lokomotiv",
           "Rubin"
-        ]
+        ],
+        "lapNumber": 2
       }
     },
     {
@@ -49,7 +52,8 @@
           "Rubin",
           "Borussia",
           "Spartak"
-        ]
+        ],
+        "lapNumber": 2
       }
     },
     {
@@ -62,7 +66,8 @@
           "CSKA",
           "Barcelona",
           "Real Madrid"
-        ]
+        ],
+        "lapNumber": 2
       }
     },
     {
@@ -75,7 +80,8 @@
           "CSKA",
           "Lokomotiv",
           "Rubin"
-        ]
+        ],
+        "lapNumber": 2
       }
     }
   ]

@@ -1,20 +1,12 @@
 package com.nikitosh.headball;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.nikitosh.headball.actors.*;
-import com.nikitosh.headball.ui.GameLabelStyle;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
-import com.nikitosh.headball.utils.GameSettings;
-
-import java.util.ArrayList;
 
 public class GameWorld {
     public static final float BOUNDS_WIDTH = 30;

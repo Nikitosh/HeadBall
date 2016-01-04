@@ -35,7 +35,6 @@ public class SettingsScreen implements Screen {
 
         backButtonTable = new Table();
         backButtonTable.setFillParent(true);
-
         Button backButton = new GameTextButtonTouchable("Back");
         backButton.addListener(new ChangeListener() {
             @Override
@@ -55,9 +54,7 @@ public class SettingsScreen implements Screen {
                 game.setScreen(new MenuScreen(game));
             }
         });
-
-        backButtonTable.top().left();
-        backButtonTable.add(backButton).top().left().pad(Constants.UI_ELEMENTS_INDENT).row();
+        backButtonTable.add(backButton).top().left().expand().pad(Constants.UI_ELEMENTS_INDENT).row();
 
         settingsTable = new Table();
         settingsTable.setFillParent(true);
@@ -121,9 +118,6 @@ public class SettingsScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //stage.getBatch().begin();
-        //stage.getBatch().draw(AssetLoader.menuTexture, 0, 0, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
-        //stage.getBatch().end();
         stage.act(delta);
         stage.draw();
     }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.nikitosh.headball.Team;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
@@ -35,7 +36,6 @@ public class MenuScreen implements Screen {
         Button settingsTextButton = new GameTextButtonTouchable("Settings");
         table.add(settingsTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();
 
-        Gdx.input.setInputProcessor(stage);
         singlePlayerTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -47,7 +47,7 @@ public class MenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
-                game.setScreen(new MultiPlayerScreen(game));
+                game.setScreen(new MultiPlayerScreen(game, new Team("Player"), new Team("Nikitosh"), MenuScreen.this));
             }
         });
         settingsTextButton.addListener(new ChangeListener() {
@@ -58,7 +58,12 @@ public class MenuScreen implements Screen {
             }
         });
 
-        stage.addActor(table);
+        Gdx.input.setInputProcessor(stage);
+        Stack stack = new Stack();
+        stack.setFillParent(true);
+        stack.addActor(new Image(AssetLoader.menuTexture));
+        stack.addActor(table);
+        stage.addActor(stack);
     }
 
     @Override
@@ -69,9 +74,6 @@ public class MenuScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.getBatch().begin();
-        stage.getBatch().draw(AssetLoader.menuTexture, 0, 0, Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
-        stage.getBatch().end();
         stage.draw();
         stage.act(delta);
     }

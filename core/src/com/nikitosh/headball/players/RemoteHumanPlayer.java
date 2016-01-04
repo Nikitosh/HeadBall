@@ -4,7 +4,7 @@ import com.nikitosh.headball.Move;
 
 import java.io.DataInputStream;
 
-public class RemoteHumanPlayer extends Player {
+public class RemoteHumanPlayer implements Player {
     private DataInputStream inputStream;
 
     public RemoteHumanPlayer(DataInputStream inputStream) {

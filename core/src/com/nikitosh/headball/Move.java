@@ -1,11 +1,7 @@
 package com.nikitosh.headball;
 
-import com.badlogic.gdx.Gdx;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class Move {
     private boolean isHit = false;

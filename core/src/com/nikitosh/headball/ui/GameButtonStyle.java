@@ -1,6 +1,5 @@
 package com.nikitosh.headball.ui;
 
-
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.nikitosh.headball.utils.AssetLoader;
 

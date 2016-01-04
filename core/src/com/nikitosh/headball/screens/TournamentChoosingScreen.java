@@ -11,7 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.nikitosh.headball.PagedScrollPane;
+import com.nikitosh.headball.tournaments.Tournament;
+import com.nikitosh.headball.widgets.PagedScrollPane;
 import com.nikitosh.headball.jsonReaders.TournamentsReader;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
@@ -43,13 +44,12 @@ public class TournamentChoosingScreen implements Screen {
                 public void changed(ChangeEvent event, Actor actor) {
                     if (reader.getTournamentType(index).equals("league")) {
                         dispose();
-                        //game.setScreen(new LeagueTournamentScreen(game, reader.getTournament(index)));
-                        game.setScreen(new SinglePlayerScreen(game));
+                        game.setScreen(new LeagueTournamentScreen(game, reader.getTournament(index)));
                     }
                     if (reader.getTournamentType(index).equals("playoff")) {
                         dispose();
-                        //game.setScreen(new PlayOffTournamentScreen(game, reader.getTournament(index)));
-                        game.setScreen(new SinglePlayerScreen(game));
+                        Tournament tournament = reader.getTournament(index);
+                        game.setScreen(new PlayOffTournamentScreen(game, tournament, tournament.getParticipants().get(0)));
                     }
                 }
             });
@@ -60,13 +60,11 @@ public class TournamentChoosingScreen implements Screen {
             scrollPane.addPage(tournamentCell);
         }
         levelContainer.add(scrollPane).expand().fill();
-
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

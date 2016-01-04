@@ -1,9 +1,9 @@
 package com.nikitosh.headball.players;
 
-import com.nikitosh.headball.InputController;
+import com.nikitosh.headball.controllers.InputController;
 import com.nikitosh.headball.Move;
 
-public class LocalHumanPlayer extends Player {
+public class LocalHumanPlayer implements Player {
     private InputController inputController;
 
     public LocalHumanPlayer(InputController inputController) {

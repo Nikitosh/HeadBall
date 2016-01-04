@@ -1,6 +1,5 @@
-package com.nikitosh.headball;
+package com.nikitosh.headball.widgets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
@@ -12,7 +11,6 @@ import com.nikitosh.headball.utils.Constants;
 public class PagedScrollPane extends ScrollPane {
 
     private Table content;
-    private float pageSpacing;
     private boolean wasPanDragFling = false;
 
     public PagedScrollPane() {

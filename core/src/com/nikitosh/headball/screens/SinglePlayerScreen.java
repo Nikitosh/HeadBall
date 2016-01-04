@@ -1,22 +1,20 @@
 package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.nikitosh.headball.Team;
 import com.nikitosh.headball.players.AIPlayer;
-import com.nikitosh.headball.players.LocalHumanPlayer;
-import com.nikitosh.headball.utils.Constants;
 
 public class SinglePlayerScreen extends GameScreen {
 
-    public SinglePlayerScreen(Game game) {
-        super(game);
+    public SinglePlayerScreen(Game game, Team firstTeam, Team secondTeam, Screen previousScreen) {
+        super(game, firstTeam, secondTeam, previousScreen);
         initializePlayers();
     }
 
     @Override
     protected void initializePlayers() {
         playerNumber = 0;
-        //players[0] = new LocalHumanPlayer(hitButton, jumpButton, leftButton, rightButton);
         players[1] = new AIPlayer(gameWorld, 1);
         super.initializePlayers();
     }
@@ -39,6 +37,6 @@ public class SinglePlayerScreen extends GameScreen {
     @Override
     public void restartGame() {
         dispose();
-        game.setScreen(new SinglePlayerScreen(game));
+        game.setScreen(new SinglePlayerScreen(game, firstTeam, secondTeam, previousScreen));
     }
 }

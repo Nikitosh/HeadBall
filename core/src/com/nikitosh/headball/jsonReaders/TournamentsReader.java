@@ -7,7 +7,6 @@ import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.utils.Utilities;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 
 import java.nio.charset.Charset;
@@ -37,10 +36,10 @@ public class TournamentsReader {
 
     public Tournament getTournament(int index) {
         JSONObject tournament = getJSONTournament(index);
-        if (tournament.get("type").equals("League")) {
+        if (tournament.get("type").equals("league")) {
             return new LeagueTournament((JSONObject) tournament.get("info"));
         }
-        if (tournament.get("type").equals("PlayOff")) {
+        if (tournament.get("type").equals("playoff")) {
             return new PlayOffTournament((JSONObject) tournament.get("info"));
         }
         return null;

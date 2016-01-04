@@ -2,10 +2,10 @@ package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.nikitosh.headball.players.LocalHumanPlayer;
+import com.badlogic.gdx.Screen;
+import com.nikitosh.headball.Team;
 import com.nikitosh.headball.Move;
 import com.nikitosh.headball.players.RemoteHumanPlayer;
-import com.nikitosh.headball.utils.Constants;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -18,8 +18,8 @@ public class MultiPlayerScreen extends GameScreen {
     private DataInputStream in;
     private DataOutputStream out;
 
-    public MultiPlayerScreen(Game game) {
-        super(game);
+    public MultiPlayerScreen(Game game, Team firstTeam, Team secondTeam, Screen previousScreen) {
+        super(game, firstTeam, secondTeam, previousScreen);
         try {
             InetAddress ipAddress = InetAddress.getByName(SERVER_ADDRESS);
             Gdx.app.log("MultiPlayerScreen", "Any of you heard of a socket with IP address " + SERVER_ADDRESS + " and port " + PORT + "?");
@@ -56,8 +56,8 @@ public class MultiPlayerScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        Move myMove = players[playerNumber].getMove();
-        myMove.serialize(out);
+        Move playerMove = players[playerNumber].getMove();
+        playerMove.serialize(out);
         try {
             out.flush();
         }
@@ -66,10 +66,10 @@ public class MultiPlayerScreen extends GameScreen {
         }
         if (gameState == GameState.GAME_RUNNING) {
             if (playerNumber == 0) {
-                gameWorld.update(delta, myMove, players[1].getMove());
+                gameWorld.update(delta, playerMove, players[1].getMove());
             }
             else {
-                gameWorld.update(delta, players[0].getMove(), myMove);
+                gameWorld.update(delta, players[0].getMove(), playerMove);
             }
         }
         stage.draw();
@@ -79,6 +79,6 @@ public class MultiPlayerScreen extends GameScreen {
     @Override
     public void restartGame() {
         dispose();
-        game.setScreen(new MultiPlayerScreen(game));
+        game.setScreen(new MultiPlayerScreen(game, firstTeam, secondTeam, previousScreen));
     }
 }

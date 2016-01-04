@@ -1,13 +1,12 @@
 package com.nikitosh.headball.players;
 
-import com.badlogic.gdx.physics.box2d.World;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.GameWorld;
 import com.nikitosh.headball.Move;
 import com.nikitosh.headball.actors.Ball;
 import com.nikitosh.headball.actors.Footballer;
 
-public class AIPlayer extends Player {
+public class AIPlayer implements Player {
     private GameWorld gameWorld;
     private int footballerNumber;
 

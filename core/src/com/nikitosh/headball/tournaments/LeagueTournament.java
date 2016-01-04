@@ -1,47 +1,68 @@
 package com.nikitosh.headball.tournaments;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Array;
+import com.nikitosh.headball.Team;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-public class LeagueTournament extends Tournament {
+public class LeagueTournament implements Tournament {
     private int lapNumber;
     private int selectedTeamIndex = 0;
-    private ArrayList<String> teams = new ArrayList<String>();
-    private HashMap<String, Integer> scores = new HashMap<String, Integer>();
+    private Array<Team> teams = new Array<Team>();
 
     public LeagueTournament(JSONObject tournament) {
         lapNumber = ((Long) tournament.get("lapNumber")).intValue();
         JSONArray participantsNames = (JSONArray) tournament.get("participants");
         for (int i = 0; i < participantsNames.size(); i++) {
             String teamName = (String) participantsNames.get(i);
-            teams.add(teamName);
-            scores.put(teamName, 0);
+            teams.add(new Team(teamName));
         }
         generateTimetable();
     }
 
-    @Override
-    protected void generateTimetable() {
+    private void generateTimetable() {
 
     }
 
     @Override
-    public void setSelectedTeam(String teamName) {
-        selectedTeamIndex = teams.indexOf(teamName);
+    public void setSelectedTeam(Team teamName) {
+        selectedTeamIndex = teams.indexOf(teamName, false);
         assert(selectedTeamIndex != -1);
     }
 
     @Override
-    public void playNextMatch() {
+    public void simulateNextRound() {
 
     }
 
     @Override
-    public String getNextOpponent() {
+    public void handlePlayerMatch(int playerScore, int opponentScore) {
+
+    }
+
+    @Override
+    public Team getNextOpponent() {
         return null;
     }
 
+    @Override
+    public Array<Team> getParticipants() {
+        return null;
+    }
+
+    @Override
+    public Group getResultTable() {
+        return null;
+    }
+
+    @Override
+    public Group getStatisticsTable() {
+        return null;
+    }
+
+    @Override
+    public boolean isEnded() {
+        return false;
+    }
 }

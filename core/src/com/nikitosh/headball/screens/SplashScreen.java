@@ -13,10 +13,8 @@ import com.nikitosh.headball.utils.Constants;
 
 public class SplashScreen implements Screen {
     private Game game;
-    private Texture splashBallTexture;
     private Sprite sprite;
     private SpriteBatch batch;
-    private BitmapFont font;
     private long startTime;
     private OrthographicCamera camera;
 
@@ -43,7 +41,6 @@ public class SplashScreen implements Screen {
     @Override
     public void show() {
         AssetLoader.load();
-        Gdx.app.log("SplashScreen", "show splashScreen");
         startTime = TimeUtils.millis();
     }
 

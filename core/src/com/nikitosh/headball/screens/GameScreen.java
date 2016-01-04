@@ -8,10 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.nikitosh.headball.ButtonsInputController;
-import com.nikitosh.headball.InputController;
-import com.nikitosh.headball.TouchpadInputController;
+import com.nikitosh.headball.Team;
+import com.nikitosh.headball.controllers.ButtonsInputController;
+import com.nikitosh.headball.controllers.InputController;
+import com.nikitosh.headball.controllers.TouchpadInputController;
 import com.nikitosh.headball.players.LocalHumanPlayer;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
@@ -23,14 +25,15 @@ import com.nikitosh.headball.utils.GameSettings;
 public abstract class GameScreen implements Screen {
 
     protected final Game game;
+    protected Screen previousScreen;
+    protected Team firstTeam;
+    protected Team secondTeam;
 
     protected GameWorld gameWorld;
     protected Player[] players;
 
     protected Stage stage;
     protected Table pauseButtonTable;
-    protected Table hudTable;
-
     protected InputController inputController;
 
     private Label scoreLabel;
@@ -43,10 +46,12 @@ public abstract class GameScreen implements Screen {
     protected GameOverScreen gameOverScreen;
 
     protected int playerNumber;
-    protected float gameDuration = 0;
 
-    public GameScreen(Game newGame) {
+    public GameScreen(Game newGame, Team firstTeam, Team secondTeam, Screen previousScreen) {
         game = newGame;
+        this.firstTeam = firstTeam;
+        this.secondTeam = secondTeam;
+        this.previousScreen = previousScreen;
 
         gameWorld = new GameWorld();
         stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
@@ -78,29 +83,30 @@ public abstract class GameScreen implements Screen {
             }
         });
 
-        pauseButtonTable.top().right();
-        pauseButtonTable.add(pauseButton).top().right().pad(Constants.UI_ELEMENTS_INDENT).row();
+        pauseButtonTable.add(pauseButton).top().right().expand().pad(Constants.UI_ELEMENTS_INDENT).row();
 
-        scoreLabel = new Label("", AssetLoader.gameLabelStyle);
-        timerLabel = new Label("", AssetLoader.gameLabelStyle);
-
-        hudTable = new Table();
-        hudTable.setFillParent(true);
-        hudTable.add(timerLabel).pad(Constants.UI_ELEMENTS_INDENT).row();
-        hudTable.add(scoreLabel).pad(Constants.UI_ELEMENTS_INDENT).row();
+        Table infoTable = new Table();
+        Table nestedTable = new Table();
+        timerLabel = new Label("", AssetLoader.defaultSkin);
+        scoreLabel = new Label("", AssetLoader.defaultSkin);
+        timerLabel.setAlignment(Align.center);
+        scoreLabel.setAlignment(Align.center);
+        nestedTable.add(timerLabel).fillX().row();
+        nestedTable.add(scoreLabel).fillX();
+        infoTable.add(new Label(firstTeam.getName(), AssetLoader.defaultSkin)).fillY();
+        infoTable.add(nestedTable);
+        infoTable.add(new Label(secondTeam.getName(), AssetLoader.defaultSkin)).fillY();
 
         if (GameSettings.getString("control").equals("Buttons")) {
-            inputController = new ButtonsInputController();
+            inputController = new ButtonsInputController(infoTable);
         }
         else {
-            inputController = new TouchpadInputController();
+            inputController = new TouchpadInputController(infoTable);
         }
 
         Table mainTable = new Table();
         mainTable.setFillParent(true);
-        mainTable.top();
-        mainTable.add(gameWorld.getGroup()).top().expand().fillX().height(Constants.FIELD_HEIGHT);
-        mainTable.bottom();
+        mainTable.add(gameWorld.getGroup()).top().expand().fillX().height(Constants.FIELD_HEIGHT).row();
         mainTable.add(inputController.getTable()).bottom().fill().expand().row();
         Gdx.input.setInputProcessor(stage);
 
@@ -111,8 +117,8 @@ public abstract class GameScreen implements Screen {
 
         stack.addActor(mainTable);
         stack.addActor(pauseButtonTable);
-        stack.addActor(hudTable);
         stage.addActor(stack);
+
     }
 
     @Override
@@ -180,16 +186,22 @@ public abstract class GameScreen implements Screen {
         pauseScreen.remove();
     }
 
-    public void restartGame() {
-    }
+    public abstract void restartGame();
 
     public void exitGame() {
+        synchronized (this) {
+            notifyAll();
+        }
         dispose();
-        game.setScreen(new MenuScreen(game));
+        game.setScreen(previousScreen);
     }
 
     public int[] getScore() {
         return gameWorld.getScore();
+    }
+
+    public boolean isGameFinished() {
+        return gameState == GameState.GAME_OVER;
     }
 
     public int getPlayerNumber() {
