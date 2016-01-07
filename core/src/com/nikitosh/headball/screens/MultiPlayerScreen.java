@@ -12,6 +12,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class MultiPlayerScreen extends GameScreen {
+    private static final String LOG_TAG = "MultiPlayerScreen";
 
     private static final int PORT = 2345;
     private static final String SERVER_ADDRESS = "192.168.43.9";
@@ -22,13 +23,13 @@ public class MultiPlayerScreen extends GameScreen {
         super(game, firstTeam, secondTeam, previousScreen);
         try {
             InetAddress ipAddress = InetAddress.getByName(SERVER_ADDRESS);
-            Gdx.app.log("MultiPlayerScreen", "Any of you heard of a socket with IP address " + SERVER_ADDRESS + " and port " + PORT + "?");
+            Gdx.app.log(LOG_TAG, "Any of you heard of a socket with IP address " + SERVER_ADDRESS + " and port " + PORT + "?");
             Socket socket = new Socket(ipAddress, PORT);
-            Gdx.app.log("MultiPlayerScreen", "Yes! I just got hold of the program.");
+            Gdx.app.log(LOG_TAG, "Yes! I just got hold of the program.");
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
             String s = in.readUTF();
-            Gdx.app.log("MultiPlayerScreen", s);
+            Gdx.app.log(LOG_TAG, s);
             if (s.charAt(0) == '0') {
                 playerNumber = 0;
             } else {
@@ -43,7 +44,6 @@ public class MultiPlayerScreen extends GameScreen {
 
     @Override
     protected void initializePlayers() {
-        //players[playerNumber] = new LocalHumanPlayer(hitButton, jumpButton, leftButton, rightButton);
         players[1 - playerNumber] = new RemoteHumanPlayer(in);
         super.initializePlayers();
     }

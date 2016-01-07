@@ -15,24 +15,19 @@ public class RectangleWall extends Wall {
     private float width;
     private float height;
 
-    private ShapeRenderer shapeRenderer;
+    private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     public RectangleWall(World world, float x, float y, float width, float height) {
         this.width = width;
         this.height = height;
 
-        body = Utilities.getRectangularBody(world, x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX,
+        body = Utilities.getRectangularBody(world,
+                x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX,
                 width * Constants.WORLD_TO_BOX, height * Constants.WORLD_TO_BOX,
-                RECTANGLE_WALL_DENSITY, RECTANGLE_WALL_FRICTION, RECTANGLE_WALL_RESTITUTION);
+                RECTANGLE_WALL_DENSITY, RECTANGLE_WALL_FRICTION, RECTANGLE_WALL_RESTITUTION,
+                Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
         body.setType(BodyDef.BodyType.StaticBody);
         body.getFixtureList().get(0).setUserData(this);
-        Filter filter = new Filter();
-        filter.maskBits = 1;
-        filter.categoryBits = 1;
-        body.getFixtureList().get(0).setFilterData(filter);
-
-
-        shapeRenderer = new ShapeRenderer();
     }
 
     @Override
@@ -47,8 +42,7 @@ public class RectangleWall extends Wall {
         shapeRenderer.setColor(Color.BLACK);
         shapeRenderer.rect(body.getPosition().x * Constants.BOX_TO_WORLD - width / 2,
                 body.getPosition().y * Constants.BOX_TO_WORLD - height / 2,
-                width,
-                height);
+                width, height);
         shapeRenderer.end();
 
         batch.begin();

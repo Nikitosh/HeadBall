@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.controllers.ButtonsInputController;
 import com.nikitosh.headball.controllers.InputController;
+import com.nikitosh.headball.controllers.KeyboardInputController;
 import com.nikitosh.headball.controllers.TouchpadInputController;
 import com.nikitosh.headball.players.LocalHumanPlayer;
 import com.nikitosh.headball.utils.AssetLoader;
@@ -23,6 +24,8 @@ import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.GameSettings;
 
 public abstract class GameScreen implements Screen {
+    private static final String PAUSE = "Pause";
+    private static final String SCORE_SEPARATOR = " : ";
 
     protected final Game game;
     protected Screen previousScreen;
@@ -54,11 +57,9 @@ public abstract class GameScreen implements Screen {
         this.previousScreen = previousScreen;
 
         gameWorld = new GameWorld();
-        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
 
         Image background = new Image(AssetLoader.backgroundTexture);
         background.setFillParent(true);
-        stage.addActor(background);
 
         pauseScreen = new PauseScreen(this);
         pauseScreen.setBounds(Constants.VIRTUAL_WIDTH / 4,
@@ -72,10 +73,7 @@ public abstract class GameScreen implements Screen {
                 Constants.VIRTUAL_WIDTH / 2,
                 Constants.VIRTUAL_HEIGHT / 2);
 
-        pauseButtonTable = new Table();
-        pauseButtonTable.setFillParent(true);
-
-        GameTextButtonTouchable pauseButton = new GameTextButtonTouchable("Pause");
+        GameTextButtonTouchable pauseButton = new GameTextButtonTouchable(PAUSE);
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -83,53 +81,61 @@ public abstract class GameScreen implements Screen {
             }
         });
 
+        pauseButtonTable = new Table();
+        pauseButtonTable.setFillParent(true);
         pauseButtonTable.add(pauseButton).top().right().expand().pad(Constants.UI_ELEMENTS_INDENT).row();
 
-        Table infoTable = new Table();
-        Table nestedTable = new Table();
         timerLabel = new Label("", AssetLoader.defaultSkin);
         scoreLabel = new Label("", AssetLoader.defaultSkin);
         timerLabel.setAlignment(Align.center);
         scoreLabel.setAlignment(Align.center);
+
+        Table infoTable = new Table();
+        Table nestedTable = new Table();
         nestedTable.add(timerLabel).fillX().row();
         nestedTable.add(scoreLabel).fillX();
         infoTable.add(new Label(firstTeam.getName(), AssetLoader.defaultSkin)).fillY();
         infoTable.add(nestedTable);
         infoTable.add(new Label(secondTeam.getName(), AssetLoader.defaultSkin)).fillY();
 
-        if (GameSettings.getString("control").equals("Buttons")) {
+        if (GameSettings.getString(Constants.SETTINGS_CONTROL).equals(Constants.SETTINGS_CONTROL_BUTTONS)) {
             inputController = new ButtonsInputController(infoTable);
         }
-        else {
+        else if (GameSettings.getString(Constants.SETTINGS_CONTROL).equals(Constants.SETTINGS_CONTROL_TOUCHPAD)) {
             inputController = new TouchpadInputController(infoTable);
+        }
+        else if (GameSettings.getString(Constants.SETTINGS_CONTROL).equals(Constants.SETTINGS_CONTROL_KEYBOARD)) {
+            inputController = new KeyboardInputController(infoTable);
         }
 
         Table mainTable = new Table();
         mainTable.setFillParent(true);
         mainTable.add(gameWorld.getGroup()).top().expand().fillX().height(Constants.FIELD_HEIGHT).row();
         mainTable.add(inputController.getTable()).bottom().fill().expand().row();
-        Gdx.input.setInputProcessor(stage);
 
-        players = new Player[2];
+        players = new Player[Constants.PLAYERS_NUMBER];
 
         Stack stack = new Stack();
         stack.setFillParent(true);
-
+        stack.addActor(background);
         stack.addActor(mainTable);
         stack.addActor(pauseButtonTable);
+
+        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
         stage.addActor(stack);
 
     }
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if (gameWorld.isGoal() && GameSettings.getBoolean("sound")) {
+        if (gameWorld.isGoal() && GameSettings.getBoolean(Constants.SETTINGS_SOUND)) {
             AssetLoader.goalSound.play();
         }
         if (gameWorld.isEnded()) {
@@ -210,7 +216,7 @@ public abstract class GameScreen implements Screen {
 
     private void updateHUD() {
         int[] score = gameWorld.getScore();
-        scoreLabel.setText(Integer.toString(score[0]) + " : "+ Integer.toString(score[1]));
+        scoreLabel.setText(Integer.toString(score[0]) + SCORE_SEPARATOR + Integer.toString(score[1]));
         timerLabel.setText(String.format("%02d", Constants.GAME_DURATION - (int) gameWorld.getGameDuration()));
     }
 }

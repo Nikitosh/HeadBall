@@ -9,11 +9,18 @@ import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
 public class PauseScreen extends Window {
+    private static final String PAUSE = "Pause";
+    private static final String CONTINUE = "Continue";
+    private static final String RESTART = "Restart";
+    private static final String EXIT = "Exit";
+
     public PauseScreen(final GameScreen gameScreen) {
         super("", AssetLoader.gameWindowStyle);
         setMovable(false);
 
-        GameTextButtonTouchable continueButton = new GameTextButtonTouchable("Continue");
+        Label pauseLabel = new Label(PAUSE, AssetLoader.gameLabelStyle);
+
+        GameTextButtonTouchable continueButton = new GameTextButtonTouchable(CONTINUE);
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -21,23 +28,21 @@ public class PauseScreen extends Window {
             }
         });
 
-        GameTextButtonTouchable restartButton = new GameTextButtonTouchable("Restart");
+        GameTextButtonTouchable restartButton = new GameTextButtonTouchable(RESTART);
         restartButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 gameScreen.restartGame();
             }
         });
-        GameTextButtonTouchable exitButton = new GameTextButtonTouchable("Exit");
+
+        GameTextButtonTouchable exitButton = new GameTextButtonTouchable(EXIT);
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 gameScreen.exitGame();
             }
         });
-
-        Label pauseLabel = new Label("Pause", AssetLoader.gameLabelStyle);
-
 
         add(pauseLabel).pad(Constants.UI_ELEMENTS_INDENT).row();
         add(continueButton).pad(Constants.UI_ELEMENTS_INDENT).row();

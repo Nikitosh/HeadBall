@@ -12,18 +12,23 @@ import org.json.simple.JSONObject;
 import java.util.Random;
 
 public class PlayOffTournament implements Tournament {
+    private static final int MAXIMUM_GOALS_NUMBER = 3;
+    private static final String LAP_NUMBER = "lapNumber";
+    private static final String PARTICIPANTS = "participants";
+
+
     private int lapNumber;
     private int selectedTeamIndex;
     private int currentRound = 0;
     private Array<Team> teams = new Array<Team>();
-    private Array<Integer> nextRoundParticipants = new Array<Integer>();
+    private Array<Integer> nextRoundParticipants;
     private Array<Array<Integer>> tournamentBracket = new Array<Array<Integer>>();
     private OlympicSystemTournamentWidget resultTable;
     private StatisticsTable statisticsTable;
 
     public PlayOffTournament(JSONObject tournament) {
-        lapNumber = ((Long) tournament.get("lapNumber")).intValue();
-        JSONArray participantsNames = (JSONArray) tournament.get("participants");
+        lapNumber = ((Long) tournament.get(LAP_NUMBER)).intValue();
+        JSONArray participantsNames = (JSONArray) tournament.get(PARTICIPANTS);
         TeamReader teamReader = new TeamReader();
         for (int i = 0; i < participantsNames.size(); i++) {
             String teamName = (String) participantsNames.get(i);
@@ -59,8 +64,8 @@ public class PlayOffTournament implements Tournament {
             int firstTeamIndex = currentRoundParticipants.get(i);
             int secondTeamIndex = currentRoundParticipants.get(i + 1);
             if (firstTeamIndex != selectedTeamIndex && secondTeamIndex != selectedTeamIndex) {
-                int firstTeamScore = random.nextInt(3);
-                int secondTeamScore = random.nextInt(3);
+                int firstTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
+                int secondTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
                 MatchController.handle(teams.get(firstTeamIndex), teams.get(secondTeamIndex),
                         firstTeamScore, secondTeamScore);
                 nextRoundParticipants.add(teams.indexOf(MatchController.getWinner(teams.get(firstTeamIndex), teams.get(secondTeamIndex),

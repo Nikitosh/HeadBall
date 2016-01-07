@@ -4,20 +4,24 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
 public class GameSettings {
-    static private Preferences preferences = Gdx.app.getPreferences("Settings");
+    private static final String SETTINGS = "Settings";
+    static private Preferences preferences = Gdx.app.getPreferences(SETTINGS);
 
-    static public void intialize() {
-        preferences.putBoolean("sound", true);
-        preferences.putBoolean("music", true);
-        preferences.putString("control", "Buttons");
+    static public void initialize() {
+        preferences.putBoolean(Constants.SETTINGS_SOUND, true);
+        preferences.putBoolean(Constants.SETTINGS_MUSIC, true);
+        preferences.putString(Constants.SETTINGS_CONTROL, Constants.SETTINGS_CONTROL_BUTTONS);
+        preferences.flush();
     }
 
     static public void putBoolean(String text, boolean value) {
         preferences.putBoolean(text, value);
+        preferences.flush();
     }
 
     static public void putString(String text, String value) {
         preferences.putString(text, value);
+        preferences.flush();
     }
 
     static public boolean getBoolean(String text) {

@@ -4,21 +4,22 @@ import java.net.*;
 import java.io.*;
 
 public class Server {
+    private static final String WAITING_CLIENTS = "Waiting for clients";
+    private static final String CONNECTION_GOT = "Got two clients";
 
     public static void main(String[] args) {
 
         try {
             int port = 2345;
             ServerSocket serverSocket = new ServerSocket(port);
-            System.err.println("Waiting for a clients...");
+            System.err.println(WAITING_CLIENTS);
 
             while(true) {
                 Socket socketFirst = serverSocket.accept();
                 (new DataOutputStream(socketFirst.getOutputStream())).writeUTF("0\n");
                 Socket socketSecond = serverSocket.accept();
                 (new DataOutputStream(socketSecond.getOutputStream())).writeUTF("1\n");
-                System.err.println("Got two clients :)");
-                System.out.println();
+                System.err.println(CONNECTION_GOT);
                 new Thread(new GameConnection(socketFirst, socketSecond)).start();
             }
         } catch(Exception x) { x.printStackTrace(); }

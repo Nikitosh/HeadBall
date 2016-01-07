@@ -20,19 +20,18 @@ public class Ball extends Actor {
     private Body body;
 
     public Ball(World world, float x, float y) {
-        body = Utilities.getCircleBody(world, x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX,
-                BALL_RADIUS * Constants.WORLD_TO_BOX, BALL_DENSITY, BALL_FRICTION, BALL_RESTITUTION);
+        body = Utilities.getCircleBody(world,
+                x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX, BALL_RADIUS * Constants.WORLD_TO_BOX,
+                BALL_DENSITY, BALL_FRICTION, BALL_RESTITUTION,
+                Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Box2DSprite box2DSprite = new Box2DSprite(AssetLoader.ballTexture);
         box2DSprite.draw(batch,
-                body.getPosition().x * Constants.BOX_TO_WORLD,
-                body.getPosition().y * Constants.BOX_TO_WORLD,
-                2 * BALL_RADIUS,
-                2 * BALL_RADIUS,
-                body.getAngle());
+                body.getPosition().x * Constants.BOX_TO_WORLD, body.getPosition().y * Constants.BOX_TO_WORLD,
+                2 * BALL_RADIUS, 2 * BALL_RADIUS, body.getAngle());
     }
 
     public Vector2 getPosition() {

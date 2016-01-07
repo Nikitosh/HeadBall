@@ -52,7 +52,7 @@ public class PagedScrollPane extends ScrollPane {
 
         Array<Actor> pages = content.getChildren();
         float pageX = 0;
-        float pageWidth = 0;
+        float pageWidth;
         if (pages.size > 0) {
             for (Actor page : pages) {
                 pageX = page.getX();

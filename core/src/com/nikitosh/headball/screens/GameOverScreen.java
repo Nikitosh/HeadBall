@@ -8,6 +8,14 @@ import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.AssetLoader;
 
 public class GameOverScreen extends Window {
+    private static final String GAME_OVER = "Game over!";
+    private static final String EXIT = "Exit";
+    private static final String WIN_RESULT = "You win! ";
+    private static final String DRAW_RESULT = "Draw! ";
+    private static final String LOSS_RESULT = "You lose! ";
+    private static final String SCORE = "Score: ";
+    private static final String SCORE_SEPARATOR = " : ";
+
     private GameScreen gameScreen;
     private Label resultLabel;
 
@@ -17,10 +25,10 @@ public class GameOverScreen extends Window {
 
         setMovable(false);
 
-        Label gameOverLabel = new Label("Game over!", AssetLoader.gameLabelStyle);
+        Label gameOverLabel = new Label(GAME_OVER, AssetLoader.gameLabelStyle);
         resultLabel = new Label("", AssetLoader.gameLabelStyle);
 
-        GameTextButtonTouchable gameOverExitButton = new GameTextButtonTouchable("Exit");
+        GameTextButtonTouchable gameOverExitButton = new GameTextButtonTouchable(EXIT);
         gameOverExitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -38,15 +46,15 @@ public class GameOverScreen extends Window {
         String result = "";
         int playerNumber = gameScreen.getPlayerNumber();
         if (score[playerNumber] == score[1 - playerNumber]) {
-            result += "Draw! ";
+            result += DRAW_RESULT;
         }
         if (score[playerNumber] > score[1 - playerNumber]) {
-            result += "You win! ";
+            result += WIN_RESULT;
         }
         if (score[playerNumber] < score[1 - playerNumber]) {
-            result += "You lose! ";
+            result += LOSS_RESULT;
         }
-        result += "Score: " + Integer.toString(score[0]) + " : " + Integer.toString(score[1]);
+        result += SCORE + Integer.toString(score[0]) + SCORE_SEPARATOR + Integer.toString(score[1]);
         return result;
     }
 

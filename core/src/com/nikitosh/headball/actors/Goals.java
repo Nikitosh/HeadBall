@@ -28,7 +28,8 @@ public class Goals extends Actor {
         this.height = height;
 
         body = Utilities.getRectangularBody(world, x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX,
-                width * Constants.WORLD_TO_BOX, height * Constants.WORLD_TO_BOX, GOALS_DENSITY, GOALS_FRICTION, GOALS_RESTITUTION);
+                width * Constants.WORLD_TO_BOX, height * Constants.WORLD_TO_BOX, GOALS_DENSITY, GOALS_FRICTION,
+                GOALS_RESTITUTION, Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
         body.setType(BodyDef.BodyType.StaticBody);
         body.getFixtureList().get(0).setUserData(this);
 
@@ -50,11 +51,9 @@ public class Goals extends Actor {
             box2DSprite = new Box2DSprite(AssetLoader.reversedGoalsTexture);
         }
         box2DSprite.draw(batch,
-                    body.getPosition().x * Constants.BOX_TO_WORLD,
-                    body.getPosition().y * Constants.BOX_TO_WORLD - Constants.GOALS_HEIGHT / 2,
-                    width,
-                    Constants.GOALS_HEIGHT + height,
-                    body.getAngle());
+                body.getPosition().x * Constants.BOX_TO_WORLD,
+                body.getPosition().y * Constants.BOX_TO_WORLD - Constants.GOALS_HEIGHT / 2,
+                width, Constants.GOALS_HEIGHT + height, body.getAngle());
     }
 
     public boolean contains(Vector2 point) {

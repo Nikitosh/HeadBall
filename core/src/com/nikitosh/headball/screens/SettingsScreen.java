@@ -16,67 +16,30 @@ import com.nikitosh.headball.utils.GameSettings;
 import com.nikitosh.headball.ui.GameButtonStyle;
 import com.nikitosh.headball.ui.GameTextButton;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
+import com.nikitosh.headball.widgets.BackButtonTable;
 
 public class SettingsScreen implements Screen {
+    private static final String ENABLED_ICON_NAME = "red_boxCheckmark";
+    private static final String DISABLED_ICON_NAME = "red_boxCross";
+
     private Stage stage;
     private Table settingsTable;
-    private Table backButtonTable;
 
-    private final Game game;
     private Drawable[] drawables;
-    private int soundState = GameSettings.getBoolean("sound") ? 0 : 1;
-    private int musicState = GameSettings.getBoolean("music") ? 0 : 1;
+    private int soundState = GameSettings.getBoolean(Constants.SETTINGS_SOUND) ? 1 : 0;
+    private int musicState = GameSettings.getBoolean(Constants.SETTINGS_MUSIC) ? 1 : 0;
     private SelectBox<String> selectBox;
 
-    public SettingsScreen(final Game game) {
-        this.game = game;
-        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
-        Gdx.input.setInputProcessor(stage);
+    public SettingsScreen(final Game game, final Screen previousScreen) {
+        Image background = new Image(AssetLoader.menuTexture);
+        background.setFillParent(true);
 
-        backButtonTable = new Table();
-        backButtonTable.setFillParent(true);
-        Button backButton = new GameTextButtonTouchable("Back");
-        backButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if (soundState == 0) {
-                    GameSettings.putBoolean("sound", true);
-                } else {
-                    GameSettings.putBoolean("sound", false);
-                }
-                if (musicState == 0) {
-                    GameSettings.putBoolean("music", true);
-                } else {
-                    GameSettings.putBoolean("music", false);
-                }
-                GameSettings.putString("control", selectBox.getSelected());
-                dispose();
-                game.setScreen(new MenuScreen(game));
-            }
-        });
-        backButtonTable.add(backButton).top().left().expand().pad(Constants.UI_ELEMENTS_INDENT).row();
+        drawables = new Drawable[] {AssetLoader.skin.getDrawable(DISABLED_ICON_NAME),
+                AssetLoader.skin.getDrawable(ENABLED_ICON_NAME)};
 
-        settingsTable = new Table();
-        settingsTable.setFillParent(true);
-
-        drawables = new Drawable[2];
-        drawables[0] = AssetLoader.skin.getDrawable("red_boxCheckmark");
-        drawables[1] = AssetLoader.skin.getDrawable("red_boxCross");
-
-        Button soundTextButton = new GameTextButton("Sound");
-        settingsTable.add(soundTextButton).pad(Constants.UI_ELEMENTS_INDENT);
-
-        final Button soundButton = new Button(new GameButtonStyle("red_boxCheckmark"));
+        Button soundTextButton = new GameTextButton(Constants.SETTINGS_SOUND);
+        final Button soundButton = new Button(new GameButtonStyle(ENABLED_ICON_NAME));
         soundButton.getStyle().up = drawables[soundState];
-        settingsTable.add(soundButton).pad(Constants.UI_ELEMENTS_INDENT).row();
-
-        Button musicTextButton = new GameTextButton("Music");
-        settingsTable.add(musicTextButton).pad(Constants.UI_ELEMENTS_INDENT);
-
-        final Button musicButton = new Button(new GameButtonStyle("red_boxCheckmark"));
-        musicButton.getStyle().up = drawables[musicState];
-        settingsTable.add(musicButton).pad(Constants.UI_ELEMENTS_INDENT).row();
-
         soundButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -84,6 +47,10 @@ public class SettingsScreen implements Screen {
                 soundButton.getStyle().up = drawables[soundState];
             }
         });
+
+        Button musicTextButton = new GameTextButton(Constants.SETTINGS_MUSIC);
+        final Button musicButton = new Button(new GameButtonStyle(ENABLED_ICON_NAME));
+        musicButton.getStyle().up = drawables[musicState];
         musicButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -92,26 +59,41 @@ public class SettingsScreen implements Screen {
             }
         });
 
-
-        Button controlButton = new GameTextButton("Control");
-        settingsTable.add(controlButton).pad(Constants.UI_ELEMENTS_INDENT);
-
+        Button controlButton = new GameTextButton(Constants.SETTINGS_CONTROL);
         selectBox = new SelectBox<String>(AssetLoader.defaultSkin);
-        selectBox.setItems(new String[] {"Buttons", "Joystick"});
-        selectBox.setSelected(GameSettings.getString("control"));
+        selectBox.setItems(new String[]{Constants.SETTINGS_CONTROL_BUTTONS, Constants.SETTINGS_CONTROL_TOUCHPAD,
+                Constants.SETTINGS_CONTROL_KEYBOARD});
+        selectBox.setSelected(GameSettings.getString(Constants.SETTINGS_CONTROL));
+
+        settingsTable = new Table();
+        settingsTable.setFillParent(true);
+        settingsTable.add(soundTextButton).pad(Constants.UI_ELEMENTS_INDENT);
+        settingsTable.add(soundButton).pad(Constants.UI_ELEMENTS_INDENT).row();
+        settingsTable.add(musicTextButton).pad(Constants.UI_ELEMENTS_INDENT);
+        settingsTable.add(musicButton).pad(Constants.UI_ELEMENTS_INDENT).row();
+        settingsTable.add(controlButton).pad(Constants.UI_ELEMENTS_INDENT);
         settingsTable.add(selectBox).pad(Constants.UI_ELEMENTS_INDENT);
 
         Stack stack = new Stack();
         stack.setFillParent(true);
-        stage.addActor(stack);
-        stack.addActor(new Image(AssetLoader.menuTexture));
-        stack.addActor(backButtonTable);
+        stack.addActor(background);
+        stack.addActor(new BackButtonTable(game, this, previousScreen, new Runnable() {
+            @Override
+            public void run() {
+                GameSettings.putBoolean(Constants.SETTINGS_SOUND, soundState != 0);
+                GameSettings.putBoolean(Constants.SETTINGS_MUSIC, musicState != 0);
+                GameSettings.putString(Constants.SETTINGS_CONTROL, selectBox.getSelected());
+            }
+        }));
         stack.addActor(settingsTable);
+
+        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
+        stage.addActor(stack);
     }
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

@@ -79,7 +79,7 @@ public class AssetLoader {
         touchpadBackgroundDrawable = new Image(new Texture(Gdx.files.internal("images/touchpadBackground.png"))).getDrawable();
         touchpadKnobDrawable = new Image(new Texture(Gdx.files.internal("images/touchpadKnob.png"))).getDrawable();
 
-        GameSettings.intialize();
+        GameSettings.initialize();
     }
 
     public static void dispose() {

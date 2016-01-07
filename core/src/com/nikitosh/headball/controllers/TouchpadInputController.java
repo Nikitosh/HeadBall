@@ -12,10 +12,11 @@ import com.nikitosh.headball.utils.Constants;
 public class TouchpadInputController implements InputController {
     private final static String HIT_BUTTON_NAME = "Hit";
     private final static float TOUCHPAD_KNOB = 0;
+    private final static float TOUCHPAD_JUMP_LEVEL_PERCENTAGE = 0.5f;
 
     private Table uiTable = new Table();
     private GameTextButtonTouchable hitButton;
-    private Touchpad joystick;
+    private Touchpad touchpad;
 
     private Move move = new Move();
 
@@ -33,11 +34,11 @@ public class TouchpadInputController implements InputController {
             }
         });
 
-        joystick = new Touchpad(TOUCHPAD_KNOB, new GameTouchpadStyle());
+        touchpad = new Touchpad(TOUCHPAD_KNOB, new GameTouchpadStyle());
 
         uiTable.add(hitButton).left().bottom().pad(Constants.UI_ELEMENTS_INDENT);
         uiTable.add(infoTable).expand().bottom();
-        uiTable.add(joystick).width(Constants.UI_LAYER_HEIGHT).height(Constants.UI_LAYER_HEIGHT).right().bottom();
+        uiTable.add(touchpad).width(Constants.UI_LAYER_HEIGHT).height(Constants.UI_LAYER_HEIGHT).right().bottom();
     }
 
     @Override
@@ -45,13 +46,13 @@ public class TouchpadInputController implements InputController {
         move.setRight(false);
         move.setLeft(false);
         move.setJump(false);
-        if (joystick.getKnobPercentX() > 0) {
+        if (touchpad.getKnobPercentX() > 0) {
             move.setRight(true);
         }
-        if (joystick.getKnobPercentX() < 0) {
+        if (touchpad.getKnobPercentX() < 0) {
             move.setLeft(true);
         }
-        if (joystick.getKnobPercentY() >= 0.5f) {
+        if (touchpad.getKnobPercentY() >= TOUCHPAD_JUMP_LEVEL_PERCENTAGE) {
             move.setJump(true);
         }
         return move;

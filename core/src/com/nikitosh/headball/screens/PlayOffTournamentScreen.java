@@ -15,14 +15,15 @@ import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.Constants;
 
 public class PlayOffTournamentScreen implements Screen {
+    private static final String PLAY = "Play next match";
+
     private Stage stage;
     private Table table = new Table();
 
     public PlayOffTournamentScreen(final Game game, final Tournament tournament, final Team playerTeam) {
-        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
         tournament.setSelectedTeam(playerTeam);
 
-        GameTextButtonTouchable playButton = new GameTextButtonTouchable("Play next match");
+        GameTextButtonTouchable playButton = new GameTextButtonTouchable(PLAY);
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -53,14 +54,16 @@ public class PlayOffTournamentScreen implements Screen {
             }
         });
 
-        table.setFillParent(true);
         Table upTable = new Table();
         upTable.defaults().padRight(5 * Constants.UI_ELEMENTS_INDENT);
         upTable.add(tournament.getResultTable());
         upTable.add(tournament.getStatisticsTable()).row();
+
+        table.setFillParent(true);
         table.add(upTable).row();
         table.add(playButton).pad(Constants.UI_ELEMENTS_INDENT);
 
+        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
         stage.addActor(table);
     }
 
