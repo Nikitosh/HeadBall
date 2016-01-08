@@ -3,6 +3,7 @@ package com.nikitosh.headball.tournaments;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Team;
+import com.nikitosh.headball.widgets.ResultTable;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -52,12 +53,12 @@ public class LeagueTournament implements Tournament {
     }
 
     @Override
-    public Group getResultTable() {
+    public ResultTable getResultTable() {
         return null;
     }
 
     @Override
-    public Group getStatisticsTable() {
+    public ResultTable getStatisticsTable() {
         return null;
     }
 

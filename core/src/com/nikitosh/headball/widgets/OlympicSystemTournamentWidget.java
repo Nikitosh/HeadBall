@@ -1,5 +1,6 @@
 package com.nikitosh.headball.widgets;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.utils.Array;
@@ -7,7 +8,7 @@ import com.nikitosh.headball.Team;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
-public class OlympicSystemTournamentWidget extends WidgetGroup {
+public class OlympicSystemTournamentWidget extends WidgetGroup implements ResultTable {
     private int currentKnownTeamNumber = 0;
     private Array<Label> labels = new Array<Label>();
     private float width;
@@ -54,9 +55,30 @@ public class OlympicSystemTournamentWidget extends WidgetGroup {
         height = labels.get(0).getY() + maxHeight + Constants.UI_ELEMENTS_INDENT;
     }
 
+    public void clearHighlighting() {
+        for (int i = 0; i < labels.size; i++) {
+            labels.get(i).setStyle(AssetLoader.defaultSkin.get(Label.LabelStyle.class));
+        }
+    }
+
     public void update(Array<Team> teams, Array<Integer> nextRoundParticipants) {
+        clearHighlighting();
         for (int i = 0; i < nextRoundParticipants.size; i++) {
             labels.get(currentKnownTeamNumber++).setText(teams.get(nextRoundParticipants.get(i)).getName());
+        }
+    }
+
+    @Override
+    public Group getTable() {
+        return this;
+    }
+
+    @Override
+    public void highlightTeam(Team team) {
+        for (int i = 0; i < labels.size; i++) {
+            if (labels.get(i).getText().toString().equals(team.getName())) {
+                labels.get(i).setStyle(HIGHLIGHTED_STYLE);
+            }
         }
     }
 

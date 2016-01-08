@@ -10,9 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nikitosh.headball.Team;
+import com.nikitosh.headball.tournaments.PlayOffTournament;
 import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.Constants;
+import com.nikitosh.headball.widgets.OlympicSystemTournamentWidget;
+import com.nikitosh.headball.widgets.StatisticsTable;
 
 public class PlayOffTournamentScreen implements Screen {
     private static final String PLAY = "Play next match";
@@ -49,16 +52,21 @@ public class PlayOffTournamentScreen implements Screen {
                             int[] score = gameScreen.getScore();
                             tournament.simulateNextRound();
                             tournament.handlePlayerMatch(score[0], score[1]);
+                            tournament.getStatisticsTable().highlightTeam(playerTeam);
+                            tournament.getResultTable().highlightTeam(playerTeam);
                         }
                     }
                 }).start();
             }
         });
 
+        tournament.getStatisticsTable().highlightTeam(playerTeam);
+        tournament.getResultTable().highlightTeam(playerTeam);
+
         Table upTable = new Table();
         upTable.defaults().padRight(5 * Constants.UI_ELEMENTS_INDENT);
-        upTable.add(tournament.getResultTable());
-        upTable.add(tournament.getStatisticsTable()).row();
+        upTable.add(tournament.getResultTable().getTable());
+        upTable.add(tournament.getStatisticsTable().getTable()).row();
 
         table.setFillParent(true);
         table.add(upTable).row();

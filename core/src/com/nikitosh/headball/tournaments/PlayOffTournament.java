@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.jsonReaders.TeamReader;
 import com.nikitosh.headball.widgets.OlympicSystemTournamentWidget;
+import com.nikitosh.headball.widgets.ResultTable;
 import com.nikitosh.headball.widgets.StatisticsTable;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -112,12 +113,12 @@ public class PlayOffTournament implements Tournament {
     }
 
     @Override
-    public Group getResultTable() {
+    public ResultTable getResultTable() {
         return resultTable;
     }
 
     @Override
-    public Group getStatisticsTable() {
+    public ResultTable getStatisticsTable() {
         return statisticsTable;
     }
 

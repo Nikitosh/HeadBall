@@ -1,6 +1,6 @@
 package com.nikitosh.headball.widgets;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -10,9 +10,9 @@ import com.nikitosh.headball.utils.AssetLoader;
 
 import java.util.Comparator;
 
-public class StatisticsTable extends Table {
+public class StatisticsTable extends Table implements ResultTable {
+    private static final Array<String> COLUMN_NAMES = new Array<String>(new String[] {"Team", "W", "D", "L", "GF", "GA", "GD", "Points"});
 
-    private final static Array<String> COLUMN_NAMES = new Array<String>(new String[] {"Team", "W", "D", "L", "GF", "GA", "GD", "Points"});
     private Array<Array<Label>> statisticsLabels = new Array<Array<Label>>();
 
     public StatisticsTable(Array<Team> teams) {
@@ -53,7 +53,16 @@ public class StatisticsTable extends Table {
         return sortedTeams;
     }
 
+    public void clearHighlighting() {
+        for (int i = 0; i < statisticsLabels.size; i++) {
+            for (int j = 0; j < statisticsLabels.get(i).size; j++) {
+                statisticsLabels.get(i).get(j).setStyle(AssetLoader.defaultSkin.get(Label.LabelStyle.class));
+            }
+        }
+    }
+
     public void update(Array<Team> teams) {
+        clearHighlighting();
         Array<Team> sortedTeams = getSortedTeams(teams);
         for (int i = 0; i < sortedTeams.size; i++) {
             Team team = sortedTeams.get(i);
@@ -61,6 +70,23 @@ public class StatisticsTable extends Table {
             Array<Integer> statistics = team.getStatistics();
             for (int j = 0; j < team.getStatistics().size; j++) {
                 statisticsLabels.get(i).get(j + 1).setText(Integer.toString(statistics.get(j)));
+            }
+        }
+    }
+
+    @Override
+    public Group getTable() {
+        return this;
+    }
+
+    @Override
+    public void highlightTeam(Team team) {
+        for (int i = 0; i < statisticsLabels.size; i++) {
+            if (statisticsLabels.get(i).get(0).getText().toString().equals(team.getName())) {
+                Array<Label> teamsStatisticsLabels = statisticsLabels.get(i);
+                for (int j = 0; j < teamsStatisticsLabels.size; j++) {
+                    teamsStatisticsLabels.get(j).setStyle(HIGHLIGHTED_STYLE);
+                }
             }
         }
     }
