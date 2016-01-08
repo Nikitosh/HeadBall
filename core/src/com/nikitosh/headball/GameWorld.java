@@ -40,9 +40,11 @@ public class GameWorld {
     private int[] score;
     private boolean isGoal = false;
     private boolean isEnded = false;
+    private boolean isDrawResultPossible;
     private float gameDuration = 0;
 
-    public GameWorld() {
+    public GameWorld(boolean isDrawResultPossible) {
+        this.isDrawResultPossible = isDrawResultPossible;
         box2dWorld = new World(new Vector2(0f, -300f * Constants.WORLD_TO_BOX), true);
         group = new Group();
 
@@ -136,7 +138,7 @@ public class GameWorld {
 
         gameDuration += delta;
 
-        if (gameDuration > Constants.GAME_DURATION) {
+        if (gameDuration > Constants.GAME_DURATION && (isDrawResultPossible || score[0] != score[1])) {
             isEnded = true;
         }
 
@@ -204,5 +206,9 @@ public class GameWorld {
 
     public float getGameDuration() {
         return gameDuration;
+    }
+
+    public boolean isDrawResultPossible() {
+        return isDrawResultPossible;
     }
 }

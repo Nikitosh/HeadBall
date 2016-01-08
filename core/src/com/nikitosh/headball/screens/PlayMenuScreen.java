@@ -32,7 +32,7 @@ public class PlayMenuScreen implements Screen {
         practiceTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new SinglePlayerScreen(game, new Team("Player"), new Team("Bot"), PlayMenuScreen.this));
+                game.setScreen(new SinglePlayerScreen(game, new Team("Player"), new Team("Bot"), PlayMenuScreen.this, true));
             }
         });
 
@@ -48,7 +48,7 @@ public class PlayMenuScreen implements Screen {
         multiPlayerTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new MultiPlayerScreen(game, new Team(""), new Team(""), PlayMenuScreen.this));
+                game.setScreen(new MultiPlayerScreen(game, new Team(""), new Team(""), PlayMenuScreen.this, true));
             }
         });
 

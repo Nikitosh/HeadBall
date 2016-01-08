@@ -7,8 +7,8 @@ import com.nikitosh.headball.players.AIPlayer;
 
 public class SinglePlayerScreen extends GameScreen {
 
-    public SinglePlayerScreen(Game game, Team firstTeam, Team secondTeam, Screen previousScreen) {
-        super(game, firstTeam, secondTeam, previousScreen);
+    public SinglePlayerScreen(Game game, Team firstTeam, Team secondTeam, Screen previousScreen, boolean isDrawResultPossible) {
+        super(game, firstTeam, secondTeam, previousScreen, isDrawResultPossible);
         initializePlayers();
     }
 
@@ -37,6 +37,6 @@ public class SinglePlayerScreen extends GameScreen {
     @Override
     public void restartGame() {
         dispose();
-        game.setScreen(new SinglePlayerScreen(game, firstTeam, secondTeam, previousScreen));
+        game.setScreen(new SinglePlayerScreen(game, firstTeam, secondTeam, previousScreen, gameWorld.isDrawResultPossible()));
     }
 }

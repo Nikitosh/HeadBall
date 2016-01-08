@@ -36,6 +36,7 @@ public class AssetLoader {
     public static Texture menuTexture;
     public static Texture fieldTexture;
     public static Texture backgroundTexture;
+    public static Texture darkBackgroundTexture;
 
     public static Drawable touchpadBackgroundDrawable;
     public static Drawable touchpadKnobDrawable;
@@ -76,6 +77,7 @@ public class AssetLoader {
         menuTexture = new Texture(Gdx.files.internal("images/menu.jpg"));
         fieldTexture = new Texture(Gdx.files.internal("images/fieldBackground.jpg"));
         backgroundTexture = new Texture(Gdx.files.internal("images/background.jpg"));
+        darkBackgroundTexture = new Texture(Gdx.files.internal("images/darkBackground.png"));
         touchpadBackgroundDrawable = new Image(new Texture(Gdx.files.internal("images/touchpadBackground.png"))).getDrawable();
         touchpadKnobDrawable = new Image(new Texture(Gdx.files.internal("images/touchpadKnob.png"))).getDrawable();
 

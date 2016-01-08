@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -47,19 +48,23 @@ public abstract class GameScreen implements Screen {
 
     protected Window pauseScreen;
     protected GameOverScreen gameOverScreen;
+    protected Image darkBackground;
 
     protected int playerNumber;
 
-    public GameScreen(Game newGame, Team firstTeam, Team secondTeam, Screen previousScreen) {
+    public GameScreen(Game newGame, Team firstTeam, Team secondTeam, Screen previousScreen, boolean isDrawResultPossible) {
         game = newGame;
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
         this.previousScreen = previousScreen;
 
-        gameWorld = new GameWorld();
+        gameWorld = new GameWorld(isDrawResultPossible);
 
         Image background = new Image(AssetLoader.backgroundTexture);
         background.setFillParent(true);
+
+        darkBackground = new Image(AssetLoader.darkBackgroundTexture);
+        darkBackground.setFillParent(true);
 
         pauseScreen = new PauseScreen(this);
         pauseScreen.setBounds(Constants.VIRTUAL_WIDTH / 4,
@@ -135,7 +140,7 @@ public abstract class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if (gameWorld.isGoal() && GameSettings.getBoolean(Constants.SETTINGS_SOUND)) {
+        if (gameState == GameState.GAME_RUNNING && gameWorld.isGoal() && GameSettings.getBoolean(Constants.SETTINGS_SOUND)) {
             AssetLoader.goalSound.play();
         }
         if (gameWorld.isEnded()) {
@@ -176,6 +181,7 @@ public abstract class GameScreen implements Screen {
 
 
     public void finishGame() {
+        stage.addActor(darkBackground);
         stage.addActor(gameOverScreen);
         gameOverScreen.updateResult();
         gameState = GameState.GAME_OVER;
@@ -183,6 +189,7 @@ public abstract class GameScreen implements Screen {
     }
 
     public void pauseGame() {
+        stage.addActor(darkBackground);
         stage.addActor(pauseScreen);
         gameState = GameState.GAME_PAUSED;
     }
@@ -190,6 +197,7 @@ public abstract class GameScreen implements Screen {
     public void resumeGame() {
         gameState = GameState.GAME_RUNNING;
         pauseScreen.remove();
+        darkBackground.remove();
     }
 
     public abstract void restartGame();
@@ -217,6 +225,6 @@ public abstract class GameScreen implements Screen {
     private void updateHUD() {
         int[] score = gameWorld.getScore();
         scoreLabel.setText(Integer.toString(score[0]) + SCORE_SEPARATOR + Integer.toString(score[1]));
-        timerLabel.setText(String.format("%02d", Constants.GAME_DURATION - (int) gameWorld.getGameDuration()));
+        timerLabel.setText(String.format("%02d", Math.max(0, Constants.GAME_DURATION - (int) gameWorld.getGameDuration())));
     }
 }

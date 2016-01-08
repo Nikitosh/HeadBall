@@ -31,7 +31,8 @@ public class PlayOffTournamentScreen implements Screen {
                     return;
                 }
                 final Team opponentTeam = tournament.getNextOpponent();
-                final GameScreen gameScreen = new SinglePlayerScreen(game, playerTeam, opponentTeam, PlayOffTournamentScreen.this);
+                final GameScreen gameScreen = new SinglePlayerScreen(game,
+                        playerTeam, opponentTeam, PlayOffTournamentScreen.this, false);
                 game.setScreen(gameScreen);
 
                 new Thread(new Runnable() {

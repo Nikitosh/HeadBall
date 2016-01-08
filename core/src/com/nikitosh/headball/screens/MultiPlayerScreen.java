@@ -19,8 +19,8 @@ public class MultiPlayerScreen extends GameScreen {
     private DataInputStream in;
     private DataOutputStream out;
 
-    public MultiPlayerScreen(Game game, Team firstTeam, Team secondTeam, Screen previousScreen) {
-        super(game, firstTeam, secondTeam, previousScreen);
+    public MultiPlayerScreen(Game game, Team firstTeam, Team secondTeam, Screen previousScreen, boolean isDrawResultPossible) {
+        super(game, firstTeam, secondTeam, previousScreen, isDrawResultPossible);
         try {
             InetAddress ipAddress = InetAddress.getByName(SERVER_ADDRESS);
             Gdx.app.log(LOG_TAG, "Any of you heard of a socket with IP address " + SERVER_ADDRESS + " and port " + PORT + "?");
@@ -79,6 +79,6 @@ public class MultiPlayerScreen extends GameScreen {
     @Override
     public void restartGame() {
         dispose();
-        game.setScreen(new MultiPlayerScreen(game, firstTeam, secondTeam, previousScreen));
+        game.setScreen(new MultiPlayerScreen(game, firstTeam, secondTeam, previousScreen, gameWorld.isDrawResultPossible()));
     }
 }
