@@ -22,17 +22,6 @@ public class TouchpadInputController implements InputController {
 
     public TouchpadInputController(Table infoTable) {
         hitButton = new GameTextButtonTouchable(HIT_BUTTON_NAME);
-        hitButton.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                move.setHit(true);
-                return true;
-            }
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                move.setHit(false);
-            }
-        });
 
         touchpad = new Touchpad(TOUCHPAD_KNOB, new GameTouchpadStyle());
 
@@ -43,17 +32,18 @@ public class TouchpadInputController implements InputController {
 
     @Override
     public Move getMove() {
-        move.setRight(false);
-        move.setLeft(false);
-        move.setJump(false);
+        move.clear();
+        if (hitButton.isPressed()) {
+            move.setState(Constants.HIT, true);
+        }
         if (touchpad.getKnobPercentX() > 0) {
-            move.setRight(true);
+            move.setState(Constants.RIGHT, true);
         }
         if (touchpad.getKnobPercentX() < 0) {
-            move.setLeft(true);
+            move.setState(Constants.LEFT, true);
         }
         if (touchpad.getKnobPercentY() >= TOUCHPAD_JUMP_LEVEL_PERCENTAGE) {
-            move.setJump(true);
+            move.setState(Constants.JUMP, true);
         }
         return move;
     }

@@ -2,6 +2,7 @@ package com.nikitosh.headball.tournaments;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
+import com.nikitosh.headball.Match;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.jsonReaders.TeamReader;
 import com.nikitosh.headball.widgets.OlympicSystemTournamentWidget;
@@ -67,10 +68,10 @@ public class PlayOffTournament implements Tournament {
             if (firstTeamIndex != selectedTeamIndex && secondTeamIndex != selectedTeamIndex) {
                 int firstTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
                 int secondTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
-                MatchController.handle(teams.get(firstTeamIndex), teams.get(secondTeamIndex),
+                Match match = new Match(teams.get(firstTeamIndex), teams.get(secondTeamIndex),
                         firstTeamScore, secondTeamScore);
-                nextRoundParticipants.add(teams.indexOf(MatchController.getWinner(teams.get(firstTeamIndex), teams.get(secondTeamIndex),
-                        firstTeamScore, secondTeamScore), false));
+                MatchController.handle(match);
+                nextRoundParticipants.add(teams.indexOf(MatchController.getWinner(match), false));
             }
             else {
                 nextRoundParticipants.add(null);
@@ -83,10 +84,10 @@ public class PlayOffTournament implements Tournament {
         Array<Integer> currentRoundParticipants = tournamentBracket.peek();
         for (int i = 0; i < tournamentBracket.peek().size; i++) {
             if (currentRoundParticipants.get(i) == selectedTeamIndex) {
-                MatchController.handle(teams.get(currentRoundParticipants.get(i)),
+                Match match = new Match(teams.get(currentRoundParticipants.get(i)),
                         teams.get(currentRoundParticipants.get(i ^ 1)), playerScore, opponentScore);
-                nextRoundParticipants.set(i / 2, teams.indexOf(MatchController.getWinner(teams.get(currentRoundParticipants.get(i)),
-                        teams.get(currentRoundParticipants.get(i ^ 1)), playerScore, opponentScore), false));
+                MatchController.handle(match);
+                nextRoundParticipants.set(i / 2, teams.indexOf(MatchController.getWinner(match), false));
             }
         }
         tournamentBracket.add(nextRoundParticipants);

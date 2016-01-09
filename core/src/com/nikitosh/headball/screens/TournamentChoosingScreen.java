@@ -45,7 +45,8 @@ public class TournamentChoosingScreen implements Screen {
                 public void changed(ChangeEvent event, Actor actor) {
                     if (reader.getTournamentType(index).equals(JSON_LEAGUE_KEY)) {
                         dispose();
-                        game.setScreen(new LeagueTournamentScreen(game, reader.getTournament(index)));
+                        Tournament tournament = reader.getTournament(index);
+                        game.setScreen(new LeagueTournamentScreen(game, tournament, tournament.getParticipants().get(0)));
                     }
                     if (reader.getTournamentType(index).equals(JSON_PLAYOFF_KEY)) {
                         dispose();

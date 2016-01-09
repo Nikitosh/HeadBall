@@ -37,6 +37,7 @@ public class Footballer extends Actor {
     private static final float JOINT_ANGULAR_VELOCITY = 30f;
 
 
+
     private Body body;
     private Body leg;
     private RevoluteJoint revoluteJoint;
@@ -95,20 +96,20 @@ public class Footballer extends Actor {
         if (move == null) {
             return;
         }
-        if (move.isLeft() && !move.isRight()) {
+        if (move.getState(Constants.LEFT) && !move.getState(Constants.RIGHT)) {
             body.setLinearVelocity(-FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, body.getLinearVelocity().y);
         }
-        if (move.isRight() && !move.isLeft()) {
+        if (move.getState(Constants.RIGHT) && !move.getState(Constants.LEFT)) {
             body.setLinearVelocity(FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, body.getLinearVelocity().y);
         }
-        if (!move.isLeft() && !move.isRight()) {
+        if (!move.getState(Constants.LEFT) && !move.getState(Constants.RIGHT)) {
             body.setLinearVelocity(body.getLinearVelocity().x / 2, body.getLinearVelocity().y);
         }
-        if (inJump == false && move.isJump()) {
+        if (inJump == false && move.getState(Constants.JUMP)) {
             inJump = true;
             body.setLinearVelocity(body.getLinearVelocity().x, FOOTBALLER_JUMP * Constants.WORLD_TO_BOX);
         }
-        if (move.isHit()) {
+        if (move.getState(Constants.HIT)) {
             leg.setAngularVelocity(JOINT_ANGULAR_VELOCITY);
         }
         else {

@@ -30,7 +30,7 @@ public class AIPlayer implements Player {
         float myPositionX;
         float myPositionY = footballers[footballerNumber].getPosition().y;
 
-        Move move = new Move(false, false, false, false);
+        Move move = new Move();
         if (footballerNumber == 1) {
             ballPositionX = Constants.VIRTUAL_WIDTH * Constants.WORLD_TO_BOX - ball.getPosition().x;
             myPositionX = Constants.VIRTUAL_WIDTH * Constants.WORLD_TO_BOX - footballers[footballerNumber].getPosition().x;
@@ -41,35 +41,35 @@ public class AIPlayer implements Player {
         }
 
         if (ballPositionY < myPositionY - Footballer.getFootballerRadius()) {
-            move.setLeft(true);
+            move.setState(Constants.LEFT, true);
         }
         else {
             if (ballPositionX < myPositionX) {
                 if (myPositionX - ballPositionX < JUMP_RADIUS && myPositionY > ballPositionY) {
-                    move.setJump(true);
-                    move.setLeft(true);
+                    move.setState(Constants.JUMP, true);
+                    move.setState(Constants.LEFT, true);
                 }
                 else {
-                    move.setLeft(true);
+                    move.setState(Constants.LEFT, true);
                 }
             }
             else {
                 if (ballPositionX - myPositionX < HIT_RADIUS) {
-                    move.setHit(true);
-                    move.setRight(true);
+                    move.setState(Constants.HIT, true);
+                    move.setState(Constants.RIGHT, true);
                 }
                 else if (ballPositionX - myPositionX < JUMP_RADIUS && ballPositionY > myPositionY) {
-                    move.setLeft(true);
+                    move.setState(Constants.LEFT, true);
                 }
                 else {
-                    move.setRight(true);
+                    move.setState(Constants.RIGHT, true);
                 }
             }
         }
         if (footballerNumber == 1) {
-            boolean tmp = move.isLeft();
-            move.setLeft(move.isRight());
-            move.setRight(tmp);
+            boolean tmp = move.getState(Constants.LEFT);
+            move.setState(Constants.LEFT, move.getState(Constants.RIGHT));
+            move.setState(Constants.RIGHT, tmp);
         }
         return move;
     }

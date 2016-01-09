@@ -8,6 +8,7 @@ import com.nikitosh.headball.Move;
 public class KeyboardInputController implements InputController{
     private Table infoTable;
     private Move move = new Move();
+    private int[] keys = {Input.Keys.SPACE, Input.Keys.UP, Input.Keys.LEFT, Input.Keys.RIGHT};
 
     public KeyboardInputController(Table infoTable) {
         this.infoTable = infoTable;
@@ -15,29 +16,13 @@ public class KeyboardInputController implements InputController{
 
     @Override
     public Move getMove() {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            move.setLeft(true);
-        }
-        else {
-            move.setLeft(false);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            move.setRight(true);
-        }
-        else {
-            move.setRight(false);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            move.setJump(true);
-        }
-        else {
-            move.setJump(false);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            move.setHit(true);
-        }
-        else {
-            move.setHit(false);
+        for (int i = 0; i < keys.length; i++) {
+            if (Gdx.input.isKeyPressed(keys[i])) {
+                move.setState(i, true);
+            }
+            else {
+                move.setState(i, false);
+            }
         }
         return move;
     }

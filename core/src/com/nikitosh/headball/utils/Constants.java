@@ -34,4 +34,9 @@ public class Constants {
     public static final String SETTINGS_CONTROL_BUTTONS = "Buttons";
     public static final String SETTINGS_CONTROL_TOUCHPAD = "Touchpad";
     public static final String SETTINGS_CONTROL_KEYBOARD = "Keyboard";
+
+    public static final int HIT = 0;
+    public static final int JUMP = 1;
+    public static final int LEFT = 2;
+    public static final int RIGHT = 3;
 }

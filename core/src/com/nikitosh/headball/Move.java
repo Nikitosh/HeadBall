@@ -4,56 +4,39 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 public class Move {
-    private boolean isHit = false;
-    private boolean isJump = false;
-    private boolean isLeft = false;
-    private boolean isRight = false;
+
+    private boolean[] footballerState = new boolean[4];
 
     public Move() {
+        clear();
     }
 
-    public Move(boolean isHit, boolean isJump, boolean isLeft, boolean isRight) {
-        this.isHit = isHit;
-        this.isJump = isJump;
-        this.isLeft = isLeft;
-        this.isRight = isRight;
+    public Move(boolean[] footballerState) {
+        for (int i = 0; i < 4; i++) {
+            this.footballerState[i] = footballerState[i];
+        }
     }
 
-    public boolean isHit() {
-        return isHit;
+    public boolean getState(int i) {
+        return footballerState[i];
     }
 
-    public void setHit(boolean isHit) {
-        this.isHit = isHit;
+    public void setState(int i, boolean st) {
+        footballerState[i] = st;
     }
 
-    public boolean isJump() {
-        return isJump;
-    }
-
-    public void setJump(boolean isJump) {
-        this.isJump = isJump;
-    }
-
-    public boolean isLeft() {
-        return isLeft;
-    }
-
-    public void setLeft(boolean isLeft) {
-        this.isLeft = isLeft;
-    }
-
-    public boolean isRight() {
-        return isRight;
-    }
-
-    public void setRight(boolean isRight) {
-        this.isRight = isRight;
+    public void clear() {
+        for (int i = 0; i < 4; i++) {
+            footballerState[i] = false;
+        }
     }
 
     public void serialize(DataOutputStream outputStream) {
         try {
-            outputStream.writeUTF((isHit ? "1" : "0") + (isJump ? "1" : "0") + (isLeft ? "1" : "0") + (isRight ? "1" : "0") + "\n");
+            byte message = 0;
+            for (int i = 0; i < 4; i++)
+                message |= (1 << (i + 1));
+            outputStream.write(message);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -61,21 +44,14 @@ public class Move {
     }
 
     public static Move deserialize(DataInputStream inputStream) {
-        int b = 0;
         try {
-            String moveString = inputStream.readUTF();
-            Move move = new Move(false, false, false, false);
-            if (moveString.charAt(0) == '1') {
-                move.isHit = true;
-            }
-            if (moveString.charAt(1) == '1') {
-                move.isJump = true;
-            }
-            if (moveString.charAt(2) == '1') {
-                move.isLeft = true;
-            }
-            if (moveString.charAt(3) == '1') {
-                move.isRight = true;
+            byte message = (byte) inputStream.read();
+            Move move = new Move();
+            for (int i = 0; i < 4; i++) {
+                if (message % 2 == 1) {
+                    move.setState(i, true);
+                }
+                message /= 2;
             }
             return move;
         }
