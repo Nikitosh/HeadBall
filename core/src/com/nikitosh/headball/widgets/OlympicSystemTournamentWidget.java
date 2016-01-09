@@ -10,7 +10,7 @@ import com.nikitosh.headball.utils.Constants;
 
 public class OlympicSystemTournamentWidget extends WidgetGroup implements ResultTable {
     private int currentKnownTeamNumber = 0;
-    private Array<Label> labels = new Array<Label>();
+    private Array<Label> labels = new Array<>();
     private float width;
     private float height;
 

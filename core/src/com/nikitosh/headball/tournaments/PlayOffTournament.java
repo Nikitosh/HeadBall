@@ -22,9 +22,9 @@ public class PlayOffTournament implements Tournament {
     private int lapNumber;
     private int selectedTeamIndex;
     private int currentRound = 0;
-    private Array<Team> teams = new Array<Team>();
+    private Array<Team> teams = new Array<>();
     private Array<Integer> nextRoundParticipants;
-    private Array<Array<Integer>> tournamentBracket = new Array<Array<Integer>>();
+    private Array<Array<Integer>> tournamentBracket = new Array<>();
     private OlympicSystemTournamentWidget resultTable;
     private StatisticsTable statisticsTable;
 
@@ -38,7 +38,7 @@ public class PlayOffTournament implements Tournament {
             teams.add(new Team(teamName));
         }
         generateTimetable();
-        Array<Integer> firstRound = new Array<Integer>();
+        Array<Integer> firstRound = new Array<>();
         for (int i = 0; i < teams.size; i++) {
             firstRound.add(i);
         }
@@ -61,7 +61,7 @@ public class PlayOffTournament implements Tournament {
     public void simulateNextRound() {
         Random random = new Random();
         Array<Integer> currentRoundParticipants = tournamentBracket.peek();
-        nextRoundParticipants = new Array<Integer>();
+        nextRoundParticipants = new Array<>();
         for (int i = 0; i < currentRoundParticipants.size; i += 2) {
             int firstTeamIndex = currentRoundParticipants.get(i);
             int secondTeamIndex = currentRoundParticipants.get(i + 1);

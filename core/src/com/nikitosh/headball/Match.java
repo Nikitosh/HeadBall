@@ -2,9 +2,6 @@ package com.nikitosh.headball;
 
 import com.badlogic.gdx.utils.Array;
 
-/**
- * Created by Wowember on 08.01.2016.
- */
 public class Match {
 
     private Team firstTeam = null;

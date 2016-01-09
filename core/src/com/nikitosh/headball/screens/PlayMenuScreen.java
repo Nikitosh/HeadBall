@@ -16,7 +16,6 @@ import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.widgets.BackButtonTable;
 
 public class PlayMenuScreen implements Screen {
-    private static final String BACK = "Back";
     private static final String PRACTICE = "Practice";
     private static final String TOURNAMENT = "Tournament";
     private static final String MULTIPLAYER = "Multiplayer";

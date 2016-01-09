@@ -11,7 +11,7 @@ import com.nikitosh.headball.utils.Constants;
 
 public class ButtonsInputController implements InputController {
 
-    private final static String[] BUTTONS_NAMES = {"Hit", "Jump", "Left", "Right"};
+    private static final String[] BUTTONS_NAMES = {"Hit", "Jump", "Left", "Right"};
 
     private Table uiTable = new Table();
     private Array<GameTextButtonTouchable> buttonsArray = new Array<>();

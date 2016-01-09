@@ -11,9 +11,9 @@ import com.nikitosh.headball.utils.AssetLoader;
 import java.util.Comparator;
 
 public class StatisticsTable extends Table implements ResultTable {
-    private static final Array<String> COLUMN_NAMES = new Array<String>(new String[] {"Team", "W", "D", "L", "GF", "GA", "GD", "Points"});
+    private static final Array<String> COLUMN_NAMES = new Array<>(new String[] {"Team", "W", "D", "L", "GF", "GA", "GD", "Points"});
 
-    private Array<Array<Label>> statisticsLabels = new Array<Array<Label>>();
+    private Array<Array<Label>> statisticsLabels = new Array<>();
 
     public StatisticsTable(Array<Team> teams) {
         super();
@@ -23,7 +23,7 @@ public class StatisticsTable extends Table implements ResultTable {
         row();
         for (int i = 0; i < teams.size; i++) {
             Team team = teams.get(i);
-            Array<Label> teamStatisticsLabels = new Array<Label>();
+            Array<Label> teamStatisticsLabels = new Array<>();
             teamStatisticsLabels.add(new Label(team.getName(), AssetLoader.defaultSkin));
             add(teamStatisticsLabels.peek()).left();
             Array<Integer> statistics = team.getStatistics();
@@ -40,7 +40,7 @@ public class StatisticsTable extends Table implements ResultTable {
     }
 
     public Array<Team> getSortedTeams(Array<Team> teams) {
-        Array<Team> sortedTeams = new Array<Team>(teams);
+        Array<Team> sortedTeams = new Array<>(teams);
         sortedTeams.sort(new Comparator<Team>() {
             @Override
             public int compare(Team o1, Team o2) {

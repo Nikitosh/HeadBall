@@ -4,8 +4,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 public class Move {
+    private static final int STATE_NUMBER = 4;
 
-    private boolean[] footballerState = new boolean[4];
+    private boolean[] footballerState = new boolean[STATE_NUMBER];
 
     public Move() {
         clear();
@@ -19,12 +20,12 @@ public class Move {
         return footballerState[i];
     }
 
-    public void setState(int i, boolean st) {
-        footballerState[i] = st;
+    public void setState(int i, boolean state) {
+        footballerState[i] = state;
     }
 
     public void clear() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < STATE_NUMBER; i++) {
             footballerState[i] = false;
         }
     }
@@ -32,7 +33,7 @@ public class Move {
     public void serialize(DataOutputStream outputStream) {
         try {
             byte message = 0;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < STATE_NUMBER; i++)
                 if (footballerState[i]) {
                     message |= 1 << i;
                 }
@@ -47,7 +48,7 @@ public class Move {
         try {
             byte message = (byte) inputStream.read();
             Move move = new Move();
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < STATE_NUMBER; i++) {
                 if (message % 2 == 1) {
                     move.setState(i, true);
                 }

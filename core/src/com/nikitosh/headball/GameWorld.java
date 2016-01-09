@@ -56,7 +56,7 @@ public class GameWorld {
         footballers = new Footballer[Constants.PLAYERS_NUMBER];
         initializeFootballers();
 
-        walls = new Array<Wall>();
+        walls = new Array<>();
         walls.add(new GroundWall(box2dWorld,
                 0, 0,
                 Constants.FIELD_WIDTH, BOUNDS_WIDTH));

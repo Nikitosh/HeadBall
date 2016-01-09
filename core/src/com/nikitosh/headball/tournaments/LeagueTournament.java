@@ -1,10 +1,8 @@
 package com.nikitosh.headball.tournaments;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Match;
 import com.nikitosh.headball.Team;
-import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.widgets.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,9 +14,9 @@ public class LeagueTournament implements Tournament {
     private int lapNumber;
     private int selectedTeamIndex = 0;
     private int currentRound = 0;
-    private Array<Team> teams = new Array<Team>();
-    private Array<Match> currentRoundMatches = new Array<Match>();
-    private Array<Array<Integer>> timeTable = new Array<Array<Integer>>();
+    private Array<Team> teams = new Array<>();
+    private Array<Match> currentRoundMatches = new Array<>();
+    private Array<Array<Integer>> timeTable = new Array<>();
     private StatisticsTable resultTable;
     private LastRoundTable lastRoundTable;
     private NextRoundTable nextRoundTable;
@@ -42,7 +40,7 @@ public class LeagueTournament implements Tournament {
 
     private void generateTimetable() {
         teams.shuffle();
-        Array<Integer> nextRound = new Array<Integer>();
+        Array<Integer> nextRound = new Array<>();
         for (int i = 0; i < teams.size; i++) {
             nextRound.add(i);
         }

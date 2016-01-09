@@ -9,7 +9,7 @@ public class KeyboardInputController implements InputController{
     private Table infoTable;
     private Move move = new Move();
 
-    private final static int[] KEYS = {Input.Keys.SPACE, Input.Keys.UP, Input.Keys.LEFT, Input.Keys.RIGHT};
+    private static final int[] KEYS = {Input.Keys.SPACE, Input.Keys.UP, Input.Keys.LEFT, Input.Keys.RIGHT};
 
     public KeyboardInputController(Table infoTable) {
         this.infoTable = infoTable;

@@ -15,12 +15,12 @@ public class LastRoundTable extends Table implements ResultTable {
     private final static int SCORE_COLUMN = 1;
     private final static int COLUMN_COUNT = 3;
 
-    private Array<Array<Label>> statisticsLabels = new Array<Array<Label>>();
+    private Array<Array<Label>> statisticsLabels = new Array<>();
 
     public LastRoundTable(int size) {
         super();
         for (int i = 0; i < size; i++) {
-            Array<Label> matchStatisticsLabels = new Array<Label>();
+            Array<Label> matchStatisticsLabels = new Array<>();
             for (int j = 0; j < COLUMN_COUNT; j++) {
                 matchStatisticsLabels.add(new Label("", AssetLoader.defaultSkin));
                 add(matchStatisticsLabels.peek()).left();
