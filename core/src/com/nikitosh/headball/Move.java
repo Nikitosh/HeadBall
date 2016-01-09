@@ -12,9 +12,7 @@ public class Move {
     }
 
     public Move(boolean[] footballerState) {
-        for (int i = 0; i < 4; i++) {
-            this.footballerState[i] = footballerState[i];
-        }
+        System.arraycopy(footballerState, 0, this.footballerState, 0, footballerState.length);
     }
 
     public boolean getState(int i) {
@@ -35,7 +33,9 @@ public class Move {
         try {
             byte message = 0;
             for (int i = 0; i < 4; i++)
-                message |= (1 << (i + 1));
+                if (footballerState[i]) {
+                    message |= 1 << i;
+                }
             outputStream.write(message);
         }
         catch (Exception e) {

@@ -53,7 +53,7 @@ public class LeagueTournament implements Tournament {
                 nextRound.set(j - 1, nextRound.get(nextRound.size - 1));
                 nextRound.set(nextRound.size - 1, tmp);
             }
-            timeTable.add(new Array<Integer>(nextRound));
+            timeTable.add(new Array<>(nextRound));
         }
     }
 

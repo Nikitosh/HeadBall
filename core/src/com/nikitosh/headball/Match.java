@@ -37,7 +37,7 @@ public class Match {
     }
 
     public Array<String> getStatistics() {
-        return new Array<String>(new String[] {firstTeam.getName(), firstTeamScore+" : "+secondTeamScore, secondTeam.getName()});
+        return new Array<>(new String[] {firstTeam.getName(), firstTeamScore+" : "+secondTeamScore, secondTeam.getName()});
     }
 }
 
