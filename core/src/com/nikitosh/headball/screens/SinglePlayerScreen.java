@@ -34,4 +34,10 @@ public class SinglePlayerScreen extends GameScreen {
         stage.draw();
         stage.act(delta);
     }
+
+    @Override
+    public void restartGame() {
+        super.restartGame();
+        players[1] = new AIPlayer(gameWorld, 1);
+    }
 }

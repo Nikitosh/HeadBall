@@ -12,6 +12,8 @@ import java.util.Comparator;
 import java.util.Random;
 
 public class LeagueTournament implements Tournament {
+    private static final int MAXIMUM_GOALS_NUMBER = 3;
+
     private int lapNumber;
     private int selectedTeamIndex = 0;
     private int currentRound = 0;
@@ -26,9 +28,8 @@ public class LeagueTournament implements Tournament {
     public LeagueTournament(JSONObject tournament) {
         lapNumber = ((Long) tournament.get("lapNumber")).intValue();
         JSONArray participantsNames = (JSONArray) tournament.get("participants");
-        for (int i = 0; i < participantsNames.size(); i++) {
-            String teamName = (String) participantsNames.get(i);
-            teams.add(new Team(teamName));
+        for (Object teamName : participantsNames) {
+            teams.add(new Team((String) teamName));
         }
         generateTimetable();
 
@@ -46,9 +47,8 @@ public class LeagueTournament implements Tournament {
             nextRound.add(i);
         }
         for (int i = 0; i < lapNumber; i++) {
-            int tmp = 0;
             for (int j = nextRound.size - 1; j > 1; j--) {
-                tmp = nextRound.get(j - 1);
+                int tmp = nextRound.get(j - 1);
                 nextRound.set(j - 1, nextRound.get(nextRound.size - 1));
                 nextRound.set(nextRound.size - 1, tmp);
             }
@@ -58,7 +58,7 @@ public class LeagueTournament implements Tournament {
 
     @Override
     public void setSelectedTeam(Team teamName) {
-        selectedTeamIndex = teams.indexOf(teamName, false);
+        selectedTeamIndex = teams.indexOf(teamName, false); //false means comparison with .equals() not ==
         assert(selectedTeamIndex != -1);
     }
 
@@ -70,8 +70,8 @@ public class LeagueTournament implements Tournament {
             int firstTeamIndex = currentRoundParticipants.get(i);
             int secondTeamIndex = currentRoundParticipants.get(i + 1);
             if (firstTeamIndex != selectedTeamIndex && secondTeamIndex != selectedTeamIndex) {
-                int firstTeamScore = random.nextInt(3);
-                int secondTeamScore = random.nextInt(3);
+                int firstTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
+                int secondTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
                 Match match = new Match(teams.get(firstTeamIndex),
                         teams.get(secondTeamIndex), firstTeamScore, secondTeamScore);
                 currentRoundMatches.add(match);

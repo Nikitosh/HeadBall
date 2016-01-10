@@ -82,10 +82,10 @@ public class Team {
     }
 
     public Array<Integer> getStatistics() {
-        return new Array<Integer>(new Integer[] {winNumber, drawNumber, lossNumber, goalsFor, goalsAgainst, goalsFor - goalsAgainst, points});
+        return new Array<>(new Integer[] {winNumber, drawNumber, lossNumber, goalsFor, goalsAgainst, goalsFor - goalsAgainst, points});
     }
 
-    public static final Comparator<Team> getComparator() {
+    public static Comparator<Team> getComparator() {
         return comparator;
     }
 }

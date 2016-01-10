@@ -23,7 +23,6 @@ public class SettingsScreen implements Screen {
     private static final String DISABLED_ICON_NAME = "red_boxCross";
 
     private Stage stage;
-    private Table settingsTable;
 
     private Drawable[] drawables;
     private int soundState = GameSettings.getBoolean(Constants.SETTINGS_SOUND) ? 1 : 0;
@@ -60,12 +59,12 @@ public class SettingsScreen implements Screen {
         });
 
         Button controlButton = new GameTextButton(Constants.SETTINGS_CONTROL);
-        selectBox = new SelectBox<String>(AssetLoader.defaultSkin);
-        selectBox.setItems(new String[]{Constants.SETTINGS_CONTROL_BUTTONS, Constants.SETTINGS_CONTROL_TOUCHPAD,
-                Constants.SETTINGS_CONTROL_KEYBOARD});
+        selectBox = new SelectBox<>(AssetLoader.defaultSkin);
+        selectBox.setItems(Constants.SETTINGS_CONTROL_BUTTONS, Constants.SETTINGS_CONTROL_TOUCHPAD,
+                Constants.SETTINGS_CONTROL_KEYBOARD);
         selectBox.setSelected(GameSettings.getString(Constants.SETTINGS_CONTROL));
 
-        settingsTable = new Table();
+        Table settingsTable = new Table();
         settingsTable.setFillParent(true);
         settingsTable.add(soundTextButton).pad(Constants.UI_ELEMENTS_INDENT);
         settingsTable.add(soundButton).pad(Constants.UI_ELEMENTS_INDENT).row();
@@ -78,6 +77,7 @@ public class SettingsScreen implements Screen {
         stack.setFillParent(true);
         stack.addActor(background);
         stack.addActor(new BackButtonTable(game, this, previousScreen, new Runnable() {
+            //runnable is used to save settings when "back" button pressed
             @Override
             public void run() {
                 GameSettings.putBoolean(Constants.SETTINGS_SOUND, soundState != 0);

@@ -13,7 +13,7 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 public class Ball extends Actor {
     private static final float BALL_RADIUS = 10;
-    private static final float BALL_DENSITY = 10f;
+    private static final float BALL_DENSITY = 1f;
     private static final float BALL_FRICTION = 0.1f;
     private static final float BALL_RESTITUTION = 0.6f;
 

@@ -15,6 +15,7 @@ public class OlympicSystemTournamentWidget extends WidgetGroup implements Result
     private float height;
 
     public OlympicSystemTournamentWidget(int roundNumber, Array<Team> teams, Array<Array<Integer>> tournamentBracket) {
+        //maxWidth and maxHeight are used to make all labels in widget equal size
         float maxWidth = 0;
         float maxHeight = 0;
         for (int i = 0; i < teams.size; i++) {
@@ -27,6 +28,7 @@ public class OlympicSystemTournamentWidget extends WidgetGroup implements Result
         for (int i = 0; i < roundNumber; i++) {
             for (int j = 0; j < currentTeamNumber; j++) {
                 String name = "";
+                //if there is result of current round in tournamentBracket
                 if (i < tournamentBracket.size && j < tournamentBracket.get(i).size) {
                     name = teams.get(tournamentBracket.get(i).get(j)).getName();
                     currentKnownTeamNumber++;
@@ -36,12 +38,14 @@ public class OlympicSystemTournamentWidget extends WidgetGroup implements Result
                 label.setSize(maxWidth, maxHeight);
                 labels.add(label);
 
-                if (currentTeamIndex >= teams.size) {
+                if (currentTeamIndex >= teams.size) { //if it's not first column
+                    //prevTeamIndex and prevTeamIndex + 1 are indices of two teams, winner of match between them
+                    //will take place in current label
                     int prevTeamIndex = currentTeamIndex - j - 2 * currentTeamNumber + 2 * j;
                     label.setPosition(labels.get(prevTeamIndex).getX() + maxWidth + Constants.UI_ELEMENTS_INDENT,
                             (labels.get(prevTeamIndex).getY() + labels.get(prevTeamIndex + 1).getY()) / 2);
                 }
-                else {
+                else { //first column, every next team is under previous
                     label.setPosition(Constants.UI_ELEMENTS_INDENT,
                             (maxHeight + Constants.UI_ELEMENTS_INDENT) * (teams.size - currentTeamIndex - 1) +
                                     Constants.UI_ELEMENTS_INDENT);

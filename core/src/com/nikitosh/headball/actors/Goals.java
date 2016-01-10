@@ -15,36 +15,30 @@ public class Goals extends Actor {
     private static final float GOALS_DENSITY = 1f;
     private static final float GOALS_FRICTION = 1f;
     private static final float GOALS_RESTITUTION = 0f;
-    private float width;
-    private float height;
-
-    private enum Side {LEFT, RIGHT};
 
     private Body body;
-    private Side side;
+
+    private float width;
+    private float height;
+    private boolean left;
+
 
     public Goals(World world, float x, float y, float width, float height, boolean left) {
         this.width = width;
         this.height = height;
+        this.left = left;
 
         body = Utilities.getRectangularBody(world, x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX,
                 width * Constants.WORLD_TO_BOX, height * Constants.WORLD_TO_BOX, GOALS_DENSITY, GOALS_FRICTION,
                 GOALS_RESTITUTION, Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
         body.setType(BodyDef.BodyType.StaticBody);
         body.getFixtureList().get(0).setUserData(this);
-
-        if (left) {
-            side = Side.LEFT;
-        }
-        else {
-            side = Side.RIGHT;
-        }
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Box2DSprite box2DSprite;
-        if (side == Side.LEFT) {
+        if (left) {
             box2DSprite = new Box2DSprite(AssetLoader.goalsTexture);
         }
         else {
@@ -57,7 +51,7 @@ public class Goals extends Actor {
     }
 
     public boolean contains(Vector2 point) {
-        if (side == Side.LEFT) {
+        if (left) {
             return point.x < body.getPosition().x + width / 2 * Constants.WORLD_TO_BOX && point.y < body.getPosition().y;
         }
         else {

@@ -1,6 +1,5 @@
 package com.nikitosh.headball.tournaments;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Match;
 import com.nikitosh.headball.Team;
@@ -32,10 +31,8 @@ public class PlayOffTournament implements Tournament {
         lapNumber = ((Long) tournament.get(LAP_NUMBER)).intValue();
         JSONArray participantsNames = (JSONArray) tournament.get(PARTICIPANTS);
         TeamReader teamReader = new TeamReader();
-        for (int i = 0; i < participantsNames.size(); i++) {
-            String teamName = (String) participantsNames.get(i);
-            //TODO teams.add(teamReader.getTeam(teamName));
-            teams.add(new Team(teamName));
+        for (Object teamName : participantsNames) {
+            teams.add(new Team((String) teamName));
         }
         generateTimetable();
         Array<Integer> firstRound = new Array<>();
@@ -53,7 +50,7 @@ public class PlayOffTournament implements Tournament {
 
     @Override
     public void setSelectedTeam(Team selectedTeam) {
-        selectedTeamIndex = teams.indexOf(selectedTeam, false); //false for .equals() using, not ==
+        selectedTeamIndex = teams.indexOf(selectedTeam, false); //false means comparison with .equals() not ==
         assert(selectedTeamIndex != -1);
     }
 

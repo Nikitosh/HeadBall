@@ -34,6 +34,7 @@ public class RectangleWall extends Wall {
     public void draw(Batch batch, float parentAlpha) {
         batch.end();
 
+        //magic code for using ShapeRenderer on given batch
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
         shapeRenderer.translate(getX(), getY(), 0);

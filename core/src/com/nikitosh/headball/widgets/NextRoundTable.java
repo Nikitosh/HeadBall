@@ -12,7 +12,7 @@ import com.nikitosh.headball.utils.AssetLoader;
 
 public class NextRoundTable extends Table implements ResultTable {
 
-    private Array<Array<Label>> statisticsLabels = new Array<Array<Label>>();
+    private Array<Array<Label>> statisticsLabels = new Array<>();
 
     public NextRoundTable(Array<Integer> nextRoundTimeTable, Array<Team> teams) {
         super();
@@ -35,7 +35,6 @@ public class NextRoundTable extends Table implements ResultTable {
     public void update(Array<Integer> nextRoundTimeTable, Array<Team> teams) {
         for (int i = 0; i < teams.size / 2; i++) {
             statisticsLabels.get(i).get(0).setText(teams.get(nextRoundTimeTable.get(i * 2)).getName());
-            statisticsLabels.get(i).get(1).setText("vs");
             statisticsLabels.get(i).get(2).setText(teams.get(nextRoundTimeTable.get(i * 2 + 1)).getName());
         }
     }

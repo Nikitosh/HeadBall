@@ -26,7 +26,6 @@ public class TournamentChoosingScreen implements Screen {
 
 
     private Stage stage;
-    private Table levelContainer;
 
     public TournamentChoosingScreen(final Game game, final Screen previousScreen) {
         PagedScrollPane scrollPane = new PagedScrollPane();
@@ -53,7 +52,7 @@ public class TournamentChoosingScreen implements Screen {
 
             scrollPane.addPage(tournamentCell);
         }
-        levelContainer = new Table();
+        Table levelContainer = new Table();
         levelContainer.setFillParent(true);
         levelContainer.add(scrollPane).expand().fill();
 

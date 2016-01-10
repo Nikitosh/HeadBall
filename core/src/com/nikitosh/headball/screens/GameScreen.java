@@ -37,13 +37,14 @@ public abstract class GameScreen implements Screen {
     protected Player[] players;
 
     protected Stage stage;
+    protected Table mainTable = new Table();
     protected Table pauseButtonTable;
     protected InputController inputController;
 
     private Label scoreLabel;
     private Label timerLabel;
 
-    protected enum GameState {GAME_RUNNING, GAME_PAUSED, GAME_OVER};
+    protected enum GameState {GAME_RUNNING, GAME_PAUSED, GAME_OVER}
     protected GameState gameState = GameState.GAME_RUNNING;
 
     protected Window pauseScreen;
@@ -113,10 +114,8 @@ public abstract class GameScreen implements Screen {
             inputController = new KeyboardInputController(infoTable);
         }
 
-        Table mainTable = new Table();
         mainTable.setFillParent(true);
-        mainTable.add(gameWorld.getGroup()).top().expand().fillX().height(Constants.FIELD_HEIGHT).row();
-        mainTable.add(inputController.getTable()).bottom().fill().expand().row();
+        initializeMainTable();
 
         players = new Player[Constants.PLAYERS_NUMBER];
 
@@ -206,6 +205,13 @@ public abstract class GameScreen implements Screen {
         gameWorld.getBox2dWorld().dispose();
         gameWorld = new GameWorld(gameWorld.isDrawResultPossible());
         gameState = GameState.GAME_RUNNING;
+        mainTable.reset();
+        initializeMainTable();
+    }
+
+    private void initializeMainTable() {
+        mainTable.add(gameWorld.getGroup()).top().expand().fillX().height(Constants.FIELD_HEIGHT).row();
+        mainTable.add(inputController.getTable()).bottom().fill().expand().row();
     }
 
     public void exitGame() {

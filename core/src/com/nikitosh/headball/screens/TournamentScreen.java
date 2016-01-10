@@ -31,7 +31,6 @@ public class TournamentScreen implements Screen {
     private static final String EXIT = "Exit";
 
     private Stage stage;
-    private Table table = new Table();
     private final Game game;
     private Tournament tournament;
     private Team playerTeam;
@@ -82,6 +81,7 @@ public class TournamentScreen implements Screen {
         upTable.add(tournament.getResultTable().getTable());
         upTable.add(tournament.getStatisticsTable().getTable()).row();
 
+        Table table = new Table();
         table.setFillParent(true);
         table.add(upTable).row();
         table.add(playButton).pad(Constants.UI_ELEMENTS_INDENT);

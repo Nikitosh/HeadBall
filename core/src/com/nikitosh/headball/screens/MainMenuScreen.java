@@ -19,7 +19,6 @@ public class MainMenuScreen implements Screen {
     private static final String ABOUT = "About";
 
     private Stage stage;
-    private Table table;
 
     public MainMenuScreen(final Game game) {
         Image background = new Image(AssetLoader.menuTexture);
@@ -49,7 +48,7 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        table = new Table();
+        Table table = new Table();
         table.setFillParent(true);
         table.add(playTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();
         table.add(settingsTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();

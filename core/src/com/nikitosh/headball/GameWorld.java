@@ -156,16 +156,15 @@ public class GameWorld {
         destroy();
         initializeFootballers();
         initializeBall();
+        initializeGoals();
     }
 
     private void destroy() {
-        group.removeActor(ball);
         for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
             group.removeActor(footballers[i]);
-        }
-        for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
             box2dWorld.destroyBody(footballers[i].getBody());
         }
+        group.removeActor(ball);
         box2dWorld.destroyBody(ball.getBody());
     }
 
@@ -174,14 +173,18 @@ public class GameWorld {
             footballers[i] = new Footballer(box2dWorld,
                     FOOTBALLER_INITIAL_POSITION_X[i], FOOTBALLER_INITIAL_POSITION_Y[i], FOOTBALLER_INITIAL_LEFT[i]);
             group.addActor(footballers[i]);
-            footballers[i].setZIndex(walls.size + 2); //to draw footballers over walls and background
         }
     }
 
     private void initializeBall() {
         ball = new Ball(box2dWorld, BALL_INITIAL_POSITION_X, BALL_INITIAL_POSITION_Y);
         group.addActor(ball);
-        ball.setZIndex(walls.size + 2); //to draw ball over walls and background
+    }
+
+    private void initializeGoals() {
+        for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
+            goals[i].setZIndex(group.getChildren().size);
+        }
     }
 
     public World getBox2dWorld() {

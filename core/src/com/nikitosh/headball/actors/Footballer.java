@@ -1,5 +1,6 @@
 package com.nikitosh.headball.actors;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -17,26 +18,25 @@ public class Footballer extends Actor {
     private static final float FOOTBALLER_RADIUS = 20;
     private static final float FOOTBALLER_SPEED = 100;
     private static final float FOOTBALLER_JUMP = 200;
-    private static final float FOOTBALLER_DENSITY = 45f;
+    private static final float FOOTBALLER_DENSITY = 5f;
     private static final float FOOTBALLER_FRICTION = 0.1f;
     private static final float FOOTBALLER_RESTITUTION = 0f;
 
-    private static final float ROTATOR_WIDTH = 4;
-    private static final float ROTATOR_DENSITY = 45f;
+    private static final float ROTATOR_WIDTH = 10;
+    private static final float ROTATOR_DENSITY = 5f;
     private static final float ROTATOR_FRICTION = 0f;
     private static final float ROTATOR_RESTITUTION = 0f;
 
-    private static final float LEG_WIDTH = 10;
-    private static final float LEG_HEIGHT= 6;
-    private static final float LEG_DENSITY = 150f;
+    private static final float LEG_WIDTH = 16;
+    private static final float LEG_HEIGHT = 10;
+    private static final float LEG_DENSITY = 5f;
     private static final float LEG_FRICTION = 0f;
     private static final float LEG_RESTITUTION = 0f;
 
-    private static final float JOINT_LOWER_ANGLE = (float) -Math.PI / 2;
-    private static final float JOINT_UPPER_ANGLE = 0f;
+    private static final float JOINT_LOWER_ANGLE = 0;
+    private static final float JOINT_UPPER_ANGLE = (float) Math.PI / 3;
     private static final float JOINT_ANGULAR_VELOCITY = 30f;
-
-
+    private static final float JOINT_EPSILON = 0.1f;
 
     private Body body;
     private Body leg;
@@ -55,6 +55,11 @@ public class Footballer extends Actor {
         body.setFixedRotation(true);
         body.getFixtureList().get(0).setUserData(this);
 
+        /*
+        Rotator is used for rotating leg around footballer's body
+        This is done by creating two joints: revolute joint, connecting footballer's body and rotator, and
+        weld joint, connecting rotator and leg
+        */
         Body rotator = Utilities.getRectangularBody(world,
                 (x - ROTATOR_WIDTH / 2) * Constants.WORLD_TO_BOX, (y - ROTATOR_WIDTH / 2) * Constants.WORLD_TO_BOX,
                 ROTATOR_WIDTH * Constants.WORLD_TO_BOX, ROTATOR_WIDTH * Constants.WORLD_TO_BOX,
@@ -62,7 +67,7 @@ public class Footballer extends Actor {
                 Constants.ROTATOR_CATEGORY, Constants.ROTATOR_MASK);
 
         leg = Utilities.getRectangularBody(world,
-                (x + FOOTBALLER_RADIUS + 1) * Constants.WORLD_TO_BOX, (y - LEG_HEIGHT / 2) * Constants.WORLD_TO_BOX,
+                (x - LEG_WIDTH / 2) * Constants.WORLD_TO_BOX, (y - FOOTBALLER_RADIUS - LEG_HEIGHT - 1) * Constants.WORLD_TO_BOX,
                 LEG_WIDTH * Constants.WORLD_TO_BOX, LEG_HEIGHT * Constants.WORLD_TO_BOX,
                 LEG_DENSITY, LEG_FRICTION, LEG_RESTITUTION,
                 Constants.LEG_CATEGORY, Constants.LEG_MASK);
@@ -105,27 +110,25 @@ public class Footballer extends Actor {
         if (!move.getState(Constants.LEFT) && !move.getState(Constants.RIGHT)) {
             body.setLinearVelocity(body.getLinearVelocity().x / 2, body.getLinearVelocity().y);
         }
-        if (inJump == false && move.getState(Constants.JUMP)) {
+        if (!inJump && move.getState(Constants.JUMP)) {
             inJump = true;
             body.setLinearVelocity(body.getLinearVelocity().x, FOOTBALLER_JUMP * Constants.WORLD_TO_BOX);
         }
-        if (move.getState(Constants.HIT)) {
+        if (move.getState(Constants.HIT) &&
+                revoluteJoint.getJointAngle() < revoluteJoint.getUpperLimit() - JOINT_EPSILON) {
             leg.setAngularVelocity(JOINT_ANGULAR_VELOCITY);
+        }
+        else if (!move.getState(Constants.HIT) &&
+                revoluteJoint.getJointAngle() > revoluteJoint.getLowerLimit() + JOINT_EPSILON) {
+            leg.setAngularVelocity(-JOINT_ANGULAR_VELOCITY);
         }
         else {
-            leg.setAngularVelocity(-JOINT_ANGULAR_VELOCITY);
-        }
-        if (revoluteJoint.getJointAngle() < revoluteJoint.getLowerLimit()) {
-            leg.setAngularVelocity(JOINT_ANGULAR_VELOCITY);
-        }
-        if (revoluteJoint.getJointAngle() > revoluteJoint.getUpperLimit()) {
-            leg.setAngularVelocity(-JOINT_ANGULAR_VELOCITY);
+            leg.setAngularVelocity(0);
         }
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-
         Box2DSprite box2DSprite;
         if (left) {
             box2DSprite = new Box2DSprite(AssetLoader.footballerTexture);
@@ -138,7 +141,8 @@ public class Footballer extends Actor {
                 2 * FOOTBALLER_RADIUS, 2 * FOOTBALLER_RADIUS, body.getAngle());
         box2DSprite = new Box2DSprite(AssetLoader.footballerTexture);
         box2DSprite.draw(batch,
-                leg.getPosition().x * Constants.BOX_TO_WORLD, leg.getPosition().y * Constants.BOX_TO_WORLD,
+                leg.getPosition().x * Constants.BOX_TO_WORLD,
+                leg.getPosition().y * Constants.BOX_TO_WORLD,
                 LEG_WIDTH, LEG_HEIGHT, leg.getAngle());
     }
 

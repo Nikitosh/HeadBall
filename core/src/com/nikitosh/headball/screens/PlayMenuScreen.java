@@ -21,7 +21,6 @@ public class PlayMenuScreen implements Screen {
     private static final String MULTIPLAYER = "Multiplayer";
 
     private Stage stage;
-    private Table menuTable;
 
     public PlayMenuScreen(final Game game, final Screen previousScreen) {
         Image background = new Image(AssetLoader.menuTexture);
@@ -51,7 +50,7 @@ public class PlayMenuScreen implements Screen {
             }
         });
 
-        menuTable = new Table();
+        Table menuTable = new Table();
         menuTable.setFillParent(true);
         menuTable.add(practiceTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();
         menuTable.add(tournamentTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();

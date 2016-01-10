@@ -15,7 +15,6 @@ public class AboutScreen implements Screen {
     private static final String ABOUT_TEXT = "This game was developed by Nikitosh & Wowember";
 
     private Stage stage;
-    private Table aboutTable;
 
     public AboutScreen(final Game game, final Screen previousScreen) {
         Image background = new Image(AssetLoader.menuTexture);
@@ -23,7 +22,7 @@ public class AboutScreen implements Screen {
 
         Label aboutLabel = new Label(ABOUT_TEXT, AssetLoader.defaultSkin);
 
-        aboutTable = new Table();
+        Table aboutTable = new Table();
         aboutTable.setFillParent(true);
         aboutTable.add(aboutLabel);
 
