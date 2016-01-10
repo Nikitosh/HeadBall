@@ -200,7 +200,13 @@ public abstract class GameScreen implements Screen {
         darkBackground.remove();
     }
 
-    public abstract void restartGame();
+    public void restartGame() {
+        pauseScreen.remove();
+        darkBackground.remove();
+        gameWorld.getBox2dWorld().dispose();
+        gameWorld = new GameWorld(gameWorld.isDrawResultPossible());
+        gameState = GameState.GAME_RUNNING;
+    }
 
     public void exitGame() {
         synchronized (this) {

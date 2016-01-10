@@ -1,6 +1,5 @@
 package com.nikitosh.headball.tournaments;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.widgets.ResultTable;
@@ -14,4 +13,6 @@ public interface Tournament {
     ResultTable getResultTable();
     ResultTable getStatisticsTable();
     boolean isEnded();
+    boolean isDrawResultPossible();
+    boolean isWinner(Team team);
 }

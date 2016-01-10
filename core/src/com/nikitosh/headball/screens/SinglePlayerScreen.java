@@ -2,6 +2,7 @@ package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.nikitosh.headball.GameWorld;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.players.AIPlayer;
 
@@ -32,11 +33,5 @@ public class SinglePlayerScreen extends GameScreen {
         }
         stage.draw();
         stage.act(delta);
-    }
-
-    @Override
-    public void restartGame() {
-        dispose();
-        game.setScreen(new SinglePlayerScreen(game, firstTeam, secondTeam, previousScreen, gameWorld.isDrawResultPossible()));
     }
 }

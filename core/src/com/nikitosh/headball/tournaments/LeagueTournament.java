@@ -8,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.security.acl.Group;
+import java.util.Comparator;
 import java.util.Random;
 
 public class LeagueTournament implements Tournament {
@@ -132,5 +133,20 @@ public class LeagueTournament implements Tournament {
     @Override
     public boolean isEnded() {
         return currentRound == lapNumber;
+    }
+
+    @Override
+    public boolean isDrawResultPossible() {
+        return true;
+    }
+
+    @Override
+    public boolean isWinner(Team team) {
+        if (!isEnded()) {
+            return false;
+        }
+        Array<Team> sortedTeams = teams;
+        sortedTeams.sort(Team.getComparator());
+        return sortedTeams.get(0).equals(team);
     }
 }

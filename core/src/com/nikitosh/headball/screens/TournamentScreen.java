@@ -6,21 +6,41 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.tournaments.LeagueTournament;
 import com.nikitosh.headball.tournaments.Tournament;
+import com.nikitosh.headball.ui.GameTextButton;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
+import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
-public class LeagueTournamentScreen implements Screen {
+import java.awt.*;
+
+public class TournamentScreen implements Screen {
+    private static final String[] TOURNAMENT_ENDED_TITLES = {
+            "You lose :(",
+            "You win! Congratulations!"
+    };
+    private static final String EXIT = "Exit";
 
     private Stage stage;
     private Table table = new Table();
+    private final Game game;
+    private Tournament tournament;
+    private Team playerTeam;
 
-    public LeagueTournamentScreen(final Game game, final Tournament tournament, final Team playerTeam) {
+    public TournamentScreen(final Game game, final Tournament tournament, final Team playerTeam) {
+        this.game = game;
+        this.tournament = tournament;
+        this.playerTeam = playerTeam;
+
         stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
         tournament.setSelectedTeam(playerTeam);
 
@@ -31,8 +51,9 @@ public class LeagueTournamentScreen implements Screen {
                 if (tournament.isEnded()) {
                     return;
                 }
-                final Team opponentTeam = tournament.getNextOpponent();
-                final GameScreen gameScreen = new SinglePlayerScreen(game, playerTeam, opponentTeam, LeagueTournamentScreen.this, true);
+                Team opponentTeam = tournament.getNextOpponent();
+                final GameScreen gameScreen = new SinglePlayerScreen(game, playerTeam, opponentTeam,
+                        TournamentScreen.this, tournament.isDrawResultPossible());
                 game.setScreen(gameScreen);
 
                 new Thread(new Runnable() {
@@ -46,11 +67,7 @@ public class LeagueTournamentScreen implements Screen {
                                     e.printStackTrace();
                                 }
                             }
-                            int[] score = gameScreen.getScore();
-                            tournament.simulateNextRound();
-                            tournament.handlePlayerMatch(score[0], score[1]);
-                            tournament.getStatisticsTable().highlightTeam(playerTeam);
-                            tournament.getResultTable().highlightTeam(playerTeam);
+                            handleMatchEnd(gameScreen.getScore());
                         }
                     }
                 }).start();
@@ -70,6 +87,35 @@ public class LeagueTournamentScreen implements Screen {
         table.add(playButton).pad(Constants.UI_ELEMENTS_INDENT);
 
         stage.addActor(table);
+    }
+
+    private void handleMatchEnd(int[] score) {
+        tournament.simulateNextRound();
+        tournament.handlePlayerMatch(score[0], score[1]);
+        tournament.getStatisticsTable().highlightTeam(playerTeam);
+        tournament.getResultTable().highlightTeam(playerTeam);
+        if (tournament.isEnded()) {
+            Button exitButton = new GameTextButtonTouchable(EXIT);
+            exitButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    dispose();
+                    game.setScreen(new MainMenuScreen(game));
+                }
+            });
+
+            Dialog exitDialog = new Dialog("", AssetLoader.defaultSkin);
+            exitDialog.text(TOURNAMENT_ENDED_TITLES[tournament.isWinner(playerTeam) ? 1 : 0],
+                    AssetLoader.defaultSkin.get(Label.LabelStyle.class));
+            exitDialog.button(exitButton);
+
+            Table exitTable = new Table();
+            exitTable.setFillParent(true);
+            exitTable.add(exitDialog).expand();
+
+            stage.addActor(new Image(AssetLoader.darkBackgroundTexture));
+            stage.addActor(exitTable);
+        }
     }
 
     @Override

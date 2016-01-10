@@ -125,6 +125,17 @@ public class PlayOffTournament implements Tournament {
 
     @Override
     public boolean isEnded() {
-        return tournamentBracket.peek().indexOf(selectedTeamIndex, true) == -1 || currentRound == lapNumber - 1;
+        return tournamentBracket.peek().indexOf(selectedTeamIndex, false) == -1 || currentRound == lapNumber - 1;
+    }
+
+    @Override
+    public boolean isDrawResultPossible() {
+        return false;
+    }
+
+    @Override
+    public boolean isWinner(Team team) {
+        return isEnded() && tournamentBracket.peek().indexOf(teams.indexOf(team, false), false) != -1 &&
+                currentRound == lapNumber - 1;
     }
 }

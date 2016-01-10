@@ -75,10 +75,4 @@ public class MultiPlayerScreen extends GameScreen {
         stage.draw();
         stage.act(delta);
     }
-
-    @Override
-    public void restartGame() {
-        dispose();
-        game.setScreen(new MultiPlayerScreen(game, firstTeam, secondTeam, previousScreen, gameWorld.isDrawResultPossible()));
-    }
 }

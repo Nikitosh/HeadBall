@@ -41,15 +41,7 @@ public class StatisticsTable extends Table implements ResultTable {
 
     public Array<Team> getSortedTeams(Array<Team> teams) {
         Array<Team> sortedTeams = new Array<>(teams);
-        sortedTeams.sort(new Comparator<Team>() {
-            @Override
-            public int compare(Team o1, Team o2) {
-                if (o1.getPoints() == o2.getPoints()) {
-                    return o1.getWinNumber() < o2.getWinNumber() ? 1 : -1;
-                }
-                return o1.getPoints() < o2.getPoints() ? 1 : -1;
-            }
-        });
+        sortedTeams.sort(Team.getComparator());
         return sortedTeams;
     }
 

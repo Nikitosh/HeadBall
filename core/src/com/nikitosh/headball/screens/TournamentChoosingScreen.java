@@ -43,16 +43,8 @@ public class TournamentChoosingScreen implements Screen {
             tournamentImage.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    if (reader.getTournamentType(index).equals(JSON_LEAGUE_KEY)) {
-                        dispose();
-                        Tournament tournament = reader.getTournament(index);
-                        game.setScreen(new LeagueTournamentScreen(game, tournament, tournament.getParticipants().get(0)));
-                    }
-                    if (reader.getTournamentType(index).equals(JSON_PLAYOFF_KEY)) {
-                        dispose();
-                        Tournament tournament = reader.getTournament(index);
-                        game.setScreen(new PlayOffTournamentScreen(game, tournament, tournament.getParticipants().get(0)));
-                    }
+                    Tournament tournament = reader.getTournament(index);
+                    game.setScreen(new TournamentScreen(game, tournament, tournament.getParticipants().get(0)));
                 }
             });
 

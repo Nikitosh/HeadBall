@@ -53,9 +53,6 @@ public class GameWorld {
                 Constants.FIELD_WIDTH - 2 * BOUNDS_WIDTH, Constants.FIELD_HEIGHT - 2 * BOUNDS_WIDTH);
         group.addActor(field);
 
-        footballers = new Footballer[Constants.PLAYERS_NUMBER];
-        initializeFootballers();
-
         walls = new Array<>();
         walls.add(new GroundWall(box2dWorld,
                 0, 0,
@@ -73,6 +70,9 @@ public class GameWorld {
 
         for (int i = 0; i < walls.size; i++)
             group.addActor(walls.get(i));
+
+        footballers = new Footballer[Constants.PLAYERS_NUMBER];
+        initializeFootballers();
 
         initializeBall();
 
@@ -174,14 +174,14 @@ public class GameWorld {
             footballers[i] = new Footballer(box2dWorld,
                     FOOTBALLER_INITIAL_POSITION_X[i], FOOTBALLER_INITIAL_POSITION_Y[i], FOOTBALLER_INITIAL_LEFT[i]);
             group.addActor(footballers[i]);
-            footballers[i].setZIndex(1);
+            footballers[i].setZIndex(walls.size + 2); //to draw footballers over walls and background
         }
     }
 
     private void initializeBall() {
         ball = new Ball(box2dWorld, BALL_INITIAL_POSITION_X, BALL_INITIAL_POSITION_Y);
         group.addActor(ball);
-        ball.setZIndex(1);
+        ball.setZIndex(walls.size + 2); //to draw ball over walls and background
     }
 
     public World getBox2dWorld() {

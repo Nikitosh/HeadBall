@@ -2,7 +2,19 @@ package com.nikitosh.headball;
 
 import com.badlogic.gdx.utils.Array;
 
+import java.util.Comparator;
+
 public class Team {
+    private static Comparator<Team> comparator = new Comparator<Team>() {
+        @Override
+        public int compare(Team o1, Team o2) {
+            if (o1.getPoints() == o2.getPoints()) {
+                return o1.getWinNumber() < o2.getWinNumber() ? 1 : -1;
+            }
+            return o1.getPoints() < o2.getPoints() ? 1 : -1;
+        }
+    };
+
     private static final int WIN_POINTS = 3;
     private static final int DRAW_POINTS = 1;
 
@@ -71,5 +83,9 @@ public class Team {
 
     public Array<Integer> getStatistics() {
         return new Array<Integer>(new Integer[] {winNumber, drawNumber, lossNumber, goalsFor, goalsAgainst, goalsFor - goalsAgainst, points});
+    }
+
+    public static final Comparator<Team> getComparator() {
+        return comparator;
     }
 }
