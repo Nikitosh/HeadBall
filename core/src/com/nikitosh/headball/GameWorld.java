@@ -153,19 +153,11 @@ public class GameWorld {
     }
 
     public void startNewRound() {
-        destroy();
-        initializeFootballers();
-        initializeBall();
-        initializeGoals();
-    }
-
-    private void destroy() {
         for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
-            group.removeActor(footballers[i]);
-            box2dWorld.destroyBody(footballers[i].getBody());
+            footballers[i].setInitialPosition(box2dWorld,
+                    FOOTBALLER_INITIAL_POSITION_X[i], FOOTBALLER_INITIAL_POSITION_Y[i]);
         }
-        group.removeActor(ball);
-        box2dWorld.destroyBody(ball.getBody());
+        ball.setInitialPosition(BALL_INITIAL_POSITION_X, BALL_INITIAL_POSITION_Y);
     }
 
     private void initializeFootballers() {
@@ -179,12 +171,6 @@ public class GameWorld {
     private void initializeBall() {
         ball = new Ball(box2dWorld, BALL_INITIAL_POSITION_X, BALL_INITIAL_POSITION_Y);
         group.addActor(ball);
-    }
-
-    private void initializeGoals() {
-        for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
-            goals[i].setZIndex(group.getChildren().size);
-        }
     }
 
     public World getBox2dWorld() {

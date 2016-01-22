@@ -47,7 +47,7 @@ public class TournamentScreen implements Screen {
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (tournament.isEnded()) {
+                if (tournament.isEnded(playerTeam)) {
                     return;
                 }
                 Team opponentTeam = tournament.getNextOpponent();
@@ -94,7 +94,7 @@ public class TournamentScreen implements Screen {
         tournament.handlePlayerMatch(score[0], score[1]);
         tournament.getStatisticsTable().highlightTeam(playerTeam);
         tournament.getResultTable().highlightTeam(playerTeam);
-        if (tournament.isEnded()) {
+        if (tournament.isEnded(playerTeam)) {
             Button exitButton = new GameTextButtonTouchable(EXIT);
             exitButton.addListener(new ChangeListener() {
                 @Override

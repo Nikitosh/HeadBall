@@ -39,15 +39,16 @@ public class Footballer extends Actor {
     private static final float JOINT_EPSILON = 0.1f;
 
     private Body body;
+    private Body rotator;
     private Body leg;
     private RevoluteJoint revoluteJoint;
 
     private boolean inJump = false;
-    private boolean left;
+
+    private Box2DSprite bodySprite;
+    private Box2DSprite legSprite;
 
     public Footballer(World world, float x, float y, boolean left) {
-        this.left = left;
-
         body = Utilities.getCircleBody(world,
                 x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX, FOOTBALLER_RADIUS * Constants.WORLD_TO_BOX,
                 FOOTBALLER_DENSITY, FOOTBALLER_FRICTION, FOOTBALLER_RESTITUTION,
@@ -60,7 +61,7 @@ public class Footballer extends Actor {
         This is done by creating two joints: revolute joint, connecting footballer's body and rotator, and
         weld joint, connecting rotator and leg
         */
-        Body rotator = Utilities.getRectangularBody(world,
+        rotator = Utilities.getRectangularBody(world,
                 (x - ROTATOR_WIDTH / 2) * Constants.WORLD_TO_BOX, (y - ROTATOR_WIDTH / 2) * Constants.WORLD_TO_BOX,
                 ROTATOR_WIDTH * Constants.WORLD_TO_BOX, ROTATOR_WIDTH * Constants.WORLD_TO_BOX,
                 ROTATOR_DENSITY, ROTATOR_FRICTION, ROTATOR_RESTITUTION,
@@ -72,17 +73,19 @@ public class Footballer extends Actor {
                 LEG_DENSITY, LEG_FRICTION, LEG_RESTITUTION,
                 Constants.LEG_CATEGORY, Constants.LEG_MASK);
 
-        RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
-        revoluteJointDef.initialize(body, rotator, body.getWorldCenter());
-        revoluteJointDef.enableLimit = true;
-        revoluteJointDef.lowerAngle = JOINT_LOWER_ANGLE;
-        revoluteJointDef.upperAngle = JOINT_UPPER_ANGLE;
-
         WeldJointDef weldJointDef = new WeldJointDef();
         weldJointDef.initialize(rotator, leg, rotator.getWorldCenter());
 
-        revoluteJoint = (RevoluteJoint) world.createJoint(revoluteJointDef);
+        revoluteJoint = (RevoluteJoint) world.createJoint(getRevoluteJointDef());
         world.createJoint(weldJointDef);
+
+        if (left) {
+            bodySprite = new Box2DSprite(AssetLoader.footballerTexture);
+        }
+        else {
+            bodySprite = new Box2DSprite(AssetLoader.reversedFootballerTexture);
+        }
+        legSprite = new Box2DSprite(AssetLoader.footballerTexture);
     }
 
     public Vector2 getPosition() {
@@ -101,15 +104,8 @@ public class Footballer extends Actor {
         if (move == null) {
             return;
         }
-        if (move.getState(Constants.LEFT) && !move.getState(Constants.RIGHT)) {
-            body.setLinearVelocity(-FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, body.getLinearVelocity().y);
-        }
-        if (move.getState(Constants.RIGHT) && !move.getState(Constants.LEFT)) {
-            body.setLinearVelocity(FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, body.getLinearVelocity().y);
-        }
-        if (!move.getState(Constants.LEFT) && !move.getState(Constants.RIGHT)) {
-            body.setLinearVelocity(body.getLinearVelocity().x / 2, body.getLinearVelocity().y);
-        }
+        float x = ((move.getState(Constants.LEFT) ? -1 : 0) + (move.getState(Constants.RIGHT) ? 1 : 0));
+        body.setLinearVelocity(x * FOOTBALLER_SPEED * Constants.WORLD_TO_BOX, body.getLinearVelocity().y);
         if (!inJump && move.getState(Constants.JUMP)) {
             inJump = true;
             body.setLinearVelocity(body.getLinearVelocity().x, FOOTBALLER_JUMP * Constants.WORLD_TO_BOX);
@@ -129,18 +125,10 @@ public class Footballer extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Box2DSprite box2DSprite;
-        if (left) {
-            box2DSprite = new Box2DSprite(AssetLoader.footballerTexture);
-        }
-        else {
-            box2DSprite = new Box2DSprite(AssetLoader.reversedFootballerTexture);
-        }
-        box2DSprite.draw(batch,
+        bodySprite.draw(batch,
                 body.getPosition().x * Constants.BOX_TO_WORLD, body.getPosition().y * Constants.BOX_TO_WORLD,
                 2 * FOOTBALLER_RADIUS, 2 * FOOTBALLER_RADIUS, body.getAngle());
-        box2DSprite = new Box2DSprite(AssetLoader.footballerTexture);
-        box2DSprite.draw(batch,
+        legSprite.draw(batch,
                 leg.getPosition().x * Constants.BOX_TO_WORLD,
                 leg.getPosition().y * Constants.BOX_TO_WORLD,
                 LEG_WIDTH, LEG_HEIGHT, leg.getAngle());
@@ -152,5 +140,29 @@ public class Footballer extends Actor {
 
     public Body getBody() {
         return body;
+    }
+
+    public void setInitialPosition(World world, float positionX, float positionY) {
+        world.destroyJoint(revoluteJoint);
+        body.setLinearVelocity(0, 0);
+        body.setAngularVelocity(0);
+        body.setTransform(positionX * Constants.WORLD_TO_BOX, positionY * Constants.WORLD_TO_BOX, 0);
+        leg.setLinearVelocity(0, 0);
+        leg.setAngularVelocity(0);
+        leg.setTransform(positionX * Constants.WORLD_TO_BOX,
+                (positionY - FOOTBALLER_RADIUS - 1 - LEG_HEIGHT / 2f) * Constants.WORLD_TO_BOX, 0);
+        rotator.setLinearVelocity(0, 0);
+        rotator.setAngularVelocity(0);
+        rotator.setTransform(positionX * Constants.WORLD_TO_BOX, positionY * Constants.WORLD_TO_BOX, 0);
+        revoluteJoint = (RevoluteJoint) world.createJoint(getRevoluteJointDef());
+    }
+
+    private RevoluteJointDef getRevoluteJointDef() {
+        RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
+        revoluteJointDef.initialize(body, rotator, body.getWorldCenter());
+        revoluteJointDef.enableLimit = true;
+        revoluteJointDef.lowerAngle = JOINT_LOWER_ANGLE;
+        revoluteJointDef.upperAngle = JOINT_UPPER_ANGLE;
+        return revoluteJointDef;
     }
 }

@@ -22,6 +22,7 @@ public class Goals extends Actor {
     private float height;
     private boolean left;
 
+    private Box2DSprite goalsSprite;
 
     public Goals(World world, float x, float y, float width, float height, boolean left) {
         this.width = width;
@@ -33,18 +34,18 @@ public class Goals extends Actor {
                 GOALS_RESTITUTION, Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
         body.setType(BodyDef.BodyType.StaticBody);
         body.getFixtureList().get(0).setUserData(this);
+
+        if (left) {
+            goalsSprite = new Box2DSprite(AssetLoader.goalsTexture);
+        }
+        else {
+            goalsSprite = new Box2DSprite(AssetLoader.reversedGoalsTexture);
+        }
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Box2DSprite box2DSprite;
-        if (left) {
-            box2DSprite = new Box2DSprite(AssetLoader.goalsTexture);
-        }
-        else {
-            box2DSprite = new Box2DSprite(AssetLoader.reversedGoalsTexture);
-        }
-        box2DSprite.draw(batch,
+        goalsSprite.draw(batch,
                 body.getPosition().x * Constants.BOX_TO_WORLD,
                 body.getPosition().y * Constants.BOX_TO_WORLD - Constants.GOALS_HEIGHT / 2,
                 width, Constants.GOALS_HEIGHT + height, body.getAngle());

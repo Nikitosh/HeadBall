@@ -12,7 +12,7 @@ public interface Tournament {
     Array<Team> getParticipants();
     ResultTable getResultTable();
     ResultTable getStatisticsTable();
-    boolean isEnded();
+    boolean isEnded(Team team);
     boolean isDrawResultPossible();
     boolean isWinner(Team team);
 }

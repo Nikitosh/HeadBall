@@ -131,7 +131,7 @@ public class LeagueTournament implements Tournament {
     }
 
     @Override
-    public boolean isEnded() {
+    public boolean isEnded(Team team) {
         return currentRound == lapNumber;
     }
 
@@ -142,7 +142,7 @@ public class LeagueTournament implements Tournament {
 
     @Override
     public boolean isWinner(Team team) {
-        if (!isEnded()) {
+        if (!isEnded(team)) {
             return false;
         }
         Array<Team> sortedTeams = teams;
