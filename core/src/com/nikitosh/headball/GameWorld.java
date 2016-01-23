@@ -10,79 +10,37 @@ import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
 public class GameWorld {
-    private static final float BOUNDS_WIDTH = 30;
-    private static final float[] FOOTBALLER_INITIAL_POSITION_X = {
-            Constants.FIELD_WIDTH / 4,
-            3 * Constants.FIELD_WIDTH / 4
-    };
-    private static final float[] FOOTBALLER_INITIAL_POSITION_Y = {BOUNDS_WIDTH, BOUNDS_WIDTH};
-    private static final boolean[] FOOTBALLER_INITIAL_LEFT = {true, false};
-    private static final float BALL_INITIAL_POSITION_X = Constants.FIELD_WIDTH / 2;
-    private static final float BALL_INITIAL_POSITION_Y = Constants.FIELD_HEIGHT / 2;
-    private static final float[] GOALS_INITIAL_POSITION_X = {
-            BOUNDS_WIDTH,
-            Constants.FIELD_WIDTH - BOUNDS_WIDTH - Constants.GOALS_WIDTH
-    };
-    private static final float[] GOALS_INITIAL_POSITION_Y = {
-            BOUNDS_WIDTH + Constants.GOALS_HEIGHT,
-            BOUNDS_WIDTH + Constants.GOALS_HEIGHT
-    };
-    private static final boolean[] GOALS_INITIAL_LEFT = {true, false};
-
     private World box2dWorld;
     private Group group;
 
+    private Array<Float> initialFootballerPositionX;
+    private Array<Float> initialFootballerPositionY;
+    private float initialBallPositionX;
+    private float initialBallPositionY;
+
+    private Image field;
+    private float width;
+    private float height;
     private Footballer[] footballers;
     private Array<Wall> walls;
-    private Wall groundWall;
     private Ball ball;
     private Goals[] goals;
     private int[] score;
     private boolean isGoal = false;
     private boolean isEnded = false;
-    private boolean isDrawResultPossible;
+    private boolean isDrawResultPossible = true;
     private float gameDuration = 0;
 
-    public GameWorld(boolean isDrawResultPossible) {
-        this.isDrawResultPossible = isDrawResultPossible;
+    public GameWorld() {
         box2dWorld = new World(new Vector2(0f, -300f * Constants.WORLD_TO_BOX), true);
         group = new Group();
 
-        Image field = new Image(AssetLoader.fieldTexture);
-        field.setBounds(BOUNDS_WIDTH, BOUNDS_WIDTH,
-                Constants.FIELD_WIDTH - 2 * BOUNDS_WIDTH, Constants.FIELD_HEIGHT - 2 * BOUNDS_WIDTH);
+        field = new Image(AssetLoader.fieldTexture);
         group.addActor(field);
 
         walls = new Array<>();
-        walls.add(new GroundWall(box2dWorld,
-                0, 0,
-                Constants.FIELD_WIDTH, BOUNDS_WIDTH));
-        walls.add(new RectangleWall(box2dWorld,
-                0, BOUNDS_WIDTH,
-                BOUNDS_WIDTH, Constants.FIELD_HEIGHT - BOUNDS_WIDTH));
-        walls.add(new RectangleWall(box2dWorld,
-                Constants.FIELD_WIDTH - BOUNDS_WIDTH, BOUNDS_WIDTH,
-                BOUNDS_WIDTH, Constants.FIELD_HEIGHT - BOUNDS_WIDTH));
-        walls.add(new RectangleWall(box2dWorld,
-                BOUNDS_WIDTH, Constants.FIELD_HEIGHT - BOUNDS_WIDTH,
-                Constants.FIELD_WIDTH - 2 * BOUNDS_WIDTH, BOUNDS_WIDTH));
-        groundWall = walls.get(0);
-
-        for (int i = 0; i < walls.size; i++)
-            group.addActor(walls.get(i));
-
         footballers = new Footballer[Constants.PLAYERS_NUMBER];
-        initializeFootballers();
-
-        initializeBall();
-
         goals = new Goals[Constants.PLAYERS_NUMBER];
-        for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
-            goals[i] = new Goals(box2dWorld,
-                    GOALS_INITIAL_POSITION_X[i], GOALS_INITIAL_POSITION_Y[i],
-                    Constants.GOALS_WIDTH, Constants.CROSSBAR_HEIGHT, GOALS_INITIAL_LEFT[i]);
-            group.addActor(goals[i]);
-        }
 
         score = new int[Constants.PLAYERS_NUMBER];
         for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
@@ -90,6 +48,12 @@ public class GameWorld {
         }
 
         box2dWorld.setContactListener(new ContactListener() {
+            private void handleFootballerWallCollision(Footballer footballer, RectangleWall wall) {
+                if (footballer.getBody().getPosition().y >= wall.getBody().getPosition().y + footballer.getRadius()) {
+                    footballer.setInJump(false);
+                }
+            }
+
             @Override
             public void beginContact(Contact contact) {
                 Object contactA = contact.getFixtureA().getUserData();
@@ -97,11 +61,11 @@ public class GameWorld {
                 if (contactA == null || contactB == null) {
                     return;
                 }
-                if (contactA instanceof Footballer && contactB.equals(groundWall)) {
-                    ((Footballer) contactA).setInJump(false);
+                if (contactA instanceof Footballer && contactB instanceof RectangleWall) {
+                    handleFootballerWallCollision((Footballer) contactA, (RectangleWall) contactB);
                 }
-                if (contactB instanceof Footballer && contactA.equals(groundWall)) {
-                    ((Footballer) contactB).setInJump(false);
+                if (contactB instanceof Footballer && contactA instanceof RectangleWall) {
+                    handleFootballerWallCollision((Footballer) contactB, (RectangleWall) contactA);
                 }
             }
 
@@ -155,22 +119,54 @@ public class GameWorld {
     public void startNewRound() {
         for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
             footballers[i].setInitialPosition(box2dWorld,
-                    FOOTBALLER_INITIAL_POSITION_X[i], FOOTBALLER_INITIAL_POSITION_Y[i]);
+                    initialFootballerPositionX.get(i), initialFootballerPositionY.get(i));
         }
-        ball.setInitialPosition(BALL_INITIAL_POSITION_X, BALL_INITIAL_POSITION_Y);
+        ball.setInitialPosition(initialBallPositionX, initialBallPositionY);
     }
 
-    private void initializeFootballers() {
+    public void restartGame() {
+        startNewRound();
+        for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
+            score[i] = 0;
+        }
+        gameDuration = 0;
+    }
+
+    public void createFootballers(Array<Float> initialPositionX, Array<Float> initialPositionY,
+                                  Array<Boolean> initialLeft, float initialRadius) {
+        initialFootballerPositionX = initialPositionX;
+        initialFootballerPositionY = initialPositionY;
         for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
             footballers[i] = new Footballer(box2dWorld,
-                    FOOTBALLER_INITIAL_POSITION_X[i], FOOTBALLER_INITIAL_POSITION_Y[i], FOOTBALLER_INITIAL_LEFT[i]);
+                    initialPositionX.get(i), initialPositionY.get(i), initialLeft.get(i), initialRadius);
             group.addActor(footballers[i]);
         }
     }
 
-    private void initializeBall() {
-        ball = new Ball(box2dWorld, BALL_INITIAL_POSITION_X, BALL_INITIAL_POSITION_Y);
+    public void createBall(float initialPositionX, float initialPositionY, float initialRadius) {
+        initialBallPositionX = initialPositionX;
+        initialBallPositionY = initialPositionY;
+        ball = new Ball(box2dWorld, initialPositionX, initialPositionY, initialRadius);
         group.addActor(ball);
+    }
+
+    public void createGoals(Array<Float> initialPositionX, Array<Float> initialPositionY,
+                            float goalsWidth, float goalsHeight, float crossbarHeight, Array<Boolean> initialLeft) {
+        for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
+            goals[i] = new Goals(box2dWorld,
+                    initialPositionX.get(i), initialPositionY.get(i),
+                    goalsWidth, goalsHeight, crossbarHeight, initialLeft.get(i));
+            group.addActor(goals[i]);
+        }
+    }
+
+    public void createWalls(Array<Float> initialPositionX, Array<Float> initialPositionY,
+                             Array<Float> initialWidth, Array<Float> initialHeight) {
+        for (int i = 0; i < initialPositionX.size; i++) {
+            walls.add(new RectangleWall(box2dWorld, initialPositionX.get(i), initialPositionY.get(i),
+                    initialWidth.get(i), initialHeight.get(i)));
+            group.addActor(walls.get(i));
+        }
     }
 
     public World getBox2dWorld() {
@@ -199,5 +195,19 @@ public class GameWorld {
 
     public boolean isDrawResultPossible() {
         return isDrawResultPossible;
+    }
+
+    public void setDrawResultPossible(boolean isDrawResultPossible) {
+        this.isDrawResultPossible = isDrawResultPossible;
+    }
+
+    public void setSize(float width, float height) {
+        this.width = width;
+        this.height = height;
+        field.setBounds(0, 0, width, height);
+    }
+
+    public float getHeight() {
+        return height;
     }
 }

@@ -25,7 +25,7 @@ public class RectangleWall extends Wall {
                 x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX,
                 width * Constants.WORLD_TO_BOX, height * Constants.WORLD_TO_BOX,
                 RECTANGLE_WALL_DENSITY, RECTANGLE_WALL_FRICTION, RECTANGLE_WALL_RESTITUTION,
-                Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
+                Constants.GROUND_WALL_CATEGORY, Constants.GROUND_WALL_MASK);
         body.setType(BodyDef.BodyType.StaticBody);
         body.getFixtureList().get(0).setUserData(this);
     }

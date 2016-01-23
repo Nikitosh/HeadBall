@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.nikitosh.headball.LevelLoader;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.controllers.ButtonsInputController;
 import com.nikitosh.headball.controllers.InputController;
@@ -59,7 +60,8 @@ public abstract class GameScreen implements Screen {
         this.secondTeam = secondTeam;
         this.previousScreen = previousScreen;
 
-        gameWorld = new GameWorld(isDrawResultPossible);
+        gameWorld = LevelLoader.loadLevel(1);
+        gameWorld.setDrawResultPossible(isDrawResultPossible);
 
         Image background = new Image(AssetLoader.backgroundTexture);
         background.setFillParent(true);
@@ -202,15 +204,12 @@ public abstract class GameScreen implements Screen {
     public void restartGame() {
         pauseScreen.remove();
         darkBackground.remove();
-        gameWorld.getBox2dWorld().dispose();
-        gameWorld = new GameWorld(gameWorld.isDrawResultPossible());
+        gameWorld.restartGame();
         gameState = GameState.GAME_RUNNING;
-        mainTable.reset();
-        initializeMainTable();
     }
 
     private void initializeMainTable() {
-        mainTable.add(gameWorld.getGroup()).top().expand().fillX().height(Constants.FIELD_HEIGHT).row();
+        mainTable.add(gameWorld.getGroup()).top().expand().fillX().height(gameWorld.getHeight()).row();
         mainTable.add(inputController.getTable()).bottom().fill().expand().row();
     }
 

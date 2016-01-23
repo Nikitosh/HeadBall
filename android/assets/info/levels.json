@@ -1,0 +1,46 @@
+{
+  "levels": [
+    {
+      "width": 800,
+      "height": 380,
+      "footballerRadius": 20,
+      "footballersX": [200, 600],
+      "footballersY": [30, 30],
+      "footballersLeft": [true, false],
+      "ballRadius": 7,
+      "ballX": 400,
+      "ballY": 190,
+      "goalsX": [10, 740],
+      "goalsY": [10, 10],
+      "goalsLeft": [true, false],
+      "goalsWidth": 50,
+      "goalsHeight": 90,
+      "crossbarHeight": 10,
+      "wallsX": [0, 0, 790, 10],
+      "wallsY": [0, 10, 10, 370],
+      "wallsWidth": [800, 10, 10, 780],
+      "wallsHeight": [10, 370, 370, 10]
+    },
+    {
+      "width": 800,
+      "height": 380,
+      "footballerRadius": 20,
+      "footballersX": [200, 600],
+      "footballersY": [30, 30],
+      "footballersLeft": [true, false],
+      "ballRadius": 10,
+      "ballX": 400,
+      "ballY": 190,
+      "goalsX": [10, 740],
+      "goalsY": [10, 10],
+      "goalsLeft": [true, false],
+      "goalsWidth": 50,
+      "goalsHeight": 90,
+      "crossbarHeight": 10,
+      "wallsX": [0, 0, 790, 10, 300],
+      "wallsY": [0, 10, 10, 370, 10],
+      "wallsWidth": [800, 10, 10, 780, 200],
+      "wallsHeight": [10, 370, 370, 10, 10]
+    }
+ ]
+}

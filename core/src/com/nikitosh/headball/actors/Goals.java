@@ -19,18 +19,20 @@ public class Goals extends Actor {
     private Body body;
 
     private float width;
-    private float height;
+    private float goalsHeight;
+    private float crossbarHeight;
     private boolean left;
 
     private Box2DSprite goalsSprite;
 
-    public Goals(World world, float x, float y, float width, float height, boolean left) {
+    public Goals(World world, float x, float y, float width, float goalsHeight, float crossbarHeight, boolean left) {
         this.width = width;
-        this.height = height;
+        this.goalsHeight = goalsHeight;
+        this.crossbarHeight = crossbarHeight;
         this.left = left;
 
-        body = Utilities.getRectangularBody(world, x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX,
-                width * Constants.WORLD_TO_BOX, height * Constants.WORLD_TO_BOX, GOALS_DENSITY, GOALS_FRICTION,
+        body = Utilities.getRectangularBody(world, x * Constants.WORLD_TO_BOX, (y + goalsHeight) * Constants.WORLD_TO_BOX,
+                width * Constants.WORLD_TO_BOX, crossbarHeight * Constants.WORLD_TO_BOX, GOALS_DENSITY, GOALS_FRICTION,
                 GOALS_RESTITUTION, Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
         body.setType(BodyDef.BodyType.StaticBody);
         body.getFixtureList().get(0).setUserData(this);
@@ -47,8 +49,8 @@ public class Goals extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         goalsSprite.draw(batch,
                 body.getPosition().x * Constants.BOX_TO_WORLD,
-                body.getPosition().y * Constants.BOX_TO_WORLD - Constants.GOALS_HEIGHT / 2,
-                width, Constants.GOALS_HEIGHT + height, body.getAngle());
+                body.getPosition().y * Constants.BOX_TO_WORLD - goalsHeight / 2,
+                width, goalsHeight + crossbarHeight, body.getAngle());
     }
 
     public boolean contains(Vector2 point) {

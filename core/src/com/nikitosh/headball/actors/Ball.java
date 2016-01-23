@@ -12,17 +12,18 @@ import com.nikitosh.headball.utils.Utilities;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 public class Ball extends Actor {
-    private static final float BALL_RADIUS = 10;
     private static final float BALL_DENSITY = 1f;
     private static final float BALL_FRICTION = 0.1f;
     private static final float BALL_RESTITUTION = 0.6f;
 
+    private float radius;
     private Body body;
     private Box2DSprite ballSprite;
 
-    public Ball(World world, float x, float y) {
+    public Ball(World world, float x, float y, float radius) {
+        this.radius = radius;
         body = Utilities.getCircleBody(world,
-                x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX, BALL_RADIUS * Constants.WORLD_TO_BOX,
+                x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX, radius * Constants.WORLD_TO_BOX,
                 BALL_DENSITY, BALL_FRICTION, BALL_RESTITUTION,
                 Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
 
@@ -33,15 +34,11 @@ public class Ball extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         ballSprite.draw(batch,
                 body.getPosition().x * Constants.BOX_TO_WORLD, body.getPosition().y * Constants.BOX_TO_WORLD,
-                2 * BALL_RADIUS, 2 * BALL_RADIUS, body.getAngle());
+                2 * radius, 2 * radius, body.getAngle());
     }
 
     public Vector2 getPosition() {
         return body.getPosition();
-    }
-
-    public static float getBallRadius() {
-        return BALL_RADIUS;
     }
 
     public Body getBody() {

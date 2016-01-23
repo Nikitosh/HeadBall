@@ -1,6 +1,8 @@
 package com.nikitosh.headball.utils;
 
 import com.badlogic.gdx.physics.box2d.*;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -12,6 +14,26 @@ public class Utilities {
     {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, encoding);
+    }
+
+    public static JSONObject parseJSONFile(String path) {
+        String content = null;
+        try {
+            content = Utilities.readFile(path, Charset.defaultCharset());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = (JSONObject) parser.parse(content);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 
     public static Body getCircleBody(World world, float x, float y, float r, float density, float friction,

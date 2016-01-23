@@ -40,7 +40,7 @@ public class AIPlayer implements Player {
             myPositionX = footballers[footballerNumber].getPosition().x;
         }
 
-        if (ballPositionY < myPositionY - Footballer.getFootballerRadius()) {
+        if (ballPositionY < myPositionY - footballers[footballerNumber].getRadius()) {
             move.setState(Constants.LEFT, true);
         }
         else {

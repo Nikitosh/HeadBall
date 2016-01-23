@@ -29,23 +29,7 @@ public class TournamentsReader {
     private JSONArray tournaments;
 
     public TournamentsReader() {
-        String content = null;
-        try {
-            content = Utilities.readFile(TOURNAMENTS_PATH, Charset.defaultCharset());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            Gdx.app.log(LOG_TAG, LOADING_EXCEPTION);
-        }
-
-        JSONParser parser = new JSONParser();
-        try {
-            tournaments = (JSONArray) ((JSONObject) parser.parse(content)).get(JSON_TOURNAMENTS_KEY);
-        }
-        catch (Exception e) {
-            Gdx.app.log(LOG_TAG, JSON_EXCEPTION);
-        }
-
+        tournaments = (JSONArray) Utilities.parseJSONFile(TOURNAMENTS_PATH).get(JSON_TOURNAMENTS_KEY);
     }
 
     public Tournament getTournament(int index) {
