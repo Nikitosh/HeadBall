@@ -19,7 +19,6 @@ public class PlayOffTournament implements Tournament {
 
 
     private int lapNumber;
-    private int selectedTeamIndex;
     private int currentRound = 0;
     private Array<Team> teams = new Array<>();
     private Array<Integer> nextRoundParticipants;
@@ -49,44 +48,47 @@ public class PlayOffTournament implements Tournament {
     }
 
     @Override
-    public void setSelectedTeam(Team selectedTeam) {
-        selectedTeamIndex = teams.indexOf(selectedTeam, false); //false means comparison with .equals() not ==
-        assert(selectedTeamIndex != -1);
-    }
-
-    @Override
     public void simulateNextRound() {
         Random random = new Random();
         Array<Integer> currentRoundParticipants = tournamentBracket.peek();
-        nextRoundParticipants = new Array<>();
         for (int i = 0; i < currentRoundParticipants.size; i += 2) {
+            if (nextRoundParticipants.get(i / 2) != null) {
+                continue;
+            }
             int firstTeamIndex = currentRoundParticipants.get(i);
             int secondTeamIndex = currentRoundParticipants.get(i + 1);
-            if (firstTeamIndex != selectedTeamIndex && secondTeamIndex != selectedTeamIndex) {
-                int firstTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
-                int secondTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
-                Match match = new Match(teams.get(firstTeamIndex), teams.get(secondTeamIndex),
-                        firstTeamScore, secondTeamScore);
-                MatchController.handle(match);
-                nextRoundParticipants.add(teams.indexOf(MatchController.getWinner(match), false));
-            }
-            else {
-                nextRoundParticipants.add(null);
-            }
+            int firstTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
+            int secondTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
+            Match match = new Match(teams.get(firstTeamIndex), teams.get(secondTeamIndex),
+                    firstTeamScore, secondTeamScore);
+            MatchController.handle(match);
+            nextRoundParticipants.set(i / 2, teams.indexOf(MatchController.getWinner(match), false));
         }
     }
 
     @Override
-    public void handlePlayerMatch(int playerScore, int opponentScore) {
+    public void handlePlayerMatch(Team team, int playerScore, int opponentScore) {
         Array<Integer> currentRoundParticipants = tournamentBracket.peek();
         for (int i = 0; i < tournamentBracket.peek().size; i++) {
-            if (currentRoundParticipants.get(i) == selectedTeamIndex) {
+            if (teams.get(currentRoundParticipants.get(i)).equals(team)) {
                 Match match = new Match(teams.get(currentRoundParticipants.get(i)),
                         teams.get(currentRoundParticipants.get(i ^ 1)), playerScore, opponentScore);
                 MatchController.handle(match);
                 nextRoundParticipants.set(i / 2, teams.indexOf(MatchController.getWinner(match), false));
             }
         }
+    }
+
+    @Override
+    public void startNewRound() {
+        nextRoundParticipants = new Array<>();
+        for (int i = 0; i < tournamentBracket.peek().size / 2; i++) {
+            nextRoundParticipants.add(null);
+        }
+    }
+
+    @Override
+    public void endCurrentRound() {
         tournamentBracket.add(nextRoundParticipants);
         statisticsTable.update(teams);
         resultTable.update(teams, nextRoundParticipants);
@@ -94,10 +96,10 @@ public class PlayOffTournament implements Tournament {
     }
 
     @Override
-    public Team getNextOpponent() {
+    public Team getNextOpponent(Team team) {
         Array<Integer> currentRoundParticipants = tournamentBracket.peek();
         for (int i = 0; i < currentRoundParticipants.size; i++) {
-            if (currentRoundParticipants.get(i) == selectedTeamIndex) {
+            if (teams.get(currentRoundParticipants.get(i)).equals(team)) {
                 return teams.get(currentRoundParticipants.get(i ^ 1));
             }
         }

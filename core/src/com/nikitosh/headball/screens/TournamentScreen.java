@@ -33,15 +33,12 @@ public class TournamentScreen implements Screen {
     private Stage stage;
     private final Game game;
     private Tournament tournament;
-    private Team playerTeam;
 
     public TournamentScreen(final Game game, final Tournament tournament, final Team playerTeam) {
         this.game = game;
         this.tournament = tournament;
-        this.playerTeam = playerTeam;
 
         stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
-        tournament.setSelectedTeam(playerTeam);
 
         GameTextButtonTouchable playButton = new GameTextButtonTouchable("Play next match");
         playButton.addListener(new ChangeListener() {
@@ -50,7 +47,7 @@ public class TournamentScreen implements Screen {
                 if (tournament.isEnded(playerTeam)) {
                     return;
                 }
-                Team opponentTeam = tournament.getNextOpponent();
+                Team opponentTeam = tournament.getNextOpponent(playerTeam);
                 final GameScreen gameScreen = new SinglePlayerScreen(game, playerTeam, opponentTeam,
                         TournamentScreen.this, tournament.isDrawResultPossible());
                 game.setScreen(gameScreen);
@@ -66,7 +63,7 @@ public class TournamentScreen implements Screen {
                                     e.printStackTrace();
                                 }
                             }
-                            handleMatchEnd(gameScreen.getScore());
+                            handleMatchEnd(playerTeam, gameScreen.getScore());
                         }
                     }
                 }).start();
@@ -89,9 +86,11 @@ public class TournamentScreen implements Screen {
         stage.addActor(table);
     }
 
-    private void handleMatchEnd(int[] score) {
+    private void handleMatchEnd(Team playerTeam, int[] score) {
+        tournament.startNewRound();
+        tournament.handlePlayerMatch(playerTeam, score[0], score[1]);
         tournament.simulateNextRound();
-        tournament.handlePlayerMatch(score[0], score[1]);
+        tournament.endCurrentRound();
         tournament.getStatisticsTable().highlightTeam(playerTeam);
         tournament.getResultTable().highlightTeam(playerTeam);
         if (tournament.isEnded(playerTeam)) {

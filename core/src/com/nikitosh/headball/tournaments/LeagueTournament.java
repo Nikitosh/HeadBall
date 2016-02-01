@@ -7,18 +7,17 @@ import com.nikitosh.headball.widgets.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.security.acl.Group;
-import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Random;
 
 public class LeagueTournament implements Tournament {
     private static final int MAXIMUM_GOALS_NUMBER = 3;
 
     private int lapNumber;
-    private int selectedTeamIndex = 0;
     private int currentRound = 0;
     private Array<Team> teams = new Array<>();
     private Array<Match> currentRoundMatches = new Array<>();
+    private HashSet<Integer> playedCurrentRoundTeams = new HashSet<>();
     private Array<Array<Integer>> timeTable = new Array<>();
     private StatisticsTable resultTable;
     private LastRoundTable lastRoundTable;
@@ -57,19 +56,13 @@ public class LeagueTournament implements Tournament {
     }
 
     @Override
-    public void setSelectedTeam(Team teamName) {
-        selectedTeamIndex = teams.indexOf(teamName, false); //false means comparison with .equals() not ==
-        assert(selectedTeamIndex != -1);
-    }
-
-    @Override
     public void simulateNextRound() {
         Random random = new Random();
         Array<Integer> currentRoundParticipants = timeTable.get(currentRound);
         for (int i = 0; i < currentRoundParticipants.size; i += 2) {
             int firstTeamIndex = currentRoundParticipants.get(i);
             int secondTeamIndex = currentRoundParticipants.get(i + 1);
-            if (firstTeamIndex != selectedTeamIndex && secondTeamIndex != selectedTeamIndex) {
+            if (!playedCurrentRoundTeams.contains(firstTeamIndex)) {
                 int firstTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
                 int secondTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
                 Match match = new Match(teams.get(firstTeamIndex),
@@ -81,20 +74,31 @@ public class LeagueTournament implements Tournament {
     }
 
     @Override
-    public void handlePlayerMatch(int playerScore, int opponentScore) {
+    public void handlePlayerMatch(Team team, int playerScore, int opponentScore) {
         Array<Integer> currentRoundParticipants = timeTable.get(currentRound);
         for (int i = 0; i < currentRoundParticipants.size; i++) {
-            if (currentRoundParticipants.get(i) == selectedTeamIndex) {
+            if (teams.get(currentRoundParticipants.get(i)).equals(team)) {
                 Match match = new Match(teams.get(currentRoundParticipants.get(i)),
                         teams.get(currentRoundParticipants.get(i ^ 1)), playerScore, opponentScore);
+                playedCurrentRoundTeams.add(currentRoundParticipants.get(i));
+                playedCurrentRoundTeams.add(currentRoundParticipants.get(i ^ 1));
                 currentRoundMatches.add(match);
                 MatchController.handle(match);
             }
         }
+    }
+
+    @Override
+    public void startNewRound() {
+        currentRoundMatches.clear();
+        playedCurrentRoundTeams.clear();
+    }
+
+    @Override
+    public void endCurrentRound() {
         resultTable.update(teams);
         lastRoundTable.update(currentRoundMatches);
         lastRoundTable.setVisible(true);
-        currentRoundMatches.clear();
         currentRound++;
         if (currentRound == lapNumber) {
             nextRoundTable.setVisible(false);
@@ -104,10 +108,10 @@ public class LeagueTournament implements Tournament {
     }
 
     @Override
-    public Team getNextOpponent() {
+    public Team getNextOpponent(Team team) {
         Array<Integer> currentRoundParticipants = timeTable.get(currentRound);
         for (int i = 0; i < currentRoundParticipants.size; i++) {
-            if (currentRoundParticipants.get(i) == selectedTeamIndex) {
+            if (teams.get(currentRoundParticipants.get(i)).equals(team)) {
                 return teams.get(currentRoundParticipants.get(i ^ 1));
             }
         }
