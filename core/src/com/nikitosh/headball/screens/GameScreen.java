@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -12,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nikitosh.headball.LevelLoader;
-import com.nikitosh.headball.Team;
+import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.controllers.ButtonsInputController;
 import com.nikitosh.headball.controllers.InputController;
 import com.nikitosh.headball.controllers.KeyboardInputController;
@@ -31,13 +30,12 @@ public abstract class GameScreen implements Screen {
 
     protected final Game game;
     protected Screen previousScreen;
-    protected Team firstTeam;
-    protected Team secondTeam;
 
     protected GameWorld gameWorld;
     protected Player[] players;
 
     protected Stage stage;
+    protected Stack stack;
     protected Table mainTable = new Table();
     protected Table pauseButtonTable;
     protected InputController inputController;
@@ -54,14 +52,12 @@ public abstract class GameScreen implements Screen {
 
     protected int playerNumber;
 
-    public GameScreen(Game newGame, Team firstTeam, Team secondTeam, Screen previousScreen, boolean isDrawResultPossible) {
+    public GameScreen(Game newGame, Screen previousScreen, MatchInfo matchInfo) {
         game = newGame;
-        this.firstTeam = firstTeam;
-        this.secondTeam = secondTeam;
         this.previousScreen = previousScreen;
 
         gameWorld = LevelLoader.loadLevel(1);
-        gameWorld.setDrawResultPossible(isDrawResultPossible);
+        gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
 
         Image background = new Image(AssetLoader.backgroundTexture);
         background.setFillParent(true);
@@ -69,7 +65,7 @@ public abstract class GameScreen implements Screen {
         darkBackground = new Image(AssetLoader.darkBackgroundTexture);
         darkBackground.setFillParent(true);
 
-        pauseScreen = new PauseScreen(this);
+        pauseScreen = new PauseScreen(this, matchInfo.isRestartOrExitPossible());
         pauseScreen.setBounds(Constants.VIRTUAL_WIDTH / 4,
                 Constants.VIRTUAL_HEIGHT / 4,
                 Constants.VIRTUAL_WIDTH / 2,
@@ -102,9 +98,9 @@ public abstract class GameScreen implements Screen {
         Table nestedTable = new Table();
         nestedTable.add(timerLabel).fillX().row();
         nestedTable.add(scoreLabel).fillX();
-        infoTable.add(new Label(firstTeam.getName(), AssetLoader.defaultSkin)).fillY();
+        infoTable.add(new Label(matchInfo.getFirstTeam().getName(), AssetLoader.defaultSkin)).fillY();
         infoTable.add(nestedTable);
-        infoTable.add(new Label(secondTeam.getName(), AssetLoader.defaultSkin)).fillY();
+        infoTable.add(new Label(matchInfo.getSecondTeam().getName(), AssetLoader.defaultSkin)).fillY();
 
         if (GameSettings.getString(Constants.SETTINGS_CONTROL).equals(Constants.SETTINGS_CONTROL_BUTTONS)) {
             inputController = new ButtonsInputController(infoTable);
@@ -121,7 +117,7 @@ public abstract class GameScreen implements Screen {
 
         players = new Player[Constants.PLAYERS_NUMBER];
 
-        Stack stack = new Stack();
+        stack = new Stack();
         stack.setFillParent(true);
         stack.addActor(background);
         stack.addActor(mainTable);

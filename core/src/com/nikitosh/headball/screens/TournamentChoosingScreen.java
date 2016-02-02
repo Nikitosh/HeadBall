@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.widgets.BackButtonTable;
-import com.nikitosh.headball.widgets.PagedScrollPane;
+import com.nikitosh.headball.widgets.ChoosingTable;
 import com.nikitosh.headball.jsonReaders.TournamentsReader;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
@@ -24,12 +24,10 @@ public class TournamentChoosingScreen implements Screen {
     private static final String JSON_LEAGUE_KEY = "league";
     private static final String JSON_PLAYOFF_KEY = "playoff";
 
-
     private Stage stage;
 
     public TournamentChoosingScreen(final Game game, final Screen previousScreen) {
-        PagedScrollPane scrollPane = new PagedScrollPane();
-        scrollPane.setFlingTime(FLING_TIME);
+        ChoosingTable choosingTable = new ChoosingTable();
 
         final TournamentsReader reader = new TournamentsReader();
 
@@ -50,15 +48,13 @@ public class TournamentChoosingScreen implements Screen {
             Label tournamentName = new Label(reader.getTournamentName(i), AssetLoader.gameLabelStyle);
             tournamentCell.add(tournamentName).pad(Constants.UI_ELEMENTS_INDENT).row();
 
-            scrollPane.addPage(tournamentCell);
+            choosingTable.addElement(tournamentCell);
         }
-        Table levelContainer = new Table();
-        levelContainer.setFillParent(true);
-        levelContainer.add(scrollPane).expand().fill();
+        choosingTable.setFillParent(true);
 
         Stack stack = new Stack();
         stack.setFillParent(true);
-        stack.addActor(levelContainer);
+        stack.addActor(choosingTable);
         stack.addActor(new BackButtonTable(game, this, previousScreen));
 
         stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
@@ -72,7 +68,7 @@ public class TournamentChoosingScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();

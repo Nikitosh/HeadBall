@@ -3,6 +3,7 @@ package com.nikitosh.headball.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.Move;
 import com.nikitosh.headball.players.RemoteHumanPlayer;
@@ -19,8 +20,8 @@ public class MultiPlayerScreen extends GameScreen {
     private DataInputStream in;
     private DataOutputStream out;
 
-    public MultiPlayerScreen(Game game, Team firstTeam, Team secondTeam, Screen previousScreen, boolean isDrawResultPossible) {
-        super(game, firstTeam, secondTeam, previousScreen, isDrawResultPossible);
+    public MultiPlayerScreen(Game game, Screen previousScreen, MatchInfo matchInfo) {
+        super(game, previousScreen, matchInfo);
         try {
             InetAddress ipAddress = InetAddress.getByName(SERVER_ADDRESS);
             Gdx.app.log(LOG_TAG, "Any of you heard of a socket with IP address " + SERVER_ADDRESS + " and port " + PORT + "?");

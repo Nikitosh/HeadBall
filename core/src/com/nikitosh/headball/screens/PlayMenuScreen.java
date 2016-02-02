@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
@@ -19,6 +20,8 @@ public class PlayMenuScreen implements Screen {
     private static final String PRACTICE = "Practice";
     private static final String TOURNAMENT = "Tournament";
     private static final String MULTIPLAYER = "Multiplayer";
+    private static final boolean IS_PRACTICE = true;
+    private static final boolean IS_DRAW_POSSIBLE = true;
 
     private Stage stage;
 
@@ -30,7 +33,8 @@ public class PlayMenuScreen implements Screen {
         practiceTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new SinglePlayerScreen(game, new Team("Player"), new Team("Bot"), PlayMenuScreen.this, true));
+                game.setScreen(new SinglePlayerScreen(game, PlayMenuScreen.this,
+                        new MatchInfo(new Team("Player"), new Team("Bot"), IS_DRAW_POSSIBLE, IS_PRACTICE)));
             }
         });
 
@@ -46,7 +50,8 @@ public class PlayMenuScreen implements Screen {
         multiPlayerTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new MultiPlayerScreen(game, new Team(""), new Team(""), PlayMenuScreen.this, true));
+                game.setScreen(new MultiPlayerScreen(game, PlayMenuScreen.this,
+                        new MatchInfo(new Team(""), new Team(""), IS_DRAW_POSSIBLE, IS_PRACTICE)));
             }
         });
 

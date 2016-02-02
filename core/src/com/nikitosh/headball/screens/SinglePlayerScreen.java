@@ -3,13 +3,14 @@ package com.nikitosh.headball.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.nikitosh.headball.GameWorld;
+import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.players.AIPlayer;
 
 public class SinglePlayerScreen extends GameScreen {
 
-    public SinglePlayerScreen(Game game, Team firstTeam, Team secondTeam, Screen previousScreen, boolean isDrawResultPossible) {
-        super(game, firstTeam, secondTeam, previousScreen, isDrawResultPossible);
+    public SinglePlayerScreen(Game game, Screen previousScreen, MatchInfo matchInfo) {
+        super(game, previousScreen, matchInfo);
         initializePlayers();
     }
 

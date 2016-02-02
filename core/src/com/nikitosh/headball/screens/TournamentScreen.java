@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.tournaments.LeagueTournament;
 import com.nikitosh.headball.tournaments.Tournament;
@@ -29,6 +30,7 @@ public class TournamentScreen implements Screen {
             "You win! Congratulations!"
     };
     private static final String EXIT = "Exit";
+    private static final boolean IS_PRACTICE = false;
 
     private Stage stage;
     private final Game game;
@@ -48,8 +50,8 @@ public class TournamentScreen implements Screen {
                     return;
                 }
                 Team opponentTeam = tournament.getNextOpponent(playerTeam);
-                final GameScreen gameScreen = new SinglePlayerScreen(game, playerTeam, opponentTeam,
-                        TournamentScreen.this, tournament.isDrawResultPossible());
+                final GameScreen gameScreen = new SinglePlayerScreen(game, TournamentScreen.this,
+                        new MatchInfo(playerTeam, opponentTeam, tournament.isDrawResultPossible(), IS_PRACTICE));
                 game.setScreen(gameScreen);
 
                 new Thread(new Runnable() {

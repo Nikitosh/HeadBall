@@ -14,7 +14,7 @@ public class PauseScreen extends Window {
     private static final String RESTART = "Restart";
     private static final String EXIT = "Exit";
 
-    public PauseScreen(final GameScreen gameScreen) {
+    public PauseScreen(final GameScreen gameScreen, boolean restartOrExitEnable) {
         super("", AssetLoader.gameWindowStyle);
         setMovable(false);
 
@@ -28,25 +28,28 @@ public class PauseScreen extends Window {
             }
         });
 
-        GameTextButtonTouchable restartButton = new GameTextButtonTouchable(RESTART);
-        restartButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                gameScreen.restartGame();
-            }
-        });
-
-        GameTextButtonTouchable exitButton = new GameTextButtonTouchable(EXIT);
-        exitButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                gameScreen.exitGame();
-            }
-        });
-
         add(pauseLabel).pad(Constants.UI_ELEMENTS_INDENT).row();
         add(continueButton).pad(Constants.UI_ELEMENTS_INDENT).row();
-        add(restartButton).pad(Constants.UI_ELEMENTS_INDENT).row();
-        add(exitButton).pad(Constants.UI_ELEMENTS_INDENT).row();
+
+        if (restartOrExitEnable) {
+            GameTextButtonTouchable restartButton = new GameTextButtonTouchable(RESTART);
+            restartButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    gameScreen.restartGame();
+                }
+            });
+
+            GameTextButtonTouchable exitButton = new GameTextButtonTouchable(EXIT);
+            exitButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    gameScreen.exitGame();
+                }
+            });
+
+            add(restartButton).pad(Constants.UI_ELEMENTS_INDENT).row();
+            add(exitButton).pad(Constants.UI_ELEMENTS_INDENT).row();
+        }
     }
 }
