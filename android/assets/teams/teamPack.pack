@@ -1,0 +1,75 @@
+
+teamPack.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+realMadrid
+  rotate: false
+  xy: 1, 220
+  size: 200, 280
+  orig: 200, 280
+  offset: 0, 0
+  index: -1
+cska
+  rotate: false
+  xy: 203, 227
+  size: 200, 273
+  orig: 200, 273
+  offset: 0, 0
+  index: -1
+lokomotiv
+  rotate: false
+  xy: 405, 260
+  size: 200, 240
+  orig: 200, 240
+  offset: 0, 0
+  index: -1
+rubin
+  rotate: false
+  xy: 1, 1
+  size: 200, 217
+  orig: 200, 217
+  offset: 0, 0
+  index: -1
+barcelona
+  rotate: false
+  xy: 203, 25
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+borussia
+  rotate: false
+  xy: 405, 58
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+chelsea
+  rotate: false
+  xy: 607, 300
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+schalke
+  rotate: false
+  xy: 607, 98
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+zenit
+  rotate: false
+  xy: 809, 358
+  size: 200, 142
+  orig: 200, 142
+  offset: 0, 0
+  index: -1
+spartak
+  rotate: false
+  xy: 809, 229
+  size: 200, 127
+  orig: 200, 127
+  offset: 0, 0
+  index: -1

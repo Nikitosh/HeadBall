@@ -20,6 +20,7 @@ public class AssetLoader {
     public static Skin skin;
     public static Skin defaultSkin;
     public static Skin tournamentsSkin;
+    public static Skin teamsSkin;
 
     public static GameTextButtonStyle gameTextButtonStyle;
     public static GameTextButtonTouchableStyle gameTextButtonTouchableStyle;
@@ -57,6 +58,9 @@ public class AssetLoader {
 
         TextureAtlas tournamentsAtlas = new TextureAtlas("tournaments/tournamentPack.pack");
         tournamentsSkin = new Skin(tournamentsAtlas);
+
+        TextureAtlas teamsAtlas = new TextureAtlas("teams/teamPack.pack");
+        teamsSkin = new Skin(teamsAtlas);
 
         defaultSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 

@@ -41,7 +41,7 @@ public class TournamentChoosingScreen implements Screen {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     Tournament tournament = reader.getTournament(index);
-                    game.setScreen(new TournamentScreen(game, tournament, tournament.getParticipants().get(0)));
+                    game.setScreen(new TeamChoosingScreen(game, TournamentChoosingScreen.this, tournament));
                 }
             });
 

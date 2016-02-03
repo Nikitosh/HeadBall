@@ -1,0 +1,45 @@
+{
+  "teams": [
+    {
+      "name": "Zenit",
+      "icon": "zenit"
+    },
+    {
+      "name": "CSKA",
+      "icon": "cska"
+    },
+    {
+      "name": "Lokomotiv",
+      "icon": "lokomotiv"
+    },
+    {
+      "name": "Rubin",
+      "icon": "rubin"
+    },
+    {
+      "name": "Schalke",
+      "icon": "schalke"
+    },
+    {
+      "name": "Chelsea",
+      "icon": "chelsea"
+    },
+    {
+      "name": "Barcelona",
+      "icon": "barcelona"
+    },
+    {
+      "name": "Real Madrid",
+      "icon": "realMadrid"
+    },
+    {
+      "name": "Borussia",
+      "icon": "borussia"
+    },
+    {
+      "name": "Spartak",
+      "icon": "spartak"
+    }
+  ]
+
+}

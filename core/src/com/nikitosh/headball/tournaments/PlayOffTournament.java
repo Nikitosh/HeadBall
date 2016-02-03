@@ -3,7 +3,7 @@ package com.nikitosh.headball.tournaments;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Match;
 import com.nikitosh.headball.Team;
-import com.nikitosh.headball.jsonReaders.TeamReader;
+import com.nikitosh.headball.jsonReaders.TeamsReader;
 import com.nikitosh.headball.widgets.OlympicSystemTournamentWidget;
 import com.nikitosh.headball.widgets.ResultTable;
 import com.nikitosh.headball.widgets.StatisticsTable;
@@ -29,7 +29,7 @@ public class PlayOffTournament implements Tournament {
     public PlayOffTournament(JSONObject tournament) {
         lapNumber = ((Long) tournament.get(LAP_NUMBER)).intValue();
         JSONArray participantsNames = (JSONArray) tournament.get(PARTICIPANTS);
-        TeamReader teamReader = new TeamReader();
+        TeamsReader teamReader = new TeamsReader();
         for (Object teamName : participantsNames) {
             teams.add(new Team((String) teamName));
         }
