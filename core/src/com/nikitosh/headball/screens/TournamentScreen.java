@@ -1,30 +1,17 @@
 package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.Team;
-import com.nikitosh.headball.tournaments.LeagueTournament;
 import com.nikitosh.headball.tournaments.Tournament;
-import com.nikitosh.headball.ui.GameTextButton;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
-import java.awt.*;
-
-public class TournamentScreen implements Screen {
+public class TournamentScreen extends StageAbstractScreen {
     private static final String[] TOURNAMENT_ENDED_TITLES = {
             "You lose :(",
             "You win! Congratulations!"
@@ -32,15 +19,12 @@ public class TournamentScreen implements Screen {
     private static final String EXIT = "Exit";
     private static final boolean IS_PRACTICE = false;
 
-    private Stage stage;
     private final Game game;
     private Tournament tournament;
 
     public TournamentScreen(final Game game, final Tournament tournament, final Team playerTeam) {
         this.game = game;
         this.tournament = tournament;
-
-        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
 
         GameTextButtonTouchable playButton = new GameTextButtonTouchable("Play next match");
         playButton.addListener(new ChangeListener() {
@@ -85,7 +69,7 @@ public class TournamentScreen implements Screen {
         table.add(upTable).row();
         table.add(playButton).pad(Constants.UI_ELEMENTS_INDENT);
 
-        stage.addActor(table);
+        stack.addActor(table);
     }
 
     private void handleMatchEnd(Team playerTeam, int[] score) {
@@ -114,45 +98,8 @@ public class TournamentScreen implements Screen {
             exitTable.setFillParent(true);
             exitTable.add(exitDialog).expand();
 
-            stage.addActor(new Image(AssetLoader.darkBackgroundTexture));
-            stage.addActor(exitTable);
+            stack.addActor(new Image(AssetLoader.darkBackgroundTexture));
+            stack.addActor(exitTable);
         }
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
     }
 }

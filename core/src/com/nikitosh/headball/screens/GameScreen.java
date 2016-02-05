@@ -24,7 +24,7 @@ import com.nikitosh.headball.players.Player;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.GameSettings;
 
-public abstract class GameScreen implements Screen {
+public abstract class GameScreen extends StageAbstractScreen {
     private static final String PAUSE = "Pause";
     private static final String SCORE_SEPARATOR = " : ";
 
@@ -34,8 +34,6 @@ public abstract class GameScreen implements Screen {
     protected GameWorld gameWorld;
     protected Player[] players;
 
-    protected Stage stage;
-    protected Stack stack;
     protected Table mainTable = new Table();
     protected Table pauseButtonTable;
     protected InputController inputController;
@@ -117,26 +115,13 @@ public abstract class GameScreen implements Screen {
 
         players = new Player[Constants.PLAYERS_NUMBER];
 
-        stack = new Stack();
-        stack.setFillParent(true);
         stack.addActor(background);
         stack.addActor(mainTable);
         stack.addActor(pauseButtonTable);
-
-        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
-        stage.addActor(stack);
-
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (gameState == GameState.GAME_RUNNING && gameWorld.isGoal() && GameSettings.getBoolean(Constants.SETTINGS_SOUND)) {
             AssetLoader.goalSound.play();
         }
@@ -144,11 +129,7 @@ public abstract class GameScreen implements Screen {
             finishGame();
         }
         updateHUD();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
+        super.render(delta);
     }
 
     @Override
@@ -157,19 +138,9 @@ public abstract class GameScreen implements Screen {
     }
 
     @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
     public void dispose() {
+        super.dispose();
         gameWorld.getBox2dWorld().dispose();
-        stage.dispose();
     }
 
     protected void initializePlayers() {

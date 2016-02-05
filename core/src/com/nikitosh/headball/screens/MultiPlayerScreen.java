@@ -50,13 +50,7 @@ public class MultiPlayerScreen extends GameScreen {
     }
 
     @Override
-    public void show() {
-        super.show();
-    }
-
-    @Override
     public void render(float delta) {
-        super.render(delta);
         Move playerMove = players[playerNumber].getMove();
         playerMove.serialize(out);
         try {
@@ -73,7 +67,6 @@ public class MultiPlayerScreen extends GameScreen {
                 gameWorld.update(delta, players[0].getMove(), playerMove);
             }
         }
-        stage.draw();
-        stage.act(delta);
+        super.render(delta);
     }
 }

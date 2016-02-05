@@ -16,13 +16,11 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
-public class SplashScreen implements Screen {
+public class SplashScreen extends StageAbstractScreen {
     private static final String SPLASH_TEXTURE_PATH = "images/splashScreen.jpg";
 
     private Game game;
     private float splashDuration;
-
-    private Stage stage;
 
     public SplashScreen(final Game game) {
         this.game = game;
@@ -33,12 +31,7 @@ public class SplashScreen implements Screen {
         Image background = new Image(splashTexture);
         background.setFillParent(true);
 
-        Stack stack = new Stack();
-        stack.setFillParent(true);
         stack.addActor(background);
-
-        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
-        stage.addActor(stack);
     }
 
     @Override
@@ -48,39 +41,11 @@ public class SplashScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        super.render(delta);
         splashDuration += delta;
         if (splashDuration >= Constants.SPLASH_DURATION) {
             dispose();
             game.setScreen(new MainMenuScreen(game));
         }
-        stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height);
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
     }
 }

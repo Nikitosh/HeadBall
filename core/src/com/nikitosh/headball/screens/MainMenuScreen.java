@@ -13,12 +13,10 @@ import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
 
-public class MainMenuScreen implements Screen {
+public class MainMenuScreen extends StageAbstractScreen {
     private static final String PLAY = "Play";
     private static final String SETTINGS = "Settings";
     private static final String ABOUT = "About";
-
-    private Stage stage;
 
     public MainMenuScreen(final Game game) {
         Image background = new Image(AssetLoader.menuTexture);
@@ -54,50 +52,7 @@ public class MainMenuScreen implements Screen {
         table.add(settingsTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();
         table.add(aboutTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();
 
-        Stack stack = new Stack();
-        stack.setFillParent(true);
         stack.addActor(background);
         stack.addActor(table);
-
-        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
-        stage.addActor(stack);
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.draw();
-        stage.act(delta);
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height);
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
     }
 }

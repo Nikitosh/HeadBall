@@ -16,14 +16,12 @@ import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.widgets.BackButtonTable;
 
-public class PlayMenuScreen implements Screen {
+public class PlayMenuScreen extends StageAbstractScreen {
     private static final String PRACTICE = "Practice";
     private static final String TOURNAMENT = "Tournament";
     private static final String MULTIPLAYER = "Multiplayer";
     private static final boolean IS_PRACTICE = true;
     private static final boolean IS_DRAW_POSSIBLE = true;
-
-    private Stage stage;
 
     public PlayMenuScreen(final Game game, final Screen previousScreen) {
         Image background = new Image(AssetLoader.menuTexture);
@@ -61,51 +59,8 @@ public class PlayMenuScreen implements Screen {
         menuTable.add(tournamentTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();
         menuTable.add(multiPlayerTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();
 
-        Stack stack = new Stack();
-        stack.setFillParent(true);
         stack.addActor(background);
         stack.addActor(menuTable);
         stack.addActor(new BackButtonTable(game, this, previousScreen));
-
-        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
-        stage.addActor(stack);
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.draw();
-        stage.act(delta);
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height);
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
     }
 }
