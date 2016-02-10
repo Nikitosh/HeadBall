@@ -17,7 +17,8 @@ public class PlayOffTournament implements Tournament {
     private static final String LAP_NUMBER = "lapNumber";
     private static final String PARTICIPANTS = "participants";
 
-
+    private String name;
+    private String iconName;
     private int lapNumber;
     private int currentRound = 0;
     private Array<Team> teams = new Array<>();
@@ -26,13 +27,12 @@ public class PlayOffTournament implements Tournament {
     private OlympicSystemTournamentWidget resultTable;
     private StatisticsTable statisticsTable;
 
-    public PlayOffTournament(JSONObject tournament) {
-        lapNumber = ((Long) tournament.get(LAP_NUMBER)).intValue();
-        JSONArray participantsNames = (JSONArray) tournament.get(PARTICIPANTS);
-        TeamsReader teamReader = new TeamsReader();
-        for (Object teamName : participantsNames) {
-            teams.add(new Team((String) teamName));
-        }
+    public PlayOffTournament(String name, String iconName, Array <Team> teams, int lapNumber) {
+        this.lapNumber = lapNumber;
+        this.name = name;
+        this.iconName = iconName;
+        this.teams = teams;
+
         generateTimetable();
         Array<Integer> firstRound = new Array<>();
         for (int i = 0; i < teams.size; i++) {
@@ -135,5 +135,15 @@ public class PlayOffTournament implements Tournament {
     @Override
     public boolean isWinner(Team team) {
         return isEnded(team) && tournamentBracket.peek().indexOf(teams.indexOf(team, false), false) != -1;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getIconName() {
+        return iconName;
     }
 }

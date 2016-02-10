@@ -54,7 +54,7 @@ public abstract class GameScreen extends StageAbstractScreen {
         game = newGame;
         this.previousScreen = previousScreen;
 
-        gameWorld = LevelLoader.loadLevel(1);
+        gameWorld = LevelLoader.loadLevel(matchInfo.getLevelNumber());
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
 
         Image background = new Image(AssetLoader.backgroundTexture);

@@ -12,8 +12,10 @@ import com.nikitosh.headball.utils.Constants;
 public class ChoosingTable extends Table {
 
     private Array <Actor> elements = new Array<>();
-    private int currentIndex = 0;
-    private Button leftButton, rightButton;
+    protected int currentIndex = 0;
+    private Button leftButton;
+    private Button rightButton;
+    private Button continueButton;
     private Actor currentActor;
 
     public ChoosingTable() {
@@ -39,12 +41,16 @@ public class ChoosingTable extends Table {
             }
         });
 
+        continueButton = new GameTextButtonTouchable("Continue");
+
         currentActor = null;
 
-        add(leftButton);
-        add();
-        add(rightButton);
         defaults().space(Constants.UI_ELEMENTS_INDENT);
+        add(leftButton).left().expandX();
+        add();
+        add(rightButton).right().expandX();
+        row();
+        add(continueButton).colspan(3).bottom();
     }
 
 
@@ -65,5 +71,18 @@ public class ChoosingTable extends Table {
         super.act(delta);
         leftButton.setVisible(currentIndex != 0);
         rightButton.setVisible(currentIndex != elements.size - 1);
+    }
+
+    public void setOnContinueListener(final Runnable runnable) {
+        continueButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                runnable.run();
+            }
+        });
+    }
+
+    public int getCurrentIndex() {
+        return currentIndex;
     }
 }

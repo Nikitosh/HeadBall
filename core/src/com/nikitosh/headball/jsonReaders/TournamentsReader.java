@@ -1,6 +1,8 @@
 package com.nikitosh.headball.jsonReaders;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
+import com.nikitosh.headball.Team;
 import com.nikitosh.headball.tournaments.LeagueTournament;
 import com.nikitosh.headball.tournaments.PlayOffTournament;
 import com.nikitosh.headball.tournaments.Tournament;
@@ -20,9 +22,10 @@ public class TournamentsReader {
 
     private final static String JSON_TOURNAMENTS_KEY = "tournaments";
     private final static String JSON_TYPE_KEY = "type";
-    private final static String JSON_INFO_KEY = "info";
     private final static String JSON_NAME_KEY = "name";
     private final static String JSON_ICON_KEY = "icon";
+    private final static String JSON_LAP_NUMBER_KEY = "lapNumber";
+    private final static String JSON_PARTICIPANTS_KEY = "participants";
     private final static String JSON_LEAGUE_KEY = "league";
     private final static String JSON_PLAYOFF_KEY = "playoff";
 
@@ -34,12 +37,23 @@ public class TournamentsReader {
 
     public Tournament getTournament(int index) {
         JSONObject tournament = getJSONTournament(index);
+        String name = (String) tournament.get(JSON_NAME_KEY);
+        String iconName = (String) tournament.get(JSON_ICON_KEY);
+        int lapNumber = ((Long) tournament.get(JSON_LAP_NUMBER_KEY)).intValue();
+        JSONArray participants = (JSONArray) tournament.get(JSON_PARTICIPANTS_KEY);
+        Array<Team> teams = new Array<>();
+        TeamsReader teamsReader = new TeamsReader();
+        for (Object teamName : participants) {
+            teams.add(teamsReader.getTeam((String) teamName));
+        }
+
         if (tournament.get(JSON_TYPE_KEY).equals(JSON_LEAGUE_KEY)) {
-            return new LeagueTournament((JSONObject) tournament.get(JSON_INFO_KEY));
+            return new LeagueTournament(name, iconName, teams, lapNumber);
         }
         if (tournament.get(JSON_TYPE_KEY).equals(JSON_PLAYOFF_KEY)) {
-            return new PlayOffTournament((JSONObject) tournament.get(JSON_INFO_KEY));
+            return new PlayOffTournament(name, iconName, teams, lapNumber);
         }
+        assert(false);
         return null;
     }
 
@@ -54,11 +68,11 @@ public class TournamentsReader {
     }
 
     public String getTournamentName(int index) {
-        return (String) ((JSONObject) getJSONTournament(index).get(JSON_INFO_KEY)).get(JSON_NAME_KEY);
+        return (String) getJSONTournament(index).get(JSON_NAME_KEY);
     }
 
     public String getTournamentIconName(int index) {
-        return (String) ((JSONObject) getJSONTournament(index).get(JSON_INFO_KEY)).get(JSON_ICON_KEY);
+        return (String) getJSONTournament(index).get(JSON_ICON_KEY);
     }
 
     public String getTournamentType(int index) {

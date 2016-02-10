@@ -13,6 +13,8 @@ import java.util.Random;
 public class LeagueTournament implements Tournament {
     private static final int MAXIMUM_GOALS_NUMBER = 3;
 
+    private String name;
+    private String iconName;
     private int lapNumber;
     private int currentRound = 0;
     private Array<Team> teams = new Array<>();
@@ -24,14 +26,13 @@ public class LeagueTournament implements Tournament {
     private NextRoundTable nextRoundTable;
     private LeagueTournamentStatisticsTable leagueTournamentStatisticsTable;
 
-    public LeagueTournament(JSONObject tournament) {
-        lapNumber = ((Long) tournament.get("lapNumber")).intValue();
-        JSONArray participantsNames = (JSONArray) tournament.get("participants");
-        for (Object teamName : participantsNames) {
-            teams.add(new Team((String) teamName));
-        }
-        generateTimetable();
+    public LeagueTournament(String name, String iconName, Array <Team> teams, int lapNumber) {
+        this.lapNumber = lapNumber;
+        this.name = name;
+        this.iconName = iconName;
+        this.teams = teams;
 
+        generateTimetable();
         resultTable = new StatisticsTable(teams);
         lastRoundTable = new LastRoundTable(teams.size / 2);
         lastRoundTable.setVisible(false);
@@ -152,5 +153,15 @@ public class LeagueTournament implements Tournament {
         Array<Team> sortedTeams = teams;
         sortedTeams.sort(Team.getComparator());
         return sortedTeams.get(0).equals(team);
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getIconName() {
+        return iconName;
     }
 }

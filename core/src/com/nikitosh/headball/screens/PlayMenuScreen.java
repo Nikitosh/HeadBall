@@ -31,8 +31,7 @@ public class PlayMenuScreen extends StageAbstractScreen {
         practiceTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new SinglePlayerScreen(game, PlayMenuScreen.this,
-                        new MatchInfo(new Team("Player"), new Team("Bot"), IS_DRAW_POSSIBLE, IS_PRACTICE)));
+                game.setScreen(new PracticeTeamChoosingScreen(game, PlayMenuScreen.this));
             }
         });
 
@@ -49,7 +48,7 @@ public class PlayMenuScreen extends StageAbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(new MultiPlayerScreen(game, PlayMenuScreen.this,
-                        new MatchInfo(new Team(""), new Team(""), IS_DRAW_POSSIBLE, IS_PRACTICE)));
+                        new MatchInfo(new Team("", ""), new Team("", ""), IS_DRAW_POSSIBLE, IS_PRACTICE)));
             }
         });
 

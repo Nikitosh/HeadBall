@@ -19,7 +19,7 @@ public class Team {
     private static final int DRAW_POINTS = 1;
 
     private String name;
-    private String iconName = "";
+    private String iconName;
     private int points = 0;
     private int winNumber = 0;
     private int drawNumber = 0;
@@ -27,12 +27,25 @@ public class Team {
     private int goalsFor = 0;
     private int goalsAgainst = 0;
 
-    public Team(String name) {
+    public Team(String name, String iconName) {
         this.name = name;
+        this.iconName = iconName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Team)) {
+            return false;
+        }
+        return name.equals(((Team) obj).getName());
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getIconName() {
+        return iconName;
     }
 
     public int getPoints() {
@@ -63,22 +76,6 @@ public class Team {
 
     public int getWinNumber() {
         return winNumber;
-    }
-
-    public int getDrawNumber() {
-        return drawNumber;
-    }
-
-    public int getLossNumber() {
-        return lossNumber;
-    }
-
-    public int getGoalsFor() {
-        return goalsFor;
-    }
-
-    public int getGoalsAgainst() {
-        return goalsAgainst;
     }
 
     public Array<Integer> getStatistics() {

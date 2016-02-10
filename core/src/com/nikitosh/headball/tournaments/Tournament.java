@@ -22,4 +22,6 @@ public interface Tournament {
     boolean isEnded(Team team);
     boolean isDrawResultPossible();
     boolean isWinner(Team team);
+    String getName();
+    String getIconName();
 }
