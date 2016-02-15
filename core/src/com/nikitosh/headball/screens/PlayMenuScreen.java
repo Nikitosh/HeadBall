@@ -47,8 +47,7 @@ public class PlayMenuScreen extends StageAbstractScreen {
         multiPlayerTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new MultiPlayerScreen(game, PlayMenuScreen.this,
-                        new MatchInfo(new Team("", ""), new Team("", ""), IS_DRAW_POSSIBLE, IS_PRACTICE)));
+                game.setScreen(new MultiPlayerWaitingScreen(game));
             }
         });
 

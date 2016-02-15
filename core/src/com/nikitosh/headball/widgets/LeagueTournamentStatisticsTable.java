@@ -10,19 +10,17 @@ public class LeagueTournamentStatisticsTable extends Table implements ResultTabl
     private NextRoundTable nextRoundTable;
     private LastRoundTable lastRoundTable;
 
-    private Table leagueTournamentStatisticsTable = new Table();
-
     public LeagueTournamentStatisticsTable(NextRoundTable nextRoundTable, LastRoundTable lastRoundTable) {
         this.nextRoundTable = nextRoundTable;
         this.lastRoundTable = lastRoundTable;
 
-        leagueTournamentStatisticsTable.add(nextRoundTable.getTable()).row();
-        leagueTournamentStatisticsTable.add(lastRoundTable.getTable()).pad(Constants.UI_ELEMENTS_INDENT);
+        add(nextRoundTable.getTable()).row();
+        add(lastRoundTable.getTable()).pad(Constants.UI_ELEMENTS_INDENT);
     }
 
     @Override
     public Group getTable() {
-        return leagueTournamentStatisticsTable;
+        return this;
     }
 
     @Override

@@ -3,19 +3,14 @@ package com.nikitosh.headball.tournaments;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Match;
 import com.nikitosh.headball.Team;
-import com.nikitosh.headball.jsonReaders.TeamsReader;
 import com.nikitosh.headball.widgets.OlympicSystemTournamentWidget;
 import com.nikitosh.headball.widgets.ResultTable;
 import com.nikitosh.headball.widgets.StatisticsTable;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.util.Random;
 
 public class PlayOffTournament implements Tournament {
     private static final int MAXIMUM_GOALS_NUMBER = 3;
-    private static final String LAP_NUMBER = "lapNumber";
-    private static final String PARTICIPANTS = "participants";
 
     private String name;
     private String iconName;

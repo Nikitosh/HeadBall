@@ -1,6 +1,5 @@
 package com.nikitosh.headball.jsonReaders;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.tournaments.LeagueTournament;
@@ -9,11 +8,8 @@ import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.utils.Utilities;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
-import java.nio.charset.Charset;
-
-public class TournamentsReader {
+public class TournamentReader {
     private final static String TOURNAMENTS_PATH = "info/tournaments.json";
 
     private final static String LOG_TAG = "TournamentReader";
@@ -29,10 +25,18 @@ public class TournamentsReader {
     private final static String JSON_LEAGUE_KEY = "league";
     private final static String JSON_PLAYOFF_KEY = "playoff";
 
+    private static TournamentReader tournamentReader;
     private JSONArray tournaments;
 
-    public TournamentsReader() {
+    private TournamentReader() {
         tournaments = (JSONArray) Utilities.parseJSONFile(TOURNAMENTS_PATH).get(JSON_TOURNAMENTS_KEY);
+    }
+
+    public static TournamentReader getTournamentsReader() {
+        if (tournamentReader == null) {
+            tournamentReader = new TournamentReader();
+        }
+        return tournamentReader;
     }
 
     public Tournament getTournament(int index) {
@@ -42,7 +46,7 @@ public class TournamentsReader {
         int lapNumber = ((Long) tournament.get(JSON_LAP_NUMBER_KEY)).intValue();
         JSONArray participants = (JSONArray) tournament.get(JSON_PARTICIPANTS_KEY);
         Array<Team> teams = new Array<>();
-        TeamsReader teamsReader = new TeamsReader();
+        TeamReader teamsReader = TeamReader.getTeamsReader();
         for (Object teamName : participants) {
             teams.add(teamsReader.getTeam((String) teamName));
         }
@@ -65,17 +69,5 @@ public class TournamentsReader {
         if (index < 0 || index >= tournaments.size())
             throw new IndexOutOfBoundsException();
         return (JSONObject) tournaments.get(index);
-    }
-
-    public String getTournamentName(int index) {
-        return (String) getJSONTournament(index).get(JSON_NAME_KEY);
-    }
-
-    public String getTournamentIconName(int index) {
-        return (String) getJSONTournament(index).get(JSON_ICON_KEY);
-    }
-
-    public String getTournamentType(int index) {
-        return (String) getJSONTournament(index).get(JSON_TYPE_KEY);
     }
 }

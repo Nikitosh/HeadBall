@@ -13,33 +13,15 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class MultiPlayerScreen extends GameScreen {
-    private static final String LOG_TAG = "MultiPlayerScreen";
-
-    private static final int PORT = 2345;
-    private static final String SERVER_ADDRESS = "192.168.43.9";
     private DataInputStream in;
     private DataOutputStream out;
 
-    public MultiPlayerScreen(Game game, Screen previousScreen, MatchInfo matchInfo) {
+    public MultiPlayerScreen(Game game, Screen previousScreen, MatchInfo matchInfo, int playerNumber,
+                             DataInputStream in, DataOutputStream out) {
         super(game, previousScreen, matchInfo);
-        try {
-            InetAddress ipAddress = InetAddress.getByName(SERVER_ADDRESS);
-            Gdx.app.log(LOG_TAG, "Any of you heard of a socket with IP address " + SERVER_ADDRESS + " and port " + PORT + "?");
-            Socket socket = new Socket(ipAddress, PORT);
-            Gdx.app.log(LOG_TAG, "Yes! I just got hold of the program.");
-            in = new DataInputStream(socket.getInputStream());
-            out = new DataOutputStream(socket.getOutputStream());
-            String s = in.readUTF();
-            Gdx.app.log(LOG_TAG, s);
-            if (s.charAt(0) == '0') {
-                playerNumber = 0;
-            } else {
-                playerNumber = 1;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.in = in;
+        this.out = out;
+        this.playerNumber = playerNumber;
         initializePlayers();
     }
 
