@@ -2,17 +2,18 @@ package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.jsonReaders.TeamReader;
-import com.nikitosh.headball.ui.GameTextButtonTouchable;
+import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.widgets.BackButtonTable;
 import com.nikitosh.headball.widgets.TeamChoosingTable;
 
-public class PracticeTeamChoosingScreen extends StageAbstractScreen {
+public class PracticeTeamChoosingScreen extends BackgroundStageAbstractScreen {
     private static final boolean IS_PRACTICE = true;
     private static final boolean IS_DRAW_POSSIBLE = true;
 
@@ -25,7 +26,7 @@ public class PracticeTeamChoosingScreen extends StageAbstractScreen {
         final TeamChoosingTable choosingTable1 = new TeamChoosingTable(teams);
         final TeamChoosingTable choosingTable2 = new TeamChoosingTable(teams);
 
-        GameTextButtonTouchable continueButton = new GameTextButtonTouchable("Continue");
+        TextButton continueButton = new TextButton("Continue", AssetLoader.gameSkin);
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

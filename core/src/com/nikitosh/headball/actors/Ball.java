@@ -41,10 +41,6 @@ public class Ball extends Actor {
         return body.getPosition();
     }
 
-    public Body getBody() {
-        return body;
-    }
-
     public void setInitialPosition(float positionX, float positionY) {
         body.setLinearVelocity(0, 0);
         body.setAngularVelocity(0);

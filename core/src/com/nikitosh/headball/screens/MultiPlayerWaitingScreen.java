@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.Team;
-import com.nikitosh.headball.ui.GameLabelStyle;
 import com.nikitosh.headball.utils.AssetLoader;
 
 import java.io.DataInputStream;
@@ -21,7 +20,7 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
 
     public MultiPlayerWaitingScreen() {
         stack.addActor(new Image(AssetLoader.darkBackgroundTexture));
-        stack.addActor(new Label("Wait for a while!", new GameLabelStyle()));
+        stack.addActor(new Label("Wait for a while!", AssetLoader.gameSkin));
     }
 
     @Override

@@ -7,7 +7,7 @@ import com.nikitosh.headball.widgets.BackButtonTable;
 import com.nikitosh.headball.jsonReaders.TournamentReader;
 import com.nikitosh.headball.widgets.TournamentChoosingTable;
 
-public class TournamentChoosingScreen extends StageAbstractScreen {
+public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
     public TournamentChoosingScreen() {
         TournamentReader reader = TournamentReader.getTournamentsReader();
         Array<Tournament> tournaments = new Array<>();

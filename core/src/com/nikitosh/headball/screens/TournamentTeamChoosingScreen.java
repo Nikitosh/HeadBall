@@ -1,14 +1,16 @@
 package com.nikitosh.headball.screens;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.jsonReaders.TeamReader;
 import com.nikitosh.headball.tournaments.Tournament;
+import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.widgets.BackButtonTable;
 import com.nikitosh.headball.widgets.TeamChoosingTable;
 
-public class TournamentTeamChoosingScreen extends StageAbstractScreen {
+public class TournamentTeamChoosingScreen extends BackgroundStageAbstractScreen {
 
     public TournamentTeamChoosingScreen(final Tournament tournament) {
         Array<Team> teams = new Array<>();

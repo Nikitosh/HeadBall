@@ -7,11 +7,10 @@ import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.tournaments.Tournament;
-import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
-public class TournamentScreen extends StageAbstractScreen {
+public class TournamentScreen extends BackgroundStageAbstractScreen {
     private static final String[] TOURNAMENT_ENDED_TITLES = {
             "You lose :(",
             "You win! Congratulations!"
@@ -24,7 +23,7 @@ public class TournamentScreen extends StageAbstractScreen {
     public TournamentScreen(final Tournament tournament, final Team playerTeam) {
         this.tournament = tournament;
 
-        GameTextButtonTouchable playButton = new GameTextButtonTouchable("Play next match");
+        TextButton playButton = new TextButton("Play next match", AssetLoader.gameSkin);
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -78,7 +77,7 @@ public class TournamentScreen extends StageAbstractScreen {
         tournament.getStatisticsTable().highlightTeam(playerTeam);
         tournament.getResultTable().highlightTeam(playerTeam);
         if (tournament.isEnded(playerTeam)) {
-            Button exitButton = new GameTextButtonTouchable(EXIT);
+            Button exitButton = new TextButton(EXIT, AssetLoader.gameSkin);
             exitButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {

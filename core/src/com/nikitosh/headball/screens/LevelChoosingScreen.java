@@ -8,7 +8,7 @@ import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.widgets.BackButtonTable;
 import com.nikitosh.headball.widgets.ChoosingTable;
 
-public class LevelChoosingScreen extends StageAbstractScreen {
+public class LevelChoosingScreen extends BackgroundStageAbstractScreen {
     public LevelChoosingScreen(final MatchInfo matchInfo) {
         final ChoosingTable choosingTable = new ChoosingTable();
 

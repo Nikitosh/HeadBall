@@ -16,7 +16,6 @@ import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.GameWorld;
 import com.nikitosh.headball.players.Player;
-import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.GameSettings;
 
 public abstract class GameScreen extends StageAbstractScreen {
@@ -64,7 +63,7 @@ public abstract class GameScreen extends StageAbstractScreen {
                 Constants.VIRTUAL_WIDTH / 2,
                 Constants.VIRTUAL_HEIGHT / 2);
 
-        GameTextButtonTouchable pauseButton = new GameTextButtonTouchable(PAUSE);
+        TextButton pauseButton = new TextButton(PAUSE, AssetLoader.gameSkin);
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

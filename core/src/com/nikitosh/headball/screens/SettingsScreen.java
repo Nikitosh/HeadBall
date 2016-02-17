@@ -3,68 +3,60 @@ package com.nikitosh.headball.screens;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.utils.GameSettings;
-import com.nikitosh.headball.ui.GameButtonStyle;
-import com.nikitosh.headball.ui.GameTextButton;
 import com.nikitosh.headball.widgets.BackButtonTable;
 
-public class SettingsScreen extends StageAbstractScreen {
-    private static final String ENABLED_ICON_NAME = "red_boxCheckmark";
-    private static final String DISABLED_ICON_NAME = "red_boxCross";
+public class SettingsScreen extends BackgroundStageAbstractScreen {
+    private static final String ENABLED = "on";
+    private static final String DISABLED = "off";
 
-    private Drawable[] drawables;
+    private Button.ButtonStyle[] styles;
     private int soundState = GameSettings.getBoolean(Constants.SETTINGS_SOUND) ? 1 : 0;
     private int musicState = GameSettings.getBoolean(Constants.SETTINGS_MUSIC) ? 1 : 0;
     private SelectBox<String> selectBox;
 
     public SettingsScreen() {
-        Image background = new Image(AssetLoader.menuTexture);
-        background.setFillParent(true);
+        styles = new Button.ButtonStyle[] {AssetLoader.gameSkin.get(DISABLED, Button.ButtonStyle.class),
+                AssetLoader.gameSkin.get(ENABLED, Button.ButtonStyle.class)};
 
-        drawables = new Drawable[] {AssetLoader.skin.getDrawable(DISABLED_ICON_NAME),
-                AssetLoader.skin.getDrawable(ENABLED_ICON_NAME)};
-
-        Button soundTextButton = new GameTextButton(Constants.SETTINGS_SOUND);
-        final Button soundButton = new Button(new GameButtonStyle(ENABLED_ICON_NAME));
-        soundButton.getStyle().up = drawables[soundState];
+        Button soundTextButton = new TextButton(Constants.SETTINGS_SOUND, AssetLoader.gameSkin, "notTouchable");
+        final Button soundButton = new Button(styles[soundState]);
         soundButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 soundState = 1 - soundState;
-                soundButton.getStyle().up = drawables[soundState];
+                soundButton.setStyle(styles[soundState]);
             }
         });
 
-        Button musicTextButton = new GameTextButton(Constants.SETTINGS_MUSIC);
-        final Button musicButton = new Button(new GameButtonStyle(ENABLED_ICON_NAME));
-        musicButton.getStyle().up = drawables[musicState];
+        Button musicTextButton = new TextButton(Constants.SETTINGS_MUSIC, AssetLoader.gameSkin, "notTouchable");
+        final Button musicButton = new Button(styles[musicState]);
         musicButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 musicState = 1 - musicState;
-                musicButton.getStyle().up = drawables[musicState];
+                musicButton.setStyle(styles[musicState]);
             }
         });
 
-        Button controlButton = new GameTextButton(Constants.SETTINGS_CONTROL);
-        selectBox = new SelectBox<>(AssetLoader.defaultSkin);
+        Button controlButton = new TextButton(Constants.SETTINGS_CONTROL, AssetLoader.gameSkin, "notTouchable");
+        selectBox = new SelectBox<>(AssetLoader.gameSkin);
         selectBox.setItems(Constants.SETTINGS_CONTROL_BUTTONS, Constants.SETTINGS_CONTROL_TOUCHPAD,
                 Constants.SETTINGS_CONTROL_KEYBOARD);
         selectBox.setSelected(GameSettings.getString(Constants.SETTINGS_CONTROL));
 
         Table settingsTable = new Table();
+        settingsTable.defaults().pad(Constants.UI_ELEMENTS_INDENT);
         settingsTable.setFillParent(true);
-        settingsTable.add(soundTextButton).pad(Constants.UI_ELEMENTS_INDENT);
-        settingsTable.add(soundButton).pad(Constants.UI_ELEMENTS_INDENT).row();
-        settingsTable.add(musicTextButton).pad(Constants.UI_ELEMENTS_INDENT);
-        settingsTable.add(musicButton).pad(Constants.UI_ELEMENTS_INDENT).row();
-        settingsTable.add(controlButton).pad(Constants.UI_ELEMENTS_INDENT);
-        settingsTable.add(selectBox).pad(Constants.UI_ELEMENTS_INDENT);
+        settingsTable.add(soundTextButton);
+        settingsTable.add(soundButton).row();
+        settingsTable.add(musicTextButton);
+        settingsTable.add(musicButton).row();
+        settingsTable.add(controlButton);
+        settingsTable.add(selectBox);
 
-        stack.addActor(background);
         stack.addActor(new BackButtonTable(new Runnable() {
             //runnable is used to save settings when "back" button pressed
             @Override

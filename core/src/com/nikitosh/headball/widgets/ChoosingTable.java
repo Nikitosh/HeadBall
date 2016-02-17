@@ -1,39 +1,28 @@
 package com.nikitosh.headball.widgets;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
-import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
 public class ChoosingTable extends Table {
-    //should be moved to ui.json
-    private static final Drawable LEFT_ORANGE = AssetLoader.skin.getDrawable("red_sliderLeft");
-    private static final Button.ButtonStyle LEFT_ACTIVE = new Button.ButtonStyle(LEFT_ORANGE, LEFT_ORANGE, LEFT_ORANGE);
-    private static final Drawable RIGHT_ORANGE = AssetLoader.skin.getDrawable("red_sliderRight");
-    private static final Button.ButtonStyle RIGHT_ACTIVE = new Button.ButtonStyle(RIGHT_ORANGE, RIGHT_ORANGE, RIGHT_ORANGE);
-    private static final Drawable LEFT_GRAY = AssetLoader.skin.getDrawable("grey_sliderLeft");
-    private static final Button.ButtonStyle LEFT_NOT_ACTIVE = new Button.ButtonStyle(LEFT_GRAY, LEFT_GRAY, LEFT_GRAY);
-    private static final Drawable RIGHT_GRAY = AssetLoader.skin.getDrawable("grey_sliderRight");
-    private static final Button.ButtonStyle RIGHT_NOT_ACTIVE = new Button.ButtonStyle(RIGHT_GRAY, RIGHT_GRAY, RIGHT_GRAY);
+    private static final Button.ButtonStyle LEFT_ACTIVE = AssetLoader.gameSkin.get("leftOrangeSlider", Button.ButtonStyle.class);
+    private static final Button.ButtonStyle LEFT_NOT_ACTIVE = AssetLoader.gameSkin.get("leftGraySlider", Button.ButtonStyle.class);
+    private static final Button.ButtonStyle RIGHT_ACTIVE = AssetLoader.gameSkin.get("rightOrangeSlider", Button.ButtonStyle.class);
+    private static final Button.ButtonStyle RIGHT_NOT_ACTIVE = AssetLoader.gameSkin.get("rightGraySlider", Button.ButtonStyle.class);
 
     private Array <Actor> elements = new Array<>();
     protected int currentIndex = 0;
     private Button leftButton;
     private Button rightButton;
-    private Button continueButton;
     private Actor currentActor;
 
     public ChoosingTable() {
         super();
 
-        leftButton = new Button();
-        leftButton.setStyle(LEFT_ACTIVE);
+        leftButton = new Button(LEFT_NOT_ACTIVE);
         leftButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -44,8 +33,7 @@ public class ChoosingTable extends Table {
             }
         });
 
-        rightButton = new Button();
-        rightButton.setStyle(RIGHT_ACTIVE);
+        rightButton = new Button(RIGHT_NOT_ACTIVE);
         rightButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -56,16 +44,12 @@ public class ChoosingTable extends Table {
             }
         });
 
-        continueButton = new GameTextButtonTouchable("Continue");
-
         currentActor = null;
 
         defaults().space(Constants.UI_ELEMENTS_INDENT).pad(Constants.UI_ELEMENTS_INDENT);
         add(leftButton).left().expandX();
         add();
         add(rightButton).right().expandX().expandY();
-        row();
-        add(continueButton).colspan(3).center();
     }
 
 
@@ -89,6 +73,9 @@ public class ChoosingTable extends Table {
     }
 
     public void setOnContinueListener(final Runnable runnable) {
+        Button continueButton = new TextButton("Continue", AssetLoader.gameSkin);
+        row();
+        add(continueButton).colspan(3);
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
