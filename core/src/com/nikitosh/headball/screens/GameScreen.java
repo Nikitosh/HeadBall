@@ -1,17 +1,12 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nikitosh.headball.LevelLoader;
 import com.nikitosh.headball.MatchInfo;
+import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.controllers.ButtonsInputController;
 import com.nikitosh.headball.controllers.InputController;
 import com.nikitosh.headball.controllers.KeyboardInputController;
@@ -27,9 +22,6 @@ import com.nikitosh.headball.utils.GameSettings;
 public abstract class GameScreen extends StageAbstractScreen {
     private static final String PAUSE = "Pause";
     private static final String SCORE_SEPARATOR = " : ";
-
-    protected final Game game;
-    protected Screen previousScreen;
 
     protected GameWorld gameWorld;
     protected Player[] players;
@@ -50,10 +42,7 @@ public abstract class GameScreen extends StageAbstractScreen {
 
     protected int playerNumber;
 
-    public GameScreen(Game newGame, Screen previousScreen, MatchInfo matchInfo) {
-        game = newGame;
-        this.previousScreen = previousScreen;
-
+    public GameScreen(MatchInfo matchInfo) {
         gameWorld = LevelLoader.loadLevel(matchInfo.getLevelNumber());
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
 
@@ -184,8 +173,7 @@ public abstract class GameScreen extends StageAbstractScreen {
         synchronized (this) {
             notifyAll();
         }
-        dispose();
-        game.setScreen(previousScreen);
+        ScreenManager.getInstance().disposeCurrentScreen();
     }
 
     public int[] getScore() {

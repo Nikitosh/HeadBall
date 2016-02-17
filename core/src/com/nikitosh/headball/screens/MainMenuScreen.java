@@ -1,14 +1,9 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
@@ -18,7 +13,7 @@ public class MainMenuScreen extends StageAbstractScreen {
     private static final String SETTINGS = "Settings";
     private static final String ABOUT = "About";
 
-    public MainMenuScreen(final Game game) {
+    public MainMenuScreen() {
         Image background = new Image(AssetLoader.menuTexture);
         background.setFillParent(true);
 
@@ -26,7 +21,7 @@ public class MainMenuScreen extends StageAbstractScreen {
         playTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new PlayMenuScreen(game, MainMenuScreen.this));
+                ScreenManager.getInstance().setScreen(new PlayMenuScreen());
             }
         });
 
@@ -34,7 +29,7 @@ public class MainMenuScreen extends StageAbstractScreen {
         settingsTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new SettingsScreen(game, MainMenuScreen.this));
+                ScreenManager.getInstance().setScreen(new SettingsScreen());
             }
         });
 
@@ -42,7 +37,7 @@ public class MainMenuScreen extends StageAbstractScreen {
         aboutTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new AboutScreen(game, MainMenuScreen.this));
+                ScreenManager.getInstance().setScreen(new AboutScreen());
             }
         });
 

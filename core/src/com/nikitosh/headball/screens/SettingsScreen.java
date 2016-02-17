@@ -1,7 +1,5 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -22,7 +20,7 @@ public class SettingsScreen extends StageAbstractScreen {
     private int musicState = GameSettings.getBoolean(Constants.SETTINGS_MUSIC) ? 1 : 0;
     private SelectBox<String> selectBox;
 
-    public SettingsScreen(final Game game, final Screen previousScreen) {
+    public SettingsScreen() {
         Image background = new Image(AssetLoader.menuTexture);
         background.setFillParent(true);
 
@@ -67,7 +65,7 @@ public class SettingsScreen extends StageAbstractScreen {
         settingsTable.add(selectBox).pad(Constants.UI_ELEMENTS_INDENT);
 
         stack.addActor(background);
-        stack.addActor(new BackButtonTable(game, this, previousScreen, new Runnable() {
+        stack.addActor(new BackButtonTable(new Runnable() {
             //runnable is used to save settings when "back" button pressed
             @Override
             public void run() {

@@ -1,15 +1,14 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Array;
+import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.widgets.BackButtonTable;
 import com.nikitosh.headball.jsonReaders.TournamentReader;
 import com.nikitosh.headball.widgets.TournamentChoosingTable;
 
 public class TournamentChoosingScreen extends StageAbstractScreen {
-    public TournamentChoosingScreen(final Game game, final Screen previousScreen) {
+    public TournamentChoosingScreen() {
         TournamentReader reader = TournamentReader.getTournamentsReader();
         Array<Tournament> tournaments = new Array<>();
         for (int i = 0; i < reader.getTournamentsNumber(); i++) {
@@ -20,13 +19,13 @@ public class TournamentChoosingScreen extends StageAbstractScreen {
         choosingTable.setOnContinueListener(new Runnable() {
             @Override
             public void run() {
-                game.setScreen(new TournamentTeamChoosingScreen(game, TournamentChoosingScreen.this,
-                        choosingTable.getSelectedTournament()));
+                ScreenManager.getInstance().setScreen(
+                        new TournamentTeamChoosingScreen(choosingTable.getSelectedTournament()));
             }
         });
         choosingTable.setFillParent(true);
 
         stack.addActor(choosingTable);
-        stack.addActor(new BackButtonTable(game, this, previousScreen));
+        stack.addActor(new BackButtonTable());
     }
 }

@@ -37,10 +37,10 @@
       "goalsWidth": 50,
       "goalsHeight": 90,
       "crossbarHeight": 10,
-      "wallsX": [0, 0, 790, 10, 300],
-      "wallsY": [0, 10, 10, 370, 10],
-      "wallsWidth": [800, 10, 10, 780, 200],
-      "wallsHeight": [10, 370, 370, 10, 10]
+      "wallsX": [0, 0, 790, 10, 300, 350],
+      "wallsY": [0, 10, 10, 370, 10, 30],
+      "wallsWidth": [800, 10, 10, 780, 200, 100],
+      "wallsHeight": [10, 370, 370, 10, 20, 20]
     }
  ]
 }

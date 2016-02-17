@@ -1,16 +1,9 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.nikitosh.headball.MatchInfo;
-import com.nikitosh.headball.Team;
+import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
@@ -23,7 +16,7 @@ public class PlayMenuScreen extends StageAbstractScreen {
     private static final boolean IS_PRACTICE = true;
     private static final boolean IS_DRAW_POSSIBLE = true;
 
-    public PlayMenuScreen(final Game game, final Screen previousScreen) {
+    public PlayMenuScreen() {
         Image background = new Image(AssetLoader.menuTexture);
         background.setFillParent(true);
 
@@ -31,7 +24,7 @@ public class PlayMenuScreen extends StageAbstractScreen {
         practiceTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new PracticeTeamChoosingScreen(game, PlayMenuScreen.this));
+                ScreenManager.getInstance().setScreen(new PracticeTeamChoosingScreen());
             }
         });
 
@@ -39,7 +32,7 @@ public class PlayMenuScreen extends StageAbstractScreen {
         tournamentTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new TournamentChoosingScreen(game, PlayMenuScreen.this));
+                ScreenManager.getInstance().setScreen(new TournamentChoosingScreen());
             }
         });
 
@@ -47,7 +40,7 @@ public class PlayMenuScreen extends StageAbstractScreen {
         multiPlayerTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new MultiPlayerWaitingScreen(game));
+                ScreenManager.getInstance().setScreen(new MultiPlayerWaitingScreen());
             }
         });
 
@@ -59,6 +52,6 @@ public class PlayMenuScreen extends StageAbstractScreen {
 
         stack.addActor(background);
         stack.addActor(menuTable);
-        stack.addActor(new BackButtonTable(game, this, previousScreen));
+        stack.addActor(new BackButtonTable());
     }
 }

@@ -1,7 +1,5 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.widgets.BackButtonTable;
@@ -9,7 +7,7 @@ import com.nikitosh.headball.widgets.BackButtonTable;
 public class AboutScreen extends StageAbstractScreen {
     private static final String ABOUT_TEXT = "This game was developed by Nikitosh & Wowember";
 
-    public AboutScreen(final Game game, final Screen previousScreen) {
+    public AboutScreen() {
         Image background = new Image(AssetLoader.menuTexture);
         background.setFillParent(true);
 
@@ -20,7 +18,7 @@ public class AboutScreen extends StageAbstractScreen {
         aboutTable.add(aboutLabel);
 
         stack.addActor(background);
-        stack.addActor(new BackButtonTable(game, this, previousScreen));
+        stack.addActor(new BackButtonTable());
         stack.addActor(aboutTable);
     }
 }

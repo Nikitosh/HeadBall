@@ -1,10 +1,10 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.nikitosh.headball.MatchInfo;
+import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.ui.GameLabelStyle;
 import com.nikitosh.headball.utils.AssetLoader;
@@ -19,10 +19,7 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
     private static final String SERVER_ADDRESS = "192.168.43.9";
     private static final String LOG_TAG = "MultiPlayerScreen";
 
-    private Game game;
-
-    public MultiPlayerWaitingScreen(Game game) {
-        this.game = game;
+    public MultiPlayerWaitingScreen() {
         stack.addActor(new Image(AssetLoader.darkBackgroundTexture));
         stack.addActor(new Label("Wait for a while!", new GameLabelStyle()));
     }
@@ -47,7 +44,8 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
                     } else {
                         playerNumber = 1;
                     }
-                    game.setScreen(new MultiPlayerScreen(game, MultiPlayerWaitingScreen.this,
+                    ScreenManager.getInstance().disposeCurrentScreen();
+                    ScreenManager.getInstance().setScreen(new MultiPlayerScreen(
                             new MatchInfo(new Team("", ""), new Team("", ""), false, false), playerNumber, in, out));
                 } catch (Exception e) {
                     e.printStackTrace();
