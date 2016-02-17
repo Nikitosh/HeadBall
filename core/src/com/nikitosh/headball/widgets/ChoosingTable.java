@@ -5,11 +5,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
+import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
 public class ChoosingTable extends Table {
+    //should be moved to ui.json
+    private static final Drawable LEFT_ORANGE = AssetLoader.skin.getDrawable("red_sliderLeft");
+    private static final Button.ButtonStyle LEFT_ACTIVE = new Button.ButtonStyle(LEFT_ORANGE, LEFT_ORANGE, LEFT_ORANGE);
+    private static final Drawable RIGHT_ORANGE = AssetLoader.skin.getDrawable("red_sliderRight");
+    private static final Button.ButtonStyle RIGHT_ACTIVE = new Button.ButtonStyle(RIGHT_ORANGE, RIGHT_ORANGE, RIGHT_ORANGE);
+    private static final Drawable LEFT_GRAY = AssetLoader.skin.getDrawable("grey_sliderLeft");
+    private static final Button.ButtonStyle LEFT_NOT_ACTIVE = new Button.ButtonStyle(LEFT_GRAY, LEFT_GRAY, LEFT_GRAY);
+    private static final Drawable RIGHT_GRAY = AssetLoader.skin.getDrawable("grey_sliderRight");
+    private static final Button.ButtonStyle RIGHT_NOT_ACTIVE = new Button.ButtonStyle(RIGHT_GRAY, RIGHT_GRAY, RIGHT_GRAY);
 
     private Array <Actor> elements = new Array<>();
     protected int currentIndex = 0;
@@ -21,21 +32,25 @@ public class ChoosingTable extends Table {
     public ChoosingTable() {
         super();
 
-        leftButton = new GameTextButtonTouchable("Left");
+        leftButton = new Button();
+        leftButton.setStyle(LEFT_ACTIVE);
         leftButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 currentIndex--;
+                currentIndex = Math.max(currentIndex, 0);
                 getCell(currentActor).setActor(elements.get(currentIndex));
                 currentActor = elements.get(currentIndex);
             }
         });
 
-        rightButton = new GameTextButtonTouchable("Right");
+        rightButton = new Button();
+        rightButton.setStyle(RIGHT_ACTIVE);
         rightButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 currentIndex++;
+                currentIndex = Math.min(currentIndex, elements.size - 1);
                 getCell(currentActor).setActor(elements.get(currentIndex));
                 currentActor = elements.get(currentIndex);
             }
@@ -45,12 +60,12 @@ public class ChoosingTable extends Table {
 
         currentActor = null;
 
-        defaults().space(Constants.UI_ELEMENTS_INDENT);
+        defaults().space(Constants.UI_ELEMENTS_INDENT).pad(Constants.UI_ELEMENTS_INDENT);
         add(leftButton).left().expandX();
         add();
-        add(rightButton).right().expandX();
+        add(rightButton).right().expandX().expandY();
         row();
-        add(continueButton).colspan(3).bottom();
+        add(continueButton).colspan(3).center();
     }
 
 
@@ -69,8 +84,8 @@ public class ChoosingTable extends Table {
     @Override
     public void act(float delta) {
         super.act(delta);
-        leftButton.setVisible(currentIndex != 0);
-        rightButton.setVisible(currentIndex != elements.size - 1);
+        leftButton.setStyle(currentIndex == 0 ? LEFT_NOT_ACTIVE : LEFT_ACTIVE);
+        rightButton.setStyle(currentIndex == elements.size - 1 ? RIGHT_NOT_ACTIVE : RIGHT_ACTIVE);
     }
 
     public void setOnContinueListener(final Runnable runnable) {
