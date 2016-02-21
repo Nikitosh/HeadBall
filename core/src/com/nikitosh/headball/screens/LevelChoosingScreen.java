@@ -12,10 +12,10 @@ public class LevelChoosingScreen extends BackgroundStageAbstractScreen {
     public LevelChoosingScreen(final MatchInfo matchInfo) {
         final ChoosingTable choosingTable = new ChoosingTable();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {//???
             Group level = LevelLoader.loadLevel(i).getGroup();
             level.setTransform(true);
-            float coefficient = 0.7f;
+            float coefficient = 0.7f;//???
             level.setScale(coefficient);
             level.setSize(Constants.VIRTUAL_WIDTH * coefficient,
                     (Constants.VIRTUAL_HEIGHT - Constants.UI_LAYER_HEIGHT) * coefficient);

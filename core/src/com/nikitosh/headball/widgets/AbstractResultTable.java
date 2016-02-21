@@ -22,16 +22,20 @@ public abstract class AbstractResultTable extends Table implements ResultTable, 
 
     @Override
     public void highlightTeam(Team team) {
-        for (int i = 0; i < statisticsLabels.size; i++) {
-            Array<Label> rowStatisticsLabels = statisticsLabels.get(i);
+        for (Array<Label> rowStatisticsLabels : statisticsLabels) {
             for (Label label : rowStatisticsLabels) {
                 label.setStyle(AssetLoader.defaultSkin.get(Label.LabelStyle.class));
             }
-            for (int j = 0; j < rowStatisticsLabels.size; j++) {
-                if (rowStatisticsLabels.get(j).getText().toString().equals(team.getName())) {
-                    for (Label label : rowStatisticsLabels) {
-                        label.setStyle(HIGHLIGHTED_STYLE);
-                    }
+            boolean needHighLighting = false;
+            for (Label rowLabel : rowStatisticsLabels) {
+                if (rowLabel.getText().toString().equals(team.getName())) {
+                    needHighLighting = true;
+                    break;
+                }
+            }
+            if (needHighLighting) {
+                for (Label rowLabel : rowStatisticsLabels) {
+                    rowLabel.setStyle(HIGHLIGHTED_STYLE);
                 }
             }
         }
@@ -40,12 +44,12 @@ public abstract class AbstractResultTable extends Table implements ResultTable, 
     @Override
     public void write(Json json) {
         Array<Array<String>> statistics = new Array<>();
-        for (int i = 0; i < statisticsLabels.size; i++) {
-            Array<String> tmp = new Array<>();
-            for (int j = 0; j < statisticsLabels.get(i).size; j++) {
-                tmp.add(statisticsLabels.get(i).get(j).getText().toString());
+        for (Array<Label> rowStatisticsLabels : statisticsLabels) {
+            Array<String> rowStatistics = new Array<>();
+            for (Label label : rowStatisticsLabels) {
+                rowStatistics.add(label.getText().toString());
             }
-            statistics.add(tmp);
+            statistics.add(rowStatistics);
         }
         json.writeValue("statistics", statistics);
         json.writeValue("isVisible", this.isVisible());
@@ -55,10 +59,10 @@ public abstract class AbstractResultTable extends Table implements ResultTable, 
     public void read(Json json, JsonValue jsonData) {
         Array<Array<String>> statistics = new Array<>();
         statistics = json.readValue(statistics.getClass(), jsonData.child());
-        for (int i = 0; i < statistics.size; i++) {
+        for (Array<String> rowStatistics : statistics) {
             Array<Label> teamStatisticLabel = new Array<>();
-            for (int j = 0; j < statistics.get(i).size; j++) {
-                teamStatisticLabel.add(new Label(statistics.get(i).get(j), AssetLoader.defaultSkin));
+            for (String text : rowStatistics) {
+                teamStatisticLabel.add(new Label(text, AssetLoader.defaultSkin));
                 add(teamStatisticLabel.peek()).left();
             }
             row();

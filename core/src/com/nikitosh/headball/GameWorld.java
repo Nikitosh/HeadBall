@@ -19,7 +19,7 @@ public class GameWorld {
     private float initialBallPositionY;
 
     private Image field;
-    private float width;
+    private float width;//??
     private float height;
     private Footballer[] footballers;
     private Array<Wall> walls;
@@ -32,7 +32,7 @@ public class GameWorld {
     private float gameDuration = 0;
 
     public GameWorld() {
-        box2dWorld = new World(new Vector2(0f, -300f * Constants.WORLD_TO_BOX), true);
+        box2dWorld = new World(new Vector2(0f, -300f * Constants.WORLD_TO_BOX), true);//???
         group = new Group();
 
         field = new Image(AssetLoader.fieldTexture);
@@ -88,7 +88,7 @@ public class GameWorld {
 
     public void update(float delta, Move firstMove, Move secondMove) {
         isGoal = false;
-        box2dWorld.step(1 / 60f, 6, 2);
+        box2dWorld.step(1 / 60f, 6, 2);//???
         footballers[0].update(firstMove);
         footballers[1].update(secondMove);
 

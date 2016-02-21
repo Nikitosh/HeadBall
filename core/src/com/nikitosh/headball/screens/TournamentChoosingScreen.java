@@ -26,6 +26,7 @@ public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
                 if (Gdx.files.local("tournaments/saves/"+choosingTable.getSelectedTournament().getName()+".json").exists()) {
                     Pair<Tournament, Team> tournamentInfo = TournamentDeserializer.deserialize(choosingTable.getSelectedTournament().getClass(),
                             choosingTable.getSelectedTournament().getName());
+                    ScreenManager.getInstance().disposeCurrentScreen();
                     ScreenManager.getInstance().setScreen(new TournamentScreen(tournamentInfo.getFirst(), tournamentInfo.getSecond()));
                 } else {
                     ScreenManager.getInstance().setScreen(

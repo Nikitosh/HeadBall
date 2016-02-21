@@ -13,7 +13,7 @@ public class SplashScreen extends StageAbstractScreen {
     private float splashDuration;
 
     public SplashScreen() {
-                AssetLoader.loadFont();
+        AssetLoader.loadFont();
 
         Texture splashTexture = new Texture(Gdx.files.internal(SPLASH_TEXTURE_PATH));
         Image background = new Image(splashTexture);
@@ -25,7 +25,7 @@ public class SplashScreen extends StageAbstractScreen {
     @Override
     public void show() {
         AssetLoader.load();
-    }
+    }//?
 
     @Override
     public void render(float delta) {

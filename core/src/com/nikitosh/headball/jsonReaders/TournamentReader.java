@@ -67,7 +67,7 @@ public class TournamentReader {
 
     private JSONObject getJSONTournament(int index) {
         if (index < 0 || index >= tournaments.size())
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException();//?
         return (JSONObject) tournaments.get(index);
     }
 }

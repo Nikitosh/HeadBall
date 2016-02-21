@@ -25,9 +25,6 @@ public class LeagueTournament implements Tournament {
     private LeagueTournamentStatisticsTable leagueTournamentStatisticsTable;
 
     public LeagueTournament() {
-        leagueTournamentStatisticsTable = new LeagueTournamentStatisticsTable(new NextRoundTable(),
-                new LastRoundTable());
-        leagueTournamentStatisticsTable.getLastRoundTable().setVisible(false);
     }
 
     public LeagueTournament(String name, String iconName, Array <Team> teams, int lapNumber) {

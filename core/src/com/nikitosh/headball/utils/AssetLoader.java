@@ -32,7 +32,7 @@ public class AssetLoader {
     public static void loadFont() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/LuckiestGuy.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 22;
+        parameter.size = 22;//???
         parameter.minFilter = Texture.TextureFilter.Linear;
         parameter.magFilter = Texture.TextureFilter.Linear;
         font = generator.generateFont(parameter);
@@ -67,7 +67,7 @@ public class AssetLoader {
         backgroundTexture = new Texture(Gdx.files.internal("images/background.jpg"));
         darkBackgroundTexture = new Texture(Gdx.files.internal("images/darkBackground.png"));
 
-        GameSettings.initialize();
+        GameSettings.initialize();//??
     }
 
     public static void dispose() {

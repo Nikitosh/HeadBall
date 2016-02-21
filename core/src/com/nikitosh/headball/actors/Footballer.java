@@ -50,7 +50,7 @@ public class Footballer extends Actor {
     private Box2DSprite legSprite;
 
     public Footballer(World world, float x, float y, boolean left, float radius) {
-        this.left = left;
+        this.left = left;//???
         this.radius = radius;
         body = Utilities.getCircleBody(world,
                 x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX, radius * Constants.WORLD_TO_BOX,

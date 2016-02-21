@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
 public class GameSettings {
-    private static final String SETTINGS = "Settings";
-    static private Preferences preferences = Gdx.app.getPreferences(SETTINGS);
+    private static final String SETTINGS = "Settings";                              //???
+    static private Preferences preferences = Gdx.app.getPreferences(SETTINGS);      //???
 
     static public void initialize() {
         preferences.putBoolean(Constants.SETTINGS_SOUND, true);
