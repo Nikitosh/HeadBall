@@ -22,9 +22,13 @@ public class LeagueTournament implements Tournament {
     private HashSet<Integer> playedCurrentRoundTeams = new HashSet<>();
     private Array<Array<Integer>> timeTable = new Array<>();
     private StatisticsTable resultTable;
-    private LastRoundTable lastRoundTable;
-    private NextRoundTable nextRoundTable;
     private LeagueTournamentStatisticsTable leagueTournamentStatisticsTable;
+
+    public LeagueTournament() {
+        leagueTournamentStatisticsTable = new LeagueTournamentStatisticsTable(new NextRoundTable(),
+                new LastRoundTable());
+        leagueTournamentStatisticsTable.getLastRoundTable().setVisible(false);
+    }
 
     public LeagueTournament(String name, String iconName, Array <Team> teams, int lapNumber) {
         this.lapNumber = lapNumber;
@@ -34,10 +38,10 @@ public class LeagueTournament implements Tournament {
 
         generateTimetable();
         resultTable = new StatisticsTable(teams);
-        lastRoundTable = new LastRoundTable(teams.size / 2);
-        lastRoundTable.setVisible(false);
-        nextRoundTable = new NextRoundTable(timeTable.get(0), teams);
-        leagueTournamentStatisticsTable = new LeagueTournamentStatisticsTable(nextRoundTable, lastRoundTable);
+        leagueTournamentStatisticsTable = new LeagueTournamentStatisticsTable(new NextRoundTable(timeTable.get(0), teams)
+                , new LastRoundTable(teams.size / 2));
+        leagueTournamentStatisticsTable.getLastRoundTable().setVisible(false);
+
     }
 
     private void generateTimetable() {
@@ -98,13 +102,13 @@ public class LeagueTournament implements Tournament {
     @Override
     public void endCurrentRound() {
         resultTable.update(teams);
-        lastRoundTable.update(currentRoundMatches);
-        lastRoundTable.setVisible(true);
+        leagueTournamentStatisticsTable.getLastRoundTable().update(currentRoundMatches);
+        leagueTournamentStatisticsTable.getLastRoundTable().setVisible(true);
         currentRound++;
         if (currentRound == lapNumber) {
-            nextRoundTable.setVisible(false);
+            leagueTournamentStatisticsTable.getNextRoundTable().setVisible(false);
         } else {
-            nextRoundTable.update(timeTable.get(currentRound), teams);
+            leagueTournamentStatisticsTable.getNextRoundTable().update(timeTable.get(currentRound), teams);
         }
     }
 

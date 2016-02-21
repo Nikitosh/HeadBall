@@ -1,15 +1,19 @@
 package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.tournaments.Tournament;
+import com.nikitosh.headball.tournaments.TournamentSerializer;
 import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
+import com.nikitosh.headball.widgets.BackButtonTable;
 
 public class TournamentScreen extends StageAbstractScreen {
     private static final String[] TOURNAMENT_ENDED_TITLES = {
@@ -22,7 +26,7 @@ public class TournamentScreen extends StageAbstractScreen {
     private final Game game;
     private Tournament tournament;
 
-    public TournamentScreen(final Game game, final Tournament tournament, final Team playerTeam) {
+    public TournamentScreen(final Game game, final Tournament tournament, final Team playerTeam, final Screen previousScreen) {
         this.game = game;
         this.tournament = tournament;
 
@@ -70,6 +74,12 @@ public class TournamentScreen extends StageAbstractScreen {
         table.add(playButton).pad(Constants.UI_ELEMENTS_INDENT);
 
         stack.addActor(table);
+        stack.addActor(new BackButtonTable(game, this, previousScreen, new Runnable() {
+            @Override
+            public void run() {
+                TournamentSerializer.serialize(tournament, playerTeam);
+            }
+        }));
     }
 
     private void handleMatchEnd(Team playerTeam, int[] score) {
@@ -85,6 +95,7 @@ public class TournamentScreen extends StageAbstractScreen {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     dispose();
+                    Gdx.files.local("tournaments/saves/"+tournament.getName()+".json").delete();
                     game.setScreen(new MainMenuScreen(game));
                 }
             });

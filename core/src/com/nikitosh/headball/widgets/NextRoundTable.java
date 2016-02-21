@@ -8,6 +8,10 @@ import com.nikitosh.headball.utils.AssetLoader;
 
 public class NextRoundTable extends AbstractResultTable {
 
+    public NextRoundTable() {
+        super();
+    }
+
     public NextRoundTable(Array<Integer> nextRoundTimeTable, Array<Team> teams) {
         super();
         for (int i = 0; i < teams.size / 2; i++) {

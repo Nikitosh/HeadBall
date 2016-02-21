@@ -6,12 +6,13 @@ import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.jsonReaders.TeamReader;
 import com.nikitosh.headball.tournaments.Tournament;
+import com.nikitosh.headball.tournaments.TournamentSerializer;
 import com.nikitosh.headball.widgets.BackButtonTable;
 import com.nikitosh.headball.widgets.TeamChoosingTable;
 
 public class TournamentTeamChoosingScreen extends StageAbstractScreen {
 
-    public TournamentTeamChoosingScreen(final Game game, Screen previousScreen, final Tournament tournament) {
+    public TournamentTeamChoosingScreen(final Game game, final Screen previousScreen, final Tournament tournament) {
         Array<Team> teams = new Array<>();
         TeamReader reader = TeamReader.getTeamsReader();
         for (Team team : tournament.getParticipants()) {
@@ -25,7 +26,7 @@ public class TournamentTeamChoosingScreen extends StageAbstractScreen {
         choosingTable.setOnContinueListener(new Runnable() {
             @Override
             public void run() {
-                game.setScreen(new TournamentScreen(game, tournament, choosingTable.getSelectedTeam()));
+                game.setScreen(new TournamentScreen(game, tournament, choosingTable.getSelectedTeam(), previousScreen));
             }
         });
         choosingTable.setFillParent(true);

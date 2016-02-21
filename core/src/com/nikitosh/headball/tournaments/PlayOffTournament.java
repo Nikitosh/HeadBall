@@ -22,6 +22,10 @@ public class PlayOffTournament implements Tournament {
     private OlympicSystemTournamentWidget resultTable;
     private StatisticsTable statisticsTable;
 
+    public PlayOffTournament() {
+
+    }
+
     public PlayOffTournament(String name, String iconName, Array <Team> teams, int lapNumber) {
         this.lapNumber = lapNumber;
         this.name = name;

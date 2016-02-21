@@ -1,14 +1,10 @@
 package com.nikitosh.headball.widgets;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.utils.AssetLoader;
-
-import java.util.Comparator;
 
 public class StatisticsTable extends AbstractResultTable {
     private static final Array<String> COLUMN_NAMES = new Array<>(new String[] {"Team", "W", "D", "L", "GF", "GA", "GD", "Points"});
@@ -37,6 +33,14 @@ public class StatisticsTable extends AbstractResultTable {
         }
     }
 
+    public StatisticsTable() {
+        super();
+        for (int i = 0; i < COLUMN_NAMES.size; i++) {
+            add(new Label(COLUMN_NAMES.get(i), AssetLoader.defaultSkin));
+        }
+        row();
+    }
+
     public Array<Team> getSortedTeams(Array<Team> teams) {
         Array<Team> sortedTeams = new Array<>(teams);
         sortedTeams.sort(Team.getComparator());
@@ -54,4 +58,5 @@ public class StatisticsTable extends AbstractResultTable {
             }
         }
     }
+
 }

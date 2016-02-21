@@ -12,6 +12,10 @@ public class LastRoundTable extends AbstractResultTable {
     private final static int SCORE_COLUMN = 1;
     private final static int COLUMN_COUNT = 3;
 
+    public LastRoundTable() {
+        super();
+    }
+
     public LastRoundTable(int size) {
         super();
         for (int i = 0; i < size; i++) {

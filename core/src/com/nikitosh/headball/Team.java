@@ -27,6 +27,10 @@ public class Team {
     private int goalsFor = 0;
     private int goalsAgainst = 0;
 
+    public Team() {
+
+    }
+
     public Team(String name, String iconName) {
         this.name = name;
         this.iconName = iconName;

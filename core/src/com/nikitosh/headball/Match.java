@@ -9,6 +9,9 @@ public class Match {
     private int firstTeamScore = 0;
     private int secondTeamScore = 0;
 
+    public Match() {
+
+    }
 
     public Match(Team firstTeam, Team secondTeam, int firstTeamScore, int secondTeamScore) {
         this.firstTeam = firstTeam;
