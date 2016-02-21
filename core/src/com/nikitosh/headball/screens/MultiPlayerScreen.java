@@ -1,10 +1,6 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.nikitosh.headball.MatchInfo;
-import com.nikitosh.headball.Team;
 import com.nikitosh.headball.Move;
 import com.nikitosh.headball.players.RemoteHumanPlayer;
 
@@ -16,9 +12,8 @@ public class MultiPlayerScreen extends GameScreen {
     private DataInputStream in;
     private DataOutputStream out;
 
-    public MultiPlayerScreen(Game game, Screen previousScreen, MatchInfo matchInfo, int playerNumber,
-                             DataInputStream in, DataOutputStream out) {
-        super(game, previousScreen, matchInfo);
+    public MultiPlayerScreen(MatchInfo matchInfo, int playerNumber, DataInputStream in, DataOutputStream out) {
+        super(matchInfo);
         this.in = in;
         this.out = out;
         this.playerNumber = playerNumber;

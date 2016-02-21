@@ -6,6 +6,7 @@ import com.nikitosh.headball.screens.SplashScreen;
 public class HeadballGame extends Game {
 	@Override
 	public void create () {
-		setScreen(new SplashScreen(this));
+		ScreenManager.getInstance().initialize(this);
+		ScreenManager.getInstance().setScreen(new SplashScreen());
 	}
 }

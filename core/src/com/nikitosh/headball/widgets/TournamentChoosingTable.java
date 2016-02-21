@@ -20,7 +20,7 @@ public class TournamentChoosingTable extends ChoosingTable {
 
     protected void addTournamentCell(Tournament tournament) {
         Image tournamentImage = new Image(AssetLoader.tournamentsSkin.getDrawable(tournament.getIconName()));
-        Label tournamentName = new Label(tournament.getName(), AssetLoader.gameLabelStyle);
+        Label tournamentName = new Label(tournament.getName(), AssetLoader.gameSkin);
 
         Table teamCell = new Table();
         teamCell.add(tournamentImage).pad(Constants.UI_ELEMENTS_INDENT).row();

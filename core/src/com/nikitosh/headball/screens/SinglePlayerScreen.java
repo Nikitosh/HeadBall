@@ -1,14 +1,12 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.players.AIPlayer;
 
 public class SinglePlayerScreen extends GameScreen {
 
-    public SinglePlayerScreen(Game game, Screen previousScreen, MatchInfo matchInfo) {
-        super(game, previousScreen, matchInfo);
+    public SinglePlayerScreen(MatchInfo matchInfo) {
+        super(matchInfo);
         initializePlayers();
     }
 
