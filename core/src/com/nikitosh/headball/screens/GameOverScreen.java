@@ -2,9 +2,9 @@ package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.AssetLoader;
 
 public class GameOverScreen extends Window {
@@ -20,15 +20,15 @@ public class GameOverScreen extends Window {
     private Label resultLabel;
 
     GameOverScreen(final GameScreen gameScreen) {
-        super("", AssetLoader.gameWindowStyle);
+        super("", AssetLoader.gameSkin);
         this.gameScreen = gameScreen;
 
         setMovable(false);
 
-        Label gameOverLabel = new Label(GAME_OVER, AssetLoader.gameLabelStyle);
-        resultLabel = new Label("", AssetLoader.gameLabelStyle);
+        Label gameOverLabel = new Label(GAME_OVER, AssetLoader.gameSkin);
+        resultLabel = new Label("", AssetLoader.gameSkin);
 
-        GameTextButtonTouchable gameOverExitButton = new GameTextButtonTouchable(EXIT);
+        TextButton gameOverExitButton = new TextButton(EXIT, AssetLoader.gameSkin);
         gameOverExitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

@@ -1,56 +1,55 @@
 package com.nikitosh.headball.widgets;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
-import com.nikitosh.headball.ui.GameTextButtonTouchable;
+import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
 public class ChoosingTable extends Table {
+    private static final Button.ButtonStyle LEFT_ACTIVE = AssetLoader.gameSkin.get("leftOrangeSlider", Button.ButtonStyle.class);
+    private static final Button.ButtonStyle LEFT_NOT_ACTIVE = AssetLoader.gameSkin.get("leftGraySlider", Button.ButtonStyle.class);
+    private static final Button.ButtonStyle RIGHT_ACTIVE = AssetLoader.gameSkin.get("rightOrangeSlider", Button.ButtonStyle.class);
+    private static final Button.ButtonStyle RIGHT_NOT_ACTIVE = AssetLoader.gameSkin.get("rightGraySlider", Button.ButtonStyle.class);
 
     private Array <Actor> elements = new Array<>();
     protected int currentIndex = 0;
     private Button leftButton;
     private Button rightButton;
-    private Button continueButton;
     private Actor currentActor;
 
     public ChoosingTable() {
         super();
 
-        leftButton = new GameTextButtonTouchable("Left");
+        leftButton = new Button(LEFT_NOT_ACTIVE);
         leftButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 currentIndex--;
+                currentIndex = Math.max(currentIndex, 0);
                 getCell(currentActor).setActor(elements.get(currentIndex));
                 currentActor = elements.get(currentIndex);
             }
         });
 
-        rightButton = new GameTextButtonTouchable("Right");
+        rightButton = new Button(RIGHT_NOT_ACTIVE);
         rightButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 currentIndex++;
+                currentIndex = Math.min(currentIndex, elements.size - 1);
                 getCell(currentActor).setActor(elements.get(currentIndex));
                 currentActor = elements.get(currentIndex);
             }
         });
 
-        continueButton = new GameTextButtonTouchable("Continue");
-
         currentActor = null;
 
-        defaults().space(Constants.UI_ELEMENTS_INDENT);
+        defaults().space(Constants.UI_ELEMENTS_INDENT).pad(Constants.UI_ELEMENTS_INDENT);
         add(leftButton).left().expandX();
         add();
-        add(rightButton).right().expandX();
-        row();
-        add(continueButton).colspan(3).bottom();
+        add(rightButton).right().expandX().expandY();
     }
 
 
@@ -69,11 +68,14 @@ public class ChoosingTable extends Table {
     @Override
     public void act(float delta) {
         super.act(delta);
-        leftButton.setVisible(currentIndex != 0);
-        rightButton.setVisible(currentIndex != elements.size - 1);
+        leftButton.setStyle(currentIndex == 0 ? LEFT_NOT_ACTIVE : LEFT_ACTIVE);
+        rightButton.setStyle(currentIndex == elements.size - 1 ? RIGHT_NOT_ACTIVE : RIGHT_ACTIVE);
     }
 
     public void setOnContinueListener(final Runnable runnable) {
+        Button continueButton = new TextButton("Continue", AssetLoader.gameSkin);
+        row();
+        add(continueButton).colspan(3);
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

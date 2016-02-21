@@ -1,16 +1,15 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.nikitosh.headball.LevelLoader;
 import com.nikitosh.headball.MatchInfo;
+import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.widgets.BackButtonTable;
 import com.nikitosh.headball.widgets.ChoosingTable;
 
-public class LevelChoosingScreen extends StageAbstractScreen {
-    public LevelChoosingScreen(final Game game, final Screen previousScreen, final MatchInfo matchInfo) {
+public class LevelChoosingScreen extends BackgroundStageAbstractScreen {
+    public LevelChoosingScreen(final MatchInfo matchInfo) {
         final ChoosingTable choosingTable = new ChoosingTable();
 
         for (int i = 0; i < 2; i++) {
@@ -27,12 +26,14 @@ public class LevelChoosingScreen extends StageAbstractScreen {
             @Override
             public void run() {
                 matchInfo.setLevelNumber(choosingTable.getCurrentIndex());
-                game.setScreen(new SinglePlayerScreen(game, new MainMenuScreen(game), matchInfo));
+                //dispose 2 screens: LevelChoosingScreen and PracticeTeamChoosingScreen
+                ScreenManager.getInstance().disposeCurrentScreens(2);
+                ScreenManager.getInstance().setScreen(new SinglePlayerScreen(matchInfo));
             }
         });
         choosingTable.setFillParent(true);
 
         stack.addActor(choosingTable);
-        stack.addActor(new BackButtonTable(game, this, previousScreen));
+        stack.addActor(new BackButtonTable());
     }
 }

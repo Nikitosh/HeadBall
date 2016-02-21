@@ -1,21 +1,19 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.nikitosh.headball.MatchInfo;
+import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.tournaments.TournamentSerializer;
-import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.widgets.BackButtonTable;
 
-public class TournamentScreen extends StageAbstractScreen {
+public class TournamentScreen extends BackgroundStageAbstractScreen {
     private static final String[] TOURNAMENT_ENDED_TITLES = {
             "You lose :(",
             "You win! Congratulations!"
@@ -23,14 +21,12 @@ public class TournamentScreen extends StageAbstractScreen {
     private static final String EXIT = "Exit";
     private static final boolean IS_PRACTICE = false;
 
-    private final Game game;
     private Tournament tournament;
 
-    public TournamentScreen(final Game game, final Tournament tournament, final Team playerTeam, final Screen previousScreen) {
-        this.game = game;
+    public TournamentScreen(final Tournament tournament, final Team playerTeam) {
         this.tournament = tournament;
 
-        GameTextButtonTouchable playButton = new GameTextButtonTouchable("Play next match");
+        TextButton playButton = new TextButton("Play next match", AssetLoader.gameSkin);
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -38,9 +34,9 @@ public class TournamentScreen extends StageAbstractScreen {
                     return;
                 }
                 Team opponentTeam = tournament.getNextOpponent(playerTeam);
-                final GameScreen gameScreen = new SinglePlayerScreen(game, TournamentScreen.this,
+                final GameScreen gameScreen = new SinglePlayerScreen(
                         new MatchInfo(playerTeam, opponentTeam, tournament.isDrawResultPossible(), IS_PRACTICE));
-                game.setScreen(gameScreen);
+                ScreenManager.getInstance().setScreen(gameScreen);
 
                 new Thread(new Runnable() {
                     @Override
@@ -74,7 +70,7 @@ public class TournamentScreen extends StageAbstractScreen {
         table.add(playButton).pad(Constants.UI_ELEMENTS_INDENT);
 
         stack.addActor(table);
-        stack.addActor(new BackButtonTable(game, this, previousScreen, new Runnable() {
+        stack.addActor(new BackButtonTable(new Runnable() {
             @Override
             public void run() {
                 TournamentSerializer.serialize(tournament, playerTeam);
@@ -90,13 +86,12 @@ public class TournamentScreen extends StageAbstractScreen {
         tournament.getStatisticsTable().highlightTeam(playerTeam);
         tournament.getResultTable().highlightTeam(playerTeam);
         if (tournament.isEnded(playerTeam)) {
-            Button exitButton = new GameTextButtonTouchable(EXIT);
+            Button exitButton = new TextButton(EXIT, AssetLoader.gameSkin);
             exitButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    dispose();
                     Gdx.files.local("tournaments/saves/"+tournament.getName()+".json").delete();
-                    game.setScreen(new MainMenuScreen(game));
+                    ScreenManager.getInstance().disposeCurrentScreen();
                 }
             });
 

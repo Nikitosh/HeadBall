@@ -8,7 +8,7 @@ public class Constants {
     public static final int UI_LAYER_HEIGHT = 100;
     public static final int UI_ELEMENTS_INDENT = 10;
 
-    public static final int GAME_DURATION = 8;
+    public static final int GAME_DURATION = 1;
     public static final float SPLASH_DURATION = 1;
     public static final int PLAYERS_NUMBER = 2;
 

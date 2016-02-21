@@ -1,48 +1,39 @@
 package com.nikitosh.headball.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
-import com.nikitosh.headball.ui.GameTextButtonTouchable;
 
-public class MainMenuScreen extends StageAbstractScreen {
+public class MainMenuScreen extends BackgroundStageAbstractScreen {
     private static final String PLAY = "Play";
     private static final String SETTINGS = "Settings";
     private static final String ABOUT = "About";
 
-    public MainMenuScreen(final Game game) {
-        Image background = new Image(AssetLoader.menuTexture);
-        background.setFillParent(true);
-
-        Button playTextButton = new GameTextButtonTouchable(PLAY);
+    public MainMenuScreen() {
+        Button playTextButton = new TextButton(PLAY, AssetLoader.gameSkin);
         playTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new PlayMenuScreen(game, MainMenuScreen.this));
+                ScreenManager.getInstance().setScreen(new PlayMenuScreen());
             }
         });
 
-        Button settingsTextButton = new GameTextButtonTouchable(SETTINGS);
+        Button settingsTextButton = new TextButton(SETTINGS, AssetLoader.gameSkin);
         settingsTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new SettingsScreen(game, MainMenuScreen.this));
+                ScreenManager.getInstance().setScreen(new SettingsScreen());
             }
         });
 
-        Button aboutTextButton = new GameTextButtonTouchable(ABOUT);
+        Button aboutTextButton = new TextButton(ABOUT, AssetLoader.gameSkin);
         aboutTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new AboutScreen(game, MainMenuScreen.this));
+                ScreenManager.getInstance().setScreen(new AboutScreen());
             }
         });
 
@@ -52,7 +43,6 @@ public class MainMenuScreen extends StageAbstractScreen {
         table.add(settingsTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();
         table.add(aboutTextButton).pad(Constants.UI_ELEMENTS_INDENT).row();
 
-        stack.addActor(background);
         stack.addActor(table);
     }
 }

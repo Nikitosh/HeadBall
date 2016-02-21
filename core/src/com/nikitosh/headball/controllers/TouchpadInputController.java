@@ -1,12 +1,10 @@
 package com.nikitosh.headball.controllers;
 
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nikitosh.headball.Move;
-import com.nikitosh.headball.ui.GameTextButtonTouchable;
-import com.nikitosh.headball.ui.GameTouchpadStyle;
+import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
 public class TouchpadInputController implements InputController {
@@ -15,15 +13,15 @@ public class TouchpadInputController implements InputController {
     private final static float TOUCHPAD_JUMP_LEVEL_PERCENTAGE = 0.5f;
 
     private Table uiTable = new Table();
-    private GameTextButtonTouchable hitButton;
+    private TextButton hitButton;
     private Touchpad touchpad;
 
     private Move move = new Move();
 
     public TouchpadInputController(Table infoTable) {
-        hitButton = new GameTextButtonTouchable(HIT_BUTTON_NAME);
+        hitButton = new TextButton(HIT_BUTTON_NAME, AssetLoader.gameSkin);
 
-        touchpad = new Touchpad(TOUCHPAD_KNOB, new GameTouchpadStyle());
+        touchpad = new Touchpad(TOUCHPAD_KNOB, AssetLoader.gameSkin);
 
         uiTable.add(hitButton).left().bottom().pad(Constants.UI_ELEMENTS_INDENT);
         uiTable.add(infoTable).expand().bottom();

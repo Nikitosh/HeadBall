@@ -2,9 +2,9 @@ package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.nikitosh.headball.ui.GameTextButtonTouchable;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
@@ -15,12 +15,12 @@ public class PauseScreen extends Window {
     private static final String EXIT = "Exit";
 
     public PauseScreen(final GameScreen gameScreen, boolean restartOrExitEnable) {
-        super("", AssetLoader.gameWindowStyle);
+        super("", AssetLoader.gameSkin);
         setMovable(false);
 
-        Label pauseLabel = new Label(PAUSE, AssetLoader.gameLabelStyle);
+        Label pauseLabel = new Label(PAUSE, AssetLoader.gameSkin);
 
-        GameTextButtonTouchable continueButton = new GameTextButtonTouchable(CONTINUE);
+        TextButton continueButton = new TextButton(CONTINUE, AssetLoader.gameSkin);
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -32,7 +32,7 @@ public class PauseScreen extends Window {
         add(continueButton).pad(Constants.UI_ELEMENTS_INDENT).row();
 
         if (restartOrExitEnable) {
-            GameTextButtonTouchable restartButton = new GameTextButtonTouchable(RESTART);
+            TextButton restartButton = new TextButton(RESTART, AssetLoader.gameSkin);
             restartButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -40,7 +40,7 @@ public class PauseScreen extends Window {
                 }
             });
 
-            GameTextButtonTouchable exitButton = new GameTextButtonTouchable(EXIT);
+            TextButton exitButton = new TextButton(EXIT, AssetLoader.gameSkin);
             exitButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {

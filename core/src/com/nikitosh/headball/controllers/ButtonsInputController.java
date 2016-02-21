@@ -1,12 +1,11 @@
 package com.nikitosh.headball.controllers;
 
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Move;
-import com.nikitosh.headball.ui.GameTextButton;
-import com.nikitosh.headball.ui.GameTextButtonTouchable;
+import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
 public class ButtonsInputController implements InputController {
@@ -14,21 +13,28 @@ public class ButtonsInputController implements InputController {
     private static final String[] BUTTONS_NAMES = {"Hit", "Jump", "Left", "Right"};
 
     private Table uiTable = new Table();
-    private Array<GameTextButtonTouchable> buttonsArray = new Array<>();
+    private Array<TextButton> buttonsArray = new Array<>();
 
     private Move move = new Move();
 
     public ButtonsInputController(Table infoTable) {
 
+        //used for setting minimum width for buttons inside to 0 (without it they're too wide)
+        Array<Container> containersArray = new Array<>();
         for (String name: BUTTONS_NAMES) {
-            buttonsArray.add(new GameTextButtonTouchable(name));
+            TextButton button = new TextButton(name, AssetLoader.gameSkin);
+            Container container = new Container<>(button);
+            container.minWidth(0);
+            buttonsArray.add(button);
+            containersArray.add(container);
         }
 
-        uiTable.add(buttonsArray.get(Constants.HIT)).expand().bottom();
-        uiTable.add(buttonsArray.get(Constants.JUMP)).expand().bottom();
+        uiTable.add(containersArray.get(Constants.HIT)).expand().bottom();
+        uiTable.add(containersArray.get(Constants.JUMP)).expand().bottom();
         uiTable.add(infoTable).expand().bottom();
-        uiTable.add(buttonsArray.get(Constants.LEFT)).expand().bottom();
-        uiTable.add(buttonsArray.get(Constants.RIGHT)).expand().bottom();
+        uiTable.add(containersArray.get(Constants.LEFT)).expand().bottom();
+        uiTable.add(containersArray.get(Constants.RIGHT)).expand().bottom();
+
     }
 
     @Override
