@@ -37,7 +37,7 @@ public class Move {
                 if (footballerState[i]) {
                     message |= 1 << i;
                 }
-            outputStream.write(message);
+            outputStream.writeByte(message);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -46,7 +46,7 @@ public class Move {
 
     public static Move deserialize(DataInputStream inputStream) {
         try {
-            byte message = (byte) inputStream.read();
+            byte message = inputStream.readByte();
             Move move = new Move();
             for (int i = 0; i < STATE_NUMBER; i++) {
                 if (message % 2 == 1) {

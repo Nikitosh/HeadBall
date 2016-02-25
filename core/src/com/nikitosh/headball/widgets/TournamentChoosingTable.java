@@ -4,6 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.nikitosh.headball.jsonReaders.TournamentReader;
+import com.nikitosh.headball.tournaments.PlayOffTournament;
 import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
@@ -30,6 +32,7 @@ public class TournamentChoosingTable extends ChoosingTable {
     }
 
     public Tournament getSelectedTournament() {
-        return tournaments.get(currentIndex);
+        return TournamentReader.getTournamentsReader()
+                .getTournament(tournaments.get(currentIndex).getName());
     }
 }

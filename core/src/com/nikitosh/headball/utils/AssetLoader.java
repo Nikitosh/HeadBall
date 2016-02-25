@@ -67,7 +67,7 @@ public class AssetLoader {
         backgroundTexture = new Texture(Gdx.files.internal("images/background.jpg"));
         darkBackgroundTexture = new Texture(Gdx.files.internal("images/darkBackground.png"));
 
-        GameSettings.initialize();//??
+        //GameSettings.initialize();//??
     }
 
     public static void dispose() {

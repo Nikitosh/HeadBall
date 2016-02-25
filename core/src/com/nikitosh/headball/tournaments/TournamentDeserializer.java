@@ -8,9 +8,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.utils.Pair;
 
-/**
- * Created by Wowember on 18.02.2016.
- */
+
 public class TournamentDeserializer {
 
     private TournamentDeserializer() {

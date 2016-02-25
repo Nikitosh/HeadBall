@@ -165,4 +165,5 @@ public class LeagueTournament implements Tournament {
     public String getIconName() {
         return iconName;
     }
+
 }

@@ -25,7 +25,7 @@ public class TournamentTeamChoosingScreen extends BackgroundStageAbstractScreen 
             @Override
             public void run() {
                 //dispose 2 screens: TournamentChoosingScreen and TournamentTeamChoosingScreen
-                ScreenManager.getInstance().disposeCurrentScreens(2);
+                ScreenManager.getInstance().disposeCurrentScreen();
                 ScreenManager.getInstance().setScreen(new TournamentScreen(tournament, choosingTable.getSelectedTeam()));
             }
         });

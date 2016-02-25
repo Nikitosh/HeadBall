@@ -61,6 +61,20 @@ public class TournamentReader {
         return null;
     }
 
+    public Tournament getTournament(String name) {
+        for (int i = 0; i < getTournamentsNumber(); i++) {
+            if (name.equals(getTournamentName(i))) {
+                return getTournament(i);
+            }
+        }
+        assert(false);
+        return null;
+    }
+
+    public String getTournamentName(int index) {
+        return (String) (getJSONTournament(index)).get(JSON_NAME_KEY);
+    }
+
     public int getTournamentsNumber() {
         return tournaments.size();
     }

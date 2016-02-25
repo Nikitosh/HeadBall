@@ -4,22 +4,20 @@ import java.net.*;
 import java.io.*;
 
 public class Server {
-    private static final String WAITING_CLIENTS = "Waiting for clients";
-    private static final String CONNECTION_GOT = "Got two clients";
 
     public static void main(String[] args) {
 
         try {
-            int port = 2345;
+            int port = 1234;
             ServerSocket serverSocket = new ServerSocket(port);
-            System.err.println(WAITING_CLIENTS);
+            System.err.println("Waiting for clients");
 
             while(true) {
                 Socket socketFirst = serverSocket.accept();
-                (new DataOutputStream(socketFirst.getOutputStream())).writeUTF("0\n");
+                (new DataOutputStream(socketFirst.getOutputStream())).writeByte(0);
                 Socket socketSecond = serverSocket.accept();
-                (new DataOutputStream(socketSecond.getOutputStream())).writeUTF("1\n");
-                System.err.println(CONNECTION_GOT);
+                (new DataOutputStream(socketSecond.getOutputStream())).writeByte(1);
+                System.err.println("Got two clients");
                 new Thread(new GameConnection(socketFirst, socketSecond)).start();
             }
         } catch(Exception x) { x.printStackTrace(); }
@@ -44,8 +42,8 @@ public class Server {
         }
 
         private void redirectInputOutputFlows(DataInputStream in, DataOutputStream out) throws IOException {
-            String line = in.readUTF();
-            out.writeUTF(line);
+            byte line = in.readByte();
+            out.writeByte(line);
             out.flush();
         }
 

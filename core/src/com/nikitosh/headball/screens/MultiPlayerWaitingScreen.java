@@ -15,7 +15,7 @@ import java.net.Socket;
 
 public class MultiPlayerWaitingScreen extends StageAbstractScreen {
     private static final int PORT = 2345;
-    private static final String SERVER_ADDRESS = "192.168.43.9";
+    private static final String SERVER_ADDRESS = "5.19.205.147";
     private static final String LOG_TAG = "MultiPlayerScreen";
 
     public MultiPlayerWaitingScreen() {
@@ -25,7 +25,7 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
 
     @Override
     public void show() {
-        new Thread(new Runnable() {
+        Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -35,10 +35,10 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
                     Gdx.app.log(LOG_TAG, "Yes! I just got hold of the program.");
                     DataInputStream in = new DataInputStream(socket.getInputStream());
                     DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-                    String s = in.readUTF();
-                    Gdx.app.log(LOG_TAG, s);
+                    byte s = in.readByte();
+                    Gdx.app.log(LOG_TAG, Byte.toString(s));
                     int playerNumber = 0;
-                    if (s.charAt(0) == '0') {
+                    if (s == 0) {
                         playerNumber = 0;
                     } else {
                         playerNumber = 1;
@@ -50,6 +50,6 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
     }
 }

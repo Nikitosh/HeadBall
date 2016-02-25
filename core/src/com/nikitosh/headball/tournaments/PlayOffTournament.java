@@ -145,4 +145,5 @@ public class PlayOffTournament implements Tournament {
     public String getIconName() {
         return iconName;
     }
+
 }
