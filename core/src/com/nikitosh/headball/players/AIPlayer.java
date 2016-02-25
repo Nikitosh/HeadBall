@@ -10,8 +10,8 @@ public class AIPlayer implements Player {
     private GameWorld gameWorld;
     private int footballerNumber;
 
-    private static final float HIT_RADIUS = 30f * Constants.WORLD_TO_BOX;
-    private static final float JUMP_RADIUS = 45f * Constants.WORLD_TO_BOX;
+    private static final float HIT_RADIUS = 40f * Constants.WORLD_TO_BOX;
+    private static final float JUMP_RADIUS = 55f * Constants.WORLD_TO_BOX;
 
 
     public AIPlayer(GameWorld gameWorld, int footballerNumber) {
@@ -40,11 +40,11 @@ public class AIPlayer implements Player {
             myPositionX = footballers[footballerNumber].getPosition().x;
         }
 
-        if (ballPositionY < myPositionY - footballers[footballerNumber].getRadius()) {
+        if ((ballPositionX - myPositionX > JUMP_RADIUS * 3f && ballPositionX > 6 * JUMP_RADIUS && myPositionX > 2 * JUMP_RADIUS) || ballPositionY < myPositionY - footballers[footballerNumber].getRadius()) {
             move.setState(Constants.LEFT, true);
         } else {
             if (ballPositionX < myPositionX - footballers[footballerNumber].getRadius()) {
-                if (myPositionX - ballPositionX < JUMP_RADIUS && myPositionY > ballPositionY) {
+                if (myPositionX - ballPositionX < JUMP_RADIUS / 2f && myPositionY > ballPositionY) {
                     move.setState(Constants.JUMP, true);
                     move.setState(Constants.LEFT, true);
                 } else {
@@ -55,9 +55,12 @@ public class AIPlayer implements Player {
                         && ballPositionX - myPositionX < HIT_RADIUS) {
                     move.setState(Constants.HIT, true);
                     move.setState(Constants.RIGHT, true);
-                } else if (Math.abs(ballPositionX - myPositionX) < JUMP_RADIUS && ballPositionY > myPositionY) {
+                } else if (Math.abs(ballPositionX - myPositionX) < JUMP_RADIUS / 3 && ballPositionY > myPositionY) {
                     move.setState(Constants.JUMP, true);
                     move.setState(Constants.LEFT, true);
+                } else if (Math.abs(ballPositionX - myPositionX) < JUMP_RADIUS  && ballPositionY > myPositionY) {
+                    move.setState(Constants.JUMP, true);
+                    move.setState(Constants.RIGHT, true);
                 } else {
                     move.setState(Constants.RIGHT, true);
                 }
