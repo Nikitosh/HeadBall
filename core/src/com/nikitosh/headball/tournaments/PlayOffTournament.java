@@ -26,7 +26,7 @@ public class PlayOffTournament implements Tournament {
 
     }
 
-    public PlayOffTournament(String name, String iconName, Array <Team> teams, int lapNumber) {
+    public PlayOffTournament(String name, String iconName, Array<Team> teams, int lapNumber) {
         this.lapNumber = lapNumber;
         this.name = name;
         this.iconName = iconName;
@@ -102,7 +102,7 @@ public class PlayOffTournament implements Tournament {
                 return teams.get(currentRoundParticipants.get(i ^ 1));
             }
         }
-        assert(false);
+        assert (false);
         return null;
     }
 
@@ -123,7 +123,8 @@ public class PlayOffTournament implements Tournament {
 
     @Override
     public boolean isEnded(Team team) {
-        return tournamentBracket.peek().indexOf(teams.indexOf(team, false), false) == -1 || currentRound == lapNumber - 1;
+        return tournamentBracket.peek().indexOf(teams.indexOf(team, false), false) == -1
+                || currentRound == lapNumber - 1;
     }
 
     @Override

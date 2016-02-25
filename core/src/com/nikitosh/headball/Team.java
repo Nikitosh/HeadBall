@@ -44,6 +44,11 @@ public class Team {
         return name.equals(((Team) obj).getName());
     }
 
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
     public String getName() {
         return name;
     }
@@ -83,7 +88,8 @@ public class Team {
     }
 
     public Array<Integer> getStatistics() {
-        return new Array<>(new Integer[] {winNumber, drawNumber, lossNumber, goalsFor, goalsAgainst, goalsFor - goalsAgainst, points});
+        return new Array<>(new Integer[] {winNumber, drawNumber, lossNumber,
+                goalsFor, goalsAgainst, goalsFor - goalsAgainst, points});
     }
 
     public static Comparator<Team> getComparator() {

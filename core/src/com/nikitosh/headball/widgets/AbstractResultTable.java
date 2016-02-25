@@ -10,8 +10,6 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.utils.AssetLoader;
 
-import java.io.Serializable;
-
 public abstract class AbstractResultTable extends Table implements ResultTable, Json.Serializable {
     protected Array<Array<Label>> statisticsLabels = new Array<>();
 
@@ -24,7 +22,7 @@ public abstract class AbstractResultTable extends Table implements ResultTable, 
     public void highlightTeam(Team team) {
         for (Array<Label> rowStatisticsLabels : statisticsLabels) {
             for (Label label : rowStatisticsLabels) {
-                label.setStyle(AssetLoader.defaultSkin.get(Label.LabelStyle.class));
+                label.setStyle(AssetLoader.getDefaultSkin().get(Label.LabelStyle.class));
             }
             boolean needHighLighting = false;
             for (Label rowLabel : rowStatisticsLabels) {
@@ -62,7 +60,7 @@ public abstract class AbstractResultTable extends Table implements ResultTable, 
         for (Array<String> rowStatistics : statistics) {
             Array<Label> teamStatisticLabel = new Array<>();
             for (String text : rowStatistics) {
-                teamStatisticLabel.add(new Label(text, AssetLoader.defaultSkin));
+                teamStatisticLabel.add(new Label(text, AssetLoader.getDefaultSkin()));
                 add(teamStatisticLabel.peek()).left();
             }
             row();

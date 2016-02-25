@@ -18,10 +18,11 @@ public class SettingsScreen extends BackgroundStageAbstractScreen {
     private SelectBox<String> selectBox;
 
     public SettingsScreen() {
-        styles = new Button.ButtonStyle[] {AssetLoader.gameSkin.get(DISABLED, Button.ButtonStyle.class),
-                AssetLoader.gameSkin.get(ENABLED, Button.ButtonStyle.class)};
+        styles = new Button.ButtonStyle[] {AssetLoader.getGameSkin().get(DISABLED, Button.ButtonStyle.class),
+                AssetLoader.getGameSkin().get(ENABLED, Button.ButtonStyle.class)};
 
-        Button soundTextButton = new TextButton(Constants.SETTINGS_SOUND, AssetLoader.gameSkin, "notTouchable");
+        Button soundTextButton = new TextButton(Constants.SETTINGS_SOUND, AssetLoader.getGameSkin(),
+                "notTouchable");
         final Button soundButton = new Button(styles[soundState]);
         soundButton.addListener(new ChangeListener() {
             @Override
@@ -31,7 +32,8 @@ public class SettingsScreen extends BackgroundStageAbstractScreen {
             }
         });
 
-        Button musicTextButton = new TextButton(Constants.SETTINGS_MUSIC, AssetLoader.gameSkin, "notTouchable");
+        Button musicTextButton = new TextButton(Constants.SETTINGS_MUSIC, AssetLoader.getGameSkin(),
+                "notTouchable");
         final Button musicButton = new Button(styles[musicState]);
         musicButton.addListener(new ChangeListener() {
             @Override
@@ -41,8 +43,9 @@ public class SettingsScreen extends BackgroundStageAbstractScreen {
             }
         });
 
-        Button controlButton = new TextButton(Constants.SETTINGS_CONTROL, AssetLoader.gameSkin, "notTouchable");
-        selectBox = new SelectBox<>(AssetLoader.gameSkin);
+        Button controlButton = new TextButton(Constants.SETTINGS_CONTROL, AssetLoader.getGameSkin(),
+                "notTouchable");
+        selectBox = new SelectBox<>(AssetLoader.getGameSkin());
         selectBox.setItems(Constants.SETTINGS_CONTROL_BUTTONS, Constants.SETTINGS_CONTROL_TOUCHPAD,
                 Constants.SETTINGS_CONTROL_KEYBOARD);
         selectBox.setSelected(GameSettings.getString(Constants.SETTINGS_CONTROL));

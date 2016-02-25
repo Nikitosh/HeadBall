@@ -11,6 +11,12 @@ buildscript {
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+    apply plugin: "checkstyle"
+
+    checkstyle {
+        configFile = new File(rootDir, "checkstyle.xml")
+        toolVersion = '6.7'
+    }
 
     version = '1.0'
     ext {
@@ -67,7 +73,6 @@ project(":android") {
 
 project(":core") {
     apply plugin: "java"
-
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"

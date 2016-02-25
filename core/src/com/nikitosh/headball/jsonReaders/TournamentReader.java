@@ -9,21 +9,21 @@ import com.nikitosh.headball.utils.Utilities;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class TournamentReader {
-    private final static String TOURNAMENTS_PATH = "info/tournaments.json";
+public final class TournamentReader {
+    private static final String TOURNAMENTS_PATH = "info/tournaments.json";
 
-    private final static String LOG_TAG = "TournamentReader";
-    private final static String LOADING_EXCEPTION = "Unable to load tournaments list";
-    private final static String JSON_EXCEPTION = "Wrong JSON file format";
+    private static final String LOG_TAG = "TournamentReader";
+    private static final String LOADING_EXCEPTION = "Unable to load tournaments list";
+    private static final String JSON_EXCEPTION = "Wrong JSON file format";
 
-    private final static String JSON_TOURNAMENTS_KEY = "tournaments";
-    private final static String JSON_TYPE_KEY = "type";
-    private final static String JSON_NAME_KEY = "name";
-    private final static String JSON_ICON_KEY = "icon";
-    private final static String JSON_LAP_NUMBER_KEY = "lapNumber";
-    private final static String JSON_PARTICIPANTS_KEY = "participants";
-    private final static String JSON_LEAGUE_KEY = "league";
-    private final static String JSON_PLAYOFF_KEY = "playoff";
+    private static final String JSON_TOURNAMENTS_KEY = "tournaments";
+    private static final String JSON_TYPE_KEY = "type";
+    private static final String JSON_NAME_KEY = "name";
+    private static final String JSON_ICON_KEY = "icon";
+    private static final String JSON_LAP_NUMBER_KEY = "lapNumber";
+    private static final String JSON_PARTICIPANTS_KEY = "participants";
+    private static final String JSON_LEAGUE_KEY = "league";
+    private static final String JSON_PLAYOFF_KEY = "playoff";
 
     private static TournamentReader tournamentReader;
     private JSONArray tournaments;
@@ -32,7 +32,7 @@ public class TournamentReader {
         tournaments = (JSONArray) Utilities.parseJSONFile(TOURNAMENTS_PATH).get(JSON_TOURNAMENTS_KEY);
     }
 
-    public static TournamentReader getTournamentsReader() {
+    public static TournamentReader getTournamentReader() {
         if (tournamentReader == null) {
             tournamentReader = new TournamentReader();
         }
@@ -46,7 +46,7 @@ public class TournamentReader {
         int lapNumber = ((Long) tournament.get(JSON_LAP_NUMBER_KEY)).intValue();
         JSONArray participants = (JSONArray) tournament.get(JSON_PARTICIPANTS_KEY);
         Array<Team> teams = new Array<>();
-        TeamReader teamsReader = TeamReader.getTeamsReader();
+        TeamReader teamsReader = TeamReader.getTeamReader();
         for (Object teamName : participants) {
             teams.add(teamsReader.getTeam((String) teamName));
         }
@@ -57,7 +57,7 @@ public class TournamentReader {
         if (tournament.get(JSON_TYPE_KEY).equals(JSON_PLAYOFF_KEY)) {
             return new PlayOffTournament(name, iconName, teams, lapNumber);
         }
-        assert(false);
+        assert (false);
         return null;
     }
 
@@ -67,7 +67,7 @@ public class TournamentReader {
                 return getTournament(i);
             }
         }
-        assert(false);
+        assert (false);
         return null;
     }
 
@@ -80,8 +80,7 @@ public class TournamentReader {
     }
 
     private JSONObject getJSONTournament(int index) {
-        if (index < 0 || index >= tournaments.size())
-            throw new IndexOutOfBoundsException();//?
+        assert (index >= 0 && index < tournaments.size());
         return (JSONObject) tournaments.get(index);
     }
 }

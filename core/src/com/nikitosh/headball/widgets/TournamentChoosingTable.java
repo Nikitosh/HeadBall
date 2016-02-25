@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.jsonReaders.TournamentReader;
-import com.nikitosh.headball.tournaments.PlayOffTournament;
 import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
@@ -21,8 +20,8 @@ public class TournamentChoosingTable extends ChoosingTable {
     }
 
     protected void addTournamentCell(Tournament tournament) {
-        Image tournamentImage = new Image(AssetLoader.tournamentsSkin.getDrawable(tournament.getIconName()));
-        Label tournamentName = new Label(tournament.getName(), AssetLoader.gameSkin);
+        Image tournamentImage = new Image(AssetLoader.getTournamentsSkin().getDrawable(tournament.getIconName()));
+        Label tournamentName = new Label(tournament.getName(), AssetLoader.getGameSkin());
 
         Table teamCell = new Table();
         teamCell.add(tournamentImage).pad(Constants.UI_ELEMENTS_INDENT).row();
@@ -32,7 +31,7 @@ public class TournamentChoosingTable extends ChoosingTable {
     }
 
     public Tournament getSelectedTournament() {
-        return TournamentReader.getTournamentsReader()
+        return TournamentReader.getTournamentReader()
                 .getTournament(tournaments.get(currentIndex).getName());
     }
 }

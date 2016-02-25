@@ -3,7 +3,9 @@ package com.nikitosh.headball.tournaments;
 import com.nikitosh.headball.Match;
 import com.nikitosh.headball.Team;
 
-public class MatchController {
+public final class MatchController {
+    private MatchController() {}
+
     public static void handle(Match match) {
         match.getFirstTeam().incrementGoalsFor(match.getFirstTeamScore());
         match.getFirstTeam().incrementGoalsAgainst(match.getSecondTeamScore());
@@ -25,8 +27,9 @@ public class MatchController {
     }
 
     public static Team getWinner(Match match) {
-        if (match.getFirstTeamScore() >= match.getSecondTeamScore())
+        if (match.getFirstTeamScore() >= match.getSecondTeamScore()) {
             return match.getFirstTeam();
+        }
         return match.getSecondTeam();
     }
 }

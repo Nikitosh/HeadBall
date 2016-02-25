@@ -20,8 +20,7 @@ public class KeyboardInputController implements InputController{
         for (int i = 0; i < KEYS.length; i++) {
             if (Gdx.input.isKeyPressed(KEYS[i])) {
                 move.setState(i, true);
-            }
-            else {
+            } else {
                 move.setState(i, false);
             }
         }

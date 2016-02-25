@@ -1,6 +1,6 @@
 package com.nikitosh.headball.utils;
 
-public class Constants {
+public final class Constants {
     public static final float WORLD_TO_BOX = 0.01f;
     public static final float BOX_TO_WORLD = 100f;
     public static final int VIRTUAL_WIDTH = 800;
@@ -34,4 +34,6 @@ public class Constants {
     public static final int JUMP = 1;
     public static final int LEFT = 2;
     public static final int RIGHT = 3;
+
+    private Constants() {}
 }

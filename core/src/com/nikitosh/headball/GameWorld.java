@@ -10,6 +10,13 @@ import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
 public class GameWorld {
+    private static final float GRAVITY_X = 0;
+    private static final float GRAVITY_Y = -300f * Constants.WORLD_TO_BOX;
+    private static final boolean TO_SLEEP = true; //improve perfomance for box2D World
+    private static final float BOX2D_DELTA_TIME = 1 / 60f;
+    private static final int BOX2D_VELOCITY_ITERATIONS = 6;
+    private static final int BOX2D_POSITION_ITERATIONS = 2;
+
     private World box2dWorld;
     private Group group;
 
@@ -19,7 +26,6 @@ public class GameWorld {
     private float initialBallPositionY;
 
     private Image field;
-    private float width;//??
     private float height;
     private Footballer[] footballers;
     private Array<Wall> walls;
@@ -32,10 +38,10 @@ public class GameWorld {
     private float gameDuration = 0;
 
     public GameWorld() {
-        box2dWorld = new World(new Vector2(0f, -300f * Constants.WORLD_TO_BOX), true);//???
+        box2dWorld = new World(new Vector2(GRAVITY_X, GRAVITY_Y), TO_SLEEP);
         group = new Group();
 
-        field = new Image(AssetLoader.fieldTexture);
+        field = new Image(AssetLoader.getFieldTexture());
         group.addActor(field);
 
         walls = new Array<>();
@@ -49,7 +55,8 @@ public class GameWorld {
 
         box2dWorld.setContactListener(new ContactListener() {
             private void handleFootballerWallCollision(Footballer footballer, RectangleWall wall) {
-                if (footballer.getBody().getPosition().y >= wall.getBody().getPosition().y + footballer.getRadius()) {
+                if (footballer.getBody().getPosition().y
+                        >= wall.getBody().getPosition().y + footballer.getRadius()) {
                     footballer.setInJump(false);
                 }
             }
@@ -88,7 +95,7 @@ public class GameWorld {
 
     public void update(float delta, Move firstMove, Move secondMove) {
         isGoal = false;
-        box2dWorld.step(1 / 60f, 6, 2);//???
+        box2dWorld.step(BOX2D_DELTA_TIME, BOX2D_VELOCITY_ITERATIONS, BOX2D_POSITION_ITERATIONS);
         footballers[0].update(firstMove);
         footballers[1].update(secondMove);
 
@@ -151,7 +158,8 @@ public class GameWorld {
     }
 
     public void createGoals(Array<Float> initialPositionX, Array<Float> initialPositionY,
-                            float goalsWidth, float goalsHeight, float crossbarHeight, Array<Boolean> initialLeft) {
+                            float goalsWidth, float goalsHeight, float crossbarHeight,
+                            Array<Boolean> initialLeft) {
         for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
             goals[i] = new Goals(box2dWorld,
                     initialPositionX.get(i), initialPositionY.get(i),
@@ -193,16 +201,11 @@ public class GameWorld {
         return gameDuration;
     }
 
-    public boolean isDrawResultPossible() {
-        return isDrawResultPossible;
-    }
-
     public void setDrawResultPossible(boolean isDrawResultPossible) {
         this.isDrawResultPossible = isDrawResultPossible;
     }
 
     public void setSize(float width, float height) {
-        this.width = width;
         this.height = height;
         field.setBounds(0, 0, width, height);
     }

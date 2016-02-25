@@ -6,15 +6,14 @@ import com.badlogic.gdx.utils.Json;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.utils.Pair;
 
-
-public class TournamentSerializer {
+public final class TournamentSerializer {
 
     private TournamentSerializer() {
 
     }
 
     public static void serialize(Tournament tournament, Team playerTeam) {
-        FileHandle file = Gdx.files.local("tournaments/saves/"+tournament.getName()+".json");
+        FileHandle file = Gdx.files.local("tournaments/saves/" + tournament.getName() + ".json");
         Json json = new Json();
         file.writeString(json.prettyPrint(new Pair<>(tournament, playerTeam)), false);
     }

@@ -38,7 +38,7 @@ public class BackButtonTable extends Table {
     }
 
     private void initialize() {
-        backButton = new TextButton(BACK, AssetLoader.gameSkin);
+        backButton = new TextButton(BACK, AssetLoader.getGameSkin());
         setFillParent(true);
         add(backButton).top().left().expand().pad(Constants.UI_ELEMENTS_INDENT).row();
     }

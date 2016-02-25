@@ -3,16 +3,18 @@ package com.nikitosh.headball;
 import java.net.*;
 import java.io.*;
 
-public class Server {
+public final class Server {
+    private Server() {}
+
+    private static final int PORT = 2345;
 
     public static void main(String[] args) {
 
         try {
-            int port = 1234;
-            ServerSocket serverSocket = new ServerSocket(port);
+            ServerSocket serverSocket = new ServerSocket(PORT);
             System.err.println("Waiting for clients");
 
-            while(true) {
+            while (true) {
                 Socket socketFirst = serverSocket.accept();
                 (new DataOutputStream(socketFirst.getOutputStream())).writeByte(0);
                 Socket socketSecond = serverSocket.accept();
@@ -20,7 +22,9 @@ public class Server {
                 System.err.println("Got two clients");
                 new Thread(new GameConnection(socketFirst, socketSecond)).start();
             }
-        } catch(Exception x) { x.printStackTrace(); }
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
     }
 
     private static class GameConnection implements Runnable {

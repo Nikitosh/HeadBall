@@ -7,7 +7,8 @@ public class MatchInfo {
     private boolean isRestartOrExitPossible;
     private int levelNumber = 0;
 
-    public MatchInfo(Team firstTeam, Team secondTeam, boolean isDrawResultPossible, boolean isRestartOrExitPossible) {
+    public MatchInfo(Team firstTeam, Team secondTeam, boolean isDrawResultPossible,
+                     boolean isRestartOrExitPossible) {
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
         this.isDrawResultPossible = isDrawResultPossible;

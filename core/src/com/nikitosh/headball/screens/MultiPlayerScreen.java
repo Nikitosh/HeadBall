@@ -5,8 +5,6 @@ import com.nikitosh.headball.Move;
 import com.nikitosh.headball.players.RemoteHumanPlayer;
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
 
 public class MultiPlayerScreen extends GameScreen {
     private DataInputStream in;
@@ -32,15 +30,13 @@ public class MultiPlayerScreen extends GameScreen {
         playerMove.serialize(out);
         try {
             out.flush();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (gameState == GameState.GAME_RUNNING) {
             if (playerNumber == 0) {
                 gameWorld.update(delta, playerMove, players[1].getMove());
-            }
-            else {
+            } else {
                 gameWorld.update(delta, players[0].getMove(), playerMove);
             }
         }

@@ -1,6 +1,5 @@
 package com.nikitosh.headball.actors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -43,14 +42,14 @@ public class Footballer extends Actor {
     private RevoluteJoint revoluteJoint;
 
     private boolean inJump = false;
-    private boolean left;
+    private boolean isLeftSided; //is footballer left-sided or not
     private float radius;
 
     private Box2DSprite bodySprite;
     private Box2DSprite legSprite;
 
-    public Footballer(World world, float x, float y, boolean left, float radius) {
-        this.left = left;//???
+    public Footballer(World world, float x, float y, boolean isLeftSided, float radius) {
+        this.isLeftSided = isLeftSided;
         this.radius = radius;
         body = Utilities.getCircleBody(world,
                 x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX, radius * Constants.WORLD_TO_BOX,
@@ -65,13 +64,15 @@ public class Footballer extends Actor {
         weld joint, connecting rotator and leg
         */
         rotator = Utilities.getRectangularBody(world,
-                (x - ROTATOR_WIDTH / 2) * Constants.WORLD_TO_BOX, (y - ROTATOR_WIDTH / 2) * Constants.WORLD_TO_BOX,
+                (x - ROTATOR_WIDTH / 2) * Constants.WORLD_TO_BOX,
+                (y - ROTATOR_WIDTH / 2) * Constants.WORLD_TO_BOX,
                 ROTATOR_WIDTH * Constants.WORLD_TO_BOX, ROTATOR_WIDTH * Constants.WORLD_TO_BOX,
                 ROTATOR_DENSITY, ROTATOR_FRICTION, ROTATOR_RESTITUTION,
                 Constants.ROTATOR_CATEGORY, Constants.ROTATOR_MASK);
 
         leg = Utilities.getRectangularBody(world,
-                (x - LEG_WIDTH / 2) * Constants.WORLD_TO_BOX, (y - radius - LEG_HEIGHT - 1) * Constants.WORLD_TO_BOX,
+                (x - LEG_WIDTH / 2) * Constants.WORLD_TO_BOX,
+                (y - radius - LEG_HEIGHT - 1) * Constants.WORLD_TO_BOX,
                 LEG_WIDTH * Constants.WORLD_TO_BOX, LEG_HEIGHT * Constants.WORLD_TO_BOX,
                 LEG_DENSITY, LEG_FRICTION, LEG_RESTITUTION,
                 Constants.LEG_CATEGORY, Constants.LEG_MASK);
@@ -82,13 +83,12 @@ public class Footballer extends Actor {
         revoluteJoint = (RevoluteJoint) world.createJoint(getRevoluteJointDef());
         world.createJoint(weldJointDef);
 
-        if (left) {
-            bodySprite = new Box2DSprite(AssetLoader.footballerTexture);
+        if (isLeftSided) {
+            bodySprite = new Box2DSprite(AssetLoader.getFootballerTexture());
+        } else {
+            bodySprite = new Box2DSprite(AssetLoader.getReversedFootballerTexture());
         }
-        else {
-            bodySprite = new Box2DSprite(AssetLoader.reversedFootballerTexture);
-        }
-        legSprite = new Box2DSprite(AssetLoader.footballerTexture);
+        legSprite = new Box2DSprite(AssetLoader.getFootballerTexture());
     }
 
     public Vector2 getPosition() {
@@ -109,16 +109,14 @@ public class Footballer extends Actor {
             inJump = true;
             body.setLinearVelocity(body.getLinearVelocity().x, FOOTBALLER_JUMP * Constants.WORLD_TO_BOX);
         }
-        int turn = left ? 1 : -1;
-        if (move.getState(Constants.HIT) &&
-                revoluteJoint.getJointAngle() < revoluteJoint.getUpperLimit() - JOINT_EPSILON) {
+        int turn = isLeftSided ? 1 : -1;
+        if (move.getState(Constants.HIT)
+                && revoluteJoint.getJointAngle() < revoluteJoint.getUpperLimit() - JOINT_EPSILON) {
             leg.setAngularVelocity(JOINT_ANGULAR_VELOCITY * turn);
-        }
-        else if (!move.getState(Constants.HIT) &&
-                revoluteJoint.getJointAngle() > revoluteJoint.getLowerLimit() + JOINT_EPSILON) {
+        } else if (!move.getState(Constants.HIT)
+                && revoluteJoint.getJointAngle() > revoluteJoint.getLowerLimit() + JOINT_EPSILON) {
             leg.setAngularVelocity(-JOINT_ANGULAR_VELOCITY * turn);
-        }
-        else {
+        } else {
             leg.setAngularVelocity(0);
         }
     }
@@ -161,11 +159,10 @@ public class Footballer extends Actor {
         RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
         revoluteJointDef.initialize(body, rotator, body.getWorldCenter());
         revoluteJointDef.enableLimit = true;
-        if (!left) {
+        if (!isLeftSided) {
             revoluteJointDef.lowerAngle = -JOINT_UPPER_ANGLE;
             revoluteJointDef.upperAngle = JOINT_LOWER_ANGLE;
-        }
-        else {
+        } else {
             revoluteJointDef.lowerAngle = JOINT_LOWER_ANGLE;
             revoluteJointDef.upperAngle = JOINT_UPPER_ANGLE;
         }

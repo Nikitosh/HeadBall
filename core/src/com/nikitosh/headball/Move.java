@@ -33,13 +33,13 @@ public class Move {
     public void serialize(DataOutputStream outputStream) {
         try {
             byte message = 0;
-            for (int i = 0; i < STATE_NUMBER; i++)
+            for (int i = 0; i < STATE_NUMBER; i++) {
                 if (footballerState[i]) {
                     message |= 1 << i;
                 }
+            }
             outputStream.writeByte(message);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -55,8 +55,7 @@ public class Move {
                 message /= 2;
             }
             return move;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

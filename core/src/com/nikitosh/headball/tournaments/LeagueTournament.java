@@ -4,8 +4,6 @@ import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Match;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.widgets.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -27,7 +25,7 @@ public class LeagueTournament implements Tournament {
     public LeagueTournament() {
     }
 
-    public LeagueTournament(String name, String iconName, Array <Team> teams, int lapNumber) {
+    public LeagueTournament(String name, String iconName, Array<Team> teams, int lapNumber) {
         this.lapNumber = lapNumber;
         this.name = name;
         this.iconName = iconName;
@@ -35,8 +33,8 @@ public class LeagueTournament implements Tournament {
 
         generateTimetable();
         resultTable = new StatisticsTable(teams);
-        leagueTournamentStatisticsTable = new LeagueTournamentStatisticsTable(new NextRoundTable(timeTable.get(0), teams)
-                , new LastRoundTable(teams.size / 2));
+        leagueTournamentStatisticsTable = new LeagueTournamentStatisticsTable(
+                new NextRoundTable(timeTable.get(0), teams), new LastRoundTable(teams.size / 2));
         leagueTournamentStatisticsTable.getLastRoundTable().setVisible(false);
 
     }
@@ -117,7 +115,7 @@ public class LeagueTournament implements Tournament {
                 return teams.get(currentRoundParticipants.get(i ^ 1));
             }
         }
-        assert(false);
+        assert (false);
         return null;
     }
 

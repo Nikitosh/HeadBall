@@ -1,8 +1,6 @@
 package com.nikitosh.headball.actors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -21,27 +19,29 @@ public class Goals extends Actor {
     private float width;
     private float goalsHeight;
     private float crossbarHeight;
-    private boolean left;
+    private boolean isLeftSided;
 
     private Box2DSprite goalsSprite;
 
-    public Goals(World world, float x, float y, float width, float goalsHeight, float crossbarHeight, boolean left) {
+    public Goals(World world, float x, float y, float width, float goalsHeight, float crossbarHeight,
+                 boolean isLeftSided) {
         this.width = width;
         this.goalsHeight = goalsHeight;
         this.crossbarHeight = crossbarHeight;
-        this.left = left;
+        this.isLeftSided = isLeftSided;
 
-        body = Utilities.getRectangularBody(world, x * Constants.WORLD_TO_BOX, (y + goalsHeight) * Constants.WORLD_TO_BOX,
-                width * Constants.WORLD_TO_BOX, crossbarHeight * Constants.WORLD_TO_BOX, GOALS_DENSITY, GOALS_FRICTION,
-                GOALS_RESTITUTION, Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
+        body = Utilities.getRectangularBody(world,
+                x * Constants.WORLD_TO_BOX, (y + goalsHeight) * Constants.WORLD_TO_BOX,
+                width * Constants.WORLD_TO_BOX, crossbarHeight * Constants.WORLD_TO_BOX,
+                GOALS_DENSITY, GOALS_FRICTION, GOALS_RESTITUTION,
+                Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
         body.setType(BodyDef.BodyType.StaticBody);
         body.getFixtureList().get(0).setUserData(this);
 
-        if (left) {
-            goalsSprite = new Box2DSprite(AssetLoader.goalsTexture);
-        }
-        else {
-            goalsSprite = new Box2DSprite(AssetLoader.reversedGoalsTexture);
+        if (isLeftSided) {
+            goalsSprite = new Box2DSprite(AssetLoader.getGoalsTexture());
+        } else {
+            goalsSprite = new Box2DSprite(AssetLoader.getReversedGoalsTexture());
         }
     }
 
@@ -54,11 +54,12 @@ public class Goals extends Actor {
     }
 
     public boolean contains(Vector2 point) {
-        if (left) {
-            return point.x < body.getPosition().x + width / 2 * Constants.WORLD_TO_BOX && point.y < body.getPosition().y;
-        }
-        else {
-            return point.x > body.getPosition().x - width / 2 * Constants.WORLD_TO_BOX && point.y < body.getPosition().y;
+        if (isLeftSided) {
+            return point.x < body.getPosition().x + width / 2 * Constants.WORLD_TO_BOX
+                    && point.y < body.getPosition().y;
+        } else {
+            return point.x > body.getPosition().x - width / 2 * Constants.WORLD_TO_BOX
+                    && point.y < body.getPosition().y;
         }
     }
 }

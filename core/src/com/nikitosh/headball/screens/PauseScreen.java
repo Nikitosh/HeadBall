@@ -15,12 +15,12 @@ public class PauseScreen extends Window {
     private static final String EXIT = "Exit";
 
     public PauseScreen(final GameScreen gameScreen, boolean restartOrExitEnable) {
-        super("", AssetLoader.gameSkin);
+        super("", AssetLoader.getGameSkin());
         setMovable(false);
 
-        Label pauseLabel = new Label(PAUSE, AssetLoader.gameSkin);
+        Label pauseLabel = new Label(PAUSE, AssetLoader.getGameSkin());
 
-        TextButton continueButton = new TextButton(CONTINUE, AssetLoader.gameSkin);
+        TextButton continueButton = new TextButton(CONTINUE, AssetLoader.getGameSkin());
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -32,7 +32,7 @@ public class PauseScreen extends Window {
         add(continueButton).pad(Constants.UI_ELEMENTS_INDENT).row();
 
         if (restartOrExitEnable) {
-            TextButton restartButton = new TextButton(RESTART, AssetLoader.gameSkin);
+            TextButton restartButton = new TextButton(RESTART, AssetLoader.getGameSkin());
             restartButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -40,7 +40,7 @@ public class PauseScreen extends Window {
                 }
             });
 
-            TextButton exitButton = new TextButton(EXIT, AssetLoader.gameSkin);
+            TextButton exitButton = new TextButton(EXIT, AssetLoader.getGameSkin());
             exitButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {

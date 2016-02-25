@@ -6,7 +6,7 @@ import com.nikitosh.headball.Team;
 import com.nikitosh.headball.utils.AssetLoader;
 
 public interface ResultTable {
-    Label.LabelStyle HIGHLIGHTED_STYLE = AssetLoader.defaultSkin.get("highlighted", Label.LabelStyle.class);
+    Label.LabelStyle HIGHLIGHTED_STYLE = AssetLoader.getDefaultSkin().get("highlighted", Label.LabelStyle.class);
     Group getTable();
     void highlightTeam(Team team);
 }
