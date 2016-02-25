@@ -19,8 +19,8 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
     private static final String LOG_TAG = "MultiPlayerScreen";
 
     public MultiPlayerWaitingScreen() {
-        stack.addActor(new Image(AssetLoader.darkBackgroundTexture));
-        stack.addActor(new Label("Wait for a while!", AssetLoader.gameSkin));
+        stack.addActor(new Image(AssetLoader.getDarkBackgroundTexture()));
+        stack.addActor(new Label("Wait for a while!", AssetLoader.getGameSkin()));
     }
 
     @Override
@@ -30,7 +30,8 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
             public void run() {
                 try {
                     InetAddress ipAddress = InetAddress.getByName(SERVER_ADDRESS);
-                    Gdx.app.log(LOG_TAG, "Any of you heard of a socket with IP address " + SERVER_ADDRESS + " and port " + PORT + "?");
+                    Gdx.app.log(LOG_TAG, "Any of you heard of a socket with IP address "
+                            + SERVER_ADDRESS + " and port " + PORT + "?");
                     Socket socket = new Socket(ipAddress, PORT);
                     Gdx.app.log(LOG_TAG, "Yes! I just got hold of the program.");
                     DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -45,7 +46,8 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
                     }
                     ScreenManager.getInstance().disposeCurrentScreen();
                     ScreenManager.getInstance().setScreen(new MultiPlayerScreen(
-                            new MatchInfo(new Team("", ""), new Team("", ""), false, false), playerNumber, in, out));
+                            new MatchInfo(new Team("", ""), new Team("", ""), false, false),
+                            playerNumber, in, out));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

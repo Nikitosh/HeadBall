@@ -5,7 +5,7 @@ import com.nikitosh.headball.utils.AssetLoader;
 
 public class BackgroundStageAbstractScreen extends StageAbstractScreen {
     public BackgroundStageAbstractScreen() {
-        Image background = new Image(AssetLoader.menuTexture);
+        Image background = new Image(AssetLoader.getMenuTexture());
         background.setFillParent(true);
         stack.addActor(background);
     }

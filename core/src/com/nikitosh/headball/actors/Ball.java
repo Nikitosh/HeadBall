@@ -1,8 +1,6 @@
 package com.nikitosh.headball.actors;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -27,7 +25,7 @@ public class Ball extends Actor {
                 BALL_DENSITY, BALL_FRICTION, BALL_RESTITUTION,
                 Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
 
-        ballSprite = new Box2DSprite(AssetLoader.ballTexture);
+        ballSprite = new Box2DSprite(AssetLoader.getBallTexture());
     }
 
     @Override

@@ -24,8 +24,10 @@ public class OlympicSystemTournamentWidget extends WidgetGroup implements Result
         float maxWidth = 0;
         float maxHeight = 0;
         for (int i = 0; i < teams.size; i++) {
-            maxWidth = Math.max(maxWidth, new Label(teams.get(i).getName(), AssetLoader.defaultSkin).getPrefWidth());
-            maxHeight = Math.max(maxHeight, new Label(teams.get(i).getName(), AssetLoader.defaultSkin).getPrefHeight());
+            maxWidth = Math.max(maxWidth, new Label(teams.get(i).getName(),
+                    AssetLoader.getDefaultSkin()).getPrefWidth());
+            maxHeight = Math.max(maxHeight, new Label(teams.get(i).getName(),
+                    AssetLoader.getDefaultSkin()).getPrefHeight());
         }
 
         int currentTeamIndex = 0;
@@ -39,7 +41,7 @@ public class OlympicSystemTournamentWidget extends WidgetGroup implements Result
                     currentKnownTeamNumber++;
                 }
 
-                Label label = new Label(name, AssetLoader.defaultSkin);
+                Label label = new Label(name, AssetLoader.getDefaultSkin());
                 label.setText(name);
                 label.setSize(maxWidth, maxHeight);
                 labels.add(label);
@@ -50,11 +52,10 @@ public class OlympicSystemTournamentWidget extends WidgetGroup implements Result
                     int prevTeamIndex = currentTeamIndex - j - 2 * currentTeamNumber + 2 * j;
                     label.setPosition(labels.get(prevTeamIndex).getX() + maxWidth + Constants.UI_ELEMENTS_INDENT,
                             (labels.get(prevTeamIndex).getY() + labels.get(prevTeamIndex + 1).getY()) / 2);
-                }
-                else { //first column, every next team is under previous
+                } else { //first column, every next team is under previous
                     label.setPosition(Constants.UI_ELEMENTS_INDENT,
-                            (maxHeight + Constants.UI_ELEMENTS_INDENT) * (teams.size - currentTeamIndex - 1) +
-                                    Constants.UI_ELEMENTS_INDENT);
+                            (maxHeight + Constants.UI_ELEMENTS_INDENT) * (teams.size - currentTeamIndex - 1)
+                                    + Constants.UI_ELEMENTS_INDENT);
                 }
                 addActor(label);
                 currentTeamIndex++;
@@ -69,7 +70,8 @@ public class OlympicSystemTournamentWidget extends WidgetGroup implements Result
 
     }
 
-    public OlympicSystemTournamentWidget(int roundNumber, Array<Team> teams, Array<Array<Integer>> tournamentBracket) {
+    public OlympicSystemTournamentWidget(int roundNumber, Array<Team> teams,
+                                         Array<Array<Integer>> tournamentBracket) {
         this.roundNumber = roundNumber;
         this.teams = teams;
         this.tournamentBracket = tournamentBracket;
@@ -78,7 +80,7 @@ public class OlympicSystemTournamentWidget extends WidgetGroup implements Result
 
     public void clearHighlighting() {
         for (int i = 0; i < labels.size; i++) {
-            labels.get(i).setStyle(AssetLoader.defaultSkin.get(Label.LabelStyle.class));
+            labels.get(i).setStyle(AssetLoader.getDefaultSkin().get(Label.LabelStyle.class));
         }
     }
 
@@ -133,7 +135,8 @@ public class OlympicSystemTournamentWidget extends WidgetGroup implements Result
         Array<String> results = new Array<>();
         initialise();
         results = json.readValue(results.getClass(), jsonData.get("results"));
-        for (int i = 0; i < results.size; i++)
+        for (int i = 0; i < results.size; i++) {
             labels.get(i).setText(results.get(i));
+        }
     }
 }

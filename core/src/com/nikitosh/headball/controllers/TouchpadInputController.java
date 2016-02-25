@@ -8,9 +8,9 @@ import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
 public class TouchpadInputController implements InputController {
-    private final static String HIT_BUTTON_NAME = "Hit";
-    private final static float TOUCHPAD_KNOB = 0;
-    private final static float TOUCHPAD_JUMP_LEVEL_PERCENTAGE = 0.5f;
+    private static final String HIT_BUTTON_NAME = "Hit";
+    private static final float TOUCHPAD_KNOB = 0;
+    private static final float TOUCHPAD_JUMP_LEVEL_PERCENTAGE = 0.5f;
 
     private Table uiTable = new Table();
     private TextButton hitButton;
@@ -19,9 +19,9 @@ public class TouchpadInputController implements InputController {
     private Move move = new Move();
 
     public TouchpadInputController(Table infoTable) {
-        hitButton = new TextButton(HIT_BUTTON_NAME, AssetLoader.gameSkin);
+        hitButton = new TextButton(HIT_BUTTON_NAME, AssetLoader.getGameSkin());
 
-        touchpad = new Touchpad(TOUCHPAD_KNOB, AssetLoader.gameSkin);
+        touchpad = new Touchpad(TOUCHPAD_KNOB, AssetLoader.getGameSkin());
 
         uiTable.add(hitButton).left().bottom().pad(Constants.UI_ELEMENTS_INDENT);
         uiTable.add(infoTable).expand().bottom();

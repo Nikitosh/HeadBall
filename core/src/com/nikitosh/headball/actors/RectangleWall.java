@@ -1,6 +1,5 @@
 package com.nikitosh.headball.actors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -9,9 +8,9 @@ import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.utils.Utilities;
 
 public class RectangleWall extends Wall {
-    private final static float RECTANGLE_WALL_DENSITY = 1f;
-    private final static float RECTANGLE_WALL_FRICTION = 1f;
-    private final static float RECTANGLE_WALL_RESTITUTION = 0f;
+    private static final float RECTANGLE_WALL_DENSITY = 1f;
+    private static final float RECTANGLE_WALL_FRICTION = 1f;
+    private static final float RECTANGLE_WALL_RESTITUTION = 0f;
     private float width;
     private float height;
 

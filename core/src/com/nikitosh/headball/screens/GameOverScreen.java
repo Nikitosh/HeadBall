@@ -20,15 +20,15 @@ public class GameOverScreen extends Window {
     private Label resultLabel;
 
     GameOverScreen(final GameScreen gameScreen) {
-        super("", AssetLoader.gameSkin);
+        super("", AssetLoader.getGameSkin());
         this.gameScreen = gameScreen;
 
         setMovable(false);
 
-        Label gameOverLabel = new Label(GAME_OVER, AssetLoader.gameSkin);
-        resultLabel = new Label("", AssetLoader.gameSkin);
+        Label gameOverLabel = new Label(GAME_OVER, AssetLoader.getGameSkin());
+        resultLabel = new Label("", AssetLoader.getGameSkin());
 
-        TextButton gameOverExitButton = new TextButton(EXIT, AssetLoader.gameSkin);
+        TextButton gameOverExitButton = new TextButton(EXIT, AssetLoader.getGameSkin());
         gameOverExitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

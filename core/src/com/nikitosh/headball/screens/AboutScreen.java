@@ -8,7 +8,7 @@ public class AboutScreen extends BackgroundStageAbstractScreen {
     private static final String ABOUT_TEXT = "This game was developed by Nikitosh & Wowember";
 
     public AboutScreen() {
-        Label aboutLabel = new Label(ABOUT_TEXT, AssetLoader.gameSkin, "background");
+        Label aboutLabel = new Label(ABOUT_TEXT, AssetLoader.getGameSkin(), "background");
 
         Table aboutTable = new Table();
         aboutTable.setFillParent(true);

@@ -19,8 +19,8 @@ public class TeamChoosingTable extends ChoosingTable {
     }
 
     protected void addTeamCell(Team team) {
-        Image teamImage = new Image(AssetLoader.teamsSkin.getDrawable(team.getIconName()));
-        Label teamName = new Label(team.getName(), AssetLoader.gameSkin);
+        Image teamImage = new Image(AssetLoader.getTeamsSkin().getDrawable(team.getIconName()));
+        Label teamName = new Label(team.getName(), AssetLoader.getGameSkin());
 
         Table teamCell = new Table();
         teamCell.add(teamImage).pad(Constants.UI_ELEMENTS_INDENT).row();

@@ -8,31 +8,34 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class AssetLoader {
+public final class AssetLoader {
+    private static final int FONT_SIZE = 22;
 
-    public static BitmapFont font;
-    public static Skin gameSkin;
-    public static Skin defaultSkin;
-    public static Skin tournamentsSkin;
-    public static Skin teamsSkin;
+    private static BitmapFont font;
+    private static Skin gameSkin;
+    private static Skin defaultSkin;
+    private static Skin tournamentsSkin;
+    private static Skin teamsSkin;
 
-    public static Texture legTexture;
-    public static Texture ballTexture;
-    public static Texture footballerTexture;
-    public static Texture reversedFootballerTexture;
-    public static Texture goalsTexture;
-    public static Texture reversedGoalsTexture;
-    public static Texture menuTexture;
-    public static Texture fieldTexture;
-    public static Texture backgroundTexture;
-    public static Texture darkBackgroundTexture;
+    private static Texture legTexture;
+    private static Texture ballTexture;
+    private static Texture footballerTexture;
+    private static Texture reversedFootballerTexture;
+    private static Texture goalsTexture;
+    private static Texture reversedGoalsTexture;
+    private static Texture menuTexture;
+    private static Texture fieldTexture;
+    private static Texture backgroundTexture;
+    private static Texture darkBackgroundTexture;
 
-    public static Sound goalSound;
+    private static Sound goalSound;
+
+    private AssetLoader() {}
 
     public static void loadFont() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/LuckiestGuy.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 22;//???
+        parameter.size = FONT_SIZE;
         parameter.minFilter = Texture.TextureFilter.Linear;
         parameter.magFilter = Texture.TextureFilter.Linear;
         font = generator.generateFont(parameter);
@@ -67,10 +70,73 @@ public class AssetLoader {
         backgroundTexture = new Texture(Gdx.files.internal("images/background.jpg"));
         darkBackgroundTexture = new Texture(Gdx.files.internal("images/darkBackground.png"));
 
-        GameSettings.initialize();//??
+        GameSettings.initialize();
     }
 
     public static void dispose() {
     }
 
+    public static BitmapFont getFont() {
+        return font;
+    }
+
+    public static Skin getGameSkin() {
+        return gameSkin;
+    }
+
+    public static Skin getDefaultSkin() {
+        return defaultSkin;
+    }
+
+    public static Skin getTournamentsSkin() {
+        return tournamentsSkin;
+    }
+
+    public static Skin getTeamsSkin() {
+        return teamsSkin;
+    }
+
+    public static Texture getLegTexture() {
+        return legTexture;
+    }
+
+    public static Texture getBallTexture() {
+        return ballTexture;
+    }
+
+    public static Texture getFootballerTexture() {
+        return footballerTexture;
+    }
+
+    public static Texture getReversedFootballerTexture() {
+        return reversedFootballerTexture;
+    }
+
+    public static Texture getGoalsTexture() {
+        return goalsTexture;
+    }
+
+    public static Texture getReversedGoalsTexture() {
+        return reversedGoalsTexture;
+    }
+
+    public static Texture getMenuTexture() {
+        return menuTexture;
+    }
+
+    public static Texture getFieldTexture() {
+        return fieldTexture;
+    }
+
+    public static Texture getBackgroundTexture() {
+        return backgroundTexture;
+    }
+
+    public static Texture getDarkBackgroundTexture() {
+        return darkBackgroundTexture;
+    }
+
+    public static Sound getGoalSound() {
+        return goalSound;
+    }
 }

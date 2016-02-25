@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.nikitosh.headball.LevelLoader;
+import com.nikitosh.headball.jsonReaders.LevelReader;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.controllers.ButtonsInputController;
@@ -42,13 +42,13 @@ public abstract class GameScreen extends StageAbstractScreen {
     protected int playerNumber;
 
     public GameScreen(MatchInfo matchInfo) {
-        gameWorld = LevelLoader.loadLevel(matchInfo.getLevelNumber());
+        gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber());
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
 
-        Image background = new Image(AssetLoader.backgroundTexture);
+        Image background = new Image(AssetLoader.getBackgroundTexture());
         background.setFillParent(true);
 
-        darkBackground = new Image(AssetLoader.darkBackgroundTexture);
+        darkBackground = new Image(AssetLoader.getDarkBackgroundTexture());
         darkBackground.setFillParent(true);
 
         pauseScreen = new PauseScreen(this, matchInfo.isRestartOrExitPossible());
@@ -63,7 +63,7 @@ public abstract class GameScreen extends StageAbstractScreen {
                 Constants.VIRTUAL_WIDTH / 2,
                 Constants.VIRTUAL_HEIGHT / 2);
 
-        TextButton pauseButton = new TextButton(PAUSE, AssetLoader.gameSkin);
+        TextButton pauseButton = new TextButton(PAUSE, AssetLoader.getGameSkin());
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -75,8 +75,8 @@ public abstract class GameScreen extends StageAbstractScreen {
         pauseButtonTable.setFillParent(true);
         pauseButtonTable.add(pauseButton).top().right().expand().pad(Constants.UI_ELEMENTS_INDENT).row();
 
-        timerLabel = new Label("", AssetLoader.defaultSkin);
-        scoreLabel = new Label("", AssetLoader.defaultSkin);
+        timerLabel = new Label("", AssetLoader.getDefaultSkin());
+        scoreLabel = new Label("", AssetLoader.getDefaultSkin());
         timerLabel.setAlignment(Align.center);
         scoreLabel.setAlignment(Align.center);
 
@@ -84,17 +84,17 @@ public abstract class GameScreen extends StageAbstractScreen {
         Table nestedTable = new Table();
         nestedTable.add(timerLabel).fillX().row();
         nestedTable.add(scoreLabel).fillX();
-        infoTable.add(new Label(matchInfo.getFirstTeam().getName(), AssetLoader.defaultSkin)).fillY();
+        infoTable.add(new Label(matchInfo.getFirstTeam().getName(), AssetLoader.getDefaultSkin())).fillY();
         infoTable.add(nestedTable);
-        infoTable.add(new Label(matchInfo.getSecondTeam().getName(), AssetLoader.defaultSkin)).fillY();
+        infoTable.add(new Label(matchInfo.getSecondTeam().getName(), AssetLoader.getDefaultSkin())).fillY();
 
         if (GameSettings.getString(Constants.SETTINGS_CONTROL).equals(Constants.SETTINGS_CONTROL_BUTTONS)) {
             inputController = new ButtonsInputController(infoTable);
-        }
-        else if (GameSettings.getString(Constants.SETTINGS_CONTROL).equals(Constants.SETTINGS_CONTROL_TOUCHPAD)) {
+        } else if (GameSettings.getString(Constants.SETTINGS_CONTROL).
+                equals(Constants.SETTINGS_CONTROL_TOUCHPAD)) {
             inputController = new TouchpadInputController(infoTable);
-        }
-        else if (GameSettings.getString(Constants.SETTINGS_CONTROL).equals(Constants.SETTINGS_CONTROL_KEYBOARD)) {
+        } else if (GameSettings.getString(Constants.SETTINGS_CONTROL).
+                equals(Constants.SETTINGS_CONTROL_KEYBOARD)) {
             inputController = new KeyboardInputController(infoTable);
         }
 
@@ -110,8 +110,9 @@ public abstract class GameScreen extends StageAbstractScreen {
 
     @Override
     public void render(float delta) {
-        if (gameState == GameState.GAME_RUNNING && gameWorld.isGoal() && GameSettings.getBoolean(Constants.SETTINGS_SOUND)) {
-            AssetLoader.goalSound.play();
+        if (gameState == GameState.GAME_RUNNING && gameWorld.isGoal()
+                && GameSettings.getBoolean(Constants.SETTINGS_SOUND)) {
+            AssetLoader.getGoalSound().play();
         }
         if (gameWorld.isEnded()) {
             finishGame();
@@ -190,6 +191,7 @@ public abstract class GameScreen extends StageAbstractScreen {
     private void updateHUD() {
         int[] score = gameWorld.getScore();
         scoreLabel.setText(Integer.toString(score[0]) + SCORE_SEPARATOR + Integer.toString(score[1]));
-        timerLabel.setText(String.format("%02d", Math.max(0, Constants.GAME_DURATION - (int) gameWorld.getGameDuration())));
+        timerLabel.setText(String.format("%02d",
+                Math.max(0, Constants.GAME_DURATION - (int) gameWorld.getGameDuration())));
     }
 }

@@ -7,22 +7,24 @@ import com.nikitosh.headball.Team;
 import com.nikitosh.headball.utils.AssetLoader;
 
 public class StatisticsTable extends AbstractResultTable {
-    private static final Array<String> COLUMN_NAMES = new Array<>(new String[] {"Team", "W", "D", "L", "GF", "GA", "GD", "Points"});
+    private static final Array<String> COLUMN_NAMES = new Array<>(new String[]
+            {"Team", "W", "D", "L", "GF", "GA", "GD", "Points"});
 
     public StatisticsTable(Array<Team> teams) {
         super();
         for (int i = 0; i < COLUMN_NAMES.size; i++) {
-            add(new Label(COLUMN_NAMES.get(i), AssetLoader.defaultSkin));
+            add(new Label(COLUMN_NAMES.get(i), AssetLoader.getDefaultSkin()));
         }
         row();
         for (int i = 0; i < teams.size; i++) {
             Team team = teams.get(i);
             Array<Label> teamStatisticsLabels = new Array<>();
-            teamStatisticsLabels.add(new Label(team.getName(), AssetLoader.defaultSkin));
+            teamStatisticsLabels.add(new Label(team.getName(), AssetLoader.getDefaultSkin()));
             add(teamStatisticsLabels.peek()).left();
             Array<Integer> statistics = team.getStatistics();
             for (int j = 0; j < team.getStatistics().size; j++) {
-                teamStatisticsLabels.add(new Label(Integer.toString(statistics.get(j)), AssetLoader.defaultSkin));
+                teamStatisticsLabels.add(new Label(Integer.toString(statistics.get(j)),
+                        AssetLoader.getDefaultSkin()));
                 add(teamStatisticsLabels.peek()).left();
             }
             statisticsLabels.add(teamStatisticsLabels);
@@ -36,7 +38,7 @@ public class StatisticsTable extends AbstractResultTable {
     public StatisticsTable() {
         super();
         for (int i = 0; i < COLUMN_NAMES.size; i++) {
-            add(new Label(COLUMN_NAMES.get(i), AssetLoader.defaultSkin));
+            add(new Label(COLUMN_NAMES.get(i), AssetLoader.getDefaultSkin()));
         }
         row();
     }

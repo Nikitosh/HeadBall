@@ -13,7 +13,7 @@ import com.nikitosh.headball.widgets.TournamentChoosingTable;
 
 public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
     public TournamentChoosingScreen() {
-        TournamentReader reader = TournamentReader.getTournamentsReader();
+        TournamentReader reader = TournamentReader.getTournamentReader();
         Array<Tournament> tournaments = new Array<>();
         for (int i = 0; i < reader.getTournamentsNumber(); i++) {
             tournaments.add(reader.getTournament(i));
@@ -23,11 +23,15 @@ public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
         choosingTable.setOnContinueListener(new Runnable() {
             @Override
             public void run() {
-                if (Gdx.files.local("tournaments/saves/"+choosingTable.getSelectedTournament().getName()+".json").exists()) {
-                    Pair<Tournament, Team> tournamentInfo = TournamentDeserializer.deserialize(choosingTable.getSelectedTournament().getClass(),
+                if (Gdx.files.local(
+                        "tournaments/saves/" + choosingTable.getSelectedTournament().getName() + ".json").
+                        exists()) {
+                    Pair<Tournament, Team> tournamentInfo =
+                            TournamentDeserializer.deserialize(choosingTable.getSelectedTournament().getClass(),
                             choosingTable.getSelectedTournament().getName());
                     ScreenManager.getInstance().disposeCurrentScreen();
-                    ScreenManager.getInstance().setScreen(new TournamentScreen(tournamentInfo.getFirst(), tournamentInfo.getSecond()));
+                    ScreenManager.getInstance().setScreen(new TournamentScreen(tournamentInfo.getFirst(),
+                            tournamentInfo.getSecond()));
                 } else {
                     ScreenManager.getInstance().setScreen(
                         new TournamentTeamChoosingScreen(choosingTable.getSelectedTournament()));

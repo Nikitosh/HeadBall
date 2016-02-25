@@ -12,7 +12,7 @@ public class TournamentTeamChoosingScreen extends BackgroundStageAbstractScreen 
 
     public TournamentTeamChoosingScreen(final Tournament tournament) {
         Array<Team> teams = new Array<>();
-        TeamReader reader = TeamReader.getTeamsReader();
+        TeamReader reader = TeamReader.getTeamReader();
         for (Team team : tournament.getParticipants()) {
             for (int i = 0; i < reader.getTeamsNumber(); i++) {
                 if (team.equals(reader.getTeam(i))) {
@@ -26,7 +26,8 @@ public class TournamentTeamChoosingScreen extends BackgroundStageAbstractScreen 
             public void run() {
                 //dispose 2 screens: TournamentChoosingScreen and TournamentTeamChoosingScreen
                 ScreenManager.getInstance().disposeCurrentScreens(2);
-                ScreenManager.getInstance().setScreen(new TournamentScreen(tournament, choosingTable.getSelectedTeam()));
+                ScreenManager.getInstance().setScreen(
+                        new TournamentScreen(tournament, choosingTable.getSelectedTeam()));
             }
         });
         choosingTable.setFillParent(true);

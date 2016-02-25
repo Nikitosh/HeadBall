@@ -22,7 +22,7 @@ public class ButtonsInputController implements InputController {
         //used for setting minimum width for buttons inside to 0 (without it they're too wide)
         Array<Container> containersArray = new Array<>();
         for (String name: BUTTONS_NAMES) {
-            TextButton button = new TextButton(name, AssetLoader.gameSkin);
+            TextButton button = new TextButton(name, AssetLoader.getGameSkin());
             Container container = new Container<>(button);
             container.minWidth(0);
             buttonsArray.add(button);

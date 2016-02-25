@@ -1,11 +1,12 @@
-package com.nikitosh.headball;
+package com.nikitosh.headball.jsonReaders;
 
 import com.badlogic.gdx.utils.Array;
+import com.nikitosh.headball.GameWorld;
 import com.nikitosh.headball.utils.Utilities;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class LevelLoader {
+public final class LevelReader {
     private static final String LEVELS_PATH = "info/levels.json";
     private static final String JSON_LEVELS_KEY = "levels";
     private static final String JSON_WIDTH_KEY = "width";
@@ -18,15 +19,17 @@ public class LevelLoader {
     private static final String JSON_BALL_X_KEY = "ballX";
     private static final String JSON_BALL_Y_KEY = "ballY";
     private static final String JSON_GOALS_X_KEY = "goalsX";
-    private static final String JSON_GOALS_Y_KEY= "goalsY";
+    private static final String JSON_GOALS_Y_KEY = "goalsY";
     private static final String JSON_GOALS_LEFT_KEY = "goalsLeft";
     private static final String JSON_GOALS_WIDTH_KEY = "goalsWidth";
     private static final String JSON_GOALS_HEIGHT_KEY = "goalsHeight";
     private static final String JSON_CROSSBAR_HEIGHT_KEY = "crossbarHeight";
     private static final String JSON_WALLS_X_KEY = "wallsX";
-    private static final String JSON_WALLS_Y_KEY= "wallsY";
+    private static final String JSON_WALLS_Y_KEY = "wallsY";
     private static final String JSON_WALLS_WIDTH_KEY = "wallsWidth";
     private static final String JSON_WALLS_HEIGHT_KEY = "wallsHeight";
+
+    private LevelReader() {}
 
     private static Array<Float> parseFloatArray(JSONObject level, String key) {
         JSONArray jsonArray = (JSONArray) level.get(key);
@@ -47,7 +50,8 @@ public class LevelLoader {
     }
 
     public static GameWorld loadLevel(int index) {
-        JSONObject level = (JSONObject) ((JSONArray) Utilities.parseJSONFile(LEVELS_PATH).get(JSON_LEVELS_KEY)).get(index);
+        JSONObject level = (JSONObject) ((JSONArray) Utilities.parseJSONFile(LEVELS_PATH).
+                get(JSON_LEVELS_KEY)).get(index);
         float width = ((Long) level.get(JSON_WIDTH_KEY)).floatValue();
         float height = ((Long) level.get(JSON_HEIGHT_KEY)).floatValue();
         float footballerRadius = ((Long) level.get(JSON_FOOTBALLER_RADIUS_KEY)).floatValue();
@@ -75,5 +79,9 @@ public class LevelLoader {
         gameWorld.createBall(ballPositionX, ballPositionY, ballRadius);
         gameWorld.createGoals(goalsPositionX, goalsPositionY, goalsWidth, goalsHeight, crossbarHeight, goalsLeft);
         return gameWorld;
+    }
+
+    public static int getLevelsNumber() {
+        return ((JSONArray) Utilities.parseJSONFile(LEVELS_PATH).get(JSON_LEVELS_KEY)).size();
     }
 }

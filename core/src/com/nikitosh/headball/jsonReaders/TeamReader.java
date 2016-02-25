@@ -5,12 +5,12 @@ import com.nikitosh.headball.utils.Utilities;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class TeamReader {
-    private final static String TEAMS_PATH = "info/teams.json";
+public final class TeamReader {
+    private static final String TEAMS_PATH = "info/teams.json";
 
-    private final static String JSON_TEAMS_KEY = "teams";
-    private final static String JSON_NAME_KEY = "name";
-    private final static String JSON_ICON_KEY = "icon";
+    private static final String JSON_TEAMS_KEY = "teams";
+    private static final String JSON_NAME_KEY = "name";
+    private static final String JSON_ICON_KEY = "icon";
 
     private static TeamReader teamReader;
     private JSONArray teams;
@@ -19,7 +19,7 @@ public class TeamReader {
         teams = (JSONArray) Utilities.parseJSONFile(TEAMS_PATH).get(JSON_TEAMS_KEY);
     }
 
-    public static TeamReader getTeamsReader() {
+    public static TeamReader getTeamReader() {
         if (teamReader == null) {
             teamReader = new TeamReader();
         }
@@ -37,13 +37,12 @@ public class TeamReader {
                 return getTeam(i);
             }
         }
-        assert(false);
+        assert (false);
         return null;
     }
 
     public JSONObject getJSONTeam(int index) {
-        if (index < 0 || index >= teams.size())
-            throw new IndexOutOfBoundsException();
+        assert (index >= 0 && index < teams.size());
         return (JSONObject) teams.get(index);
     }
 

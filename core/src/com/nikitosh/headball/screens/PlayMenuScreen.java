@@ -16,7 +16,7 @@ public class PlayMenuScreen extends BackgroundStageAbstractScreen {
     private static final boolean IS_DRAW_POSSIBLE = true;
 
     public PlayMenuScreen() {
-        Button practiceTextButton = new TextButton(PRACTICE, AssetLoader.gameSkin);
+        Button practiceTextButton = new TextButton(PRACTICE, AssetLoader.getGameSkin());
         practiceTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -24,7 +24,7 @@ public class PlayMenuScreen extends BackgroundStageAbstractScreen {
             }
         });
 
-        Button tournamentTextButton = new TextButton(TOURNAMENT, AssetLoader.gameSkin);
+        Button tournamentTextButton = new TextButton(TOURNAMENT, AssetLoader.getGameSkin());
         tournamentTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -32,7 +32,7 @@ public class PlayMenuScreen extends BackgroundStageAbstractScreen {
             }
         });
 
-        Button multiPlayerTextButton = new TextButton(MULTIPLAYER, AssetLoader.gameSkin);
+        Button multiPlayerTextButton = new TextButton(MULTIPLAYER, AssetLoader.getGameSkin());
         multiPlayerTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

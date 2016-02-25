@@ -33,35 +33,30 @@ public class AIPlayer implements Player {
         Move move = new Move();
         if (footballerNumber == 1) {
             ballPositionX = Constants.VIRTUAL_WIDTH * Constants.WORLD_TO_BOX - ball.getPosition().x;
-            myPositionX = Constants.VIRTUAL_WIDTH * Constants.WORLD_TO_BOX - footballers[footballerNumber].getPosition().x;
-        }
-        else {
+            myPositionX = Constants.VIRTUAL_WIDTH * Constants.WORLD_TO_BOX
+                    - footballers[footballerNumber].getPosition().x;
+        } else {
             ballPositionX = ball.getPosition().x;
             myPositionX = footballers[footballerNumber].getPosition().x;
         }
 
         if (ballPositionY < myPositionY - footballers[footballerNumber].getRadius()) {
             move.setState(Constants.LEFT, true);
-        }
-        else {
+        } else {
             if (ballPositionX < myPositionX) {
                 if (myPositionX - ballPositionX < JUMP_RADIUS && myPositionY > ballPositionY) {
                     move.setState(Constants.JUMP, true);
                     move.setState(Constants.LEFT, true);
-                }
-                else {
+                } else {
                     move.setState(Constants.LEFT, true);
                 }
-            }
-            else {
+            } else {
                 if (ballPositionX - myPositionX < HIT_RADIUS) {
                     move.setState(Constants.HIT, true);
                     move.setState(Constants.RIGHT, true);
-                }
-                else if (ballPositionX - myPositionX < JUMP_RADIUS && ballPositionY > myPositionY) {
+                } else if (ballPositionX - myPositionX < JUMP_RADIUS && ballPositionY > myPositionY) {
                     move.setState(Constants.LEFT, true);
-                }
-                else {
+                } else {
                     move.setState(Constants.RIGHT, true);
                 }
             }

@@ -9,8 +9,8 @@ import com.nikitosh.headball.utils.AssetLoader;
 
 public class LastRoundTable extends AbstractResultTable {
 
-    private final static int SCORE_COLUMN = 1;
-    private final static int COLUMN_COUNT = 3;
+    private static final int SCORE_COLUMN = 1;
+    private static final int COLUMN_COUNT = 3;
 
     public LastRoundTable() {
         super();
@@ -21,7 +21,7 @@ public class LastRoundTable extends AbstractResultTable {
         for (int i = 0; i < size; i++) {
             Array<Label> matchStatisticsLabels = new Array<>();
             for (int j = 0; j < COLUMN_COUNT; j++) {
-                matchStatisticsLabels.add(new Label("", AssetLoader.defaultSkin));
+                matchStatisticsLabels.add(new Label("", AssetLoader.getDefaultSkin()));
                 add(matchStatisticsLabels.peek()).left();
             }
             statisticsLabels.add(matchStatisticsLabels);

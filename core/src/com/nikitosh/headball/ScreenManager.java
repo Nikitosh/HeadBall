@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Array;
 
-public class ScreenManager {
+public final class ScreenManager {
     private static ScreenManager screenManager;
     private Array<Screen> screens = new Array<>();
     private Game game;
@@ -35,7 +35,7 @@ public class ScreenManager {
     }
 
     public void disposeCurrentScreen() {
-        assert(screens.size > 1);
+        assert (screens.size > 1);
         screens.pop().dispose();
         game.setScreen(screens.peek());
     }

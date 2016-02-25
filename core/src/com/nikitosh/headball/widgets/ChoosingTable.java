@@ -8,12 +8,17 @@ import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
 public class ChoosingTable extends Table {
-    private static final Button.ButtonStyle LEFT_ACTIVE = AssetLoader.gameSkin.get("leftOrangeSlider", Button.ButtonStyle.class);
-    private static final Button.ButtonStyle LEFT_NOT_ACTIVE = AssetLoader.gameSkin.get("leftGraySlider", Button.ButtonStyle.class);
-    private static final Button.ButtonStyle RIGHT_ACTIVE = AssetLoader.gameSkin.get("rightOrangeSlider", Button.ButtonStyle.class);
-    private static final Button.ButtonStyle RIGHT_NOT_ACTIVE = AssetLoader.gameSkin.get("rightGraySlider", Button.ButtonStyle.class);
+    private static final int COLUMNS_NUMBER = 3;
+    private static final Button.ButtonStyle LEFT_ACTIVE = AssetLoader.getGameSkin().get("leftOrangeSlider",
+            Button.ButtonStyle.class);
+    private static final Button.ButtonStyle LEFT_NOT_ACTIVE = AssetLoader.getGameSkin().get("leftGraySlider",
+            Button.ButtonStyle.class);
+    private static final Button.ButtonStyle RIGHT_ACTIVE = AssetLoader.getGameSkin().get("rightOrangeSlider",
+            Button.ButtonStyle.class);
+    private static final Button.ButtonStyle RIGHT_NOT_ACTIVE = AssetLoader.getGameSkin().get("rightGraySlider",
+            Button.ButtonStyle.class);
 
-    private Array <Actor> elements = new Array<>();
+    private Array<Actor> elements = new Array<>();
     protected int currentIndex = 0;
     private Button leftButton;
     private Button rightButton;
@@ -73,9 +78,9 @@ public class ChoosingTable extends Table {
     }
 
     public void setOnContinueListener(final Runnable runnable) {
-        Button continueButton = new TextButton("Continue", AssetLoader.gameSkin);
+        Button continueButton = new TextButton("Continue", AssetLoader.getGameSkin());
         row();
-        add(continueButton).colspan(3);
+        add(continueButton).colspan(COLUMNS_NUMBER); //there are COLUMNS_NUMBER cells in upper layer
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

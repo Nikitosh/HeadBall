@@ -18,7 +18,7 @@ public class PracticeTeamChoosingScreen extends BackgroundStageAbstractScreen {
     private static final boolean IS_DRAW_POSSIBLE = true;
 
     public PracticeTeamChoosingScreen() {
-        TeamReader reader = TeamReader.getTeamsReader();
+        TeamReader reader = TeamReader.getTeamReader();
         Array<Team> teams = new Array();
         for (int i = 0; i < reader.getTeamsNumber(); i++) {
             teams.add(reader.getTeam(i));
@@ -26,7 +26,7 @@ public class PracticeTeamChoosingScreen extends BackgroundStageAbstractScreen {
         final TeamChoosingTable choosingTable1 = new TeamChoosingTable(teams);
         final TeamChoosingTable choosingTable2 = new TeamChoosingTable(teams);
 
-        TextButton continueButton = new TextButton("Continue", AssetLoader.gameSkin);
+        TextButton continueButton = new TextButton("Continue", AssetLoader.getGameSkin());
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
