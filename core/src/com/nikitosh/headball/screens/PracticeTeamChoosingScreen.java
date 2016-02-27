@@ -19,7 +19,7 @@ public class PracticeTeamChoosingScreen extends BackgroundStageAbstractScreen {
 
     public PracticeTeamChoosingScreen() {
         TeamReader reader = TeamReader.getTeamReader();
-        Array<Team> teams = new Array();
+        Array<Team> teams = new Array<>();
         for (int i = 0; i < reader.getTeamsNumber(); i++) {
             teams.add(reader.getTeam(i));
         }

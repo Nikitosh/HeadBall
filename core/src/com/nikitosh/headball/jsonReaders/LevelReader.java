@@ -34,8 +34,8 @@ public final class LevelReader {
     private static Array<Float> parseFloatArray(JSONObject level, String key) {
         JSONArray jsonArray = (JSONArray) level.get(key);
         Array<Float> array = new Array<>();
-        for (int i = 0; i < jsonArray.size(); i++) {
-            array.add(((Long) jsonArray.get(i)).floatValue());
+        for (Object object : jsonArray) {
+            array.add(((Long) object).floatValue());
         }
         return array;
     }
@@ -43,8 +43,8 @@ public final class LevelReader {
     private static Array<Boolean> parseBooleanArray(JSONObject level, String key) {
         JSONArray jsonArray = (JSONArray) level.get(key);
         Array<Boolean> array = new Array<>();
-        for (int i = 0; i < jsonArray.size(); i++) {
-            array.add((Boolean) jsonArray.get(i));
+        for (Object object : jsonArray) {
+            array.add((Boolean) object);
         }
         return array;
     }

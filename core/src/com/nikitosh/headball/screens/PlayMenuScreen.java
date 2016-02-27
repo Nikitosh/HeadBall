@@ -12,8 +12,6 @@ public class PlayMenuScreen extends BackgroundStageAbstractScreen {
     private static final String PRACTICE = "Practice";
     private static final String TOURNAMENT = "Tournament";
     private static final String MULTIPLAYER = "Multiplayer";
-    private static final boolean IS_PRACTICE = true;
-    private static final boolean IS_DRAW_POSSIBLE = true;
 
     public PlayMenuScreen() {
         Button practiceTextButton = new TextButton(PRACTICE, AssetLoader.getGameSkin());

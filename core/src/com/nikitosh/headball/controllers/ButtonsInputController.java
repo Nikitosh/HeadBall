@@ -9,7 +9,6 @@ import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
 public class ButtonsInputController implements InputController {
-
     private static final String[] BUTTONS_NAMES = {"Hit", "Jump", "Left", "Right"};
 
     private Table uiTable = new Table();

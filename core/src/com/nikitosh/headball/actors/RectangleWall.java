@@ -11,6 +11,7 @@ public class RectangleWall extends Wall {
     private static final float RECTANGLE_WALL_DENSITY = 1f;
     private static final float RECTANGLE_WALL_FRICTION = 1f;
     private static final float RECTANGLE_WALL_RESTITUTION = 0f;
+
     private float width;
     private float height;
 

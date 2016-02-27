@@ -6,6 +6,7 @@ import com.nikitosh.headball.Team;
 import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.tournaments.TournamentDeserializer;
+import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.utils.Pair;
 import com.nikitosh.headball.widgets.BackButtonTable;
 import com.nikitosh.headball.jsonReaders.TournamentReader;
@@ -24,8 +25,8 @@ public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
             @Override
             public void run() {
                 if (Gdx.files.local(
-                        "tournaments/saves/" + choosingTable.getSelectedTournament().getName() + ".json")
-                        .exists()) {
+                        Constants.TOURNAMENTS_SAVES_PATH + choosingTable.getSelectedTournament().getName()
+                                + Constants.JSON).exists()) {
                     Pair<Tournament, Team> tournamentInfo =
                             TournamentDeserializer.deserialize(choosingTable.getSelectedTournament().getClass(),
                             choosingTable.getSelectedTournament().getName());

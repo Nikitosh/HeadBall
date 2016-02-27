@@ -9,6 +9,7 @@ public final class Constants {
     public static final int UI_ELEMENTS_INDENT = 10;
 
     public static final int GAME_DURATION = 100;
+    public static final int FPS = 60;
     public static final float SPLASH_DURATION = 1;
     public static final int PLAYERS_NUMBER = 2;
 
@@ -29,6 +30,8 @@ public final class Constants {
     public static final String SETTINGS_CONTROL_BUTTONS = "Buttons";
     public static final String SETTINGS_CONTROL_TOUCHPAD = "Touchpad";
     public static final String SETTINGS_CONTROL_KEYBOARD = "Keyboard";
+    public static final String TOURNAMENTS_SAVES_PATH = "tournaments/saves/";
+    public static final String JSON = ".json";
 
     public static final int HIT = 0;
     public static final int JUMP = 1;

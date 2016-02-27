@@ -36,6 +36,7 @@ public class GameWorld {
     private boolean isEnded = false;
     private boolean isDrawResultPossible = true;
     private float gameDuration = 0;
+    private float accumulator = 0;
 
     public GameWorld() {
         box2dWorld = new World(new Vector2(GRAVITY_X, GRAVITY_Y), TO_SLEEP);
@@ -95,7 +96,16 @@ public class GameWorld {
 
     public void update(float delta, Move firstMove, Move secondMove) {
         isGoal = false;
-        box2dWorld.step(BOX2D_DELTA_TIME, BOX2D_VELOCITY_ITERATIONS, BOX2D_POSITION_ITERATIONS);
+        gameDuration += delta;
+        if (gameDuration > Constants.GAME_DURATION && (isDrawResultPossible || score[0] != score[1])) {
+            isEnded = true;
+        }
+
+        accumulator += delta;
+        while (accumulator >= BOX2D_DELTA_TIME) {
+            box2dWorld.step(BOX2D_DELTA_TIME, BOX2D_VELOCITY_ITERATIONS, BOX2D_POSITION_ITERATIONS);
+            accumulator -= BOX2D_DELTA_TIME;
+        }
         footballers[0].update(firstMove);
         footballers[1].update(secondMove);
 
@@ -106,13 +116,6 @@ public class GameWorld {
                 startNewRound();
             }
         }
-
-        gameDuration += delta;
-
-        if (gameDuration > Constants.GAME_DURATION && (isDrawResultPossible || score[0] != score[1])) {
-            isEnded = true;
-        }
-
     }
 
     public boolean isGoal() {

@@ -9,8 +9,7 @@ public final class ScreenManager {
     private Array<Screen> screens = new Array<>();
     private Game game;
 
-    private ScreenManager() {
-    }
+    private ScreenManager() {}
 
     public static ScreenManager getInstance() {
         if (screenManager == null) {

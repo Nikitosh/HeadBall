@@ -6,10 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.nikitosh.headball.Move;
 
 public class KeyboardInputController implements InputController{
+    private static final int[] KEYS = {Input.Keys.SPACE, Input.Keys.UP, Input.Keys.LEFT, Input.Keys.RIGHT};
+
     private Table infoTable;
     private Move move = new Move();
-
-    private static final int[] KEYS = {Input.Keys.SPACE, Input.Keys.UP, Input.Keys.LEFT, Input.Keys.RIGHT};
 
     public KeyboardInputController(Table infoTable) {
         this.infoTable = infoTable;

@@ -2,6 +2,7 @@ package com.nikitosh.headball.screens;
 
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.players.AIPlayer;
+import com.nikitosh.headball.utils.Constants;
 
 public class SinglePlayerScreen extends GameScreen {
 
@@ -19,6 +20,7 @@ public class SinglePlayerScreen extends GameScreen {
 
     @Override
     public void render(float delta) {
+        delta = getDelta(Constants.FPS);
         if (gameState == GameState.GAME_RUNNING) {
             gameWorld.update(delta, players[0].getMove(), players[1].getMove());
         }

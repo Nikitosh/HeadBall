@@ -19,7 +19,7 @@ public class Goals extends Actor {
     private float width;
     private float goalsHeight;
     private float crossbarHeight;
-    private boolean isLeftSided;
+    private boolean isLeftSided; //are the goals left-sided or not
 
     private Box2DSprite goalsSprite;
 

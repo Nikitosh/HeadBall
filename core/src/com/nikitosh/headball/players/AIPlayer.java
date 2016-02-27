@@ -40,7 +40,9 @@ public class AIPlayer implements Player {
             myPositionX = footballers[footballerNumber].getPosition().x;
         }
 
-        if ((ballPositionX - myPositionX > JUMP_RADIUS * 3f && ballPositionX > 6 * JUMP_RADIUS && myPositionX > 2 * JUMP_RADIUS) || ballPositionY < myPositionY - footballers[footballerNumber].getRadius()) {
+        if ((ballPositionX - myPositionX > JUMP_RADIUS * 3f && ballPositionX > 4 * JUMP_RADIUS
+                && myPositionX > 2 * JUMP_RADIUS)
+                || ballPositionY < myPositionY - footballers[footballerNumber].getRadius()) {
             move.setState(Constants.LEFT, true);
         } else {
             if (ballPositionX < myPositionX - footballers[footballerNumber].getRadius()) {
@@ -55,10 +57,11 @@ public class AIPlayer implements Player {
                         && ballPositionX - myPositionX < HIT_RADIUS) {
                     move.setState(Constants.HIT, true);
                     move.setState(Constants.RIGHT, true);
-                } else if (Math.abs(ballPositionX - myPositionX) < JUMP_RADIUS / 3 && ballPositionY > myPositionY) {
+                } else if (Math.abs(ballPositionX - myPositionX) < JUMP_RADIUS / 3
+                        && ballPositionY > myPositionY) {
                     move.setState(Constants.JUMP, true);
                     move.setState(Constants.LEFT, true);
-                } else if (Math.abs(ballPositionX - myPositionX) < JUMP_RADIUS  && ballPositionY > myPositionY) {
+                } else if (Math.abs(ballPositionX - myPositionX) < JUMP_RADIUS && ballPositionY > myPositionY) {
                     move.setState(Constants.JUMP, true);
                     move.setState(Constants.RIGHT, true);
                 } else {

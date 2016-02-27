@@ -24,8 +24,8 @@ public class SplashScreen extends StageAbstractScreen {
 
     @Override
     public void show() {
-        AssetLoader.load();
-    }//?
+        AssetLoader.load(); //load resources for game
+    }
 
     @Override
     public void render(float delta) {

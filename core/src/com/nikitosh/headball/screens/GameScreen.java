@@ -21,6 +21,7 @@ import com.nikitosh.headball.utils.GameSettings;
 public abstract class GameScreen extends StageAbstractScreen {
     private static final String PAUSE = "Pause";
     private static final String SCORE_SEPARATOR = " : ";
+    private static final int MILLISECONDS = 1000;
 
     protected GameWorld gameWorld;
     protected Player[] players;
@@ -40,6 +41,8 @@ public abstract class GameScreen extends StageAbstractScreen {
     protected Image darkBackground;
 
     protected int playerNumber;
+
+    private long startTime = System.currentTimeMillis();
 
     public GameScreen(MatchInfo matchInfo) {
         gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber());
@@ -193,5 +196,21 @@ public abstract class GameScreen extends StageAbstractScreen {
         scoreLabel.setText(Integer.toString(score[0]) + SCORE_SEPARATOR + Integer.toString(score[1]));
         timerLabel.setText(String.format("%02d",
                 Math.max(0, Constants.GAME_DURATION - (int) gameWorld.getGameDuration())));
+    }
+
+    public float getDelta(int fps) {
+        long diff = System.currentTimeMillis() - startTime;
+        long targetDelay = MILLISECONDS / fps;
+        if (diff < targetDelay) {
+            try {
+                Thread.sleep(targetDelay - diff);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        long currentTime = System.currentTimeMillis();
+        float delta = (currentTime - startTime) / (float) MILLISECONDS;
+        startTime = currentTime;
+        return delta;
     }
 }

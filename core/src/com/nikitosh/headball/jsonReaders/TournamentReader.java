@@ -12,10 +12,6 @@ import org.json.simple.JSONObject;
 public final class TournamentReader {
     private static final String TOURNAMENTS_PATH = "info/tournaments.json";
 
-    private static final String LOG_TAG = "TournamentReader";
-    private static final String LOADING_EXCEPTION = "Unable to load tournaments list";
-    private static final String JSON_EXCEPTION = "Wrong JSON file format";
-
     private static final String JSON_TOURNAMENTS_KEY = "tournaments";
     private static final String JSON_TYPE_KEY = "type";
     private static final String JSON_NAME_KEY = "name";

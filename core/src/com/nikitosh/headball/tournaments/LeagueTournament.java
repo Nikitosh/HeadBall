@@ -22,8 +22,7 @@ public class LeagueTournament implements Tournament {
     private StatisticsTable resultTable;
     private LeagueTournamentStatisticsTable leagueTournamentStatisticsTable;
 
-    public LeagueTournament() {
-    }
+    public LeagueTournament() {}
 
     public LeagueTournament(String name, String iconName, Array<Team> teams, int lapNumber) {
         this.lapNumber = lapNumber;

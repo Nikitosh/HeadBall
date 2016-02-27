@@ -3,6 +3,7 @@ package com.nikitosh.headball.screens;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.Move;
 import com.nikitosh.headball.players.RemoteHumanPlayer;
+import com.nikitosh.headball.utils.Constants;
 
 import java.io.*;
 
@@ -26,6 +27,7 @@ public class MultiPlayerScreen extends GameScreen {
 
     @Override
     public void render(float delta) {
+        delta = getDelta(Constants.FPS);
         Move playerMove = players[playerNumber].getMove();
         playerMove.serialize(out);
         try {
