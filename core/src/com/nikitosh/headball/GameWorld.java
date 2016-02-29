@@ -12,7 +12,7 @@ import com.nikitosh.headball.utils.Constants;
 public class GameWorld {
     private static final float GRAVITY_X = 0;
     private static final float GRAVITY_Y = -300f * Constants.WORLD_TO_BOX;
-    private static final boolean TO_SLEEP = true; //improve perfomance for box2D World
+    private static final boolean TO_SLEEP = true; //improve performance for box2D World
     private static final float BOX2D_DELTA_TIME = 1 / 60f;
     private static final int BOX2D_VELOCITY_ITERATIONS = 6;
     private static final int BOX2D_POSITION_ITERATIONS = 2;

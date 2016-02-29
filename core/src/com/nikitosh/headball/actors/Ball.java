@@ -11,8 +11,8 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 public class Ball extends Actor {
     private static final float BALL_DENSITY = 1f;
-    private static final float BALL_FRICTION = 0.1f;
-    private static final float BALL_RESTITUTION = 0.6f;
+    private static final float BALL_FRICTION = 0.5f;
+    private static final float BALL_RESTITUTION = 0.5f;
 
     private float radius;
     private Body body;
@@ -24,7 +24,8 @@ public class Ball extends Actor {
                 x * Constants.WORLD_TO_BOX, y * Constants.WORLD_TO_BOX, radius * Constants.WORLD_TO_BOX,
                 BALL_DENSITY, BALL_FRICTION, BALL_RESTITUTION,
                 Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
-
+        body.setAngularDamping(2f);
+        body.setSleepingAllowed(false);
         ballSprite = new Box2DSprite(AssetLoader.getBallTexture());
     }
 

@@ -1,29 +1,37 @@
 package com.nikitosh.headball;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
+
 import java.net.*;
 import java.io.*;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class Server {
     private Server() {}
 
-    private static final int PORT = 2345;
+    private static final int PORT = 12345;
+    private static final String LOG_TAG = "MultiPlayerScreen";
 
     public static void main(String[] args) {
 
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
-            System.err.println("Waiting for clients");
+            Gdx.app.log(LOG_TAG, "Waiting for clients");
 
             while (true) {
                 Socket socketFirst = serverSocket.accept();
-                (new DataOutputStream(socketFirst.getOutputStream())).writeByte(0);
                 Socket socketSecond = serverSocket.accept();
+                (new DataOutputStream(socketFirst.getOutputStream())).writeByte(0);
                 (new DataOutputStream(socketSecond.getOutputStream())).writeByte(1);
-                System.err.println("Got two clients");
+                Gdx.app.log(LOG_TAG, "Got two clients");
                 new Thread(new GameConnection(socketFirst, socketSecond)).start();
             }
-        } catch (Exception x) {
-            x.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -54,8 +62,10 @@ public final class Server {
         public void run() {
             try {
                 while (true) {
-                    redirectInputOutputFlows(inFirst, outSecond);
-                    redirectInputOutputFlows(inSecond, outFirst);
+                    if (inFirst.available() > 0 && inSecond.available() > 0) {
+                        redirectInputOutputFlows(inFirst, outSecond);
+                        redirectInputOutputFlows(inSecond, outFirst);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();

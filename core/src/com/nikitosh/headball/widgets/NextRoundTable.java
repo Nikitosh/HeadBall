@@ -33,7 +33,7 @@ public class NextRoundTable extends AbstractResultTable {
     }
 
     public void update(Array<Integer> nextRoundTimeTable, Array<Team> teams) {
-        for (int i = 0; i < teams.size / 2; i++) {
+        for (int i = 0; i < nextRoundTimeTable.size / 2; i++) {
             statisticsLabels.get(i).get(0).setText(teams.get(nextRoundTimeTable.get(i * 2)).getName());
             statisticsLabels.get(i).get(2).setText(teams.get(nextRoundTimeTable.get(i * 2 + 1)).getName());
         }

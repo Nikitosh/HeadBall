@@ -7,16 +7,16 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.utils.Constants;
 
-public class LeagueTournamentStatisticsTable extends Table implements ResultTable, Json.Serializable {
+public class TournamentTimetable extends Table implements ResultTable, Json.Serializable {
 
     private NextRoundTable nextRoundTable;
     private LastRoundTable lastRoundTable;
 
-    public LeagueTournamentStatisticsTable() {
+    public TournamentTimetable() {
 
     }
 
-    public LeagueTournamentStatisticsTable(NextRoundTable nextRoundTable, LastRoundTable lastRoundTable) {
+    public TournamentTimetable(NextRoundTable nextRoundTable, LastRoundTable lastRoundTable) {
         this.nextRoundTable = nextRoundTable;
         this.lastRoundTable = lastRoundTable;
 

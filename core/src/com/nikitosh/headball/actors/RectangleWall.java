@@ -9,7 +9,7 @@ import com.nikitosh.headball.utils.Utilities;
 
 public class RectangleWall extends Wall {
     private static final float RECTANGLE_WALL_DENSITY = 1f;
-    private static final float RECTANGLE_WALL_FRICTION = 1f;
+    private static final float RECTANGLE_WALL_FRICTION = 0.5f;
     private static final float RECTANGLE_WALL_RESTITUTION = 0f;
 
     private float width;

@@ -3,9 +3,7 @@ package com.nikitosh.headball.tournaments;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Match;
 import com.nikitosh.headball.Team;
-import com.nikitosh.headball.widgets.OlympicSystemTournamentWidget;
-import com.nikitosh.headball.widgets.ResultTable;
-import com.nikitosh.headball.widgets.StatisticsTable;
+import com.nikitosh.headball.widgets.*;
 
 import java.util.Random;
 
@@ -20,7 +18,8 @@ public class PlayOffTournament implements Tournament {
     private Array<Integer> nextRoundParticipants;
     private Array<Array<Integer>> tournamentBracket = new Array<>();
     private OlympicSystemTournamentWidget resultTable;
-    private StatisticsTable statisticsTable;
+    private TournamentTimetable statisticsTable;
+    private Array<Match> currentRoundMatches = new Array<>();
 
     public PlayOffTournament() {}
 
@@ -37,7 +36,9 @@ public class PlayOffTournament implements Tournament {
         }
         tournamentBracket.add(firstRound);
         resultTable = new OlympicSystemTournamentWidget(lapNumber, teams, tournamentBracket);
-        statisticsTable = new StatisticsTable(teams);
+        statisticsTable = new TournamentTimetable(
+                new NextRoundTable(firstRound, teams), new LastRoundTable(teams.size / 2));
+        statisticsTable.getLastRoundTable().setVisible(false);
     }
 
     private void generateTimetable() {
@@ -58,6 +59,7 @@ public class PlayOffTournament implements Tournament {
             int secondTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
             Match match = new Match(teams.get(firstTeamIndex), teams.get(secondTeamIndex),
                     firstTeamScore, secondTeamScore);
+            currentRoundMatches.add(match);
             MatchController.handle(match);
             nextRoundParticipants.set(i / 2, teams.indexOf(MatchController.getWinner(match), false));
         }
@@ -70,6 +72,7 @@ public class PlayOffTournament implements Tournament {
             if (teams.get(currentRoundParticipants.get(i)).equals(team)) {
                 Match match = new Match(teams.get(currentRoundParticipants.get(i)),
                         teams.get(currentRoundParticipants.get(i ^ 1)), playerScore, opponentScore);
+                currentRoundMatches.add(match);
                 MatchController.handle(match);
                 nextRoundParticipants.set(i / 2, teams.indexOf(MatchController.getWinner(match), false));
             }
@@ -78,6 +81,7 @@ public class PlayOffTournament implements Tournament {
 
     @Override
     public void startNewRound() {
+        currentRoundMatches.clear();
         nextRoundParticipants = new Array<>();
         for (int i = 0; i < tournamentBracket.peek().size / 2; i++) {
             nextRoundParticipants.add(null);
@@ -87,9 +91,15 @@ public class PlayOffTournament implements Tournament {
     @Override
     public void endCurrentRound() {
         tournamentBracket.add(nextRoundParticipants);
-        statisticsTable.update(teams);
         resultTable.update(teams, nextRoundParticipants);
+        statisticsTable.getLastRoundTable().update(currentRoundMatches);
+        statisticsTable.getLastRoundTable().setVisible(true);
         currentRound++;
+        if (currentRound == lapNumber - 1) {
+            statisticsTable.getNextRoundTable().setVisible(false);
+        } else {
+            statisticsTable.getNextRoundTable().update(nextRoundParticipants, teams);
+        }
     }
 
     @Override

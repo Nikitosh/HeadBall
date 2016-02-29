@@ -20,7 +20,7 @@ public class LeagueTournament implements Tournament {
     private HashSet<Integer> playedCurrentRoundTeams = new HashSet<>();
     private Array<Array<Integer>> timeTable = new Array<>();
     private StatisticsTable resultTable;
-    private LeagueTournamentStatisticsTable leagueTournamentStatisticsTable;
+    private TournamentTimetable statisticTimetable;
 
     public LeagueTournament() {}
 
@@ -32,9 +32,9 @@ public class LeagueTournament implements Tournament {
 
         generateTimetable();
         resultTable = new StatisticsTable(teams);
-        leagueTournamentStatisticsTable = new LeagueTournamentStatisticsTable(
+        statisticTimetable = new TournamentTimetable(
                 new NextRoundTable(timeTable.get(0), teams), new LastRoundTable(teams.size / 2));
-        leagueTournamentStatisticsTable.getLastRoundTable().setVisible(false);
+        statisticTimetable.getLastRoundTable().setVisible(false);
 
     }
 
@@ -96,13 +96,13 @@ public class LeagueTournament implements Tournament {
     @Override
     public void endCurrentRound() {
         resultTable.update(teams);
-        leagueTournamentStatisticsTable.getLastRoundTable().update(currentRoundMatches);
-        leagueTournamentStatisticsTable.getLastRoundTable().setVisible(true);
+        statisticTimetable.getLastRoundTable().update(currentRoundMatches);
+        statisticTimetable.getLastRoundTable().setVisible(true);
         currentRound++;
         if (currentRound == lapNumber) {
-            leagueTournamentStatisticsTable.getNextRoundTable().setVisible(false);
+            statisticTimetable.getNextRoundTable().setVisible(false);
         } else {
-            leagueTournamentStatisticsTable.getNextRoundTable().update(timeTable.get(currentRound), teams);
+            statisticTimetable.getNextRoundTable().update(timeTable.get(currentRound), teams);
         }
     }
 
@@ -130,7 +130,7 @@ public class LeagueTournament implements Tournament {
 
     @Override
     public ResultTable getStatisticsTable() {
-        return leagueTournamentStatisticsTable;
+        return statisticTimetable;
     }
 
     @Override

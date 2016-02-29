@@ -14,8 +14,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class MultiPlayerWaitingScreen extends StageAbstractScreen {
-    private static final int PORT = 2345;
-    private static final String SERVER_ADDRESS = "5.19.205.147";
+    private static final int PORT = 12345;
+    private static final String SERVER_ADDRESS = "";
     private static final String LOG_TAG = "MultiPlayerScreen";
 
     public MultiPlayerWaitingScreen() {
