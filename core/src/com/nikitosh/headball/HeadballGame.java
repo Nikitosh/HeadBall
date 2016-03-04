@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.nikitosh.headball.screens.SplashScreen;
 
 public class HeadballGame extends Game {
-    public static ActionResolver actionResolver;
+    private static ActionResolver actionResolver;
 
     public HeadballGame(ActionResolver actionResolver) {
         super();
@@ -16,5 +16,9 @@ public class HeadballGame extends Game {
         actionResolver.signIn();
         ScreenManager.getInstance().initialize(this);
         ScreenManager.getInstance().setScreen(new SplashScreen());
+    }
+
+    public static ActionResolver getActionResolver() {
+        return actionResolver;
     }
 }
