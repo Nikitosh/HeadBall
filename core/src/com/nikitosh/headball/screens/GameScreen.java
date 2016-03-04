@@ -1,5 +1,6 @@
 package com.nikitosh.headball.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -22,6 +23,8 @@ public abstract class GameScreen extends StageAbstractScreen {
     private static final String PAUSE = "Pause";
     private static final String SCORE_SEPARATOR = " : ";
     private static final int MILLISECONDS = 1000;
+
+    private static final String LOG_TAG = "GameScreen";
 
     protected GameWorld gameWorld;
     protected Player[] players;
@@ -205,7 +208,7 @@ public abstract class GameScreen extends StageAbstractScreen {
             try {
                 Thread.sleep(targetDelay - diff);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Gdx.app.error(LOG_TAG, "", e);
             }
         }
         long currentTime = System.currentTimeMillis();

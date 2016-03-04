@@ -12,12 +12,22 @@ import com.nikitosh.headball.widgets.BackButtonTable;
 import com.nikitosh.headball.jsonReaders.TournamentReader;
 import com.nikitosh.headball.widgets.TournamentChoosingTable;
 
+import java.util.NoSuchElementException;
+
 public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
+
+    private static final String LOG_TAG = "TournamentChoosingScreen";
+    private static final String GET_TOURNAMENT_BY_INDEX_ERROR_MESSAGE = "Can't get tournament with index:";
+
     public TournamentChoosingScreen() {
         TournamentReader reader = TournamentReader.getTournamentReader();
         Array<Tournament> tournaments = new Array<>();
         for (int i = 0; i < reader.getTournamentsNumber(); i++) {
-            tournaments.add(reader.getTournament(i));
+            try {
+                tournaments.add(reader.getTournament(i));
+            } catch (NoSuchElementException e) {
+                Gdx.app.error(LOG_TAG, GET_TOURNAMENT_BY_INDEX_ERROR_MESSAGE + i, e);
+            }
         }
 
         final TournamentChoosingTable choosingTable = new TournamentChoosingTable(tournaments);

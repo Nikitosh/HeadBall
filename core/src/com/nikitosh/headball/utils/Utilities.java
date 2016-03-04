@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 public final class Utilities {
+
+    private static final String LOG_TAG = "Utilities";
+
     private Utilities() {}
 
     public static String readFile(String path, Charset encoding) throws IOException
@@ -21,7 +24,7 @@ public final class Utilities {
         try {
             content = Utilities.readFile(path, Charset.defaultCharset());
         } catch (Exception e) {
-            e.printStackTrace();
+            Gdx.app.error(LOG_TAG, "", e);
         }
 
         JSONParser parser = new JSONParser();
@@ -29,7 +32,7 @@ public final class Utilities {
         try {
             jsonObject = (JSONObject) parser.parse(content);
         }   catch (Exception e) {
-            e.printStackTrace();
+            Gdx.app.error(LOG_TAG, "", e);
         }
         return jsonObject;
     }

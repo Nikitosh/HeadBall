@@ -5,6 +5,8 @@ import com.nikitosh.headball.utils.Utilities;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.NoSuchElementException;
+
 public final class TeamReader {
     private static final String TEAMS_PATH = "info/teams.json";
 
@@ -37,12 +39,13 @@ public final class TeamReader {
                 return getTeam(i);
             }
         }
-        assert (false);
-        return null;
+        throw new NoSuchElementException();
     }
 
     public JSONObject getJSONTeam(int index) {
-        assert (index >= 0 && index < teams.size());
+        if (index < 0 || index >= teams.size()) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
         return (JSONObject) teams.get(index);
     }
 

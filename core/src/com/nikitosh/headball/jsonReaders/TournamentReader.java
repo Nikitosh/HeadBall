@@ -1,5 +1,6 @@
 package com.nikitosh.headball.jsonReaders;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.tournaments.LeagueTournament;
@@ -8,6 +9,8 @@ import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.utils.Utilities;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import java.util.NoSuchElementException;
 
 public final class TournamentReader {
     private static final String TOURNAMENTS_PATH = "info/tournaments.json";
@@ -20,6 +23,9 @@ public final class TournamentReader {
     private static final String JSON_PARTICIPANTS_KEY = "participants";
     private static final String JSON_LEAGUE_KEY = "league";
     private static final String JSON_PLAYOFF_KEY = "playoff";
+
+    private static final String LOG_TAG = "TournamentReader";
+    private static final String GET_TEAM_BY_NAME_ERROR_MESSAGE = "Can't get team with name: ";
 
     private static TournamentReader tournamentReader;
     private JSONArray tournaments;
@@ -44,7 +50,11 @@ public final class TournamentReader {
         Array<Team> teams = new Array<>();
         TeamReader teamsReader = TeamReader.getTeamReader();
         for (Object teamName : participants) {
-            teams.add(teamsReader.getTeam((String) teamName));
+            try {
+                teams.add(teamsReader.getTeam((String) teamName));
+            } catch (NoSuchElementException e) {
+                Gdx.app.error(LOG_TAG, GET_TEAM_BY_NAME_ERROR_MESSAGE + teamName, e);
+            }
         }
 
         if (tournament.get(JSON_TYPE_KEY).equals(JSON_LEAGUE_KEY)) {
@@ -53,8 +63,7 @@ public final class TournamentReader {
         if (tournament.get(JSON_TYPE_KEY).equals(JSON_PLAYOFF_KEY)) {
             return new PlayOffTournament(name, iconName, teams, lapNumber);
         }
-        assert (false);
-        return null;
+        throw new NoSuchElementException();
     }
 
     public Tournament getTournament(String name) {
@@ -63,8 +72,7 @@ public final class TournamentReader {
                 return getTournament(i);
             }
         }
-        assert (false);
-        return null;
+        throw new NoSuchElementException();
     }
 
     public String getTournamentName(int index) {
@@ -76,7 +84,9 @@ public final class TournamentReader {
     }
 
     private JSONObject getJSONTournament(int index) {
-        assert (index >= 0 && index < tournaments.size());
+        if (index < 0 || index > tournaments.size()) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
         return (JSONObject) tournaments.get(index);
     }
 }

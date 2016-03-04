@@ -6,6 +6,7 @@ import com.nikitosh.headball.Team;
 import com.nikitosh.headball.widgets.*;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 public class LeagueTournament implements Tournament {
@@ -114,8 +115,7 @@ public class LeagueTournament implements Tournament {
                 return teams.get(currentRoundParticipants.get(i ^ 1));
             }
         }
-        assert (false);
-        return null;
+        throw new NoSuchElementException();
     }
 
     @Override

@@ -1,10 +1,17 @@
 package com.nikitosh.headball;
 
+import com.badlogic.gdx.Gdx;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
+
 
 public class Move {
     private static final int STATE_NUMBER = 4;
+    private static final String LOG_TAG = "Move";
+    private static final String MOVE_SERIALIZE_ERROR_MESSAGE = "Serialization failed!";
+    private static final String MOVE_DESERIALIZE_ERROR_MESSAGE = "Deserialization failed!";
 
     private boolean[] footballerState = new boolean[STATE_NUMBER];
 
@@ -39,8 +46,8 @@ public class Move {
                 }
             }
             outputStream.writeByte(message);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            Gdx.app.error(LOG_TAG, MOVE_SERIALIZE_ERROR_MESSAGE, e);
         }
     }
 
@@ -55,8 +62,8 @@ public class Move {
                 message /= 2;
             }
             return move;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            Gdx.app.error(LOG_TAG, MOVE_DESERIALIZE_ERROR_MESSAGE, e);
         }
         return null;
     }

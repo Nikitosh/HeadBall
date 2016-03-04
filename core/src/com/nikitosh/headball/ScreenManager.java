@@ -1,6 +1,7 @@
 package com.nikitosh.headball;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Array;
 
@@ -8,6 +9,10 @@ public final class ScreenManager {
     private static ScreenManager screenManager;
     private Array<Screen> screens = new Array<>();
     private Game game;
+
+    private static final String LOG_TAG = "ScreenManager";
+    private static final String
+            DISPOSE_CURRENT_SCREEN_ERROR_MESSAGE = "Not enough screens for disposing. Method ignored";
 
     private ScreenManager() {}
 
@@ -34,7 +39,10 @@ public final class ScreenManager {
     }
 
     public void disposeCurrentScreen() {
-        assert (screens.size > 1);
+        if (screens.size < 2) {
+            Gdx.app.log(LOG_TAG, DISPOSE_CURRENT_SCREEN_ERROR_MESSAGE);
+            return;
+        }
         screens.pop().dispose();
         game.setScreen(screens.peek());
     }

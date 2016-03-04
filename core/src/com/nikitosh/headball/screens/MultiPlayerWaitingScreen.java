@@ -16,7 +16,9 @@ import java.net.Socket;
 public class MultiPlayerWaitingScreen extends StageAbstractScreen {
     private static final int PORT = 12345;
     private static final String SERVER_ADDRESS = "";
-    private static final String LOG_TAG = "MultiPlayerScreen";
+
+    private static final String LOG_TAG = "MultiPlayerWaitingScreen";
+    private static final String CONNECTION_ERROR_MESSAGE = "Connection failed!";
 
     public MultiPlayerWaitingScreen() {
         stack.addActor(new Image(AssetLoader.getDarkBackgroundTexture()));
@@ -49,7 +51,7 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
                             new MatchInfo(new Team("", ""), new Team("", ""), false, false),
                             playerNumber, in, out));
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Gdx.app.error(LOG_TAG, CONNECTION_ERROR_MESSAGE, e);
                 }
             }
         });

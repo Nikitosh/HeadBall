@@ -13,7 +13,13 @@ import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.widgets.BackButtonTable;
 
+import java.util.NoSuchElementException;
+
 public class TournamentScreen extends BackgroundStageAbstractScreen {
+
+    private static final String LOG_TAG = "TournamentScreen";
+    private static final String GET_NEXT_OPPONENT_ERROR_MESSAGE = "No next opponent for team: ";
+
     private static final String[] TOURNAMENT_ENDED_TITLES = {
             "You lose :(",
             "You win! Congratulations!"
@@ -33,7 +39,13 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
                 if (tournament.isEnded(playerTeam)) {
                     return;
                 }
-                Team opponentTeam = tournament.getNextOpponent(playerTeam);
+                Team opponentTeam;
+                try {
+                    opponentTeam = tournament.getNextOpponent(playerTeam);
+                } catch (NoSuchElementException e) {
+                    Gdx.app.error(LOG_TAG, GET_NEXT_OPPONENT_ERROR_MESSAGE + playerTeam.getName(), e);
+                    return;
+                }
                 final GameScreen gameScreen = new SinglePlayerScreen(
                         new MatchInfo(playerTeam, opponentTeam, tournament.isDrawResultPossible(), IS_PRACTICE));
                 ScreenManager.getInstance().setScreen(gameScreen);
@@ -46,7 +58,7 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
                                 try {
                                     gameScreen.wait();
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    Gdx.app.error(LOG_TAG, "", e);
                                 }
                             }
                             handleMatchEnd(playerTeam, gameScreen.getScore());

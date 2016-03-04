@@ -9,24 +9,28 @@ public final class Server {
 
     private static final int PORT = 12345;
     private static final String LOG_TAG = "MultiPlayerScreen";
+    private static final String SERVER_WAITING_CLIENTS_MESSAGE = "Waiting for clients";
+    private static final String CLIENTS_CONNECT_TO_SERVER_MESSAGE = "Got two clients";
+    private static final String SERVER_START_ERROR_MESSAGE = "Starting server failed!";
+    private static final String IOFLOWS_REDIRECT_ERROR_MESSAGE = "IOFlows redirection failed";
 
     public static void main(String[] args) {
 
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
-            Gdx.app.log(LOG_TAG, "Waiting for clients");
+            Gdx.app.log(LOG_TAG, SERVER_WAITING_CLIENTS_MESSAGE);
 
             while (true) {
                 Socket socketFirst = serverSocket.accept();
                 Socket socketSecond = serverSocket.accept();
                 (new DataOutputStream(socketFirst.getOutputStream())).writeByte(0);
                 (new DataOutputStream(socketSecond.getOutputStream())).writeByte(1);
-                Gdx.app.log(LOG_TAG, "Got two clients");
+                Gdx.app.log(LOG_TAG, CLIENTS_CONNECT_TO_SERVER_MESSAGE);
                 new Thread(new GameConnection(socketFirst, socketSecond)).start();
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Gdx.app.log(LOG_TAG, SERVER_START_ERROR_MESSAGE, e);
         }
     }
 
@@ -63,7 +67,7 @@ public final class Server {
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                Gdx.app.error(LOG_TAG, IOFLOWS_REDIRECT_ERROR_MESSAGE, e);
             }
         }
 

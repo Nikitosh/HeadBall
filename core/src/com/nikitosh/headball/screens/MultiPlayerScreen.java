@@ -1,5 +1,6 @@
 package com.nikitosh.headball.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.Move;
 import com.nikitosh.headball.players.RemoteHumanPlayer;
@@ -10,6 +11,8 @@ import java.io.*;
 public class MultiPlayerScreen extends GameScreen {
     private DataInputStream in;
     private DataOutputStream out;
+
+    private static final String LOG_TAG = "MultiPlayerScreen";
 
     public MultiPlayerScreen(MatchInfo matchInfo, int playerNumber, DataInputStream in, DataOutputStream out) {
         super(matchInfo);
@@ -32,8 +35,8 @@ public class MultiPlayerScreen extends GameScreen {
         playerMove.serialize(out);
         try {
             out.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            Gdx.app.error(LOG_TAG, "", e);
         }
         if (gameState == GameState.GAME_RUNNING) {
             if (playerNumber == 0) {

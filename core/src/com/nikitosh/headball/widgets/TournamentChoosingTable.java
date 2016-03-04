@@ -1,5 +1,6 @@
 package com.nikitosh.headball.widgets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -9,8 +10,13 @@ import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
+import java.util.NoSuchElementException;
+
 public class TournamentChoosingTable extends ChoosingTable {
     private Array<Tournament> tournaments;
+
+    private static final String LOG_TAG = "TournamentChoosingTable";
+    private static final String GET_TOURNAMENT_BY_NAME_ERROR_MESSAGE = "Can't get tournament with name: ";
 
     public TournamentChoosingTable(Array<Tournament> tournaments) {
         this.tournaments = tournaments;
@@ -31,7 +37,15 @@ public class TournamentChoosingTable extends ChoosingTable {
     }
 
     public Tournament getSelectedTournament() {
-        return TournamentReader.getTournamentReader()
+        Tournament tournament;
+        try {
+            tournament = TournamentReader.getTournamentReader()
                 .getTournament(tournaments.get(currentIndex).getName());
+        } catch (NoSuchElementException e) {
+            Gdx.app.error(LOG_TAG,
+                    GET_TOURNAMENT_BY_NAME_ERROR_MESSAGE + tournaments.get(currentIndex).getName(), e);
+            throw e;
+        }
+        return tournament;
     }
 }
