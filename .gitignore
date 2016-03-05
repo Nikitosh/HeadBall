@@ -13,5 +13,12 @@ hs_err_pid*
 
 
 /android/build/
+/android/libs/
+/android/android-release.apk
+/BaseGameUtils/build/
+/BaseGameUtils/src/main/gen/
+/desktop/build/
+/core/build/
 /.gradle
 /.build
+/build
