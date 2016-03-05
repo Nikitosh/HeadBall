@@ -16,6 +16,8 @@ public class Goals extends Actor {
 
     private Body body;
 
+    private float x;
+    private float y;
     private float width;
     private float goalsHeight;
     private float crossbarHeight;
@@ -29,6 +31,8 @@ public class Goals extends Actor {
         this.goalsHeight = goalsHeight;
         this.crossbarHeight = crossbarHeight;
         this.isLeftSided = isLeftSided;
+        this.x = x;
+        this.y = y;
 
         body = Utilities.getRectangularBody(world,
                 x * Constants.WORLD_TO_BOX, (y + goalsHeight) * Constants.WORLD_TO_BOX,
@@ -60,6 +64,22 @@ public class Goals extends Actor {
         } else {
             return point.x > body.getPosition().x - width / 2 * Constants.WORLD_TO_BOX
                     && point.y < body.getPosition().y;
+        }
+    }
+
+    public boolean containsOnUpperEdge(Vector2 point, float radius) {
+        point.x *= Constants.BOX_TO_WORLD;
+        point.y *= Constants.BOX_TO_WORLD;
+        radius *= Constants.BOX_TO_WORLD;
+        return Math.abs(point.y - (y + goalsHeight + crossbarHeight)) <= radius
+                && point.x >= x && point.x <= x + width;
+        }
+
+    public Vector2 getToFieldCenterVector() {
+        if (isLeftSided) {
+            return new Vector2(1, 0);
+        } else {
+            return new Vector2(-1, 0);
         }
     }
 }

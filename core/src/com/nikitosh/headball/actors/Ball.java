@@ -40,6 +40,18 @@ public class Ball extends Actor {
         return body.getPosition();
     }
 
+    public float getRadius() {
+        return radius;
+    }
+
+    public float getVelocity() {
+        return body.getLinearVelocity().len();
+    }
+
+    public void applyLinearImpulse(Vector2 impulse) {
+        body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+    }
+
     public void setInitialPosition(float positionX, float positionY) {
         body.setLinearVelocity(0, 0);
         body.setAngularVelocity(0);

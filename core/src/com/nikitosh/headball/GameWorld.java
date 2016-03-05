@@ -110,6 +110,12 @@ public class GameWorld {
         footballers[1].update(secondMove);
 
         for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
+            if (ball.getVelocity() == 0 && goals[i].containsOnUpperEdge(ball.getPosition(), ball.getRadius())) {
+                ball.applyLinearImpulse(goals[i].getToFieldCenterVector().scl(Constants.WORLD_TO_BOX));
+            }
+        }
+
+        for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
             if (goals[i].contains(ball.getPosition())) {
                 score[1 - i]++;
                 isGoal = true;

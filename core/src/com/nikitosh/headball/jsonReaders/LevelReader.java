@@ -1,6 +1,5 @@
 package com.nikitosh.headball.jsonReaders;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.GameWorld;
 import com.nikitosh.headball.utils.Utilities;
@@ -69,10 +68,8 @@ public final class LevelReader {
         float goalsHeight = ((Long) level.get(JSON_GOALS_HEIGHT_KEY)).floatValue();
         float crossbarHeight = ((Long) level.get(JSON_CROSSBAR_HEIGHT_KEY)).floatValue();
         JSONArray wallsArray = (JSONArray) level.get(JSON_WALLS_KEY);
-        Gdx.app.log("LevelLoader", Integer.toString(wallsArray.size()));
         Array<Array<Float>> walls = new Array<>();
         for (Object wall : wallsArray) {
-            Gdx.app.log("LevelLoader2", Integer.toString(((JSONArray) wall).size()));
             walls.add(parseFloatArray((JSONArray) wall));
         }
 
