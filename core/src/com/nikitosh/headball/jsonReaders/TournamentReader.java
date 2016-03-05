@@ -2,6 +2,7 @@ package com.nikitosh.headball.jsonReaders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.nikitosh.headball.HeadballGame;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.tournaments.LeagueTournament;
 import com.nikitosh.headball.tournaments.PlayOffTournament;
@@ -54,6 +55,7 @@ public final class TournamentReader {
                 teams.add(teamsReader.getTeam((String) teamName));
             } catch (NoSuchElementException e) {
                 Gdx.app.error(LOG_TAG, GET_TEAM_BY_NAME_ERROR_MESSAGE + teamName, e);
+                HeadballGame.getActionResolver().showToast(GET_TEAM_BY_NAME_ERROR_MESSAGE + teamName);
             }
         }
 
@@ -84,8 +86,8 @@ public final class TournamentReader {
     }
 
     private JSONObject getJSONTournament(int index) {
-        if (index < 0 || index > tournaments.size()) {
-            throw new ArrayIndexOutOfBoundsException();
+        if (index < 0 || index >= tournaments.size()) {
+            throw new NoSuchElementException();
         }
         return (JSONObject) tournaments.get(index);
     }

@@ -2,6 +2,7 @@ package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.nikitosh.headball.HeadballGame;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.tournaments.Tournament;
@@ -17,7 +18,7 @@ import java.util.NoSuchElementException;
 public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
 
     private static final String LOG_TAG = "TournamentChoosingScreen";
-    private static final String GET_TOURNAMENT_BY_INDEX_ERROR_MESSAGE = "Can't get tournament with index:";
+    private static final String GET_TOURNAMENT_BY_INDEX_ERROR_MESSAGE = "Can't get tournament with index: ";
 
     public TournamentChoosingScreen() {
         TournamentReader reader = TournamentReader.getTournamentReader();
@@ -27,6 +28,7 @@ public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
                 tournaments.add(reader.getTournament(i));
             } catch (NoSuchElementException e) {
                 Gdx.app.error(LOG_TAG, GET_TOURNAMENT_BY_INDEX_ERROR_MESSAGE + i, e);
+                HeadballGame.getActionResolver().showToast(GET_TOURNAMENT_BY_INDEX_ERROR_MESSAGE + i);
             }
         }
 

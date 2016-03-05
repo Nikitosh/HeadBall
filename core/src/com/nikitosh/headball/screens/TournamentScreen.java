@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.nikitosh.headball.HeadballGame;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.Team;
@@ -44,6 +45,8 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
                     opponentTeam = tournament.getNextOpponent(playerTeam);
                 } catch (NoSuchElementException e) {
                     Gdx.app.error(LOG_TAG, GET_NEXT_OPPONENT_ERROR_MESSAGE + playerTeam.getName(), e);
+                    HeadballGame.getActionResolver().showToast(GET_NEXT_OPPONENT_ERROR_MESSAGE
+                            + playerTeam.getName());
                     return;
                 }
                 final GameScreen gameScreen = new SinglePlayerScreen(
