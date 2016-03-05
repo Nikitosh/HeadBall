@@ -56,8 +56,12 @@ public class PlayOffTournament implements Tournament {
             }
             int firstTeamIndex = currentRoundParticipants.get(i);
             int secondTeamIndex = currentRoundParticipants.get(i + 1);
-            int firstTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
-            int secondTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
+            int firstTeamScore = 0;
+            int secondTeamScore = 0;
+            while (firstTeamScore == secondTeamScore) { //draw is forbidden for play-off tournaments
+                firstTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
+                secondTeamScore = random.nextInt(MAXIMUM_GOALS_NUMBER);
+            }
             Match match = new Match(teams.get(firstTeamIndex), teams.get(secondTeamIndex),
                     firstTeamScore, secondTeamScore);
             currentRoundMatches.add(match);
