@@ -1,5 +1,6 @@
 package com.nikitosh.headball.jsonReaders;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.GameWorld;
 import com.nikitosh.headball.utils.Utilities;
@@ -24,20 +25,20 @@ public final class LevelReader {
     private static final String JSON_GOALS_WIDTH_KEY = "goalsWidth";
     private static final String JSON_GOALS_HEIGHT_KEY = "goalsHeight";
     private static final String JSON_CROSSBAR_HEIGHT_KEY = "crossbarHeight";
-    private static final String JSON_WALLS_X_KEY = "wallsX";
-    private static final String JSON_WALLS_Y_KEY = "wallsY";
-    private static final String JSON_WALLS_WIDTH_KEY = "wallsWidth";
-    private static final String JSON_WALLS_HEIGHT_KEY = "wallsHeight";
+    private static final String JSON_WALLS_KEY = "walls";
 
     private LevelReader() {}
 
-    private static Array<Float> parseFloatArray(JSONObject level, String key) {
-        JSONArray jsonArray = (JSONArray) level.get(key);
+    private static Array<Float> parseFloatArray(JSONArray jsonArray) {
         Array<Float> array = new Array<>();
         for (Object object : jsonArray) {
             array.add(((Long) object).floatValue());
         }
         return array;
+    }
+
+    private static Array<Float> parseFloatArrayFromKey(JSONObject level, String key) {
+        return parseFloatArray((JSONArray) level.get(key));
     }
 
     private static Array<Boolean> parseBooleanArray(JSONObject level, String key) {
@@ -55,26 +56,29 @@ public final class LevelReader {
         float width = ((Long) level.get(JSON_WIDTH_KEY)).floatValue();
         float height = ((Long) level.get(JSON_HEIGHT_KEY)).floatValue();
         float footballerRadius = ((Long) level.get(JSON_FOOTBALLER_RADIUS_KEY)).floatValue();
-        Array<Float> footballerPositionX = parseFloatArray(level, JSON_FOOTBALLER_X_KEY);
-        Array<Float> footballerPositionY = parseFloatArray(level, JSON_FOOTBALLER_Y_KEY);
+        Array<Float> footballerPositionX = parseFloatArrayFromKey(level, JSON_FOOTBALLER_X_KEY);
+        Array<Float> footballerPositionY = parseFloatArrayFromKey(level, JSON_FOOTBALLER_Y_KEY);
         Array<Boolean> footballerLeft = parseBooleanArray(level, JSON_FOOTBALLER_LEFT_KEY);
         float ballRadius = ((Long) level.get(JSON_BALL_RADIUS_KEY)).floatValue();
         float ballPositionX = ((Long) level.get(JSON_BALL_X_KEY)).floatValue();
         float ballPositionY = ((Long) level.get(JSON_BALL_Y_KEY)).floatValue();
-        Array<Float> goalsPositionX = parseFloatArray(level, JSON_GOALS_X_KEY);
-        Array<Float> goalsPositionY = parseFloatArray(level, JSON_GOALS_Y_KEY);
+        Array<Float> goalsPositionX = parseFloatArrayFromKey(level, JSON_GOALS_X_KEY);
+        Array<Float> goalsPositionY = parseFloatArrayFromKey(level, JSON_GOALS_Y_KEY);
         Array<Boolean> goalsLeft = parseBooleanArray(level, JSON_GOALS_LEFT_KEY);
         float goalsWidth = ((Long) level.get(JSON_GOALS_WIDTH_KEY)).floatValue();
         float goalsHeight = ((Long) level.get(JSON_GOALS_HEIGHT_KEY)).floatValue();
         float crossbarHeight = ((Long) level.get(JSON_CROSSBAR_HEIGHT_KEY)).floatValue();
-        Array<Float> wallsPositionX = parseFloatArray(level, JSON_WALLS_X_KEY);
-        Array<Float> wallsPositionY = parseFloatArray(level, JSON_WALLS_Y_KEY);
-        Array<Float> wallsWidth = parseFloatArray(level, JSON_WALLS_WIDTH_KEY);
-        Array<Float> wallsHeight = parseFloatArray(level, JSON_WALLS_HEIGHT_KEY);
+        JSONArray wallsArray = (JSONArray) level.get(JSON_WALLS_KEY);
+        Gdx.app.log("LevelLoader", Integer.toString(wallsArray.size()));
+        Array<Array<Float>> walls = new Array<>();
+        for (Object wall : wallsArray) {
+            Gdx.app.log("LevelLoader2", Integer.toString(((JSONArray) wall).size()));
+            walls.add(parseFloatArray((JSONArray) wall));
+        }
 
         GameWorld gameWorld = new GameWorld();
         gameWorld.setSize(width, height);
-        gameWorld.createWalls(wallsPositionX, wallsPositionY, wallsWidth, wallsHeight);
+        gameWorld.createWalls(walls);
         gameWorld.createFootballers(footballerPositionX, footballerPositionY, footballerLeft, footballerRadius);
         gameWorld.createBall(ballPositionX, ballPositionY, ballRadius);
         gameWorld.createGoals(goalsPositionX, goalsPositionY, goalsWidth, goalsHeight, crossbarHeight, goalsLeft);

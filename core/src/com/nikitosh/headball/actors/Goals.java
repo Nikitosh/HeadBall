@@ -11,7 +11,7 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 public class Goals extends Actor {
     private static final float GOALS_DENSITY = 1f;
-    private static final float GOALS_FRICTION = 1f;
+    private static final float GOALS_FRICTION = 0f;
     private static final float GOALS_RESTITUTION = 0f;
 
     private Body body;

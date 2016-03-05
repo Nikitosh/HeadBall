@@ -171,12 +171,12 @@ public class GameWorld {
         }
     }
 
-    public void createWalls(Array<Float> initialPositionX, Array<Float> initialPositionY,
-                             Array<Float> initialWidth, Array<Float> initialHeight) {
-        for (int i = 0; i < initialPositionX.size; i++) {
-            walls.add(new RectangleWall(box2dWorld, initialPositionX.get(i), initialPositionY.get(i),
-                    initialWidth.get(i), initialHeight.get(i)));
-            group.addActor(walls.get(i));
+    public void createWalls(Array<Array<Float>> walls) {
+        for (Array<Float> wall : walls) {
+            Wall newWall = new RectangleWall(box2dWorld, wall.get(0), wall.get(1),
+                    wall.get(2) - wall.get(0), wall.get(3) - wall.get(1), wall.get(4) != 0);
+            this.walls.add(newWall);
+            group.addActor(newWall);
         }
     }
 

@@ -16,19 +16,20 @@
       "goalsWidth": 50,
       "goalsHeight": 90,
       "crossbarHeight": 10,
-      "wallsX": [0, 0, 790, 10],
-      "wallsY": [0, 10, 10, 370],
-      "wallsWidth": [800, 10, 10, 780],
-      "wallsHeight": [10, 370, 370, 10]
+      "walls": [
+        [0, 0, 800, 10, 1],
+        [0, 10, 10, 380, 0],
+        [790, 10, 800, 380, 0],
+        [10, 370, 790, 380, 1]]
     },
     {
       "width": 800,
       "height": 380,
       "footballerRadius": 20,
       "footballersX": [200, 600],
-      "footballersY": [30, 30],
+      "footballersY": [50, 50],
       "footballersLeft": [true, false],
-      "ballRadius": 10,
+      "ballRadius": 7,
       "ballX": 400,
       "ballY": 190,
       "goalsX": [10, 740],
@@ -37,10 +38,13 @@
       "goalsWidth": 50,
       "goalsHeight": 90,
       "crossbarHeight": 10,
-      "wallsX": [0, 0, 790, 10, 300, 350],
-      "wallsY": [0, 10, 10, 370, 10, 30],
-      "wallsWidth": [800, 10, 10, 780, 200, 100],
-      "wallsHeight": [10, 370, 370, 10, 20, 20]
+      "walls": [
+        [0, 0, 800, 10, 1],
+        [0, 10, 10, 380, 0],
+        [790, 10, 800, 380, 0],
+        [10, 370, 790, 380, 1],
+        [150, 20, 250, 30, 1],
+        [550, 20, 650, 30, 1]]
     }
  ]
 }
