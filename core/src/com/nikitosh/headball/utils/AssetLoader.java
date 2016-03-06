@@ -59,7 +59,7 @@ public final class AssetLoader {
 
         goalSound = Gdx.audio.newSound(Gdx.files.internal("sounds/goal.wav"));
 
-        legTexture = new Texture(Gdx.files.internal("images/splashScreen.jpg"));
+        legTexture = new Texture(Gdx.files.internal("images/leg.png"));
         ballTexture = new Texture(Gdx.files.internal("images/ball.png"));
         footballerTexture = new Texture(Gdx.files.internal("images/footballerHead.png"));
         reversedFootballerTexture = new Texture(Gdx.files.internal("images/reversedFootballerHead.png"));
@@ -69,14 +69,6 @@ public final class AssetLoader {
         fieldTexture = new Texture(Gdx.files.internal("images/fieldBackground.jpg"));
         backgroundTexture = new Texture(Gdx.files.internal("images/background.jpg"));
         darkBackgroundTexture = new Texture(Gdx.files.internal("images/darkBackground.png"));
-    }
-
-
-    public static void dispose() {
-    }
-
-    public static BitmapFont getFont() {
-        return font;
     }
 
     public static Skin getGameSkin() {

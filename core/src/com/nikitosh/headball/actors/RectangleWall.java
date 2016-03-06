@@ -22,7 +22,7 @@ public class RectangleWall extends Wall {
         this.width = width;
         this.height = height;
 
-        float friction = 0;
+        float friction;
         if (isHorizontal) {
             friction = RECTANGLE_WALL_HORIZONTAL_FRICTION;
         } else {

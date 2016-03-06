@@ -57,7 +57,7 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
                     @Override
                     public void run() {
                         synchronized (gameScreen) {
-                            while (!gameScreen.isGameFinished()) {
+                            while (gameScreen.isGameNotFinished()) {
                                 try {
                                     gameScreen.wait();
                                 } catch (Exception e) {

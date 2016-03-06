@@ -42,14 +42,14 @@ public final class TeamReader {
         throw new NoSuchElementException();
     }
 
-    public JSONObject getJSONTeam(int index) {
+    private JSONObject getJSONTeam(int index) {
         if (index < 0 || index >= teams.size()) {
-            throw new ArrayIndexOutOfBoundsException();
+            throw new NoSuchElementException();
         }
         return (JSONObject) teams.get(index);
     }
 
-    public String getTeamName(int index) {
+    private String getTeamName(int index) {
         return (String) (getJSONTeam(index)).get(JSON_NAME_KEY);
     }
 

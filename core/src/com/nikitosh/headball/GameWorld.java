@@ -58,7 +58,7 @@ public class GameWorld {
             private void handleFootballerWallCollision(Footballer footballer, RectangleWall wall) {
                 if (footballer.getBody().getPosition().y
                         >= wall.getBody().getPosition().y + footballer.getRadius()) {
-                    footballer.setInJump(false);
+                    footballer.resetInJump();
                 }
             }
 
@@ -132,7 +132,7 @@ public class GameWorld {
         return isEnded;
     }
 
-    public void startNewRound() {
+    private void startNewRound() {
         for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
             footballers[i].setInitialPosition(box2dWorld,
                     initialFootballerPositionX.get(i), initialFootballerPositionY.get(i));

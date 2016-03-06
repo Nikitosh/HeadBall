@@ -77,7 +77,7 @@ public final class TournamentReader {
         throw new NoSuchElementException();
     }
 
-    public String getTournamentName(int index) {
+    private String getTournamentName(int index) {
         return (String) (getJSONTournament(index)).get(JSON_NAME_KEY);
     }
 

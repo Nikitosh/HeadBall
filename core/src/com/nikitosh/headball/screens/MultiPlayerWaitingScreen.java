@@ -40,7 +40,7 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
                     DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                     byte s = in.readByte();
                     Gdx.app.log(LOG_TAG, Byte.toString(s));
-                    int playerNumber = 0;
+                    int playerNumber;
                     if (s == 0) {
                         playerNumber = 0;
                     } else {

@@ -29,9 +29,8 @@ public abstract class GameScreen extends StageAbstractScreen {
     protected GameWorld gameWorld;
     protected Player[] players;
 
-    protected Table mainTable = new Table();
-    protected Table pauseButtonTable;
-    protected InputController inputController;
+    private Table mainTable = new Table();
+    private InputController inputController;
 
     private Label scoreLabel;
     private Label timerLabel;
@@ -39,9 +38,9 @@ public abstract class GameScreen extends StageAbstractScreen {
     protected enum GameState {GAME_RUNNING, GAME_PAUSED, GAME_OVER}
     protected GameState gameState = GameState.GAME_RUNNING;
 
-    protected Window pauseScreen;
-    protected GameOverScreen gameOverScreen;
-    protected Image darkBackground;
+    private Window pauseScreen;
+    private GameOverScreen gameOverScreen;
+    private Image darkBackground;
 
     protected int playerNumber;
 
@@ -77,7 +76,7 @@ public abstract class GameScreen extends StageAbstractScreen {
             }
         });
 
-        pauseButtonTable = new Table();
+        Table pauseButtonTable = new Table();
         pauseButtonTable.setFillParent(true);
         pauseButtonTable.add(pauseButton).top().right().expand().pad(Constants.UI_ELEMENTS_INDENT).row();
 
@@ -143,7 +142,7 @@ public abstract class GameScreen extends StageAbstractScreen {
     }
 
 
-    public void finishGame() {
+    private void finishGame() {
         stage.addActor(darkBackground);
         stage.addActor(gameOverScreen);
         gameOverScreen.updateResult();
@@ -151,7 +150,7 @@ public abstract class GameScreen extends StageAbstractScreen {
 
     }
 
-    public void pauseGame() {
+    private void pauseGame() {
         stage.addActor(darkBackground);
         stage.addActor(pauseScreen);
         gameState = GameState.GAME_PAUSED;
@@ -186,8 +185,8 @@ public abstract class GameScreen extends StageAbstractScreen {
         return gameWorld.getScore();
     }
 
-    public boolean isGameFinished() {
-        return gameState == GameState.GAME_OVER;
+    public boolean isGameNotFinished() {
+        return gameState != GameState.GAME_OVER;
     }
 
     public int getPlayerNumber() {

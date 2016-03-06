@@ -6,16 +6,13 @@ import com.nikitosh.headball.HeadballGame;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-
 public final class Utilities {
     private static final String LOG_TAG = "Utilities";
     private static final String INCORRECT_RESOURCES_LOADING = "Resources haven't been loaded correctly";
 
     private Utilities() {}
 
-    public static String readFile(String path, Charset encoding) throws IOException
+    private static String readFile(String path)
     {
         return Gdx.files.internal(path).readString();
     }
@@ -23,7 +20,7 @@ public final class Utilities {
     public static JSONObject parseJSONFile(String path) {
         String content = null;
         try {
-            content = Utilities.readFile(path, Charset.defaultCharset());
+            content = Utilities.readFile(path);
         } catch (Exception e) {
             Gdx.app.error(LOG_TAG, INCORRECT_RESOURCES_LOADING, e);
             HeadballGame.getActionResolver().showToast(INCORRECT_RESOURCES_LOADING);

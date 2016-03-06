@@ -8,10 +8,10 @@ public class Team {
     private static Comparator<Team> comparator = new Comparator<Team>() {
         @Override
         public int compare(Team o1, Team o2) {
-            if (o1.getPoints() == o2.getPoints()) {
-                return o1.getWinNumber() < o2.getWinNumber() ? 1 : -1;
+            if (o1.points == o2.points) {
+                return o1.winNumber < o2.winNumber ? 1 : -1;
             }
-            return o1.getPoints() < o2.getPoints() ? 1 : -1;
+            return o1.points < o2.points ? 1 : -1;
         }
     };
 
@@ -36,10 +36,7 @@ public class Team {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Team)) {
-            return false;
-        }
-        return name.equals(((Team) obj).getName());
+        return obj instanceof Team && name.equals(((Team) obj).getName());
     }
 
     @Override
@@ -53,10 +50,6 @@ public class Team {
 
     public String getIconName() {
         return iconName;
-    }
-
-    public int getPoints() {
-        return points;
     }
 
     public void incrementWinNumber() {
@@ -79,10 +72,6 @@ public class Team {
 
     public void incrementGoalsAgainst(int goalsNumber) {
         goalsAgainst += goalsNumber;
-    }
-
-    public int getWinNumber() {
-        return winNumber;
     }
 
     public Array<Integer> getStatistics() {

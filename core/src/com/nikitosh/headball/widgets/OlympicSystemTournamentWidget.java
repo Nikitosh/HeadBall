@@ -78,7 +78,7 @@ public class OlympicSystemTournamentWidget extends WidgetGroup implements Result
         initialise();
     }
 
-    public void clearHighlighting() {
+    private void clearHighlighting() {
         for (int i = 0; i < labels.size; i++) {
             labels.get(i).setStyle(AssetLoader.getDefaultSkin().get(Label.LabelStyle.class));
         }

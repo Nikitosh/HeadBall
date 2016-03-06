@@ -27,4 +27,5 @@ It's available to play with three different controls:
 To build project run following commands:
 * ```git clone https://github.com/Nikitosh/HeadBall```
 * open (open, not import) it in IntelliJ IDEA
-* run configuration you need: ```android``` for Android version and ```DesktopLaucnher``` for PC version.
+* run configuration you need: ```android``` for Android version and ```DesktopLaucnher``` for PC version
+* for correct build of Android version you should have ```ANDROID_HOME``` variable with path to Android SDK in your environment variables

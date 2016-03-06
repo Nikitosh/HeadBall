@@ -43,7 +43,7 @@ public class StatisticsTable extends AbstractResultTable {
         row();
     }
 
-    public Array<Team> getSortedTeams(Array<Team> teams) {
+    private Array<Team> getSortedTeams(Array<Team> teams) {
         Array<Team> sortedTeams = new Array<>(teams);
         sortedTeams.sort(Team.getComparator());
         return sortedTeams;

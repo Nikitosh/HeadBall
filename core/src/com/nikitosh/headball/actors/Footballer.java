@@ -88,7 +88,7 @@ public class Footballer extends Actor {
         } else {
             bodySprite = new Box2DSprite(AssetLoader.getReversedFootballerTexture());
         }
-        legSprite = new Box2DSprite(AssetLoader.getFootballerTexture());
+        legSprite = new Box2DSprite(AssetLoader.getLegTexture());
     }
 
     public Vector2 getPosition() {
@@ -132,8 +132,8 @@ public class Footballer extends Actor {
                 LEG_WIDTH, LEG_HEIGHT, leg.getAngle());
     }
 
-    public void setInJump(boolean inJump) {
-        this.inJump = inJump;
+    public void resetInJump() {
+        this.inJump = false;
     }
 
     public Body getBody() {
