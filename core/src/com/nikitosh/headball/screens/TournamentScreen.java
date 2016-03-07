@@ -4,14 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.nikitosh.headball.HeadballGame;
-import com.nikitosh.headball.MatchInfo;
-import com.nikitosh.headball.ScreenManager;
-import com.nikitosh.headball.Team;
+import com.nikitosh.headball.*;
+import com.nikitosh.headball.gamecontrollers.GameController;
+import com.nikitosh.headball.gamecontrollers.SinglePlayerGameController;
 import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.tournaments.TournamentSerializer;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
+import com.nikitosh.headball.utils.ScreenManager;
 import com.nikitosh.headball.widgets.BackButtonTable;
 
 import java.util.NoSuchElementException;
@@ -49,22 +49,24 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
                             + playerTeam.getName());
                     return;
                 }
-                final GameScreen gameScreen = new SinglePlayerScreen(
+                final GameScreen gameScreen = new GameScreen();
+                final GameController gameController = new SinglePlayerGameController(gameScreen,
                         new MatchInfo(playerTeam, opponentTeam, tournament.isDrawResultPossible(), IS_PRACTICE));
                 ScreenManager.getInstance().setScreen(gameScreen);
 
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        synchronized (gameScreen) {
-                            while (gameScreen.isGameNotFinished()) {
+                        synchronized (gameController) {
+                            while (gameController.isGameNotFinished()) {
                                 try {
-                                    gameScreen.wait();
+                                    gameController.wait();
                                 } catch (Exception e) {
                                     Gdx.app.error(LOG_TAG, "", e);
                                 }
+
                             }
-                            handleMatchEnd(playerTeam, gameScreen.getScore());
+                            handleMatchEnd(playerTeam, gameController.getScore());
                         }
                     }
                 }).start();
@@ -94,6 +96,7 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
     }
 
     private void handleMatchEnd(Team playerTeam, int[] score) {
+        Gdx.app.log(Integer.toString(score[0]), Integer.toString(score[1]));
         tournament.startNewRound();
         tournament.handlePlayerMatch(playerTeam, score[0], score[1]);
         tournament.simulateNextRound();
@@ -105,7 +108,8 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
             exitButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    Gdx.files.local("tournaments/saves/" + tournament.getName() + ".json").delete();
+                    Gdx.files.local(Constants.TOURNAMENTS_SAVES_PATH + tournament.getName()
+                            + Constants.JSON).delete();
                     ScreenManager.getInstance().disposeCurrentScreen();
                 }
             });

@@ -1,31 +1,29 @@
-package com.nikitosh.headball.controllers;
+package com.nikitosh.headball.inputcontrollers;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.nikitosh.headball.Move;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
-public class TouchpadInputController implements InputController {
+public class TouchpadInputController extends InputController {
     private static final String HIT_BUTTON_NAME = "Hit";
     private static final float TOUCHPAD_KNOB = 0;
     private static final float TOUCHPAD_JUMP_LEVEL_PERCENTAGE = 0.5f;
 
-    private Table uiTable = new Table();
     private TextButton hitButton;
     private Touchpad touchpad;
 
     private Move move = new Move();
 
-    public TouchpadInputController(Table infoTable) {
-        hitButton = new TextButton(HIT_BUTTON_NAME, AssetLoader.getGameSkin());
+    public TouchpadInputController() {
+        super();
 
+        hitButton = new TextButton(HIT_BUTTON_NAME, AssetLoader.getGameSkin());
         touchpad = new Touchpad(TOUCHPAD_KNOB, AssetLoader.getGameSkin());
 
-        uiTable.add(hitButton).left().bottom().pad(Constants.UI_ELEMENTS_INDENT);
-        uiTable.add(infoTable).expand().bottom();
-        uiTable.add(touchpad).width(Constants.UI_LAYER_HEIGHT).height(Constants.UI_LAYER_HEIGHT).right().bottom();
+        leftTable.add(hitButton).pad(Constants.UI_ELEMENTS_INDENT);
+        rightTable.add(touchpad).width(Constants.UI_LAYER_HEIGHT).height(Constants.UI_LAYER_HEIGHT);
     }
 
     @Override
@@ -44,10 +42,5 @@ public class TouchpadInputController implements InputController {
             move.setState(Constants.JUMP, true);
         }
         return move;
-    }
-
-    @Override
-    public Table getTable() {
-        return uiTable;
     }
 }

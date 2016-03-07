@@ -2,10 +2,9 @@ package com.nikitosh.headball;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
-import com.nikitosh.headball.actors.*;
+import com.nikitosh.headball.gameobjects.*;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
@@ -18,7 +17,6 @@ public class GameWorld {
     private static final int BOX2D_POSITION_ITERATIONS = 2;
 
     private World box2dWorld;
-    private Group group;
 
     private Array<Float> initialFootballerPositionX;
     private Array<Float> initialFootballerPositionY;
@@ -28,7 +26,7 @@ public class GameWorld {
     private Image field;
     private float height;
     private Footballer[] footballers;
-    private Array<Wall> walls;
+    private Array<RectangleWall> walls;
     private Ball ball;
     private Goals[] goals;
     private int[] score;
@@ -40,10 +38,8 @@ public class GameWorld {
 
     public GameWorld() {
         box2dWorld = new World(new Vector2(GRAVITY_X, GRAVITY_Y), TO_SLEEP);
-        group = new Group();
 
         field = new Image(AssetLoader.getFieldTexture());
-        group.addActor(field);
 
         walls = new Array<>();
         footballers = new Footballer[Constants.PLAYERS_NUMBER];
@@ -155,7 +151,6 @@ public class GameWorld {
         for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
             footballers[i] = new Footballer(box2dWorld,
                     initialPositionX.get(i), initialPositionY.get(i), initialLeft.get(i), initialRadius);
-            group.addActor(footballers[i]);
         }
     }
 
@@ -163,7 +158,6 @@ public class GameWorld {
         initialBallPositionX = initialPositionX;
         initialBallPositionY = initialPositionY;
         ball = new Ball(box2dWorld, initialPositionX, initialPositionY, initialRadius);
-        group.addActor(ball);
     }
 
     public void createGoals(Array<Float> initialPositionX, Array<Float> initialPositionY,
@@ -173,16 +167,14 @@ public class GameWorld {
             goals[i] = new Goals(box2dWorld,
                     initialPositionX.get(i), initialPositionY.get(i),
                     goalsWidth, goalsHeight, crossbarHeight, initialLeft.get(i));
-            group.addActor(goals[i]);
         }
     }
 
     public void createWalls(Array<Array<Float>> walls) {
         for (Array<Float> wall : walls) {
-            Wall newWall = new RectangleWall(box2dWorld, wall.get(0), wall.get(1),
+            RectangleWall newWall = new RectangleWall(box2dWorld, wall.get(0), wall.get(1),
                     wall.get(2) - wall.get(0), wall.get(3) - wall.get(1), wall.get(4) != 0);
             this.walls.add(newWall);
-            group.addActor(newWall);
         }
     }
 
@@ -190,16 +182,20 @@ public class GameWorld {
         return box2dWorld;
     }
 
-    public Group getGroup() {
-        return group;
+    public Ball getBall() {
+        return ball;
     }
 
     public Footballer[] getFootballers() {
         return footballers;
     }
 
-    public Ball getBall() {
-        return ball;
+    public Goals[] getGoals() {
+        return goals;
+    }
+
+    public Array<RectangleWall> getWalls() {
+        return walls;
     }
 
     public int[] getScore() {

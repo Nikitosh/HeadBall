@@ -1,19 +1,15 @@
-package com.nikitosh.headball.actors;
+package com.nikitosh.headball.gameobjects;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.Move;
 import com.nikitosh.headball.utils.Utilities;
-import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
-public class Footballer extends Actor {
+public class Footballer {
     private static final float FOOTBALLER_SPEED = 100;
     private static final float FOOTBALLER_JUMP = 200;
     private static final float FOOTBALLER_DENSITY = 5f;
@@ -25,8 +21,8 @@ public class Footballer extends Actor {
     private static final float ROTATOR_FRICTION = 0f;
     private static final float ROTATOR_RESTITUTION = 0f;
 
-    private static final float LEG_WIDTH = 16;
-    private static final float LEG_HEIGHT = 10;
+    public static final float LEG_WIDTH = 16;
+    public static final float LEG_HEIGHT = 10;
     private static final float LEG_DENSITY = 5f;
     private static final float LEG_FRICTION = 0f;
     private static final float LEG_RESTITUTION = 0f;
@@ -44,9 +40,6 @@ public class Footballer extends Actor {
     private boolean inJump = false;
     private boolean isLeftSided; //is footballer left-sided or not
     private float radius;
-
-    private Box2DSprite bodySprite;
-    private Box2DSprite legSprite;
 
     public Footballer(World world, float x, float y, boolean isLeftSided, float radius) {
         this.isLeftSided = isLeftSided;
@@ -82,21 +75,6 @@ public class Footballer extends Actor {
 
         revoluteJoint = (RevoluteJoint) world.createJoint(getRevoluteJointDef());
         world.createJoint(weldJointDef);
-
-        if (isLeftSided) {
-            bodySprite = new Box2DSprite(AssetLoader.getFootballerTexture());
-        } else {
-            bodySprite = new Box2DSprite(AssetLoader.getReversedFootballerTexture());
-        }
-        legSprite = new Box2DSprite(AssetLoader.getLegTexture());
-    }
-
-    public Vector2 getPosition() {
-        return body.getPosition();
-    }
-
-    public float getRadius() {
-        return radius * Constants.WORLD_TO_BOX;
     }
 
     public void update(Move move) {
@@ -121,23 +99,24 @@ public class Footballer extends Actor {
         }
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        bodySprite.draw(batch,
-                body.getPosition().x * Constants.BOX_TO_WORLD, body.getPosition().y * Constants.BOX_TO_WORLD,
-                2 * radius, 2 * radius, body.getAngle());
-        legSprite.draw(batch,
-                leg.getPosition().x * Constants.BOX_TO_WORLD,
-                leg.getPosition().y * Constants.BOX_TO_WORLD,
-                LEG_WIDTH, LEG_HEIGHT, leg.getAngle());
-    }
-
     public void resetInJump() {
         this.inJump = false;
     }
 
     public Body getBody() {
         return body;
+    }
+
+    public Body getLeg() {
+        return leg;
+    }
+
+    public Vector2 getPosition() {
+        return body.getPosition();
+    }
+
+    public float getRadius() {
+        return radius * Constants.WORLD_TO_BOX;
     }
 
     public void setInitialPosition(World world, float positionX, float positionY) {

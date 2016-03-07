@@ -8,8 +8,8 @@ public final class Constants {
     public static final int UI_LAYER_HEIGHT = 100;
     public static final int UI_ELEMENTS_INDENT = 10;
 
-    public static final int GAME_DURATION = 100;
-    public static final int FPS = 60;
+    public static final int GAME_DURATION = 10;
+    public static final int FRAMES_PER_SECOND = 60;
     public static final float SPLASH_DURATION = 1;
     public static final int PLAYERS_NUMBER = 2;
 
@@ -23,6 +23,11 @@ public final class Constants {
     public static final short GROUND_WALL_MASK = ~LEG_CATEGORY;
     public static final short FOOTBALLER_MASK = ~ROTATOR_CATEGORY;
     public static final short GAME_OBJECT_MASK = -1;
+
+    public static final String BALL = "Ball";
+    public static final String FOOTBALLER = "Footballer";
+    public static final String LEG = "Leg";
+    public static final String GOALS = "Goals";
 
     public static final String SETTINGS_SOUND = "Sound";
     public static final String SETTINGS_MUSIC = "Music";

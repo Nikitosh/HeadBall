@@ -1,22 +1,17 @@
-package com.nikitosh.headball.actors;
+package com.nikitosh.headball.gameobjects;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.utils.Utilities;
-import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
-public class Ball extends Actor {
+public class Ball {
     private static final float BALL_DENSITY = 1f;
     private static final float BALL_FRICTION = 0.5f;
     private static final float BALL_RESTITUTION = 0.5f;
 
     private float radius;
     private Body body;
-    private Box2DSprite ballSprite;
 
     public Ball(World world, float x, float y, float radius) {
         this.radius = radius;
@@ -26,14 +21,6 @@ public class Ball extends Actor {
                 Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
         body.setAngularDamping(2f);
         body.setSleepingAllowed(false);
-        ballSprite = new Box2DSprite(AssetLoader.getBallTexture());
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        ballSprite.draw(batch,
-                body.getPosition().x * Constants.BOX_TO_WORLD, body.getPosition().y * Constants.BOX_TO_WORLD,
-                2 * radius, 2 * radius, body.getAngle());
     }
 
     public Vector2 getPosition() {
@@ -42,6 +29,10 @@ public class Ball extends Actor {
 
     public float getRadius() {
         return radius;
+    }
+
+    public float getAngle() {
+        return body.getAngle();
     }
 
     public float getVelocity() {

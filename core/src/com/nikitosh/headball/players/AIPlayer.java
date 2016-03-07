@@ -3,8 +3,8 @@ package com.nikitosh.headball.players;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.GameWorld;
 import com.nikitosh.headball.Move;
-import com.nikitosh.headball.actors.Ball;
-import com.nikitosh.headball.actors.Footballer;
+import com.nikitosh.headball.gameobjects.Ball;
+import com.nikitosh.headball.gameobjects.Footballer;
 
 public class AIPlayer implements Player {
     private GameWorld gameWorld;

@@ -2,6 +2,7 @@ package com.nikitosh.headball;
 
 import com.badlogic.gdx.Game;
 import com.nikitosh.headball.screens.SplashScreen;
+import com.nikitosh.headball.utils.ScreenManager;
 
 public class HeadballGame extends Game {
     private static ActionResolver actionResolver;

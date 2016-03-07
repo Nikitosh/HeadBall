@@ -4,7 +4,7 @@ public class MatchInfo {
     private Team firstTeam;
     private Team secondTeam;
     private boolean isDrawResultPossible;
-    private boolean isRestartOrExitPossible;
+    private boolean isRestartOrExitAvailable;
     private int levelNumber = 0;
 
     public MatchInfo(Team firstTeam, Team secondTeam, boolean isDrawResultPossible,
@@ -12,7 +12,7 @@ public class MatchInfo {
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
         this.isDrawResultPossible = isDrawResultPossible;
-        this.isRestartOrExitPossible = isRestartOrExitPossible;
+        this.isRestartOrExitAvailable = isRestartOrExitPossible;
     }
 
     public Team getFirstTeam() {
@@ -27,8 +27,8 @@ public class MatchInfo {
         return isDrawResultPossible;
     }
 
-    public boolean isRestartOrExitPossible() {
-        return isRestartOrExitPossible;
+    public boolean isRestartOrExitAvailable() {
+        return isRestartOrExitAvailable;
     }
 
     public void setLevelNumber(int levelNumber) {

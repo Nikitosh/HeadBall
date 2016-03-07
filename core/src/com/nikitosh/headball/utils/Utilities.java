@@ -12,8 +12,7 @@ public final class Utilities {
 
     private Utilities() {}
 
-    private static String readFile(String path)
-    {
+    private static String readFile(String path) {
         return Gdx.files.internal(path).readString();
     }
 

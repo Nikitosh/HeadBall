@@ -1,6 +1,6 @@
 package com.nikitosh.headball.players;
 
-import com.nikitosh.headball.controllers.InputController;
+import com.nikitosh.headball.inputcontrollers.InputController;
 import com.nikitosh.headball.Move;
 
 public class LocalHumanPlayer implements Player {

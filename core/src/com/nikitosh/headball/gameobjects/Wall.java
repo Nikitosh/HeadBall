@@ -1,9 +1,8 @@
-package com.nikitosh.headball.actors;
+package com.nikitosh.headball.gameobjects;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public abstract class Wall extends Actor {
+public abstract class Wall {
     protected Body body;
 
     public Body getBody() {

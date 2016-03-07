@@ -3,10 +3,11 @@ package com.nikitosh.headball.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.nikitosh.headball.MatchInfo;
-import com.nikitosh.headball.ScreenManager;
-import com.nikitosh.headball.Team;
+import com.nikitosh.headball.*;
+import com.nikitosh.headball.gamecontrollers.GameController;
+import com.nikitosh.headball.gamecontrollers.SinglePlayerGameController;
 import com.nikitosh.headball.utils.AssetLoader;
+import com.nikitosh.headball.utils.ScreenManager;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -47,9 +48,10 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
                         playerNumber = 1;
                     }
                     ScreenManager.getInstance().disposeCurrentScreen();
-                    ScreenManager.getInstance().setScreen(new MultiPlayerScreen(
-                            new MatchInfo(new Team("", ""), new Team("", ""), false, false),
-                            playerNumber, in, out));
+                    GameScreen gameScreen = new GameScreen();
+                    GameController gameController = new SinglePlayerGameController(gameScreen,
+                            new MatchInfo(new Team("", ""), new Team("", ""), false, false));
+                    ScreenManager.getInstance().setScreen(gameScreen);
                 } catch (Exception e) {
                     Gdx.app.error(LOG_TAG, CONNECTION_ERROR_MESSAGE, e);
                 }

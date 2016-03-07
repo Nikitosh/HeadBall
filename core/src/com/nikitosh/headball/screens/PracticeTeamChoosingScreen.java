@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.MatchInfo;
-import com.nikitosh.headball.ScreenManager;
+import com.nikitosh.headball.utils.ScreenManager;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.jsonReaders.TeamReader;
 import com.nikitosh.headball.utils.AssetLoader;

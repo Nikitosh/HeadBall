@@ -1,15 +1,11 @@
-package com.nikitosh.headball.actors;
+package com.nikitosh.headball.gameobjects;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.utils.Utilities;
-import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
-public class Goals extends Actor {
+public class Goals {
     private static final float GOALS_DENSITY = 1f;
     private static final float GOALS_FRICTION = 0f;
     private static final float GOALS_RESTITUTION = 0f;
@@ -22,8 +18,6 @@ public class Goals extends Actor {
     private float goalsHeight;
     private float crossbarHeight;
     private boolean isLeftSided; //are the goals left-sided or not
-
-    private Box2DSprite goalsSprite;
 
     public Goals(World world, float x, float y, float width, float goalsHeight, float crossbarHeight,
                  boolean isLeftSided) {
@@ -41,20 +35,6 @@ public class Goals extends Actor {
                 Constants.GAME_OBJECT_CATEGORY, Constants.GAME_OBJECT_MASK);
         body.setType(BodyDef.BodyType.StaticBody);
         body.getFixtureList().get(0).setUserData(this);
-
-        if (isLeftSided) {
-            goalsSprite = new Box2DSprite(AssetLoader.getGoalsTexture());
-        } else {
-            goalsSprite = new Box2DSprite(AssetLoader.getReversedGoalsTexture());
-        }
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        goalsSprite.draw(batch,
-                body.getPosition().x * Constants.BOX_TO_WORLD,
-                body.getPosition().y * Constants.BOX_TO_WORLD - goalsHeight / 2,
-                width, goalsHeight + crossbarHeight, body.getAngle());
     }
 
     public boolean contains(Vector2 point) {
@@ -81,5 +61,17 @@ public class Goals extends Actor {
         } else {
             return new Vector2(-1, 0);
         }
+    }
+
+    public Vector2 getPosition() {
+        return new Vector2(x + width / 2, y + (goalsHeight + crossbarHeight) / 2);
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return goalsHeight + crossbarHeight;
     }
 }

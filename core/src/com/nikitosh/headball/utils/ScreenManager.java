@@ -1,4 +1,4 @@
-package com.nikitosh.headball;
+package com.nikitosh.headball.utils;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

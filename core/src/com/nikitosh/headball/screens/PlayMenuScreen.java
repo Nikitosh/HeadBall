@@ -3,7 +3,7 @@ package com.nikitosh.headball.screens;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.nikitosh.headball.ScreenManager;
+import com.nikitosh.headball.utils.ScreenManager;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.widgets.BackButtonTable;

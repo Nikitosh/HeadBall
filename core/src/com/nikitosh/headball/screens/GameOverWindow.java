@@ -5,9 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.nikitosh.headball.gamecontrollers.GameController;
 import com.nikitosh.headball.utils.AssetLoader;
 
-public class GameOverScreen extends Window {
+public class GameOverWindow extends Window {
     private static final String GAME_OVER = "Game over!";
     private static final String EXIT = "Exit";
     private static final String WIN_RESULT = "You win! ";
@@ -16,12 +17,12 @@ public class GameOverScreen extends Window {
     private static final String SCORE = "Score: ";
     private static final String SCORE_SEPARATOR = " : ";
 
-    private GameScreen gameScreen;
+    private GameController gameController;
     private Label resultLabel;
 
-    GameOverScreen(final GameScreen gameScreen) {
+    GameOverWindow(final GameController gameController) {
         super("", AssetLoader.getGameSkin());
-        this.gameScreen = gameScreen;
+        this.gameController = gameController;
 
         setMovable(false);
 
@@ -32,7 +33,7 @@ public class GameOverScreen extends Window {
         gameOverExitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameScreen.exitGame();
+                gameController.exitGame();
             }
         });
 
@@ -41,10 +42,8 @@ public class GameOverScreen extends Window {
         add(gameOverExitButton).row();
     }
 
-    private String getResultString() {
-        int[] score = gameScreen.getScore();
+    private String getResultString(int[] score, int playerNumber) {
         String result = "";
-        int playerNumber = gameScreen.getPlayerNumber();
         if (score[playerNumber] == score[1 - playerNumber]) {
             result += DRAW_RESULT;
         }
@@ -58,7 +57,7 @@ public class GameOverScreen extends Window {
         return result;
     }
 
-    public void updateResult() {
-        resultLabel.setText(getResultString());
+    public void updateResult(int[] score, int playerNumber) {
+        resultLabel.setText(getResultString(score, playerNumber));
     }
 }

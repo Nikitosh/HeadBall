@@ -3,7 +3,7 @@ package com.nikitosh.headball.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.nikitosh.headball.ScreenManager;
+import com.nikitosh.headball.utils.ScreenManager;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 

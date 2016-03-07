@@ -1,7 +1,7 @@
 package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.utils.Array;
-import com.nikitosh.headball.ScreenManager;
+import com.nikitosh.headball.utils.ScreenManager;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.jsonReaders.TeamReader;
 import com.nikitosh.headball.tournaments.Tournament;

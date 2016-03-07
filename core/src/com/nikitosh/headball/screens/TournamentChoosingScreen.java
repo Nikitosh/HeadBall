@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.HeadballGame;
 import com.nikitosh.headball.Team;
-import com.nikitosh.headball.ScreenManager;
+import com.nikitosh.headball.utils.ScreenManager;
 import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.tournaments.TournamentDeserializer;
 import com.nikitosh.headball.utils.Constants;

@@ -1,10 +1,12 @@
 package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.nikitosh.headball.*;
+import com.nikitosh.headball.gamecontrollers.GameController;
+import com.nikitosh.headball.gamecontrollers.SinglePlayerGameController;
 import com.nikitosh.headball.jsonReaders.LevelReader;
-import com.nikitosh.headball.MatchInfo;
-import com.nikitosh.headball.ScreenManager;
 import com.nikitosh.headball.utils.Constants;
+import com.nikitosh.headball.utils.ScreenManager;
 import com.nikitosh.headball.widgets.BackButtonTable;
 import com.nikitosh.headball.widgets.ChoosingTable;
 
@@ -15,7 +17,12 @@ public class LevelChoosingScreen extends BackgroundStageAbstractScreen {
         final ChoosingTable choosingTable = new ChoosingTable();
 
         for (int i = 0; i < LevelReader.getLevelsNumber(); i++) {
-            Group level = LevelReader.loadLevel(i).getGroup();
+            GameScreen gameScreen = new GameScreen();
+            SinglePlayerGameController gameController = new SinglePlayerGameController(gameScreen,
+                    new MatchInfo(new Team("", ""), new Team("", ""), false, false));
+            gameController.setGameWorld(LevelReader.loadLevel(i));
+            gameController.update();
+            Group level = gameScreen.getField();
             level.setTransform(true);
             level.setScale(SCALE_COEFFICIENT);
             level.setSize(Constants.VIRTUAL_WIDTH * SCALE_COEFFICIENT,
@@ -29,7 +36,9 @@ public class LevelChoosingScreen extends BackgroundStageAbstractScreen {
                 matchInfo.setLevelNumber(choosingTable.getCurrentIndex());
                 //dispose 2 screens: LevelChoosingScreen and PracticeTeamChoosingScreen
                 ScreenManager.getInstance().disposeCurrentScreens(2);
-                ScreenManager.getInstance().setScreen(new SinglePlayerScreen(matchInfo));
+                GameScreen gameScreen = new GameScreen();
+                GameController gameController = new SinglePlayerGameController(gameScreen, matchInfo);
+                ScreenManager.getInstance().setScreen(gameScreen);
             }
         });
         choosingTable.setFillParent(true);
