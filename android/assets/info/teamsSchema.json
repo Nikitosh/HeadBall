@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/",
+  "type": "object",
+  "properties": {
+    "teams": {
+      "id": "teams",
+      "type": "array",
+      "description": "array of teams",
+      "items": {
+        "id": "team",
+        "type": "object",
+        "description": "team object with two fields: name of team and icon name",
+        "properties": {
+          "name": {
+            "id": "name",
+            "type": "string"
+          },
+          "icon": {
+            "id": "icon",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "icon"
+        ]
+      }
+    }
+  },
+  "required": [
+    "teams"
+  ]
+}

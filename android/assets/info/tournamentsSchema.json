@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/",
+  "type": "object",
+  "properties": {
+    "tournaments": {
+      "id": "tournaments",
+      "type": "array",
+      "description": "array of tournaments",
+      "items": {
+        "id": "tournament",
+        "type": "object",
+        "description": "tournament object with three fields: type, name and icon name",
+        "properties": {
+          "type": {
+            "id": "type",
+            "type": "string",
+            "pattern": "^(playoff|league)$"
+          },
+          "name": {
+            "id": "name",
+            "type": "string"
+          },
+          "icon": {
+            "id": "icon",
+            "type": "string"
+          },
+          "participants": {
+            "id": "participants",
+            "type": "array",
+            "items": {
+              "id": "team",
+              "type": "string"
+            }
+          },
+          "lapNumber": {
+            "id": "lapNumber",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "icon",
+          "participants",
+          "lapNumber"
+        ]
+      }
+    }
+  },
+  "required": [
+    "tournaments"
+  ]
+}

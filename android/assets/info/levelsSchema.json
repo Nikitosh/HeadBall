@@ -1,0 +1,148 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/",
+  "type": "object",
+  "properties": {
+    "levels": {
+      "id": "levels",
+      "type": "array",
+      "items": {
+        "id": "level",
+        "type": "object",
+        "properties": {
+          "width": {
+            "id": "width",
+            "type": "integer"
+          },
+          "height": {
+            "id": "height",
+            "type": "integer"
+          },
+          "footballerRadius": {
+            "id": "footballerRadius",
+            "type": "integer"
+          },
+          "footballersX": {
+            "id": "footballersX",
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "id": "footballerX",
+              "type": "integer"
+            }
+          },
+          "footballersY": {
+            "id": "footballersY",
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "id": "footballerY",
+              "type": "integer"
+            }
+          },
+          "footballersLeft": {
+            "id": "footballersLeft",
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "id": "footballerLeft",
+              "type": "boolean"
+            }
+          },
+          "ballRadius": {
+            "id": "ballRadius",
+            "type": "integer"
+          },
+          "ballX": {
+            "id": "ballX",
+            "type": "integer"
+          },
+          "ballY": {
+            "id": "ballY",
+            "type": "integer"
+          },
+          "goalsX": {
+            "id": "goalsX",
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "id": "goalX",
+              "type": "integer"
+            }
+          },
+          "goalsY": {
+            "id": "goalsY",
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "id": "goalY",
+              "type": "integer"
+            }
+          },
+          "goalsLeft": {
+            "id": "goalsLeft",
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "id": "goalLeft",
+              "type": "boolean"
+            }
+          },
+          "goalsWidth": {
+            "id": "goalsWidth",
+            "type": "integer"
+          },
+          "goalsHeight": {
+            "id": "goalsHeight",
+            "type": "integer"
+          },
+          "crossbarHeight": {
+            "id": "crossbarHeight",
+            "type": "integer"
+          },
+          "walls": {
+            "id": "walls",
+            "type": "array",
+            "items": {
+              "id": "wall",
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "items": {
+                "id": "el",
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "required": [
+          "width",
+          "height",
+          "footballerRadius",
+          "footballersX",
+          "footballersY",
+          "footballersLeft",
+          "ballRadius",
+          "ballX",
+          "ballY",
+          "goalsX",
+          "goalsY",
+          "goalsLeft",
+          "goalsWidth",
+          "goalsHeight",
+          "crossbarHeight",
+          "walls"
+        ]
+      }
+    }
+  },
+  "required": [
+    "levels"
+  ]
+}
