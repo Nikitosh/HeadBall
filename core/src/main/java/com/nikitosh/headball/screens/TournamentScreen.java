@@ -96,7 +96,6 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
     }
 
     private void handleMatchEnd(Team playerTeam, int[] score) {
-        Gdx.app.log(Integer.toString(score[0]), Integer.toString(score[1]));
         tournament.startNewRound();
         tournament.handlePlayerMatch(playerTeam, score[0], score[1]);
         tournament.simulateNextRound();
