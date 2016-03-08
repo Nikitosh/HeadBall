@@ -1,6 +1,5 @@
 package com.nikitosh.headball.gameobjects;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.utils.Constants;

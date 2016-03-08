@@ -43,5 +43,7 @@ public final class Constants {
     public static final int LEFT = 2;
     public static final int RIGHT = 3;
 
+    public static final char DATA_SEPARATOR = '_';
+
     private Constants() {}
 }

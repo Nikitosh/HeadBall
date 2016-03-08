@@ -2,7 +2,6 @@ package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.nikitosh.headball.*;
-import com.nikitosh.headball.gamecontrollers.GameController;
 import com.nikitosh.headball.gamecontrollers.SinglePlayerGameController;
 import com.nikitosh.headball.jsonReaders.LevelReader;
 import com.nikitosh.headball.utils.Constants;

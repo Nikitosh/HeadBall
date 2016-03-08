@@ -5,13 +5,10 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.utils.Utilities;
 
-public class Ball {
+public class Ball extends GameObject{
     private static final float BALL_DENSITY = 1f;
     private static final float BALL_FRICTION = 0.5f;
     private static final float BALL_RESTITUTION = 0.5f;
-
-    private final float radius;
-    private final Body body;
 
     public Ball(World world, float x, float y, float radius) {
         this.radius = radius;

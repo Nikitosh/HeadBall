@@ -9,7 +9,7 @@ import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.Move;
 import com.nikitosh.headball.utils.Utilities;
 
-public class Footballer {
+public class Footballer extends GameObject{
     private static final float FOOTBALLER_SPEED = 100;
     private static final float FOOTBALLER_JUMP = 200;
     private static final float FOOTBALLER_DENSITY = 5f;
@@ -32,14 +32,12 @@ public class Footballer {
     private static final float JOINT_ANGULAR_VELOCITY = 30f;
     private static final float JOINT_EPSILON = 0.1f;
 
-    private final Body body;
     private final Body rotator;
     private final Body leg;
     private RevoluteJoint revoluteJoint;
 
     private boolean inJump = false;
     private final boolean isLeftSided; //is footballer left-sided or not
-    private final float radius;
 
     public Footballer(World world, float x, float y, boolean isLeftSided, float radius) {
         this.isLeftSided = isLeftSided;
