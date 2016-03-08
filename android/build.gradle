@@ -1,3 +1,7 @@
+dependencies {
+    compile 'com.android.support:multidex:1.0.0'
+}
+
 android {
     buildToolsVersion "23.0.2"
     compileSdkVersion 23
@@ -14,8 +18,24 @@ android {
 
         instrumentTest.setRoot('tests')
     }
+    defaultConfig {
+        multiDexEnabled true
+    }
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize '4g'
+    }
 }
 
+android.packagingOptions {
+    exclude 'META-INF/NOTICE'
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/ASL-2.0.txt'
+    exclude 'META-INF/LGPL-3.0.txt'
+    exclude 'META-INF/LICENSE.txt'
+    exclude 'draftv3/schema'
+    exclude 'draftv4/schema'
+}
 
 // called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders
