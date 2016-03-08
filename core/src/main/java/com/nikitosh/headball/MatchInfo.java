@@ -1,10 +1,10 @@
 package com.nikitosh.headball;
 
 public class MatchInfo {
-    private Team firstTeam;
-    private Team secondTeam;
-    private boolean isDrawResultPossible;
-    private boolean isRestartOrExitAvailable;
+    private final Team firstTeam;
+    private final Team secondTeam;
+    private final boolean isDrawResultPossible;
+    private final boolean isRestartOrExitAvailable;
     private int levelNumber = 0;
 
     public MatchInfo(Team firstTeam, Team secondTeam, boolean isDrawResultPossible,

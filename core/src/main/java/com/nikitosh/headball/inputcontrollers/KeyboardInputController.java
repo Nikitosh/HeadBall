@@ -7,7 +7,7 @@ import com.nikitosh.headball.Move;
 public class KeyboardInputController extends InputController{
     private static final int[] KEYS = {Input.Keys.SPACE, Input.Keys.UP, Input.Keys.LEFT, Input.Keys.RIGHT};
 
-    private Move move = new Move();
+    private final Move move = new Move();
 
     public KeyboardInputController() {
         super();

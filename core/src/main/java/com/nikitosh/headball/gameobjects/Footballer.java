@@ -32,14 +32,14 @@ public class Footballer {
     private static final float JOINT_ANGULAR_VELOCITY = 30f;
     private static final float JOINT_EPSILON = 0.1f;
 
-    private Body body;
-    private Body rotator;
-    private Body leg;
+    private final Body body;
+    private final Body rotator;
+    private final Body leg;
     private RevoluteJoint revoluteJoint;
 
     private boolean inJump = false;
-    private boolean isLeftSided; //is footballer left-sided or not
-    private float radius;
+    private final boolean isLeftSided; //is footballer left-sided or not
+    private final float radius;
 
     public Footballer(World world, float x, float y, boolean isLeftSided, float radius) {
         this.isLeftSided = isLeftSided;

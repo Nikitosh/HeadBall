@@ -10,8 +10,8 @@ public class Ball {
     private static final float BALL_FRICTION = 0.5f;
     private static final float BALL_RESTITUTION = 0.5f;
 
-    private float radius;
-    private Body body;
+    private final float radius;
+    private final Body body;
 
     public Ball(World world, float x, float y, float radius) {
         this.radius = radius;

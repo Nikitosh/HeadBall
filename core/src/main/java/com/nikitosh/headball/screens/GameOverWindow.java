@@ -17,12 +17,10 @@ public class GameOverWindow extends Window {
     private static final String SCORE = "Score: ";
     private static final String SCORE_SEPARATOR = " : ";
 
-    private GameController gameController;
-    private Label resultLabel;
+    private final Label resultLabel;
 
     GameOverWindow(final GameController gameController) {
         super("", AssetLoader.getGameSkin());
-        this.gameController = gameController;
 
         setMovable(false);
 

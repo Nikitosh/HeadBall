@@ -35,9 +35,9 @@ public class LevelChoosingScreen extends BackgroundStageAbstractScreen {
             public void run() {
                 matchInfo.setLevelNumber(choosingTable.getCurrentIndex());
                 //dispose 2 screens: LevelChoosingScreen and PracticeTeamChoosingScreen
-                ScreenManager.getInstance().disposeCurrentScreens(2);
+                ScreenManager.getInstance().disposeLastScreens(2);
                 GameScreen gameScreen = new GameScreen();
-                GameController gameController = new SinglePlayerGameController(gameScreen, matchInfo);
+                new SinglePlayerGameController(gameScreen, matchInfo);
                 ScreenManager.getInstance().setScreen(gameScreen);
             }
         });

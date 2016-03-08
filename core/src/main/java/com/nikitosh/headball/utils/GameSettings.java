@@ -5,7 +5,7 @@ import com.badlogic.gdx.Preferences;
 
 public final class GameSettings {
     private static final String SETTINGS = "Settings";
-    private static Preferences preferences = Gdx.app.getPreferences(SETTINGS);
+    private static final Preferences preferences = Gdx.app.getPreferences(SETTINGS);
 
     private GameSettings() {}
 
@@ -16,21 +16,21 @@ public final class GameSettings {
         preferences.flush();
     }
 
-    public static void putBoolean(String text, boolean value) {
-        preferences.putBoolean(text, value);
+    public static void putBoolean(String settingName, boolean value) {
+        preferences.putBoolean(settingName, value);
         preferences.flush();
     }
 
-    public static void putString(String text, String value) {
-        preferences.putString(text, value);
+    public static void putString(String settingName, String value) {
+        preferences.putString(settingName, value);
         preferences.flush();
     }
 
-    public static boolean getBoolean(String text) {
-        return preferences.getBoolean(text);
+    public static boolean getBoolean(String settingName) {
+        return preferences.getBoolean(settingName);
     }
 
-    public static String getString(String text) {
-        return preferences.getString(text);
+    public static String getString(String settingName) {
+        return preferences.getString(settingName);
     }
 }

@@ -49,7 +49,7 @@ public class MultiPlayerWaitingScreen extends StageAbstractScreen {
                     }
                     ScreenManager.getInstance().disposeCurrentScreen();
                     GameScreen gameScreen = new GameScreen();
-                    GameController gameController = new SinglePlayerGameController(gameScreen,
+                    new SinglePlayerGameController(gameScreen,
                             new MatchInfo(new Team("", ""), new Team("", ""), false, false));
                     ScreenManager.getInstance().setScreen(gameScreen);
                 } catch (Exception e) {

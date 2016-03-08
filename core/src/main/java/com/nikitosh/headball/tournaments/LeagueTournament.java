@@ -17,9 +17,9 @@ public class LeagueTournament implements Tournament {
     private int lapNumber;
     private int currentRound = 0;
     private Array<Team> teams = new Array<>();
-    private Array<Match> currentRoundMatches = new Array<>();
-    private HashSet<Integer> playedCurrentRoundTeams = new HashSet<>();
-    private Array<Array<Integer>> timeTable = new Array<>();
+    private final Array<Match> currentRoundMatches = new Array<>();
+    private final HashSet<Integer> playedCurrentRoundTeams = new HashSet<>();
+    private final Array<Array<Integer>> timeTable = new Array<>();
     private StatisticsTable resultTable;
     private TournamentTimetable statisticTimetable;
 

@@ -10,9 +10,9 @@ import com.nikitosh.headball.utils.Constants;
 public class ButtonsInputController extends InputController {
     private static final String[] BUTTONS_NAMES = {"Hit", "Jump", "Left", "Right"};
 
-    private Array<TextButton> buttonsArray = new Array<>();
+    private final Array<TextButton> buttonsArray = new Array<>();
 
-    private Move move = new Move();
+    private final Move move = new Move();
 
     public ButtonsInputController() {
         super();

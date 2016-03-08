@@ -12,12 +12,10 @@ public class RectangleWall extends Wall {
     private static final float RECTANGLE_WALL_VERTICAL_FRICTION = 0;
     private static final float RECTANGLE_WALL_RESTITUTION = 0;
 
-    private float x;
-    private float y;
-    private float width;
-    private float height;
-
-    private ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private final float x;
+    private final float y;
+    private final float width;
+    private final float height;
 
     public RectangleWall(World world, float x, float y, float width, float height, boolean isHorizontal) {
         this.x = x;

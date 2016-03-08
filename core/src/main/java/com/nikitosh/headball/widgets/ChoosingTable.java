@@ -17,11 +17,12 @@ public class ChoosingTable extends Table {
             Button.ButtonStyle.class);
     private static final Button.ButtonStyle RIGHT_NOT_ACTIVE = AssetLoader.getGameSkin().get("rightGraySlider",
             Button.ButtonStyle.class);
+    private static final String CONTINUE = "Continue";
 
-    private Array<Actor> elements = new Array<>();
+    private final Array<Actor> elements = new Array<>();
     protected int currentIndex = 0;
-    private Button leftButton;
-    private Button rightButton;
+    private final Button leftButton;
+    private final Button rightButton;
     private Actor currentActor;
 
     public ChoosingTable() {
@@ -78,7 +79,7 @@ public class ChoosingTable extends Table {
     }
 
     public void setOnContinueListener(final Runnable runnable) {
-        Button continueButton = new TextButton("Continue", AssetLoader.getGameSkin());
+        Button continueButton = new TextButton(CONTINUE, AssetLoader.getGameSkin());
         row();
         add(continueButton).colspan(COLUMNS_NUMBER); //there are COLUMNS_NUMBER cells in upper layer
         continueButton.addListener(new ChangeListener() {

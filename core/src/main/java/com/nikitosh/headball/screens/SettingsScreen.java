@@ -12,10 +12,10 @@ public class SettingsScreen extends BackgroundStageAbstractScreen {
     private static final String ENABLED = "on";
     private static final String DISABLED = "off";
 
-    private Button.ButtonStyle[] styles;
+    private final Button.ButtonStyle[] styles;
     private int soundState = GameSettings.getBoolean(Constants.SETTINGS_SOUND) ? 1 : 0;
     private int musicState = GameSettings.getBoolean(Constants.SETTINGS_MUSIC) ? 1 : 0;
-    private SelectBox<String> selectBox;
+    private final SelectBox<String> selectBox;
 
     public SettingsScreen() {
         styles = new Button.ButtonStyle[] {AssetLoader.getGameSkin().get(DISABLED, Button.ButtonStyle.class),

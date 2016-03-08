@@ -7,15 +7,15 @@ import com.nikitosh.headball.gameobjects.Ball;
 import com.nikitosh.headball.gameobjects.Footballer;
 
 public class AIPlayer implements Player {
-    private GameWorld gameWorld;
-    private int footballerNumber;
-
     private static final float HIT_RADIUS = 40f * Constants.WORLD_TO_BOX;
     private static final float JUMP_RADIUS = 55f * Constants.WORLD_TO_BOX;
     private static final float DEFENCE_POSITION = (Constants.VIRTUAL_WIDTH / 8f) * Constants.WORLD_TO_BOX;
     private static final float VISION_RADIUS = (Constants.VIRTUAL_WIDTH / 8f) * Constants.WORLD_TO_BOX;
     private static final float EPS = 3f * Constants.WORLD_TO_BOX;
     private static final float DEFENCE_ZONE = (Constants.VIRTUAL_WIDTH / 4f) * Constants.WORLD_TO_BOX;
+
+    private final GameWorld gameWorld;
+    private final int footballerNumber;
 
     public AIPlayer(GameWorld gameWorld, int footballerNumber) {
         this.gameWorld = gameWorld;

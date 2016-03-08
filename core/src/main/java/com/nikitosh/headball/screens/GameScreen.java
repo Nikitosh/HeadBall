@@ -16,15 +16,15 @@ public class GameScreen extends StageAbstractScreen {
     private static final String PAUSE = "Pause";
     private static final String SCORE_SEPARATOR = " : ";
 
-    private Table mainTable = new Table();
-    private GameFieldGroup gameField = new GameFieldGroup();
+    private final Table mainTable = new Table();
+    private final GameFieldGroup gameField = new GameFieldGroup();
 
     private Label scoreLabel;
     private Label timerLabel;
 
     private PauseWindow pauseWindow;
     private GameOverWindow gameOverWindow;
-    private Image darkBackground;
+    private final Image darkBackground;
 
     private GameController gameController;
 

@@ -12,9 +12,7 @@ public class TournamentTimetable extends Table implements ResultTable, Json.Seri
     private NextRoundTable nextRoundTable;
     private LastRoundTable lastRoundTable;
 
-    public TournamentTimetable() {
-
-    }
+    public TournamentTimetable() {}
 
     public TournamentTimetable(NextRoundTable nextRoundTable, LastRoundTable lastRoundTable) {
         this.nextRoundTable = nextRoundTable;

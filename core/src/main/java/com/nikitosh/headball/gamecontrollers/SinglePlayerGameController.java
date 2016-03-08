@@ -30,7 +30,7 @@ public class SinglePlayerGameController extends GameController {
     @Override
     public void update() {
         if (gameState == GameState.GAME_RUNNING) {
-            accumulator += getDelta(Constants.FRAMES_PER_SECOND);
+            accumulator += getDelta();
             gameWorld.update(accumulator, players[0].getMove(), players[1].getMove());
             accumulator = 0;
         }
@@ -76,7 +76,7 @@ public class SinglePlayerGameController extends GameController {
     }
 
     @Override
-    public void finishGame() {
+    protected void finishGame() {
         super.finishGame();
         gameScreen.addGameOverWindow(gameWorld.getScore(), playerNumber);
     }

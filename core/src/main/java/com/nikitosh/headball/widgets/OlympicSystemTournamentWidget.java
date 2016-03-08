@@ -12,7 +12,7 @@ import com.nikitosh.headball.utils.Constants;
 
 public class OlympicSystemTournamentWidget extends WidgetGroup implements ResultTable, Json.Serializable {
     private int currentKnownTeamNumber = 0;
-    private Array<Label> labels = new Array<>();
+    private final Array<Label> labels = new Array<>();
     private float width;
     private float height;
     private int roundNumber;
@@ -66,9 +66,7 @@ public class OlympicSystemTournamentWidget extends WidgetGroup implements Result
         height = labels.get(0).getY() + maxHeight + Constants.UI_ELEMENTS_INDENT;
     }
 
-    public OlympicSystemTournamentWidget() {
-
-    }
+    public OlympicSystemTournamentWidget() {}
 
     public OlympicSystemTournamentWidget(int roundNumber, Array<Team> teams,
                                          Array<Array<Integer>> tournamentBracket) {

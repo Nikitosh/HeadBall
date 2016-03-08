@@ -15,7 +15,7 @@ public final class TeamReader {
     private static final String JSON_ICON_KEY = "icon";
 
     private static TeamReader teamReader;
-    private JSONArray teams;
+    private final JSONArray teams;
 
     private TeamReader() {
         teams = (JSONArray) Utilities.parseJSONFile(TEAMS_PATH).get(JSON_TEAMS_KEY);

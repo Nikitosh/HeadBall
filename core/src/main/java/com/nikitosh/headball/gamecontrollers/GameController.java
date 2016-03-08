@@ -16,12 +16,12 @@ public abstract class GameController {
     private static final int MILLISECONDS = 1000;
     private static final String LOG_TAG = "GameController";
 
-    protected GameScreen gameScreen;
+    protected final GameScreen gameScreen;
 
-    private MatchInfo matchInfo;
+    private final MatchInfo matchInfo;
     private InputController inputController;
 
-    protected Player[] players;
+    protected final Player[] players;
     protected int playerNumber;
     private long startTime = System.currentTimeMillis();
     protected float accumulator = 0;
@@ -53,9 +53,9 @@ public abstract class GameController {
         gameScreen.initializeWindows();
     }
 
-    public float getDelta(int framesPerSecond) {
+    public float getDelta() {
         long diff = System.currentTimeMillis() - startTime;
-        long targetDelay = MILLISECONDS / framesPerSecond;
+        long targetDelay = MILLISECONDS / Constants.FRAMES_PER_SECOND;
         if (diff < targetDelay) {
             try {
                 Thread.sleep(targetDelay - diff);
@@ -76,7 +76,7 @@ public abstract class GameController {
     }
 
     public void pauseGame() {
-        accumulator += getDelta(Constants.FRAMES_PER_SECOND);
+        accumulator += getDelta();
         gameScreen.addPauseWindow(matchInfo.isRestartOrExitAvailable());
         gameState = GameState.GAME_PAUSED;
     }

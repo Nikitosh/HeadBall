@@ -10,14 +10,14 @@ public class Goals {
     private static final float GOALS_FRICTION = 0f;
     private static final float GOALS_RESTITUTION = 0f;
 
-    private Body body;
+    private final Body body;
 
-    private float x;
-    private float y;
-    private float width;
-    private float goalsHeight;
-    private float crossbarHeight;
-    private boolean isLeftSided; //are the goals left-sided or not
+    private final float x;
+    private final float y;
+    private final float width;
+    private final float goalsHeight;
+    private final float crossbarHeight;
+    private final boolean isLeftSided; //are the goals left-sided or not
 
     public Goals(World world, float x, float y, float width, float goalsHeight, float crossbarHeight,
                  boolean isLeftSided) {

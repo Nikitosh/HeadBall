@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 
 public final class ScreenManager {
     private static ScreenManager screenManager;
-    private Array<Screen> screens = new Array<>();
+    private final Array<Screen> screens = new Array<>();
     private Game game;
 
     private static final String LOG_TAG = "ScreenManager";
@@ -32,7 +32,7 @@ public final class ScreenManager {
         game.setScreen(screen);
     }
 
-    public void disposeCurrentScreens(int count) {
+    public void disposeLastScreens(int count) {
         for (int i = 0; i < count; i++) {
             disposeCurrentScreen();
         }

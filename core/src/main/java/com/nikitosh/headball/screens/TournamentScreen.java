@@ -28,7 +28,7 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
     private static final String EXIT = "Exit";
     private static final boolean IS_PRACTICE = false;
 
-    private Tournament tournament;
+    private final Tournament tournament;
 
     public TournamentScreen(final Tournament tournament, final Team playerTeam) {
         this.tournament = tournament;

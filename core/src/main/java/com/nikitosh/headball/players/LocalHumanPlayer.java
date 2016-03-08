@@ -4,7 +4,7 @@ import com.nikitosh.headball.inputcontrollers.InputController;
 import com.nikitosh.headball.Move;
 
 public class LocalHumanPlayer implements Player {
-    private InputController inputController;
+    private final InputController inputController;
 
     public LocalHumanPlayer(InputController inputController) {
         this.inputController = inputController;

@@ -11,7 +11,7 @@ import com.nikitosh.headball.Team;
 import com.nikitosh.headball.utils.AssetLoader;
 
 public abstract class AbstractResultTable extends Table implements ResultTable, Json.Serializable {
-    protected Array<Array<Label>> statisticsLabels = new Array<>();
+    protected final Array<Array<Label>> statisticsLabels = new Array<>();
 
     @Override
     public Group getTable() {

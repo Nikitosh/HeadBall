@@ -9,7 +9,7 @@ import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
 public class TeamChoosingTable extends ChoosingTable {
-    private Array<Team> teams;
+    private final Array<Team> teams;
 
     public TeamChoosingTable(Array<Team> teams) {
         this.teams = teams;

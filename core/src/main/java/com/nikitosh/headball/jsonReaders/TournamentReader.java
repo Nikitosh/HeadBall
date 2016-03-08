@@ -29,7 +29,7 @@ public final class TournamentReader {
     private static final String GET_TEAM_BY_NAME_ERROR_MESSAGE = "Can't get team with name: ";
 
     private static TournamentReader tournamentReader;
-    private JSONArray tournaments;
+    private final JSONArray tournaments;
 
     private TournamentReader() {
         tournaments = (JSONArray) Utilities.parseJSONFile(TOURNAMENTS_PATH).get(JSON_TOURNAMENTS_KEY);

@@ -15,8 +15,8 @@ public class PauseWindow extends Window {
     private static final String RESTART = "Restart";
     private static final String EXIT = "Exit";
 
-    private TextButton restartButton;
-    private TextButton exitButton;
+    private final TextButton restartButton;
+    private final TextButton exitButton;
 
     public PauseWindow(final GameController gameController) {
         super("", AssetLoader.getGameSkin());

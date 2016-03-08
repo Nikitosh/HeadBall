@@ -16,20 +16,20 @@ public class GameWorld {
     private static final int BOX2D_VELOCITY_ITERATIONS = 6;
     private static final int BOX2D_POSITION_ITERATIONS = 2;
 
-    private World box2dWorld;
+    private final World box2dWorld;
 
     private Array<Float> initialFootballerPositionX;
     private Array<Float> initialFootballerPositionY;
     private float initialBallPositionX;
     private float initialBallPositionY;
 
-    private Image field;
+    private final Image field;
     private float height;
-    private Footballer[] footballers;
-    private Array<RectangleWall> walls;
+    private final Footballer[] footballers;
+    private final Array<RectangleWall> walls;
     private Ball ball;
-    private Goals[] goals;
-    private int[] score;
+    private final Goals[] goals;
+    private final int[] score;
     private boolean isGoal = false;
     private boolean isEnded = false;
     private boolean isDrawResultPossible = true;
@@ -213,9 +213,5 @@ public class GameWorld {
     public void setSize(float width, float height) {
         this.height = height;
         field.setBounds(0, 0, width, height);
-    }
-
-    public float getHeight() {
-        return height;
     }
 }

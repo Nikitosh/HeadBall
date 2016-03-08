@@ -7,8 +7,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nikitosh.headball.utils.Constants;
 
 public class StageAbstractScreen extends AbstractScreen {
-    protected Stage stage;
-    protected Stack stack;
+    protected final Stage stage;
+    protected final Stack stack;
 
     public StageAbstractScreen() {
         stack = new Stack();

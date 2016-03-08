@@ -14,12 +14,12 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class GameFieldGroup extends Group {
-    private Map<String, Float> spriteX = new TreeMap<>();
-    private Map<String, Float> spriteY = new TreeMap<>();
-    private Map<String, Float> spriteWidth = new TreeMap<>();
-    private Map<String, Float> spriteHeight = new TreeMap<>();
-    private Map<String, Float> spriteAngle = new TreeMap<>();
-    private Map<String, Box2DSprite> spriteMap = new TreeMap<>();
+    private final Map<String, Float> spriteX = new TreeMap<>();
+    private final Map<String, Float> spriteY = new TreeMap<>();
+    private final Map<String, Float> spriteWidth = new TreeMap<>();
+    private final Map<String, Float> spriteHeight = new TreeMap<>();
+    private final Map<String, Float> spriteAngle = new TreeMap<>();
+    private final Map<String, Box2DSprite> spriteMap = new TreeMap<>();
 
     private Array<Array<Float>> walls;
     private ShapeRenderer shapeRenderer = new ShapeRenderer();

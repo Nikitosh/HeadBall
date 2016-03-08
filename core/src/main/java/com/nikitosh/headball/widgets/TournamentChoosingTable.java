@@ -13,7 +13,7 @@ import com.nikitosh.headball.utils.Constants;
 import java.util.NoSuchElementException;
 
 public class TournamentChoosingTable extends ChoosingTable {
-    private Array<Tournament> tournaments;
+    private final Array<Tournament> tournaments;
 
     private static final String LOG_TAG = "TournamentChoosingTable";
     private static final String GET_TOURNAMENT_BY_NAME_ERROR_MESSAGE = "Can't get tournament with name: ";

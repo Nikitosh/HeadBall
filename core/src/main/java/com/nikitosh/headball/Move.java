@@ -13,7 +13,7 @@ public class Move {
     private static final String MOVE_SERIALIZE_ERROR_MESSAGE = "Serialization failed!";
     private static final String MOVE_DESERIALIZE_ERROR_MESSAGE = "Deserialization failed!";
 
-    private boolean[] footballerState = new boolean[STATE_NUMBER];
+    private final boolean[] footballerState = new boolean[STATE_NUMBER];
 
     public Move() {
         clear();

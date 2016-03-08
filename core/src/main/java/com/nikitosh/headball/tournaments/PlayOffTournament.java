@@ -17,10 +17,10 @@ public class PlayOffTournament implements Tournament {
     private int currentRound = 0;
     private Array<Team> teams = new Array<>();
     private Array<Integer> nextRoundParticipants;
-    private Array<Array<Integer>> tournamentBracket = new Array<>();
+    private final Array<Array<Integer>> tournamentBracket = new Array<>();
     private OlympicSystemTournamentWidget resultTable;
     private TournamentTimetable statisticsTable;
-    private Array<Match> currentRoundMatches = new Array<>();
+    private final Array<Match> currentRoundMatches = new Array<>();
 
     public PlayOffTournament() {}
 

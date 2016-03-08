@@ -4,8 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.nikitosh.headball.Move;
 
 public abstract class InputController {
-    protected Table leftTable = new Table();
-    protected Table rightTable = new Table();
+    protected final Table leftTable = new Table();
+    protected final Table rightTable = new Table();
 
     public abstract Move getMove();
 

@@ -9,7 +9,7 @@ import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.utils.GameSettings;
 
 public class DesktopLauncher implements ActionResolver {
-	private static DesktopLauncher launcher = new DesktopLauncher();
+	private static final DesktopLauncher launcher = new DesktopLauncher();
 
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();

@@ -16,6 +16,7 @@ import com.nikitosh.headball.widgets.TeamChoosingTable;
 public class PracticeTeamChoosingScreen extends BackgroundStageAbstractScreen {
     private static final boolean IS_PRACTICE = true;
     private static final boolean IS_DRAW_POSSIBLE = true;
+    private static final String CONTINUE = "Continue";
 
     public PracticeTeamChoosingScreen() {
         TeamReader reader = TeamReader.getTeamReader();
@@ -26,7 +27,7 @@ public class PracticeTeamChoosingScreen extends BackgroundStageAbstractScreen {
         final TeamChoosingTable choosingTable1 = new TeamChoosingTable(teams);
         final TeamChoosingTable choosingTable2 = new TeamChoosingTable(teams);
 
-        TextButton continueButton = new TextButton("Continue", AssetLoader.getGameSkin());
+        TextButton continueButton = new TextButton(CONTINUE, AssetLoader.getGameSkin());
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

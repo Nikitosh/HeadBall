@@ -11,10 +11,10 @@ public class TouchpadInputController extends InputController {
     private static final float TOUCHPAD_KNOB = 0;
     private static final float TOUCHPAD_JUMP_LEVEL_PERCENTAGE = 0.5f;
 
-    private TextButton hitButton;
-    private Touchpad touchpad;
+    private final TextButton hitButton;
+    private final Touchpad touchpad;
 
-    private Move move = new Move();
+    private final Move move = new Move();
 
     public TouchpadInputController() {
         super();
