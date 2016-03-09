@@ -22,7 +22,7 @@ public class GameFieldGroup extends Group {
     private final Map<String, Box2DSprite> spriteMap = new TreeMap<>();
 
     private Array<Array<Float>> walls;
-    private ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     public GameFieldGroup() {
         super();

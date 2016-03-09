@@ -48,8 +48,8 @@ public class MultiPlayerGameController extends GameController {
     private String[] ballParameters;
     private String[] scoreSerialization;
     private String gameDuration;
-    private Array<String[]> footballersParameters = new Array<>();
-    private Array<String[]> footballersLegsParameters = new Array<>();
+    private final Array<String[]> footballersParameters = new Array<>();
+    private final Array<String[]> footballersLegsParameters = new Array<>();
 
     public MultiPlayerGameController(GameScreen gameScreen,
                                      MatchInfo matchInfo, Socket socket) throws IOException {
@@ -62,7 +62,7 @@ public class MultiPlayerGameController extends GameController {
             playerNumber = 1;
         }
 
-        gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber());
+        gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber(), true);
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
 
         player = new LocalHumanPlayer(getInputController());
@@ -163,7 +163,7 @@ public class MultiPlayerGameController extends GameController {
     }
 
     @Override
-    public void finishGame() {
+    protected void finishGame() {
         super.finishGame();
         gameScreen.addGameOverWindow(score, playerNumber);
     }

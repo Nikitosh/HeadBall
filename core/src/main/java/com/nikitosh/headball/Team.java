@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import java.util.Comparator;
 
 public class Team {
-    private static final Comparator<Team> comparator = new Comparator<Team>() {
+    private static final Comparator<Team> COMPARATOR = new Comparator<Team>() {
         @Override
         public int compare(Team o1, Team o2) {
             if (o1.points == o2.points) {
@@ -80,7 +80,7 @@ public class Team {
     }
 
     public static Comparator<Team> getComparator() {
-        return comparator;
+        return COMPARATOR;
     }
 
 }

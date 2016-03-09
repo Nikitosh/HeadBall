@@ -24,7 +24,6 @@ public class GameWorld {
     private float initialBallPositionY;
 
     private final Image field;
-    private float height;
     private final Footballer[] footballers;
     private final Array<RectangleWall> walls;
     private Ball ball;
@@ -211,7 +210,6 @@ public class GameWorld {
     }
 
     public void setSize(float width, float height) {
-        this.height = height;
         field.setBounds(0, 0, width, height);
     }
 }

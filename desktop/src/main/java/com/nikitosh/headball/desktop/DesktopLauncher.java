@@ -1,5 +1,6 @@
 package com.nikitosh.headball.desktop;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -15,6 +16,7 @@ public class DesktopLauncher implements ActionResolver {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 960;
 		config.height = 540;
+		//config.addIcon("res/mipmap-hdpi/ic_launcher.png", Files.FileType.Internal);
 		new LwjglApplication(new HeadballGame(launcher), config);
 		GameSettings.putString(Constants.SETTINGS_CONTROL, Constants.SETTINGS_CONTROL_KEYBOARD);
 	}

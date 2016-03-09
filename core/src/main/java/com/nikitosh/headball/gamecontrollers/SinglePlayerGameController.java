@@ -19,7 +19,7 @@ public class SinglePlayerGameController extends GameController {
     public SinglePlayerGameController(GameScreen gameScreen, MatchInfo matchInfo) {
         super(gameScreen, matchInfo);
 
-        gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber());
+        gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber(), true);
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
 
         playerNumber = 0;

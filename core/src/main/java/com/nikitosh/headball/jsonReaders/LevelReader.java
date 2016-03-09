@@ -7,7 +7,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public final class LevelReader {
-    private static final String LEVELS_PATH = "info/levels.json";
     private static final String JSON_LEVELS_KEY = "levels";
     private static final String JSON_WIDTH_KEY = "width";
     private static final String JSON_HEIGHT_KEY = "height";
@@ -25,6 +24,8 @@ public final class LevelReader {
     private static final String JSON_GOALS_HEIGHT_KEY = "goalsHeight";
     private static final String JSON_CROSSBAR_HEIGHT_KEY = "crossbarHeight";
     private static final String JSON_WALLS_KEY = "walls";
+
+    private static String levelsPath = "info/levels.json";
 
     private LevelReader() {}
 
@@ -49,8 +50,8 @@ public final class LevelReader {
         return array;
     }
 
-    public static GameWorld loadLevel(int index) {
-        JSONObject level = (JSONObject) ((JSONArray) Utilities.parseJSONFile(LEVELS_PATH).
+    public static GameWorld loadLevel(int index, boolean toCreate) {
+        JSONObject level = (JSONObject) ((JSONArray) Utilities.parseJSONFile(levelsPath).
                 get(JSON_LEVELS_KEY)).get(index);
         float width = ((Long) level.get(JSON_WIDTH_KEY)).floatValue();
         float height = ((Long) level.get(JSON_HEIGHT_KEY)).floatValue();
@@ -72,7 +73,9 @@ public final class LevelReader {
         for (Object wall : wallsArray) {
             walls.add(parseFloatArray((JSONArray) wall));
         }
-
+        if (!toCreate) {
+            return null;
+        }
         GameWorld gameWorld = new GameWorld();
         gameWorld.setSize(width, height);
         gameWorld.createWalls(walls);
@@ -83,6 +86,10 @@ public final class LevelReader {
     }
 
     public static int getLevelsNumber() {
-        return ((JSONArray) Utilities.parseJSONFile(LEVELS_PATH).get(JSON_LEVELS_KEY)).size();
+        return ((JSONArray) Utilities.parseJSONFile(levelsPath).get(JSON_LEVELS_KEY)).size();
+    }
+
+    public static void setLevelsPath(String levelsPath) {
+        LevelReader.levelsPath = levelsPath;
     }
 }

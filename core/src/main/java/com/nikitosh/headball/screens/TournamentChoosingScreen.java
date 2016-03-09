@@ -25,7 +25,7 @@ public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
         Array<Tournament> tournaments = new Array<>();
         for (int i = 0; i < reader.getTournamentsNumber(); i++) {
             try {
-                tournaments.add(reader.getTournament(i));
+                tournaments.add(reader.getTournament(i, true));
             } catch (NoSuchElementException e) {
                 Gdx.app.error(LOG_TAG, GET_TOURNAMENT_BY_INDEX_ERROR_MESSAGE + i, e);
                 HeadballGame.getActionResolver().showToast(GET_TOURNAMENT_BY_INDEX_ERROR_MESSAGE + i);

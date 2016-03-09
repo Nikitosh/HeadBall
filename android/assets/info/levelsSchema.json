@@ -24,6 +24,7 @@
           },
           "footballersX": {
             "id": "footballersX",
+            "description": "initial x-coordinates of two footballers",
             "type": "array",
             "minItems": 2,
             "maxItems": 2,
@@ -34,6 +35,7 @@
           },
           "footballersY": {
             "id": "footballersY",
+            "description": "initial y-coordinates of two footballers",
             "type": "array",
             "minItems": 2,
             "maxItems": 2,
@@ -44,6 +46,7 @@
           },
           "footballersLeft": {
             "id": "footballersLeft",
+            "description": "is footballer left sided",
             "type": "array",
             "minItems": 2,
             "maxItems": 2,
@@ -58,14 +61,17 @@
           },
           "ballX": {
             "id": "ballX",
+            "description": "initial x-coordinate of ball",
             "type": "integer"
           },
           "ballY": {
             "id": "ballY",
+            "description": "initial y-coordinate of ball",
             "type": "integer"
           },
           "goalsX": {
             "id": "goalsX",
+            "description": "initial x-coordinates of goals",
             "type": "array",
             "minItems": 2,
             "maxItems": 2,
@@ -76,6 +82,7 @@
           },
           "goalsY": {
             "id": "goalsY",
+            "description": "initial y-coordinates of goals",
             "type": "array",
             "minItems": 2,
             "maxItems": 2,
@@ -86,6 +93,7 @@
           },
           "goalsLeft": {
             "id": "goalsLeft",
+            "description": "are goals left sided",
             "type": "array",
             "minItems": 2,
             "maxItems": 2,
@@ -111,6 +119,7 @@
             "type": "array",
             "items": {
               "id": "wall",
+              "description": "five numbers: x1, y1, x2, y2, p; four first numbers stay for rectangle with lower left corner (x1, y1) and upper right corner (x2, y2); p is 0 when wall is vertical and 1 if horizontal",
               "type": "array",
               "minItems": 5,
               "maxItems": 5,

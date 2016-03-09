@@ -14,8 +14,6 @@ import org.json.simple.JSONObject;
 import java.util.NoSuchElementException;
 
 public final class TournamentReader {
-    private static final String TOURNAMENTS_PATH = "info/tournaments.json";
-
     private static final String JSON_TOURNAMENTS_KEY = "tournaments";
     private static final String JSON_TYPE_KEY = "type";
     private static final String JSON_NAME_KEY = "name";
@@ -28,11 +26,13 @@ public final class TournamentReader {
     private static final String LOG_TAG = "TournamentReader";
     private static final String GET_TEAM_BY_NAME_ERROR_MESSAGE = "Can't get team with name: ";
 
+    private static String tournamentsPath = "info/tournaments.json";
+
     private static TournamentReader tournamentReader;
     private final JSONArray tournaments;
 
     private TournamentReader() {
-        tournaments = (JSONArray) Utilities.parseJSONFile(TOURNAMENTS_PATH).get(JSON_TOURNAMENTS_KEY);
+        tournaments = (JSONArray) Utilities.parseJSONFile(tournamentsPath).get(JSON_TOURNAMENTS_KEY);
     }
 
     public static TournamentReader getTournamentReader() {
@@ -42,7 +42,7 @@ public final class TournamentReader {
         return tournamentReader;
     }
 
-    public Tournament getTournament(int index) {
+    public Tournament getTournament(int index, boolean toCreate) {
         JSONObject tournament = getJSONTournament(index);
         String name = (String) tournament.get(JSON_NAME_KEY);
         String iconName = (String) tournament.get(JSON_ICON_KEY);
@@ -58,7 +58,9 @@ public final class TournamentReader {
                 HeadballGame.getActionResolver().showToast(GET_TEAM_BY_NAME_ERROR_MESSAGE + teamName);
             }
         }
-
+        if (!toCreate) {
+            return null;
+        }
         if (tournament.get(JSON_TYPE_KEY).equals(JSON_LEAGUE_KEY)) {
             return new LeagueTournament(name, iconName, teams, lapNumber);
         }
@@ -68,10 +70,10 @@ public final class TournamentReader {
         throw new NoSuchElementException();
     }
 
-    public Tournament getTournament(String name) {
+    public Tournament getTournament(String name, boolean toCreate) {
         for (int i = 0; i < getTournamentsNumber(); i++) {
             if (name.equals(getTournamentName(i))) {
-                return getTournament(i);
+                return getTournament(i, toCreate);
             }
         }
         throw new NoSuchElementException();
@@ -90,5 +92,9 @@ public final class TournamentReader {
             throw new NoSuchElementException();
         }
         return (JSONObject) tournaments.get(index);
+    }
+
+    public static void setTournamentsPath(String tournamentsPath) {
+        TournamentReader.tournamentsPath = tournamentsPath;
     }
 }

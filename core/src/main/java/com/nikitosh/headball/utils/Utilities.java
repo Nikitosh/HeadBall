@@ -2,7 +2,6 @@ package com.nikitosh.headball.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
-import com.nikitosh.headball.HeadballGame;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -21,8 +20,7 @@ public final class Utilities {
         try {
             content = Utilities.readFile(path);
         } catch (Exception e) {
-            Gdx.app.error(LOG_TAG, INCORRECT_RESOURCES_LOADING, e);
-            HeadballGame.getActionResolver().showToast(INCORRECT_RESOURCES_LOADING);
+                Gdx.app.error(LOG_TAG, INCORRECT_RESOURCES_LOADING, e);
         }
 
         JSONParser parser = new JSONParser();
@@ -31,7 +29,6 @@ public final class Utilities {
             jsonObject = (JSONObject) parser.parse(content);
         }   catch (Exception e) {
             Gdx.app.error(LOG_TAG, INCORRECT_RESOURCES_LOADING, e);
-            HeadballGame.getActionResolver().showToast(INCORRECT_RESOURCES_LOADING);
         }
         return jsonObject;
     }

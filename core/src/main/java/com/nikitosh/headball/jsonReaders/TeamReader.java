@@ -8,17 +8,17 @@ import org.json.simple.JSONObject;
 import java.util.NoSuchElementException;
 
 public final class TeamReader {
-    private static final String TEAMS_PATH = "info/teams.json";
-
     private static final String JSON_TEAMS_KEY = "teams";
     private static final String JSON_NAME_KEY = "name";
     private static final String JSON_ICON_KEY = "icon";
+
+    private static String teamsPath = "info/teams.json";
 
     private static TeamReader teamReader;
     private final JSONArray teams;
 
     private TeamReader() {
-        teams = (JSONArray) Utilities.parseJSONFile(TEAMS_PATH).get(JSON_TEAMS_KEY);
+        teams = (JSONArray) Utilities.parseJSONFile(teamsPath).get(JSON_TEAMS_KEY);
     }
 
     public static TeamReader getTeamReader() {
@@ -55,5 +55,9 @@ public final class TeamReader {
 
     public int getTeamsNumber() {
         return teams.size();
+    }
+
+    public static void setTeamsPath(String teamsPath) {
+        TeamReader.teamsPath = teamsPath;
     }
 }

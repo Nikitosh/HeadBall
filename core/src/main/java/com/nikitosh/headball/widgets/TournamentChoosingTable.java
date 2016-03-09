@@ -40,7 +40,7 @@ public class TournamentChoosingTable extends ChoosingTable {
         Tournament tournament;
         try {
             tournament = TournamentReader.getTournamentReader()
-                .getTournament(tournaments.get(currentIndex).getName());
+                .getTournament(tournaments.get(currentIndex).getName(), true);
         } catch (NoSuchElementException e) {
             Gdx.app.error(LOG_TAG,
                     GET_TOURNAMENT_BY_NAME_ERROR_MESSAGE + tournaments.get(currentIndex).getName(), e);

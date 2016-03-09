@@ -9,8 +9,8 @@
       "description": "array of tournaments",
       "items": {
         "id": "tournament",
+        "description": "tournament object with four fields: type, name, icon name and teams-participants",
         "type": "object",
-        "description": "tournament object with three fields: type, name and icon name",
         "properties": {
           "type": {
             "id": "type",
@@ -27,6 +27,7 @@
           },
           "participants": {
             "id": "participants",
+            "description": "names of participating teams",
             "type": "array",
             "items": {
               "id": "team",
@@ -35,6 +36,7 @@
           },
           "lapNumber": {
             "id": "lapNumber",
+            "description": "means number of laps in league or number of rounds in playoff",
             "type": "integer"
           }
         },

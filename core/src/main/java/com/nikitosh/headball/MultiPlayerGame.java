@@ -29,8 +29,8 @@ public class MultiPlayerGame implements Runnable {
     private static final String RUN_ERROR_MESSAGE = "Run failed!";
     private static final String CLOSE_RESOURCES_ERROR_MESSAGE = "Closing resources failed!";
 
-    private GameWorld gameWorld;
-    private Array<Player> players = new Array<>();
+    private final GameWorld gameWorld;
+    private final Array<Player> players = new Array<>();
 
     private static final String LOG_TAG = "MultiPlayerGame";
 
@@ -39,7 +39,7 @@ public class MultiPlayerGame implements Runnable {
         AssetLoader.loadFont();
         AssetLoader.load();
 
-        gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber());
+        gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber(), true);
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
 
         this.firstPlayerSocket = firstPlayerSocket;
@@ -62,9 +62,9 @@ public class MultiPlayerGame implements Runnable {
         players.add(new RemoteHumanPlayer(secondPlayerInputStream));
     }
 
-    public float getDelta(int framesPerSecond) {
+    private float getDelta() {
         long diff = System.currentTimeMillis() - startTime;
-        long targetDelay = MILLISECONDS / framesPerSecond;
+        long targetDelay = MILLISECONDS / Constants.FRAMES_PER_SECOND;
         if (diff < targetDelay) {
             try {
                 Thread.sleep(targetDelay - diff);
@@ -113,7 +113,7 @@ public class MultiPlayerGame implements Runnable {
         while (!gameWorld.isEnded()) {
             sendGameWorldFrame(firstPlayerOutputStream);
             sendGameWorldFrame(secondPlayerOutputStream);
-            gameWorld.update(getDelta(Constants.FRAMES_PER_SECOND),
+            gameWorld.update(getDelta(),
                     players.get(0).getMove(), players.get(1).getMove());
         }
         try {
@@ -127,7 +127,7 @@ public class MultiPlayerGame implements Runnable {
         close();
     }
 
-    void close() {
+    private void close() {
         try {
             firstPlayerSocket.close();
             secondPlayerSocket.close();

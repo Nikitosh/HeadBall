@@ -14,14 +14,7 @@ public final class Server extends Game {
     private static final String CLIENTS_CONNECT_TO_SERVER_MESSAGE = "Got two clients";
     private static final String SERVER_START_ERROR_MESSAGE = "Starting server failed!";
 
-    private static ActionResolver actionResolver;
-
-    public Server(ActionResolver actionResolver) {
-        super();
-        Server.actionResolver = actionResolver;
-    }
-
-    public static void main() {
+    private static void run() {
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
             Gdx.app.log(LOG_TAG, SERVER_WAITING_CLIENTS_MESSAGE);
@@ -41,7 +34,6 @@ public final class Server extends Game {
 
     @Override
     public void create() {
-        actionResolver.signIn();
-        main();
+        run();
     }
 }
