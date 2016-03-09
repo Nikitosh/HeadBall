@@ -3,7 +3,7 @@ package com.nikitosh.headball.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.nikitosh.headball.utils.Constants;
 
 public class StageAbstractScreen extends AbstractScreen {
@@ -14,7 +14,7 @@ public class StageAbstractScreen extends AbstractScreen {
         stack = new Stack();
         stack.setFillParent(true);
 
-        stage = new Stage(new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
+        stage = new Stage(new ExtendViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT));
         stage.addActor(stack);
     }
 

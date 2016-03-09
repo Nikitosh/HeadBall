@@ -2,7 +2,6 @@ package com.nikitosh.headball.android;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.widget.Toast;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;

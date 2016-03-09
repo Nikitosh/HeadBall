@@ -31,14 +31,19 @@ public abstract class GameController {
         this.matchInfo = matchInfo;
 
         String control = GameSettings.getString(Constants.SETTINGS_CONTROL);
-        if (control.equals(Constants.SETTINGS_CONTROL_BUTTONS)) {
-            inputController = new ButtonsInputController();
-        } else if (control.equals(Constants.SETTINGS_CONTROL_TOUCHPAD)) {
-            inputController = new TouchpadInputController();
-        } else if (control.equals(Constants.SETTINGS_CONTROL_KEYBOARD)) {
-            inputController = new KeyboardInputController();
-        } else if (control.equals(Constants.SETTINGS_CONTROL_ACCELEROMETER)) {
-            inputController = new AccelerometerInputController();
+        switch (control) {
+            case Constants.SETTINGS_CONTROL_BUTTONS:
+                inputController = new ButtonsInputController();
+                break;
+            case Constants.SETTINGS_CONTROL_TOUCHPAD:
+                inputController = new TouchpadInputController();
+                break;
+            case Constants.SETTINGS_CONTROL_KEYBOARD:
+                inputController = new KeyboardInputController();
+                break;
+            case Constants.SETTINGS_CONTROL_ACCELEROMETER:
+                inputController = new AccelerometerInputController();
+                break;
         }
 
         players = new Player[Constants.PLAYERS_NUMBER];

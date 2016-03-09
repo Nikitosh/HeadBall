@@ -67,7 +67,7 @@ public final class AssetLoader {
         Texture goalsTexture = new Texture(Gdx.files.internal("images/goals.png"));
         Texture reversedGoalsTexture = new Texture(Gdx.files.internal("images/reversedGoals.png"));
 
-        menuTexture = new Texture(Gdx.files.internal("images/menu.jpg"));
+        menuTexture = new Texture(Gdx.files.internal("images/menu2.jpg"));
         fieldTexture = new Texture(Gdx.files.internal("images/fieldBackground.jpg"));
         backgroundTexture = new Texture(Gdx.files.internal("images/background.jpg"));
         darkBackgroundTexture = new Texture(Gdx.files.internal("images/darkBackground.png"));
