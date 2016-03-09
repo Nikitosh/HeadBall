@@ -12,7 +12,7 @@ public class MainMenuScreen extends BackgroundStageAbstractScreen {
     private static final String PLAY = "Play";
     private static final String ACHIEVEMENTS = "Achievements";
     private static final String SETTINGS = "Settings";
-    private static final String ABOUT = "About";
+    private static final String CREDITS = "Credits";
 
     public MainMenuScreen() {
         Button playTextButton = new TextButton(PLAY, AssetLoader.getGameSkin());
@@ -39,7 +39,7 @@ public class MainMenuScreen extends BackgroundStageAbstractScreen {
             }
         });
 
-        Button aboutTextButton = new TextButton(ABOUT, AssetLoader.getGameSkin());
+        Button aboutTextButton = new TextButton(CREDITS, AssetLoader.getGameSkin());
         aboutTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

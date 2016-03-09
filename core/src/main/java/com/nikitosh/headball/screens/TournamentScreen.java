@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.nikitosh.headball.*;
 import com.nikitosh.headball.gamecontrollers.GameController;
 import com.nikitosh.headball.gamecontrollers.SinglePlayerGameController;
+import com.nikitosh.headball.tournaments.LeagueTournament;
+import com.nikitosh.headball.tournaments.PlayOffTournament;
 import com.nikitosh.headball.tournaments.Tournament;
 import com.nikitosh.headball.tournaments.TournamentSerializer;
 import com.nikitosh.headball.utils.AssetLoader;
@@ -112,6 +114,15 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
                     ScreenManager.getInstance().disposeCurrentScreen();
                 }
             });
+
+            if (tournament.isWinner(playerTeam)) {
+                if (tournament instanceof LeagueTournament) {
+                    HeadballGame.getActionResolver().unlockAchievement(Constants.ACHIEVEMENT_LEAGUE);
+                }
+                if (tournament instanceof PlayOffTournament) {
+                    HeadballGame.getActionResolver().unlockAchievement(Constants.ACHIEVEMENT_PLAY_OFF);
+                }
+            }
 
             Dialog exitDialog = new Dialog("", AssetLoader.getDefaultSkin());
             exitDialog.text(TOURNAMENT_ENDED_TITLES[tournament.isWinner(playerTeam) ? 1 : 0],

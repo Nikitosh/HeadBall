@@ -3,6 +3,7 @@ package com.nikitosh.headball.gamecontrollers;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.GameWorld;
+import com.nikitosh.headball.HeadballGame;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.gameobjects.*;
 import com.nikitosh.headball.jsonReaders.LevelReader;
@@ -79,6 +80,19 @@ public class SinglePlayerGameController extends GameController {
     protected void finishGame() {
         super.finishGame();
         gameScreen.addGameOverWindow(gameWorld.getScore(), playerNumber);
+        if (GameSettings.getString(Constants.SETTINGS_CONTROL).equals(Constants.SETTINGS_CONTROL_TOUCHPAD)) {
+            HeadballGame.getActionResolver().unlockAchievement(Constants.ACHIEVEMENT_TOUCHPAD_GAMER);
+        }
+        int[] score = gameWorld.getScore();
+        if (score[playerNumber] > score[1 - playerNumber]) {
+            HeadballGame.getActionResolver().unlockAchievement(Constants.ACHIEVEMENT_FIRST_WIN);
+            if (GameSettings.getString(Constants.SETTINGS_CONTROL).equals(Constants.SETTINGS_CONTROL_ACCELEROMETER)) {
+                HeadballGame.getActionResolver().unlockAchievement(Constants.ACHIEVEMENT_SHAKE_IT);
+            }
+            if (score[playerNumber] >= Constants.ACHIEVEMENT_LUCKY_GUY_GOALS_NUMBER) {
+                HeadballGame.getActionResolver().unlockAchievement(Constants.ACHIEVEMENT_LUCKY_GUY);
+            }
+        }
     }
 
     @Override

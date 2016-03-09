@@ -46,5 +46,14 @@ public final class Constants {
 
     public static final char DATA_SEPARATOR = '_';
 
+    public static final String ACHIEVEMENT_TOUCHPAD_GAMER = "CgkIoYOlo7sYEAIQAQ";
+    public static final String ACHIEVEMENT_SHAKE_IT       = "CgkIoYOlo7sYEAIQAg";
+    public static final String ACHIEVEMENT_FIRST_WIN      = "CgkIoYOlo7sYEAIQAw";
+    public static final String ACHIEVEMENT_PLAY_OFF       = "CgkIoYOlo7sYEAIQBA";
+    public static final String ACHIEVEMENT_LEAGUE         = "CgkIoYOlo7sYEAIQBQ";
+    public static final String ACHIEVEMENT_LUCKY_GUY      = "CgkIoYOlo7sYEAIQBg";
+
+    public static final int ACHIEVEMENT_LUCKY_GUY_GOALS_NUMBER = 5;
+
     private Constants() {}
 }
