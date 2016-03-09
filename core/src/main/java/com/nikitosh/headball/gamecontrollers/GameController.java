@@ -2,11 +2,8 @@ package com.nikitosh.headball.gamecontrollers;
 
 import com.badlogic.gdx.Gdx;
 import com.nikitosh.headball.MatchInfo;
+import com.nikitosh.headball.inputcontrollers.*;
 import com.nikitosh.headball.utils.ScreenManager;
-import com.nikitosh.headball.inputcontrollers.ButtonsInputController;
-import com.nikitosh.headball.inputcontrollers.InputController;
-import com.nikitosh.headball.inputcontrollers.KeyboardInputController;
-import com.nikitosh.headball.inputcontrollers.TouchpadInputController;
 import com.nikitosh.headball.players.Player;
 import com.nikitosh.headball.screens.GameScreen;
 import com.nikitosh.headball.utils.Constants;
@@ -33,14 +30,15 @@ public abstract class GameController {
         this.gameScreen = gameScreen;
         this.matchInfo = matchInfo;
 
-        if (GameSettings.getString(Constants.SETTINGS_CONTROL).equals(Constants.SETTINGS_CONTROL_BUTTONS)) {
+        String control = GameSettings.getString(Constants.SETTINGS_CONTROL);
+        if (control.equals(Constants.SETTINGS_CONTROL_BUTTONS)) {
             inputController = new ButtonsInputController();
-        } else if (GameSettings.getString(Constants.SETTINGS_CONTROL).
-                equals(Constants.SETTINGS_CONTROL_TOUCHPAD)) {
+        } else if (control.equals(Constants.SETTINGS_CONTROL_TOUCHPAD)) {
             inputController = new TouchpadInputController();
-        } else if (GameSettings.getString(Constants.SETTINGS_CONTROL).
-                equals(Constants.SETTINGS_CONTROL_KEYBOARD)) {
+        } else if (control.equals(Constants.SETTINGS_CONTROL_KEYBOARD)) {
             inputController = new KeyboardInputController();
+        } else if (control.equals(Constants.SETTINGS_CONTROL_ACCELEROMETER)) {
+            inputController = new AccelerometerInputController();
         }
 
         players = new Player[Constants.PLAYERS_NUMBER];

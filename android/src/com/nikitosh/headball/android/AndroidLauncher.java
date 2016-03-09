@@ -98,6 +98,10 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
     @Override
     public void showAchievements() {
+        if (!isSignedIn()) {
+            showToast("You should sign in Google Play to see your achievements");
+            return;
+        }
         try {
             runOnUiThread(new Runnable() {
                 @Override
@@ -113,6 +117,10 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
     @Override
     public void showLeaderboard() {
+        if (!isSignedIn()) {
+            showToast("You should sign in Google Play to see leaderboard");
+            return;
+        }
         try {
             runOnUiThread(new Runnable() {
                 @Override
@@ -128,6 +136,9 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
     @Override
     public void unlockAchievement(String achievementID) {
+        if (!isSignedIn()) {
+            return;
+        }
         Games.Achievements.unlock(gameHelper.getApiClient(), achievementID);
     }
 

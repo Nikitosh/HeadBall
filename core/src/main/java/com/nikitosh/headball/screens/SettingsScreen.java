@@ -1,8 +1,11 @@
 package com.nikitosh.headball.screens;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.utils.GameSettings;
@@ -46,8 +49,15 @@ public class SettingsScreen extends BackgroundStageAbstractScreen {
         Button controlButton = new TextButton(Constants.SETTINGS_CONTROL, AssetLoader.getGameSkin(),
                 "notTouchable");
         selectBox = new SelectBox<>(AssetLoader.getGameSkin());
-        selectBox.setItems(Constants.SETTINGS_CONTROL_BUTTONS, Constants.SETTINGS_CONTROL_TOUCHPAD,
-                Constants.SETTINGS_CONTROL_KEYBOARD);
+        Array<String> controls = new Array<>(new String[] {
+                Constants.SETTINGS_CONTROL_BUTTONS, Constants.SETTINGS_CONTROL_TOUCHPAD});
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            controls.add(Constants.SETTINGS_CONTROL_ACCELEROMETER);
+        }
+        if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+            controls.add(Constants.SETTINGS_CONTROL_KEYBOARD);
+        }
+        selectBox.setItems(controls);
         selectBox.setSelected(GameSettings.getString(Constants.SETTINGS_CONTROL));
 
         Table settingsTable = new Table();

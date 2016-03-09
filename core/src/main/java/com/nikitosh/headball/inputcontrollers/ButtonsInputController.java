@@ -37,9 +37,7 @@ public class ButtonsInputController extends InputController {
     public Move getMove() {
         move.clear();
         for (int i = 0; i < buttonsArray.size; i++) {
-            if (buttonsArray.get(i).isPressed()) {
-                move.setState(i, true);
-            }
+            move.setState(i, buttonsArray.get(i).isPressed());
         }
         return move;
     }

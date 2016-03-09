@@ -10,9 +10,9 @@ public final class GameSettings {
     private GameSettings() {}
 
     public static void initialize() {
-        PREFERENCES.putBoolean(Constants.SETTINGS_SOUND, true);
-        PREFERENCES.putBoolean(Constants.SETTINGS_MUSIC, true);
-        PREFERENCES.putString(Constants.SETTINGS_CONTROL, Constants.SETTINGS_CONTROL_BUTTONS);
+        if (PREFERENCES.getString(Constants.SETTINGS_CONTROL).equals("")) {
+            putString(Constants.SETTINGS_CONTROL, Constants.SETTINGS_CONTROL_BUTTONS);
+        }
         PREFERENCES.flush();
     }
 

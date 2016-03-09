@@ -82,6 +82,8 @@ public final class AssetLoader {
         goalsSprites = new Box2DSprite[Constants.PLAYERS_NUMBER];
         goalsSprites[0] = new Box2DSprite(goalsTexture);
         goalsSprites[1] = new Box2DSprite(reversedGoalsTexture);
+
+        GameSettings.initialize();
     }
 
     public static Skin getGameSkin() {

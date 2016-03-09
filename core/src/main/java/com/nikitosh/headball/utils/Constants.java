@@ -35,6 +35,7 @@ public final class Constants {
     public static final String SETTINGS_CONTROL_BUTTONS = "Buttons";
     public static final String SETTINGS_CONTROL_TOUCHPAD = "Touchpad";
     public static final String SETTINGS_CONTROL_KEYBOARD = "Keyboard";
+    public static final String SETTINGS_CONTROL_ACCELEROMETER = "Accelerometer";
     public static final String TOURNAMENTS_SAVES_PATH = "tournaments/saves/";
     public static final String JSON = ".json";
 
