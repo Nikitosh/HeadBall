@@ -58,7 +58,7 @@ public class GameFieldGroup extends Group {
         shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.BLACK);
+        shapeRenderer.setColor(Color.DARK_GRAY);
         for (Array<Float> wall : walls) {
             shapeRenderer.rect(wall.get(0), wall.get(1), wall.get(2), wall.get(3));
         }
