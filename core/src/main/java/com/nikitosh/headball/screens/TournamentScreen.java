@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.nikitosh.headball.*;
+import com.nikitosh.headball.HeadballGame;
+import com.nikitosh.headball.MatchInfo;
+import com.nikitosh.headball.Team;
 import com.nikitosh.headball.gamecontrollers.GameController;
-import com.nikitosh.headball.gamecontrollers.SinglePlayerGameController;
+import com.nikitosh.headball.gamecontrollers.TournamentGameController;
 import com.nikitosh.headball.tournaments.LeagueTournament;
 import com.nikitosh.headball.tournaments.PlayOffTournament;
 import com.nikitosh.headball.tournaments.Tournament;
@@ -42,7 +44,7 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
                 if (tournament.isEnded(playerTeam)) {
                     return;
                 }
-                Team opponentTeam;
+                final Team opponentTeam;
                 try {
                     opponentTeam = tournament.getNextOpponent(playerTeam);
                 } catch (NoSuchElementException e) {
@@ -52,26 +54,10 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
                     return;
                 }
                 final GameScreen gameScreen = new GameScreen();
-                final GameController gameController = new SinglePlayerGameController(gameScreen,
-                        new MatchInfo(playerTeam, opponentTeam, tournament.isDrawResultPossible(), IS_PRACTICE));
+                final GameController gameController = new TournamentGameController(gameScreen,
+                        new MatchInfo(playerTeam, opponentTeam, tournament.isDrawResultPossible(), IS_PRACTICE),
+                        TournamentScreen.this);
                 ScreenManager.getInstance().setScreen(gameScreen);
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        synchronized (gameController) {
-                            while (gameController.isGameNotFinished()) {
-                                try {
-                                    gameController.wait();
-                                } catch (Exception e) {
-                                    Gdx.app.error(LOG_TAG, "", e);
-                                }
-
-                            }
-                            handleMatchEnd(playerTeam, gameController.getScore());
-                        }
-                    }
-                }).start();
             }
         });
 
@@ -80,7 +66,7 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
 
         Table upTable = new Table();
         upTable.defaults().padRight(Constants.UI_ELEMENTS_INDENT);
-        upTable.add(tournament.getResultTable().getTable());
+        upTable.add(new ScrollPane(tournament.getResultTable().getTable())).height(Constants.TABLES_HEGIHT);
         upTable.add(tournament.getStatisticsTable().getTable()).row();
 
         Table table = new Table();
@@ -97,7 +83,7 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
         }));
     }
 
-    private void handleMatchEnd(Team playerTeam, int[] score) {
+    public void handleMatchEnd(Team playerTeam, int[] score) {
         tournament.startNewRound();
         tournament.handlePlayerMatch(playerTeam, score[0], score[1]);
         tournament.simulateNextRound();

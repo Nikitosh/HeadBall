@@ -16,6 +16,7 @@ public class LastRoundTable extends AbstractResultTable {
 
     public void update(Array<Match> matches) {
         reset();
+        statisticsLabels.clear();
         for (int i = 0; i < matches.size; i++) {
             Array<String> statistics = matches.get(i).getStatistics();
             Array<Label> matchStatisticsLabels = new Array<>();

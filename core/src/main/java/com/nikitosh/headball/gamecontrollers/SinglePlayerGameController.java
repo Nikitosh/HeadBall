@@ -73,7 +73,7 @@ public class SinglePlayerGameController extends GameController {
         gameScreen.drawWall(wallRectangles);
 
         gameScreen.updateScoreLabel(gameWorld.getScore());
-        gameScreen.updateTimerLabel((int) gameWorld.getGameDuration());
+        gameScreen.updateTimerLabel(Math.round(gameWorld.getGameDuration()));
     }
 
     @Override

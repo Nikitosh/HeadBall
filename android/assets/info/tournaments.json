@@ -5,16 +5,16 @@
       "name": "APL",
       "icon": "aplLeague",
       "participants": [
-        "arsenal",
-        "chelsea",
-        "leicester-city",
-        "liverpool",
-        "manchester-city",
-        "manchester-united",
-        "southampton",
-        "stoke-city",
-        "tottenham-hotspur",
-        "west-ham"
+        "Arsenal",
+        "Chelsea",
+        "Leicester City",
+        "Liverpool",
+        "Manchester City",
+        "Manchester United",
+        "Southampton",
+        "Stoke City",
+        "Tottenham Hotspur",
+        "West Ham"
       ],
       "lapNumber": 18
     },
@@ -39,14 +39,14 @@
       "name": "Champions League",
       "icon": "Champions_League",
       "participants": [
-        "atletico",
-        "barcelona",
-        "bayern",
-        "benfica",
-        "manchester-city",
-        "psg",
-        "real",
-        "wolfsburg"
+        "Atletico",
+        "Barcelona",
+        "Bayern",
+        "Benfica",
+        "Manchester City",
+        "PSG",
+        "Real Madrid",
+        "Wolfsburg"
       ],
       "lapNumber": 4
     }

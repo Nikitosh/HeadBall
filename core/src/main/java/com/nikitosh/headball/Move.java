@@ -45,7 +45,7 @@ public class Move {
                     message |= 1 << i;
                 }
             }
-            outputStream.writeByte(message);
+            outputStream.writeUTF(Byte.toString(message) + '\n');
         } catch (IOException e) {
             Gdx.app.error(LOG_TAG, MOVE_SERIALIZE_ERROR_MESSAGE, e);
         }
@@ -53,7 +53,7 @@ public class Move {
 
     public static Move deserialize(DataInputStream inputStream) {
         try {
-            byte message = inputStream.readByte();
+            byte message = Byte.parseByte(inputStream.readUTF().replaceAll("\n", ""));
             Move move = new Move();
             for (int i = 0; i < STATE_NUMBER; i++) {
                 if (message % 2 == 1) {

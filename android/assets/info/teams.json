@@ -1,43 +1,43 @@
 {
   "teams": [
     {
-      "name": "arsenal",
+      "name": "Arsenal",
       "icon": "arsenal"
     },
     {
-      "name": "chelsea",
+      "name": "Chelsea",
       "icon": "chelsea"
     },
     {
-      "name": "leicester-city",
+      "name": "Leicester City",
       "icon": "leicester-city"
     },
     {
-      "name": "liverpool",
+      "name": "Liverpool",
       "icon": "liverpool"
     },
     {
-      "name": "manchester-city",
+      "name": "Manchester City",
       "icon": "manchester-city"
     },
     {
-      "name": "manchester-united",
+      "name": "Manchester United",
       "icon": "manchester-united"
     },
     {
-      "name": "southampton",
+      "name": "Southampton",
       "icon": "southampton"
     },
     {
-      "name": "stoke-city",
+      "name": "Stoke City",
       "icon": "stoke-city"
     },
     {
-      "name": "tottenham-hotspur",
+      "name": "Tottenham Hotspur",
       "icon": "tottenham-hotspur"
     },
     {
-      "name": "west-ham",
+      "name": "West Ham",
       "icon": "west-ham"
     },
     {
@@ -73,35 +73,35 @@
       "icon": "zenit-saint-petersburg-hd-logo"
     },
     {
-      "name": "atletico",
+      "name": "Atletico",
       "icon": "atletico"
     },
     {
-      "name": "barcelona",
+      "name": "Barcelona",
       "icon": "barcelona"
     },
     {
-      "name": "bayern",
+      "name": "Bayern",
       "icon": "bayern"
     },
     {
-      "name": "benfica",
+      "name": "Benfica",
       "icon": "benfica"
     },
     {
-      "name": "manchester-city",
+      "name": "Manchester City",
       "icon": "manchester-city"
     },
     {
-      "name": "psg",
+      "name": "PSG",
       "icon": "psg"
     },
     {
-      "name": "real",
+      "name": "Real Madrid",
       "icon": "real"
     },
     {
-      "name": "wolfsburg",
+      "name": "Wolfsburg",
       "icon": "wolfsburg"
     }
   ]

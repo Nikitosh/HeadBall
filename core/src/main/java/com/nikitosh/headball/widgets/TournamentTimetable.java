@@ -1,6 +1,7 @@
 package com.nikitosh.headball.widgets;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
@@ -18,8 +19,9 @@ public class TournamentTimetable extends Table implements ResultTable, Json.Seri
         this.nextRoundTable = nextRoundTable;
         this.lastRoundTable = lastRoundTable;
 
-        add(nextRoundTable.getTable()).row();
-        add(lastRoundTable.getTable()).pad(Constants.UI_ELEMENTS_INDENT);
+        add(new ScrollPane(nextRoundTable.getTable())).height(Constants.TABLES_HEGIHT / 2).row();
+        add(new ScrollPane(lastRoundTable.getTable())).height(Constants.TABLES_HEGIHT / 2)
+                .pad(Constants.UI_ELEMENTS_INDENT);
     }
 
     public LastRoundTable getLastRoundTable() {

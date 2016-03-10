@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 
 import java.util.NoSuchElementException;
 
-public final class TeamReader {
+public final class  TeamReader {
     private static final String JSON_TEAMS_KEY = "teams";
     private static final String JSON_NAME_KEY = "name";
     private static final String JSON_ICON_KEY = "icon";

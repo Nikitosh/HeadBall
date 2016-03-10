@@ -17,6 +17,7 @@ public class TournamentTeamChoosingScreen extends BackgroundStageAbstractScreen 
             for (int i = 0; i < reader.getTeamsNumber(); i++) {
                 if (team.equals(reader.getTeam(i))) {
                     teams.add(reader.getTeam(i));
+                    break;
                 }
             }
         }

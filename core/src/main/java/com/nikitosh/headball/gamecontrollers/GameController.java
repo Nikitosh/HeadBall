@@ -15,7 +15,7 @@ public abstract class GameController {
 
     protected final GameScreen gameScreen;
 
-    private final MatchInfo matchInfo;
+    protected final MatchInfo matchInfo;
     private InputController inputController;
 
     protected final Player[] players;

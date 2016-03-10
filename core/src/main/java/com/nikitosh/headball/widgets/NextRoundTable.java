@@ -19,6 +19,7 @@ public class NextRoundTable extends AbstractResultTable {
 
     public void update(Array<Integer> nextRoundTimeTable, Array<Team> teams) {
         reset();
+        statisticsLabels.clear();
         for (int i = 0; i < nextRoundTimeTable.size / 2; i++) {
             Array<Label> matchLabels = new Array<>();
             matchLabels.add(new Label(teams.get(nextRoundTimeTable.get(i * 2)).getName(),

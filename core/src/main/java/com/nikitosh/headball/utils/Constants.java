@@ -7,6 +7,7 @@ public final class Constants {
     public static final int VIRTUAL_HEIGHT = 480;
     public static final int UI_LAYER_HEIGHT = 100;
     public static final int UI_ELEMENTS_INDENT = 10;
+    public static final int TABLES_HEGIHT = 300;
 
     public static final int GAME_DURATION = 10;
     public static final int FRAMES_PER_SECOND = 60;
