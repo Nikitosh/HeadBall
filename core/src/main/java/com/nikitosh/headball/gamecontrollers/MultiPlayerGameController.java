@@ -142,9 +142,11 @@ public class MultiPlayerGameController extends GameController {
             gameScreen.drawWall(wallRectangles);
 
             for (int i = 0; i < score.length; i++) {
-                int newScore = Integer.valueOf(scoreSerialization[i]);
-                if (newScore != score[i] && GameSettings.getBoolean(Constants.SETTINGS_SOUND)) {
-                    AssetLoader.getGoalSound().play();
+                int newScore = Integer.parseInt(scoreSerialization[i]);
+                if (newScore != score[i]) {
+                    if (GameSettings.getBoolean(Constants.SETTINGS_SOUND)) {
+                        AssetLoader.getGoalSound().play();
+                    }
                     score[i] = newScore;
                 }
             }
