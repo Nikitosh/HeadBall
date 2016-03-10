@@ -1,76 +1,54 @@
 {
   "tournaments": [
     {
+      "type": "league",
+      "name": "APL",
+      "icon": "aplLeague",
+      "participants": [
+        "arsenal",
+        "chelsea",
+        "leicester-city",
+        "liverpool",
+        "manchester-city",
+        "manchester-united",
+        "southampton",
+        "stoke-city",
+        "tottenham-hotspur",
+        "west-ham"
+      ],
+      "lapNumber": 18
+    },
+    {
+      "type": "league",
+      "name": "RFPL",
+      "icon": "rfplLeague",
+      "participants": [
+        "CSKA",
+        "Dinamo",
+        "Rostov",
+        "Krasnodar",
+        "Lokomotiv",
+        "Rubin",
+        "Spartak",
+        "Zenit"
+      ],
+      "lapNumber": 14
+    },
+    {
       "type": "playoff",
-      "name": "Europa League",
-      "icon": "europaLeague",
-      "participants": [
-        "Lokomotiv",
-        "Rubin",
-        "Schalke",
-        "Chelsea"
-      ],
-      "lapNumber": 3
-    },
-    {
-      "type": "league",
       "name": "Champions League",
-      "icon": "championsLeague",
+      "icon": "Champions_League",
       "participants": [
-        "Zenit",
-        "CSKA",
-        "Barcelona",
-        "Real Madrid"
+        "atletico",
+        "barcelona",
+        "bayern",
+        "benfica",
+        "manchester-city",
+        "psg",
+        "real",
+        "wolfsburg"
       ],
-      "lapNumber": 6
-    },
-    {
-      "type": "league",
-      "name": "RFPL",
-      "icon": "rfplLeague",
-      "participants": [
-        "Zenit",
-        "CSKA",
-        "Lokomotiv",
-        "Rubin"
-      ],
-      "lapNumber": 2
-    },
-    {
-      "type": "league",
-      "name": "Europa League",
-      "icon": "europaLeague",
-      "participants": [
-        "Lokomotiv",
-        "Rubin",
-        "Borussia",
-        "Spartak"
-      ],
-      "lapNumber": 2
-    },
-    {
-      "type": "league",
-      "name": "Champions League",
-      "icon": "championsLeague",
-      "participants": [
-        "Zenit",
-        "CSKA",
-        "Barcelona",
-        "Real Madrid"
-      ],
-      "lapNumber": 2
-    },
-    {
-      "type": "league",
-      "name": "RFPL",
-      "icon": "rfplLeague",
-      "participants": [
-        "Zenit",
-        "CSKA",
-        "Lokomotiv",
-        "Rubin"
-      ],
-      "lapNumber": 2
+      "lapNumber": 4
     }
   ]
 }

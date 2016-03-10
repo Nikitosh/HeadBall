@@ -1,75 +1,198 @@
 
-teamPack.png
+aplPack.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-realMadrid
+arsenal
   rotate: false
-  xy: 1, 220
-  size: 200, 280
-  orig: 200, 280
-  offset: 0, 0
-  index: -1
-cska
-  rotate: false
-  xy: 203, 227
-  size: 200, 273
-  orig: 200, 273
-  offset: 0, 0
-  index: -1
-lokomotiv
-  rotate: false
-  xy: 405, 260
-  size: 200, 240
-  orig: 200, 240
-  offset: 0, 0
-  index: -1
-rubin
-  rotate: false
-  xy: 1, 1
-  size: 200, 217
-  orig: 200, 217
-  offset: 0, 0
-  index: -1
-barcelona
-  rotate: false
-  xy: 203, 25
-  size: 200, 200
-  orig: 200, 200
-  offset: 0, 0
-  index: -1
-borussia
-  rotate: false
-  xy: 405, 58
+  xy: 1, 203
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 chelsea
   rotate: false
-  xy: 607, 300
+  xy: 1, 1
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
-schalke
+leicester-city
   rotate: false
-  xy: 607, 98
+  xy: 203, 203
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
-zenit
+liverpool
   rotate: false
-  xy: 809, 358
-  size: 200, 142
-  orig: 200, 142
+  xy: 203, 1
+  size: 200, 200
+  orig: 200, 200
   offset: 0, 0
   index: -1
-spartak
+manchester-city
   rotate: false
-  xy: 809, 229
-  size: 200, 127
-  orig: 200, 127
+  xy: 405, 203
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+manchester-united
+  rotate: false
+  xy: 405, 1
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+southampton
+  rotate: false
+  xy: 607, 203
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+stoke-city
+  rotate: false
+  xy: 607, 1
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+tottenham-hotspur
+  rotate: false
+  xy: 809, 203
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+west-ham
+  rotate: false
+  xy: 809, 1
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+
+
+rfplPack.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cska-moscow-logo
+  rotate: false
+  xy: 1, 203
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+dinamo-moscow-hd-logo
+  rotate: false
+  xy: 1, 1
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+fc-rostov-hd-logo
+  rotate: false
+  xy: 203, 203
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+krasnodar-fk-hd-logo
+  rotate: false
+  xy: 203, 1
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+lokomotiv-moscow-logo
+  rotate: false
+  xy: 405, 203
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+rubin-kazan-hd-logo
+  rotate: false
+  xy: 405, 1
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+spartak-moscow-hd-logo
+  rotate: false
+  xy: 607, 203
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+zenit-saint-petersburg-hd-logo
+  rotate: false
+  xy: 607, 1
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+
+championPack.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+atletico
+  rotate: false
+  xy: 1, 203
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+barcelona
+  rotate: false
+  xy: 1, 1
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+bayern
+  rotate: false
+  xy: 203, 203
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+benfica
+  rotate: false
+  xy: 203, 1
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+manchester-city
+  rotate: false
+  xy: 405, 203
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+psg
+  rotate: false
+  xy: 405, 1
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+real
+  rotate: false
+  xy: 607, 203
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+wolfsburg
+  rotate: false
+  xy: 607, 1
+  size: 200, 200
+  orig: 200, 200
   offset: 0, 0
   index: -1

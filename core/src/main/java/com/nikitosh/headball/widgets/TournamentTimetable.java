@@ -26,8 +26,16 @@ public class TournamentTimetable extends Table implements ResultTable, Json.Seri
         return lastRoundTable;
     }
 
+    public void setLastRoundTable(LastRoundTable lastRoundTable) {
+        this.lastRoundTable = lastRoundTable;
+    }
+
     public NextRoundTable getNextRoundTable() {
         return nextRoundTable;
+    }
+
+    public void setNextRoundTable(NextRoundTable nextRoundTable) {
+        this.nextRoundTable = nextRoundTable;
     }
 
     @Override

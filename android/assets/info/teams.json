@@ -1,44 +1,108 @@
 {
   "teams": [
     {
-      "name": "Zenit",
-      "icon": "zenit"
+      "name": "arsenal",
+      "icon": "arsenal"
     },
     {
-      "name": "CSKA",
-      "icon": "cska"
-    },
-    {
-      "name": "Lokomotiv",
-      "icon": "lokomotiv"
-    },
-    {
-      "name": "Rubin",
-      "icon": "rubin"
-    },
-    {
-      "name": "Schalke",
-      "icon": "schalke"
-    },
-    {
-      "name": "Chelsea",
+      "name": "chelsea",
       "icon": "chelsea"
     },
     {
-      "name": "Barcelona",
-      "icon": "barcelona"
+      "name": "leicester-city",
+      "icon": "leicester-city"
     },
     {
-      "name": "Real Madrid",
-      "icon": "realMadrid"
+      "name": "liverpool",
+      "icon": "liverpool"
     },
     {
-      "name": "Borussia",
-      "icon": "borussia"
+      "name": "manchester-city",
+      "icon": "manchester-city"
+    },
+    {
+      "name": "manchester-united",
+      "icon": "manchester-united"
+    },
+    {
+      "name": "southampton",
+      "icon": "southampton"
+    },
+    {
+      "name": "stoke-city",
+      "icon": "stoke-city"
+    },
+    {
+      "name": "tottenham-hotspur",
+      "icon": "tottenham-hotspur"
+    },
+    {
+      "name": "west-ham",
+      "icon": "west-ham"
+    },
+    {
+      "name": "CSKA",
+      "icon": "cska-moscow-logo"
+    },
+    {
+      "name": "Dinamo",
+      "icon": "dinamo-moscow-hd-logo"
+    },
+    {
+      "name": "Rostov",
+      "icon": "fc-rostov-hd-logo"
+    },
+    {
+      "name": "Krasnodar",
+      "icon": "krasnodar-fk-hd-logo"
+    },
+    {
+      "name": "Lokomotiv",
+      "icon": "lokomotiv-moscow-logo"
+    },
+    {
+      "name": "Rubin",
+      "icon": "rubin-kazan-hd-logo"
     },
     {
       "name": "Spartak",
-      "icon": "spartak"
+      "icon": "spartak-moscow-hd-logo"
+    },
+    {
+      "name": "Zenit",
+      "icon": "zenit-saint-petersburg-hd-logo"
+    },
+    {
+      "name": "atletico",
+      "icon": "atletico"
+    },
+    {
+      "name": "barcelona",
+      "icon": "barcelona"
+    },
+    {
+      "name": "bayern",
+      "icon": "bayern"
+    },
+    {
+      "name": "benfica",
+      "icon": "benfica"
+    },
+    {
+      "name": "manchester-city",
+      "icon": "manchester-city"
+    },
+    {
+      "name": "psg",
+      "icon": "psg"
+    },
+    {
+      "name": "real",
+      "icon": "real"
+    },
+    {
+      "name": "wolfsburg",
+      "icon": "wolfsburg"
     }
   ]
 

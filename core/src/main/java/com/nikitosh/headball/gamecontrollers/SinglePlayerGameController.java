@@ -86,7 +86,8 @@ public class SinglePlayerGameController extends GameController {
         int[] score = gameWorld.getScore();
         if (score[playerNumber] > score[1 - playerNumber]) {
             HeadballGame.getActionResolver().unlockAchievement(Constants.ACHIEVEMENT_FIRST_WIN);
-            if (GameSettings.getString(Constants.SETTINGS_CONTROL).equals(Constants.SETTINGS_CONTROL_ACCELEROMETER)) {
+            if (GameSettings.getString(Constants.SETTINGS_CONTROL)
+                    .equals(Constants.SETTINGS_CONTROL_ACCELEROMETER)) {
                 HeadballGame.getActionResolver().unlockAchievement(Constants.ACHIEVEMENT_SHAKE_IT);
             }
             if (score[playerNumber] >= Constants.ACHIEVEMENT_LUCKY_GUY_GOALS_NUMBER) {

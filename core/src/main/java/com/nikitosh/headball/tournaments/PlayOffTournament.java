@@ -38,7 +38,7 @@ public class PlayOffTournament implements Tournament {
         tournamentBracket.add(firstRound);
         resultTable = new OlympicSystemTournamentWidget(lapNumber, teams, tournamentBracket);
         statisticsTable = new TournamentTimetable(
-                new NextRoundTable(firstRound, teams), new LastRoundTable(teams.size / 2));
+                new NextRoundTable(firstRound, teams), new LastRoundTable());
         statisticsTable.getLastRoundTable().setVisible(false);
     }
 

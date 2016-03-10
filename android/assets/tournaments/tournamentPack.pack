@@ -3,24 +3,24 @@ tournamentPack.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-championsLeague
+aplLeague
   rotate: false
-  xy: 0, 0
-  size: 292, 280
-  orig: 292, 280
+  xy: 1, 1
+  size: 202, 201
+  orig: 202, 201
   offset: 0, 0
   index: -1
 rfplLeague
   rotate: false
-  xy: 292, 0
-  size: 280, 280
-  orig: 280, 280
+  xy: 205, 1
+  size: 201, 201
+  orig: 201, 201
   offset: 0, 0
   index: -1
-europaLeague
+Champions_League
   rotate: false
-  xy: 572, 0
-  size: 213, 280
-  orig: 213, 280
+  xy: 408, 10
+  size: 200, 192
+  orig: 200, 192
   offset: 0, 0
   index: -1

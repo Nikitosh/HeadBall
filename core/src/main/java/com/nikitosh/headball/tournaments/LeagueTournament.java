@@ -34,7 +34,7 @@ public class LeagueTournament implements Tournament {
         generateTimetable();
         resultTable = new StatisticsTable(teams);
         statisticTimetable = new TournamentTimetable(
-                new NextRoundTable(timeTable.get(0), teams), new LastRoundTable(teams.size / 2));
+                new NextRoundTable(timeTable.get(0), teams), new LastRoundTable());
         statisticTimetable.getLastRoundTable().setVisible(false);
     }
 
