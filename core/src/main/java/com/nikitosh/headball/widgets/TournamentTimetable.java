@@ -61,7 +61,8 @@ public class TournamentTimetable extends Table implements ResultTable, Json.Seri
     public void read(Json json, JsonValue jsonData) {
         json.readField(this, "nextRoundTable", jsonData);
         json.readField(this, "lastRoundTable", jsonData);
-        add(nextRoundTable.getTable()).row();
-        add(lastRoundTable.getTable()).pad(Constants.UI_ELEMENTS_INDENT);
+        add(new ScrollPane(nextRoundTable.getTable())).height(Constants.TABLES_HEGIHT / 2).row();
+        add(new ScrollPane(lastRoundTable.getTable())).height(Constants.TABLES_HEGIHT / 2)
+                .pad(Constants.UI_ELEMENTS_INDENT);
     }
 }

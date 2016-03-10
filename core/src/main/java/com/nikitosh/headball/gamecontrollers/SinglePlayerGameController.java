@@ -23,6 +23,8 @@ public class SinglePlayerGameController extends GameController {
         gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber(), true);
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
 
+        gameScreen.addPauseButton();
+
         playerNumber = 0;
         players[0] = new LocalHumanPlayer(getInputController());
         players[1] = new AIPlayer(gameWorld, 1);

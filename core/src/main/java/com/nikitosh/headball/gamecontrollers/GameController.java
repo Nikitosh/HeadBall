@@ -50,8 +50,6 @@ public abstract class GameController {
 
         gameScreen.addUILayer(inputController,
                 matchInfo.getFirstTeam().getName(), matchInfo.getSecondTeam().getName());
-        gameScreen.addPauseButton();
-
         gameScreen.initializeController(this);
         gameScreen.initializeWindows();
     }
