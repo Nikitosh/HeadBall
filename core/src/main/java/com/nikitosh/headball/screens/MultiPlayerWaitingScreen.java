@@ -3,11 +3,12 @@ package com.nikitosh.headball.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.nikitosh.headball.*;
+import com.nikitosh.headball.HeadballGame;
+import com.nikitosh.headball.MatchInfo;
+import com.nikitosh.headball.Team;
 import com.nikitosh.headball.gamecontrollers.MultiPlayerGameController;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.ScreenManager;
-import com.nikitosh.headball.widgets.BackButtonTable;
 
 import java.net.InetAddress;
 import java.net.Socket;
@@ -36,12 +37,6 @@ public class MultiPlayerWaitingScreen extends BackgroundStageAbstractScreen {
         Table table = new Table();
         table.add(new Label("Wait for a while...", AssetLoader.getGameSkin(), "background"));
         stack.addActor(table);
-        stack.addActor(new BackButtonTable(new Runnable() {
-            @Override
-            public void run() {
-                closeSocket();
-            }
-        }));
     }
 
     @Override
@@ -68,5 +63,6 @@ public class MultiPlayerWaitingScreen extends BackgroundStageAbstractScreen {
                 }
             }
         });
+
     }
 }

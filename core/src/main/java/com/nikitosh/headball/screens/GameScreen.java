@@ -10,6 +10,7 @@ import com.nikitosh.headball.gamecontrollers.GameController;
 import com.nikitosh.headball.inputcontrollers.InputController;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
+import com.nikitosh.headball.utils.GameSettings;
 import com.nikitosh.headball.widgets.GameFieldGroup;
 
 public class GameScreen extends StageAbstractScreen {
@@ -24,17 +25,12 @@ public class GameScreen extends StageAbstractScreen {
 
     private PauseWindow pauseWindow;
     private GameOverWindow gameOverWindow;
-    private final Image darkBackground;
 
     private GameController gameController;
 
     public GameScreen() {
         Image background = new Image(AssetLoader.getBackgroundTexture());
         background.setFillParent(true);
-
-        darkBackground = new Image(AssetLoader.getDarkBackgroundTexture());
-        darkBackground.setFillParent(true);
-
 
         mainTable.setFillParent(true);
         mainTable.add(gameField).row();
@@ -72,20 +68,20 @@ public class GameScreen extends StageAbstractScreen {
     }
 
     public void addGameOverWindow(int[] score, int playerNumber) {
-        stage.addActor(darkBackground);
+        stage.addActor(AssetLoader.getDarkBackgroundImage());
         stage.addActor(gameOverWindow);
         gameOverWindow.updateResult(score, playerNumber);
     }
 
     public void addPauseWindow(boolean isRestartOrExitPossible) {
-        stage.addActor(darkBackground);
+        stage.addActor(AssetLoader.getDarkBackgroundImage());
         stage.addActor(pauseWindow);
         pauseWindow.setRestartOrExitAvailable(isRestartOrExitPossible);
     }
 
     public void removePauseWindow() {
         pauseWindow.remove();
-        darkBackground.remove();
+        AssetLoader.getDarkBackgroundImage().remove();
     }
 
     public void addUILayer(InputController controller, String teamName1, String teamName2) {
@@ -129,7 +125,8 @@ public class GameScreen extends StageAbstractScreen {
     }
 
     public void updateTimerLabel(int currentTime) {
-        timerLabel.setText(String.format("%02d", Math.max(0, Constants.GAME_DURATION - currentTime)));
+        timerLabel.setText(String.format("%02d",
+                Math.max(0, GameSettings.getInteger(Constants.GAME_DURATION) - currentTime)));
     }
 
     public void drawBall(float x, float y, float radius, float angle) {

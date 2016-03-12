@@ -29,6 +29,9 @@
 },com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
   default: { titleFont: default-font, background: windowBackground, titleFontColor: white },
 },
+  com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+  default-horizontal: { background: default-slider, knob: red_sliderDown },
+},
   com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
   default: { font: default-font, fontColor: white},
   background: { font: default-font, fontColor: white, background: red_button02},

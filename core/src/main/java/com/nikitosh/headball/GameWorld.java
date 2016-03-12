@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.gameobjects.*;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
+import com.nikitosh.headball.utils.GameSettings;
 
 public class GameWorld {
     private static final float GRAVITY_X = 0;
@@ -92,7 +93,8 @@ public class GameWorld {
     public void update(float delta, Move firstMove, Move secondMove) {
         isGoal = false;
         gameDuration += delta;
-        if (gameDuration > Constants.GAME_DURATION && (isDrawResultPossible || score[0] != score[1])) {
+        if (gameDuration > GameSettings.getInteger(Constants.GAME_DURATION)
+                && (isDrawResultPossible || score[0] != score[1])) {
             isEnded = true;
         }
 

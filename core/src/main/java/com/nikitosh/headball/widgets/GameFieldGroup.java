@@ -46,6 +46,8 @@ public class GameFieldGroup extends Group {
         for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
             draw(batch, Constants.FOOTBALLER + i);
             draw(batch, Constants.LEG + i);
+        }
+        for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
             draw(batch, Constants.GOALS + i);
         }
     }

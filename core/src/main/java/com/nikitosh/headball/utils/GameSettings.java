@@ -13,6 +13,12 @@ public final class GameSettings {
         if (PREFERENCES.getString(Constants.SETTINGS_CONTROL).equals("")) {
             putString(Constants.SETTINGS_CONTROL, Constants.SETTINGS_CONTROL_BUTTONS);
         }
+        if (PREFERENCES.getInteger(Constants.GAME_DURATION) == 0) {
+            putInteger(Constants.GAME_DURATION, Constants.GAME_DURATION_OPTIONS[0]);
+        }
+        if (PREFERENCES.getString(Constants.BOT_LEVEL).equals("")) {
+            putString(Constants.BOT_LEVEL, Constants.BOT_LEVEL_MEDIUM);
+        }
         PREFERENCES.flush();
     }
 
@@ -24,6 +30,15 @@ public final class GameSettings {
     public static void putString(String settingName, String value) {
         PREFERENCES.putString(settingName, value);
         PREFERENCES.flush();
+    }
+
+    public static void putInteger(String settingName, int value) {
+        PREFERENCES.putInteger(settingName, value);
+        PREFERENCES.flush();
+    }
+
+    public static int getInteger(String settingName) {
+        return PREFERENCES.getInteger(settingName);
     }
 
     public static boolean getBoolean(String settingName) {

@@ -9,7 +9,6 @@ public final class Constants {
     public static final int UI_ELEMENTS_INDENT = 10;
     public static final int TABLES_HEGIHT = 300;
 
-    public static final int GAME_DURATION = 10;
     public static final int FRAMES_PER_SECOND = 60;
     public static final float SPLASH_DURATION = 1;
     public static final int PLAYERS_NUMBER = 2;
@@ -37,6 +36,13 @@ public final class Constants {
     public static final String SETTINGS_CONTROL_TOUCHPAD = "Touchpad";
     public static final String SETTINGS_CONTROL_KEYBOARD = "Keyboard";
     public static final String SETTINGS_CONTROL_ACCELEROMETER = "Accelerometer";
+    public static final String GAME_DURATION = "Game duration";
+    public static final int[] GAME_DURATION_OPTIONS = new int[] {30, 60, 90, 120};
+    public static final String BOT_LEVEL = "Bot level";
+    public static final String BOT_LEVEL_EASY = "Easy";
+    public static final String BOT_LEVEL_MEDIUM = "Medium";
+    public static final String BOT_LEVEL_HARD = "Hard";
+
     public static final String TOURNAMENTS_SAVES_PATH = "tournaments/saves/";
     public static final String JSON = ".json";
 

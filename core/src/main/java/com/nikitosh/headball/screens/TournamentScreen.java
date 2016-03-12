@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.nikitosh.headball.HeadballGame;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.Team;
-import com.nikitosh.headball.gamecontrollers.GameController;
 import com.nikitosh.headball.gamecontrollers.TournamentGameController;
 import com.nikitosh.headball.tournaments.LeagueTournament;
 import com.nikitosh.headball.tournaments.PlayOffTournament;
@@ -33,9 +32,11 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
     private static final boolean IS_PRACTICE = false;
 
     private final Tournament tournament;
+    private final Team playerTeam;
 
     public TournamentScreen(final Tournament tournament, final Team playerTeam) {
         this.tournament = tournament;
+        this.playerTeam = playerTeam;
 
         TextButton playButton = new TextButton("Play next match", AssetLoader.getGameSkin());
         playButton.addListener(new ChangeListener() {
@@ -54,7 +55,7 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
                     return;
                 }
                 final GameScreen gameScreen = new GameScreen();
-                final GameController gameController = new TournamentGameController(gameScreen,
+                new TournamentGameController(gameScreen,
                         new MatchInfo(playerTeam, opponentTeam, tournament.isDrawResultPossible(), IS_PRACTICE),
                         TournamentScreen.this);
                 ScreenManager.getInstance().setScreen(gameScreen);
@@ -81,6 +82,8 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
                 TournamentSerializer.serialize(tournament, playerTeam);
             }
         }));
+
+        TournamentSerializer.serialize(tournament, playerTeam);
     }
 
     public void handleMatchEnd(Team playerTeam, int[] score) {
@@ -111,6 +114,7 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
             }
 
             Dialog exitDialog = new Dialog("", AssetLoader.getDefaultSkin());
+            exitDialog.setMovable(false);
             exitDialog.text(TOURNAMENT_ENDED_TITLES[tournament.isWinner(playerTeam) ? 1 : 0],
                     AssetLoader.getDefaultSkin().get(Label.LabelStyle.class));
             exitDialog.button(exitButton);
@@ -119,8 +123,16 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
             exitTable.setFillParent(true);
             exitTable.add(exitDialog).expand();
 
-            stack.addActor(new Image(AssetLoader.getDarkBackgroundTexture()));
+            stack.addActor(AssetLoader.getDarkBackgroundImage());
             stack.addActor(exitTable);
         }
+    }
+
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public Team getPlayerTeam() {
+        return playerTeam;
     }
 }

@@ -5,10 +5,15 @@ import com.badlogic.gdx.utils.Array;
 import com.nikitosh.headball.GameWorld;
 import com.nikitosh.headball.HeadballGame;
 import com.nikitosh.headball.MatchInfo;
-import com.nikitosh.headball.gameobjects.*;
+import com.nikitosh.headball.gameobjects.Ball;
+import com.nikitosh.headball.gameobjects.Footballer;
+import com.nikitosh.headball.gameobjects.Goals;
+import com.nikitosh.headball.gameobjects.RectangleWall;
 import com.nikitosh.headball.jsonReaders.LevelReader;
-import com.nikitosh.headball.players.AIPlayer;
+import com.nikitosh.headball.players.EasyAIPlayer;
+import com.nikitosh.headball.players.HardAIPlayer;
 import com.nikitosh.headball.players.LocalHumanPlayer;
+import com.nikitosh.headball.players.MediumAIPlayer;
 import com.nikitosh.headball.screens.GameScreen;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
@@ -27,7 +32,17 @@ public class SinglePlayerGameController extends GameController {
 
         playerNumber = 0;
         players[0] = new LocalHumanPlayer(getInputController());
-        players[1] = new AIPlayer(gameWorld, 1);
+        switch (GameSettings.getString(Constants.BOT_LEVEL)) {
+            case Constants.BOT_LEVEL_EASY:
+                players[1] = new EasyAIPlayer();
+                break;
+            case Constants.BOT_LEVEL_MEDIUM:
+                players[1] = new MediumAIPlayer(gameWorld, 1);
+                break;
+            case Constants.BOT_LEVEL_HARD:
+                players[1] = new HardAIPlayer();
+                break;
+        }
     }
 
     @Override

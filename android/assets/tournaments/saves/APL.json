@@ -1,0 +1,1239 @@
+{
+first: {
+	class: com.nikitosh.headball.tournaments.LeagueTournament
+	name: APL
+	iconName: aplLeague
+	lapNumber: 18
+	teams: [
+		{
+			name: Liverpool
+			iconName: liverpool
+		}
+		{
+			name: Manchester City
+			iconName: manchester-city
+		}
+		{
+			name: West Ham
+			iconName: west-ham
+		}
+		{
+			name: Tottenham Hotspur
+			iconName: tottenham-hotspur
+		}
+		{
+			name: Chelsea
+			iconName: chelsea
+		}
+		{
+			name: Arsenal
+			iconName: arsenal
+		}
+		{
+			name: Leicester City
+			iconName: leicester-city
+		}
+		{
+			name: Stoke City
+			iconName: stoke-city
+		}
+		{
+			name: Southampton
+			iconName: southampton
+		}
+		{
+			name: Manchester United
+			iconName: manchester-united
+		}
+	]
+	timeTable: [
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+		]
+		[
+			{
+				class: java.lang.Integer
+				value: 0
+			}
+			{
+				class: java.lang.Integer
+				value: 1
+			}
+			{
+				class: java.lang.Integer
+				value: 2
+			}
+			{
+				class: java.lang.Integer
+				value: 3
+			}
+			{
+				class: java.lang.Integer
+				value: 4
+			}
+			{
+				class: java.lang.Integer
+				value: 5
+			}
+			{
+				class: java.lang.Integer
+				value: 6
+			}
+			{
+				class: java.lang.Integer
+				value: 7
+			}
+			{
+				class: java.lang.Integer
+				value: 8
+			}
+			{
+				class: java.lang.Integer
+				value: 9
+			}
+		]
+	]
+	resultTable: {
+		statistics: [
+			[
+				{
+					class: java.lang.String
+					value: Liverpool
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+			]
+			[
+				{
+					class: java.lang.String
+					value: Manchester City
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+			]
+			[
+				{
+					class: java.lang.String
+					value: West Ham
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+			]
+			[
+				{
+					class: java.lang.String
+					value: Tottenham Hotspur
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+			]
+			[
+				{
+					class: java.lang.String
+					value: Chelsea
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+			]
+			[
+				{
+					class: java.lang.String
+					value: Arsenal
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+			]
+			[
+				{
+					class: java.lang.String
+					value: Leicester City
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+			]
+			[
+				{
+					class: java.lang.String
+					value: Stoke City
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+			]
+			[
+				{
+					class: java.lang.String
+					value: Southampton
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+			]
+			[
+				{
+					class: java.lang.String
+					value: Manchester United
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+				{
+					class: java.lang.String
+					value: 0
+				}
+			]
+		]
+		isVisible: true
+	}
+	statisticTimetable: {
+		nextRoundTable: {
+			statistics: [
+				[
+					{
+						class: java.lang.String
+						value: Liverpool
+					}
+					{
+						class: java.lang.String
+						value: vs
+					}
+					{
+						class: java.lang.String
+						value: West Ham
+					}
+				]
+				[
+					{
+						class: java.lang.String
+						value: Tottenham Hotspur
+					}
+					{
+						class: java.lang.String
+						value: vs
+					}
+					{
+						class: java.lang.String
+						value: Chelsea
+					}
+				]
+				[
+					{
+						class: java.lang.String
+						value: Arsenal
+					}
+					{
+						class: java.lang.String
+						value: vs
+					}
+					{
+						class: java.lang.String
+						value: Leicester City
+					}
+				]
+				[
+					{
+						class: java.lang.String
+						value: Stoke City
+					}
+					{
+						class: java.lang.String
+						value: vs
+					}
+					{
+						class: java.lang.String
+						value: Southampton
+					}
+				]
+				[
+					{
+						class: java.lang.String
+						value: Manchester United
+					}
+					{
+						class: java.lang.String
+						value: vs
+					}
+					{
+						class: java.lang.String
+						value: Manchester City
+					}
+				]
+			]
+			isVisible: true
+		}
+		lastRoundTable: {
+			statistics: []
+			isVisible: false
+		}
+	}
+}
+second: {
+	class: com.nikitosh.headball.Team
+	name: Liverpool
+	iconName: liverpool
+}
+}

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
@@ -21,7 +22,8 @@ public final class AssetLoader {
     private static Texture menuTexture;
     private static Texture fieldTexture;
     private static Texture backgroundTexture;
-    private static Texture darkBackgroundTexture;
+
+    private static Image darkBackgroundImage;
 
     private static Box2DSprite ballSprite;
     private static Box2DSprite[] footballerSprites;
@@ -70,7 +72,7 @@ public final class AssetLoader {
         menuTexture = new Texture(Gdx.files.internal("images/menu2.jpg"));
         fieldTexture = new Texture(Gdx.files.internal("images/fieldBackground.jpg"));
         backgroundTexture = new Texture(Gdx.files.internal("images/background.jpg"));
-        darkBackgroundTexture = new Texture(Gdx.files.internal("images/darkBackground.png"));
+        darkBackgroundImage = new Image(new Texture(Gdx.files.internal("images/darkBackground.png")));
 
         ballSprite = new Box2DSprite(ballTexture);
         footballerSprites = new Box2DSprite[Constants.PLAYERS_NUMBER];
@@ -114,8 +116,8 @@ public final class AssetLoader {
         return backgroundTexture;
     }
 
-    public static Texture getDarkBackgroundTexture() {
-        return darkBackgroundTexture;
+    public static Image getDarkBackgroundImage() {
+        return darkBackgroundImage;
     }
 
     public static Sound getGoalSound() {
