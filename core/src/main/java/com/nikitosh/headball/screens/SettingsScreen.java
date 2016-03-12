@@ -83,11 +83,11 @@ public class SettingsScreen extends BackgroundStageAbstractScreen {
         durationTable.add(slider).pad(Constants.UI_ELEMENTS_INDENT);
         durationTable.add(durationLabel).width(100);
 
-        Button botButton = new TextButton(Constants.BOT_LEVEL, AssetLoader.getGameSkin(), "notTouchable");
+        Button botButton = new TextButton(Constants.AI_LEVEL, AssetLoader.getGameSkin(), "notTouchable");
         final SelectBox<String> botSelectBox = new SelectBox<>(AssetLoader.getGameSkin());
         botSelectBox.setItems(new Array<>(new String[] {
-                Constants.BOT_LEVEL_EASY, Constants.BOT_LEVEL_MEDIUM, Constants.BOT_LEVEL_HARD}));
-        botSelectBox.setSelected(GameSettings.getString(Constants.BOT_LEVEL));
+                Constants.AI_LEVEL_EASY, Constants.AI_LEVEL_MEDIUM, Constants.AI_LEVEL_HARD}));
+        botSelectBox.setSelected(GameSettings.getString(Constants.AI_LEVEL));
 
         Table settingsTable = new Table();
         settingsTable.defaults().pad(Constants.UI_ELEMENTS_INDENT);
@@ -111,7 +111,7 @@ public class SettingsScreen extends BackgroundStageAbstractScreen {
                 GameSettings.putBoolean(Constants.SETTINGS_MUSIC, musicState != 0);
                 GameSettings.putString(Constants.SETTINGS_CONTROL, controlSelectBox.getSelected());
                 GameSettings.putInteger(Constants.GAME_DURATION, (int) slider.getValue());
-                GameSettings.putString(Constants.BOT_LEVEL, botSelectBox.getSelected());
+                GameSettings.putString(Constants.AI_LEVEL, botSelectBox.getSelected());
             }
         }));
         stack.addActor(settingsTable);

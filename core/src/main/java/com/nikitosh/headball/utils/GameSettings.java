@@ -16,8 +16,8 @@ public final class GameSettings {
         if (PREFERENCES.getInteger(Constants.GAME_DURATION) == 0) {
             putInteger(Constants.GAME_DURATION, Constants.GAME_DURATION_OPTIONS[0]);
         }
-        if (PREFERENCES.getString(Constants.BOT_LEVEL).equals("")) {
-            putString(Constants.BOT_LEVEL, Constants.BOT_LEVEL_MEDIUM);
+        if (PREFERENCES.getString(Constants.AI_LEVEL).equals("")) {
+            putString(Constants.AI_LEVEL, Constants.AI_LEVEL_MEDIUM);
         }
         PREFERENCES.flush();
     }

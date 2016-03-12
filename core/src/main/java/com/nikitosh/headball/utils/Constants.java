@@ -38,10 +38,10 @@ public final class Constants {
     public static final String SETTINGS_CONTROL_ACCELEROMETER = "Accelerometer";
     public static final String GAME_DURATION = "Game duration";
     public static final int[] GAME_DURATION_OPTIONS = new int[] {30, 60, 90, 120};
-    public static final String BOT_LEVEL = "Bot level";
-    public static final String BOT_LEVEL_EASY = "Easy";
-    public static final String BOT_LEVEL_MEDIUM = "Medium";
-    public static final String BOT_LEVEL_HARD = "Hard";
+    public static final String AI_LEVEL = "AI level";
+    public static final String AI_LEVEL_EASY = "Easy";
+    public static final String AI_LEVEL_MEDIUM = "Medium";
+    public static final String AI_LEVEL_HARD = "Hard";
 
     public static final String TOURNAMENTS_SAVES_PATH = "tournaments/saves/";
     public static final String JSON = ".json";

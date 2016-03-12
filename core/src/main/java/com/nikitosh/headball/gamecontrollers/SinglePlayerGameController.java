@@ -32,14 +32,14 @@ public class SinglePlayerGameController extends GameController {
 
         playerNumber = 0;
         players[0] = new LocalHumanPlayer(getInputController());
-        switch (GameSettings.getString(Constants.BOT_LEVEL)) {
-            case Constants.BOT_LEVEL_EASY:
+        switch (GameSettings.getString(Constants.AI_LEVEL)) {
+            case Constants.AI_LEVEL_EASY:
                 players[1] = new EasyAIPlayer();
                 break;
-            case Constants.BOT_LEVEL_MEDIUM:
+            case Constants.AI_LEVEL_MEDIUM:
                 players[1] = new MediumAIPlayer(gameWorld, 1);
                 break;
-            case Constants.BOT_LEVEL_HARD:
+            case Constants.AI_LEVEL_HARD:
                 players[1] = new HardAIPlayer();
                 break;
         }
