@@ -6,7 +6,7 @@ import com.nikitosh.headball.screens.TournamentScreen;
 import com.nikitosh.headball.tournaments.TournamentSerializer;
 
 public class TournamentGameController extends SinglePlayerGameController {
-    private TournamentScreen screen;
+    private final TournamentScreen screen;
 
     public TournamentGameController(GameScreen gameScreen, MatchInfo matchInfo, TournamentScreen screen) {
         super(gameScreen, matchInfo);

@@ -67,7 +67,7 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
 
         Table upTable = new Table();
         upTable.defaults().padRight(Constants.UI_ELEMENTS_INDENT);
-        upTable.add(new ScrollPane(tournament.getResultTable().getTable())).height(Constants.TABLES_HEGIHT);
+        upTable.add(new ScrollPane(tournament.getResultTable().getTable())).height(Constants.TABLES_HEIGHT);
         upTable.add(tournament.getStatisticsTable().getTable()).row();
 
         Table table = new Table();

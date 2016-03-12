@@ -8,11 +8,11 @@ import com.nikitosh.headball.utils.Constants;
 
 public class AIPlayer implements Player {
 
-    protected GameWorld gameWorld;
-    protected int footballerNumber;
+    protected final GameWorld gameWorld;
+    protected final int footballerNumber;
 
     protected Footballer[] footballers;
-    protected Ball ball;
+    private Ball ball;
 
     protected float ballPositionX;
     protected float ballPositionY;

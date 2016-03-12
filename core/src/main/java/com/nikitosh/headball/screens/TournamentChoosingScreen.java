@@ -72,6 +72,8 @@ public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
                     public void changed(ChangeEvent event, Actor actor) {
                         dialogTable.remove();
                         AssetLoader.getDarkBackgroundImage().remove();
+                        Gdx.files.local(Constants.TOURNAMENTS_SAVES_PATH
+                                + choosingTable.getSelectedTournament().getName() + Constants.JSON).delete();
                         ScreenManager.getInstance().setScreen(
                                 new TournamentTeamChoosingScreen(choosingTable.getSelectedTournament()));
                     }

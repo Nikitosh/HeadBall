@@ -19,8 +19,8 @@ public class TournamentTimetable extends Table implements ResultTable, Json.Seri
         this.nextRoundTable = nextRoundTable;
         this.lastRoundTable = lastRoundTable;
 
-        add(new ScrollPane(nextRoundTable.getTable())).height(Constants.TABLES_HEGIHT / 2).row();
-        add(new ScrollPane(lastRoundTable.getTable())).height(Constants.TABLES_HEGIHT / 2)
+        add(new ScrollPane(nextRoundTable.getTable())).height(Constants.TABLES_HEIGHT / 2).row();
+        add(new ScrollPane(lastRoundTable.getTable())).height(Constants.TABLES_HEIGHT / 2)
                 .pad(Constants.UI_ELEMENTS_INDENT);
     }
 
@@ -28,16 +28,8 @@ public class TournamentTimetable extends Table implements ResultTable, Json.Seri
         return lastRoundTable;
     }
 
-    public void setLastRoundTable(LastRoundTable lastRoundTable) {
-        this.lastRoundTable = lastRoundTable;
-    }
-
     public NextRoundTable getNextRoundTable() {
         return nextRoundTable;
-    }
-
-    public void setNextRoundTable(NextRoundTable nextRoundTable) {
-        this.nextRoundTable = nextRoundTable;
     }
 
     @Override
@@ -61,8 +53,8 @@ public class TournamentTimetable extends Table implements ResultTable, Json.Seri
     public void read(Json json, JsonValue jsonData) {
         json.readField(this, "nextRoundTable", jsonData);
         json.readField(this, "lastRoundTable", jsonData);
-        add(new ScrollPane(nextRoundTable.getTable())).height(Constants.TABLES_HEGIHT / 2).row();
-        add(new ScrollPane(lastRoundTable.getTable())).height(Constants.TABLES_HEGIHT / 2)
+        add(new ScrollPane(nextRoundTable.getTable())).height(Constants.TABLES_HEIGHT / 2).row();
+        add(new ScrollPane(lastRoundTable.getTable())).height(Constants.TABLES_HEIGHT / 2)
                 .pad(Constants.UI_ELEMENTS_INDENT);
     }
 }
