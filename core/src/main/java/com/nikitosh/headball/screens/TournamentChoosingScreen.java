@@ -42,8 +42,8 @@ public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
         choosingTable.setOnContinueListener(new Runnable() {
             @Override
             public void run() {
-                if (!Gdx.files.local(Constants.TOURNAMENTS_SAVES_PATH +
-                        choosingTable.getSelectedTournament().getName() + Constants.JSON).exists()) {
+                if (!Gdx.files.local(Constants.TOURNAMENTS_SAVES_PATH
+                        + choosingTable.getSelectedTournament().getName() + Constants.JSON).exists()) {
                     ScreenManager.getInstance().setScreen(
                             new TournamentTeamChoosingScreen(choosingTable.getSelectedTournament()));
                     return;
@@ -58,7 +58,8 @@ public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
                         dialogTable.remove();
                         AssetLoader.getDarkBackgroundImage().remove();
                         Pair<Tournament, Team> tournamentInfo =
-                                TournamentDeserializer.deserialize(choosingTable.getSelectedTournament().getClass(),
+                                TournamentDeserializer.deserialize(
+                                        choosingTable.getSelectedTournament().getClass(),
                                         choosingTable.getSelectedTournament().getName());
                         ScreenManager.getInstance().setScreen(
                                 new TournamentScreen(tournamentInfo.getFirst(), tournamentInfo.getSecond()));

@@ -15,6 +15,7 @@ import com.nikitosh.headball.widgets.BackButtonTable;
 public class SettingsScreen extends BackgroundStageAbstractScreen {
     private static final String ENABLED = "on";
     private static final String DISABLED = "off";
+    private static final int DURATION_LABEL_WIDTH = 100;
 
     private final Button.ButtonStyle[] styles;
     private int soundState = GameSettings.getBoolean(Constants.SETTINGS_SOUND) ? 1 : 0;
@@ -81,7 +82,7 @@ public class SettingsScreen extends BackgroundStageAbstractScreen {
 
         Table durationTable = new Table();
         durationTable.add(slider).pad(Constants.UI_ELEMENTS_INDENT);
-        durationTable.add(durationLabel).width(100);
+        durationTable.add(durationLabel).width(DURATION_LABEL_WIDTH);
 
         Button botButton = new TextButton(Constants.AI_LEVEL, AssetLoader.getGameSkin(), "notTouchable");
         final SelectBox<String> botSelectBox = new SelectBox<>(AssetLoader.getGameSkin());
