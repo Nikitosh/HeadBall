@@ -2,7 +2,7 @@ package com.nikitosh.headball.jsonReaders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
-import com.nikitosh.headball.HeadballGame;
+import com.nikitosh.headball.ActionResolverSingleton;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.tournaments.LeagueTournament;
 import com.nikitosh.headball.tournaments.PlayOffTournament;
@@ -42,7 +42,7 @@ public final class TournamentReader {
         return tournamentReader;
     }
 
-    public Tournament getTournament(int index, boolean toCreate) {
+    public Tournament getTournament(int index) {
         JSONObject tournament = getJSONTournament(index);
         String name = (String) tournament.get(JSON_NAME_KEY);
         String iconName = (String) tournament.get(JSON_ICON_KEY);
@@ -55,11 +55,8 @@ public final class TournamentReader {
                 teams.add(teamsReader.getTeam((String) teamName));
             } catch (NoSuchElementException e) {
                 Gdx.app.error(LOG_TAG, GET_TEAM_BY_NAME_ERROR_MESSAGE + teamName, e);
-                HeadballGame.getActionResolver().showToast(GET_TEAM_BY_NAME_ERROR_MESSAGE + teamName);
+                ActionResolverSingleton.getInstance().showToast(GET_TEAM_BY_NAME_ERROR_MESSAGE + teamName);
             }
-        }
-        if (!toCreate) {
-            return null;
         }
         if (tournament.get(JSON_TYPE_KEY).equals(JSON_LEAGUE_KEY)) {
             return new LeagueTournament(name, iconName, teams, lapNumber);
@@ -70,10 +67,10 @@ public final class TournamentReader {
         throw new NoSuchElementException();
     }
 
-    public Tournament getTournament(String name, boolean toCreate) {
+    public Tournament getTournament(String name) {
         for (int i = 0; i < getTournamentsNumber(); i++) {
             if (name.equals(getTournamentName(i))) {
-                return getTournament(i, toCreate);
+                return getTournament(i);
             }
         }
         throw new NoSuchElementException();

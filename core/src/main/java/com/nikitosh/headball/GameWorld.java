@@ -2,10 +2,11 @@ package com.nikitosh.headball;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
-import com.nikitosh.headball.gameobjects.*;
-import com.nikitosh.headball.utils.AssetLoader;
+import com.nikitosh.headball.gameobjects.Ball;
+import com.nikitosh.headball.gameobjects.Footballer;
+import com.nikitosh.headball.gameobjects.Goals;
+import com.nikitosh.headball.gameobjects.RectangleWall;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.utils.GameSettings;
 
@@ -24,7 +25,6 @@ public class GameWorld {
     private float initialBallPositionX;
     private float initialBallPositionY;
 
-    private final Image field;
     private final Footballer[] footballers;
     private final Array<RectangleWall> walls;
     private Ball ball;
@@ -38,8 +38,6 @@ public class GameWorld {
 
     public GameWorld() {
         box2dWorld = new World(new Vector2(GRAVITY_X, GRAVITY_Y), TO_SLEEP);
-
-        field = new Image(AssetLoader.getFieldTexture());
 
         walls = new Array<>();
         footballers = new Footballer[Constants.PLAYERS_NUMBER];
@@ -209,9 +207,5 @@ public class GameWorld {
 
     public void setDrawResultPossible(boolean isDrawResultPossible) {
         this.isDrawResultPossible = isDrawResultPossible;
-    }
-
-    public void setSize(float width, float height) {
-        field.setBounds(0, 0, width, height);
     }
 }

@@ -62,7 +62,7 @@ public class MultiPlayerGameController extends GameController {
             playerNumber = 1;
         }
 
-        gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber(), true);
+        gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber());
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
 
         player = new LocalHumanPlayer(getInputController());

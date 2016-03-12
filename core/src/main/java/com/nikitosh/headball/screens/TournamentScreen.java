@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.nikitosh.headball.HeadballGame;
+import com.nikitosh.headball.ActionResolverSingleton;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.gamecontrollers.TournamentGameController;
@@ -50,7 +50,7 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
                     opponentTeam = tournament.getNextOpponent(playerTeam);
                 } catch (NoSuchElementException e) {
                     Gdx.app.error(LOG_TAG, GET_NEXT_OPPONENT_ERROR_MESSAGE + playerTeam.getName(), e);
-                    HeadballGame.getActionResolver().showToast(GET_NEXT_OPPONENT_ERROR_MESSAGE
+                    ActionResolverSingleton.getInstance().showToast(GET_NEXT_OPPONENT_ERROR_MESSAGE
                             + playerTeam.getName());
                     return;
                 }
@@ -106,10 +106,10 @@ public class TournamentScreen extends BackgroundStageAbstractScreen {
 
             if (tournament.isWinner(playerTeam)) {
                 if (tournament instanceof LeagueTournament) {
-                    HeadballGame.getActionResolver().unlockAchievement(Constants.ACHIEVEMENT_LEAGUE);
+                    ActionResolverSingleton.getInstance().unlockAchievement(Constants.ACHIEVEMENT_LEAGUE);
                 }
                 if (tournament instanceof PlayOffTournament) {
-                    HeadballGame.getActionResolver().unlockAchievement(Constants.ACHIEVEMENT_PLAY_OFF);
+                    ActionResolverSingleton.getInstance().unlockAchievement(Constants.ACHIEVEMENT_PLAY_OFF);
                 }
             }
 

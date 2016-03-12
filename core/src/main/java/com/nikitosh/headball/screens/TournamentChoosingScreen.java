@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
-import com.nikitosh.headball.HeadballGame;
+import com.nikitosh.headball.ActionResolverSingleton;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.jsonReaders.TournamentReader;
 import com.nikitosh.headball.tournaments.Tournament;
@@ -25,16 +25,19 @@ public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
 
     private static final String LOG_TAG = "TournamentChoosingScreen";
     private static final String GET_TOURNAMENT_BY_INDEX_ERROR_MESSAGE = "Can't get tournament with index: ";
+    private static final String CONTINUE = "Continue";
+    private static final String START_NEW = "Start new";
+    private static final String TOURNAMENT_DIALOG_TEXT = "Do you want to continue saved or start new tournament?";
 
     public TournamentChoosingScreen() {
         TournamentReader reader = TournamentReader.getTournamentReader();
         Array<Tournament> tournaments = new Array<>();
         for (int i = 0; i < reader.getTournamentsNumber(); i++) {
             try {
-                tournaments.add(reader.getTournament(i, true));
+                tournaments.add(reader.getTournament(i));
             } catch (NoSuchElementException e) {
                 Gdx.app.error(LOG_TAG, GET_TOURNAMENT_BY_INDEX_ERROR_MESSAGE + i, e);
-                HeadballGame.getActionResolver().showToast(GET_TOURNAMENT_BY_INDEX_ERROR_MESSAGE + i);
+                ActionResolverSingleton.getInstance().showToast(GET_TOURNAMENT_BY_INDEX_ERROR_MESSAGE + i);
             }
         }
 
@@ -51,7 +54,7 @@ public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
 
                 final Table dialogTable = new Table();
 
-                TextButton continueButton = new TextButton("Continue", AssetLoader.getGameSkin());
+                TextButton continueButton = new TextButton(CONTINUE, AssetLoader.getGameSkin());
                 continueButton.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
@@ -66,7 +69,7 @@ public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
                     }
                 });
 
-                TextButton startButton = new TextButton("Start new", AssetLoader.getGameSkin());
+                TextButton startButton = new TextButton(START_NEW, AssetLoader.getGameSkin());
                 startButton.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
@@ -81,7 +84,7 @@ public class TournamentChoosingScreen extends BackgroundStageAbstractScreen {
 
                 Dialog tournamentDialog = new Dialog("", AssetLoader.getDefaultSkin());
                 tournamentDialog.setMovable(false);
-                tournamentDialog.text("Do you want to continue saved or start new tournament?");
+                tournamentDialog.text(TOURNAMENT_DIALOG_TEXT);
                 tournamentDialog.button(continueButton);
                 tournamentDialog.button(startButton);
                 dialogTable.setFillParent(true);

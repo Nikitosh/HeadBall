@@ -39,7 +39,7 @@ public class MultiPlayerGame implements Runnable {
         AssetLoader.loadFont();
         AssetLoader.load();
 
-        gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber(), true);
+        gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber());
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
 
         this.firstPlayerSocket = firstPlayerSocket;

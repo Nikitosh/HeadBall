@@ -1,12 +1,14 @@
 package com.nikitosh.headball.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.nikitosh.headball.HeadballGame;
-import com.nikitosh.headball.utils.ScreenManager;
+import com.nikitosh.headball.ActionResolverSingleton;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
+import com.nikitosh.headball.utils.ScreenManager;
 
 public class MainMenuScreen extends BackgroundStageAbstractScreen {
     private static final String PLAY = "Play";
@@ -27,7 +29,7 @@ public class MainMenuScreen extends BackgroundStageAbstractScreen {
         achievementsTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                HeadballGame.getActionResolver().showAchievements();
+                ActionResolverSingleton.getInstance().showAchievements();
             }
         });
 

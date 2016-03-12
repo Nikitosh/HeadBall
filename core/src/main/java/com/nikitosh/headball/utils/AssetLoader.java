@@ -2,6 +2,7 @@ package com.nikitosh.headball.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -9,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
+
+import java.io.File;
 
 public final class AssetLoader {
     private static final int FONT_SIZE = 22;
@@ -42,6 +45,10 @@ public final class AssetLoader {
         parameter.magFilter = Texture.TextureFilter.Linear;
         font = generator.generateFont(parameter);
         generator.dispose();
+    }
+
+    public static void loadDefaultSkin(String skinPath) { //used for unit-tests
+        defaultSkin = new Skin(new FileHandle(new File(skinPath)));
     }
 
     public static void load() {

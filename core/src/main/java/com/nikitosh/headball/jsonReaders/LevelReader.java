@@ -50,7 +50,7 @@ public final class LevelReader {
         return array;
     }
 
-    public static GameWorld loadLevel(int index, boolean toCreate) {
+    public static GameWorld loadLevel(int index) {
         JSONObject level = (JSONObject) ((JSONArray) Utilities.parseJSONFile(levelsPath).
                 get(JSON_LEVELS_KEY)).get(index);
         float width = ((Long) level.get(JSON_WIDTH_KEY)).floatValue();
@@ -73,11 +73,7 @@ public final class LevelReader {
         for (Object wall : wallsArray) {
             walls.add(parseFloatArray((JSONArray) wall));
         }
-        if (!toCreate) {
-            return null;
-        }
         GameWorld gameWorld = new GameWorld();
-        gameWorld.setSize(width, height);
         gameWorld.createWalls(walls);
         gameWorld.createFootballers(footballerPositionX, footballerPositionY, footballerLeft, footballerRadius);
         gameWorld.createBall(ballPositionX, ballPositionY, ballRadius);

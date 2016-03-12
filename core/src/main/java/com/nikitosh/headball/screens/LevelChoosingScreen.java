@@ -19,7 +19,7 @@ public class LevelChoosingScreen extends BackgroundStageAbstractScreen {
             GameScreen gameScreen = new GameScreen();
             SinglePlayerGameController gameController = new SinglePlayerGameController(gameScreen,
                     new MatchInfo(new Team("", ""), new Team("", ""), false, false));
-            gameController.setGameWorld(LevelReader.loadLevel(i, true));
+            gameController.setGameWorld(LevelReader.loadLevel(i));
             gameController.update();
             Group level = gameScreen.getField();
             level.setTransform(true);

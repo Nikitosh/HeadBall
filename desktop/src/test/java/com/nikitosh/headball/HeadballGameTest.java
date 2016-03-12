@@ -6,9 +6,9 @@ import com.nikitosh.headball.jsonReaders.TournamentReader;
 import com.nikitosh.headball.tournaments.Tournament;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
+
+import static org.junit.Assert.*;
 
 public class HeadballGameTest extends GdxInitializer {
     private static final String LEVELS_PATH = "..\\android\\assets\\info\\levels.json";
@@ -61,7 +61,7 @@ public class HeadballGameTest extends GdxInitializer {
         System.out.print(levelsNumber);
         for (int i = 0; i < levelsNumber; i++) {
             try {
-                LevelReader.loadLevel(i, false);
+                LevelReader.loadLevel(i);
             } catch (Exception e) { //if exception during parsing occurs
                 e.printStackTrace();
                 fail();
@@ -92,7 +92,7 @@ public class HeadballGameTest extends GdxInitializer {
         int tournamentsNumber = tournamentReader.getTournamentsNumber();
         for (int i = 0; i < tournamentsNumber; i++) {
             try {
-                Tournament tournament = tournamentReader.getTournament(i, false);
+                Tournament tournament = tournamentReader.getTournament(i);
             } catch (Exception e) { //if exception during parsing occurs
                 e.printStackTrace();
                 fail();

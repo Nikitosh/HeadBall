@@ -3,7 +3,7 @@ package com.nikitosh.headball.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.nikitosh.headball.HeadballGame;
+import com.nikitosh.headball.ActionResolverSingleton;
 import com.nikitosh.headball.MatchInfo;
 import com.nikitosh.headball.Team;
 import com.nikitosh.headball.gamecontrollers.MultiPlayerGameController;
@@ -57,7 +57,7 @@ public class MultiPlayerWaitingScreen extends BackgroundStageAbstractScreen {
                     ScreenManager.getInstance().setScreen(gameScreen);
                 } catch (Exception e) {
                     Gdx.app.error(LOG_TAG, CONNECTION_ERROR_MESSAGE, e);
-                    HeadballGame.getActionResolver().showToast(RECONNECT);
+                    ActionResolverSingleton.getInstance().showToast(RECONNECT);
                     closeSocket();
                     ScreenManager.getInstance().disposeCurrentScreen();
                 }
