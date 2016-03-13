@@ -52,6 +52,10 @@ public final class Constants {
     public static final int RIGHT = 3;
 
     public static final char DATA_SEPARATOR = '_';
+    public static final int BUFFER_SIZE = 256;
+    public static final int FIRST_CLIENT_PORT = 20000;
+    public static final int LAST_CLIENT_PORT = 30000;
+    public static final int FRAMES_TO_SKIP_NUMBER = 20;
 
     public static final String ACHIEVEMENT_TOUCHPAD_GAMER = "CgkIoYOlo7sYEAIQAQ";
     public static final String ACHIEVEMENT_SHAKE_IT       = "CgkIoYOlo7sYEAIQAg";

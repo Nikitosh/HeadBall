@@ -2,17 +2,17 @@ package com.nikitosh.headball.players;
 
 import com.nikitosh.headball.Move;
 
-import java.io.DataInputStream;
+import java.nio.channels.DatagramChannel;
 
 public class RemoteHumanPlayer implements Player {
-    private final DataInputStream inputStream;
+    private final DatagramChannel datagramChannel;
 
-    public RemoteHumanPlayer(DataInputStream inputStream) {
-        this.inputStream = inputStream;
+    public RemoteHumanPlayer(DatagramChannel datagramChannel) {
+        this.datagramChannel = datagramChannel;
     }
 
     @Override
     public Move getMove() {
-        return Move.deserialize(inputStream);
+        return Move.deserialize(datagramChannel);
     }
 }

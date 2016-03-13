@@ -9,57 +9,55 @@ import com.nikitosh.headball.players.RemoteHumanPlayer;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
+import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
 
 public class MultiPlayerGame implements Runnable {
 
-    private final Socket firstPlayerSocket;
-    private final Socket secondPlayerSocket;
-    private final DataInputStream firstPlayerInputStream;
-    private final DataInputStream secondPlayerInputStream;
-    private final DataOutputStream firstPlayerOutputStream;
-    private final DataOutputStream secondPlayerOutputStream;
+    private final DatagramChannel firstPlayerChannel;
+    private final DatagramChannel secondPlayerChannel;
+    private final SocketAddress firstSocketAddress;
+    private final SocketAddress secondSocketAddress;
 
     private static final int MILLISECONDS = 1000;
     private long startTime = System.currentTimeMillis();
 
-    private static final String RUN_ERROR_MESSAGE = "Run failed!";
-    private static final String CLOSE_RESOURCES_ERROR_MESSAGE = "Closing resources failed!";
+    private Move[] lastMove = new Move[Constants.PLAYERS_NUMBER];
 
-    private final GameWorld gameWorld;
-    private final Array<Player> players = new Array<>();
+    private static final String RUN_ERROR_MESSAGE = "Run failed!";
+
+    private GameWorld gameWorld;
+    private Array<Player> players = new Array<>();
 
     private static final String LOG_TAG = "MultiPlayerGame";
 
-    public MultiPlayerGame(MatchInfo matchInfo, Socket firstPlayerSocket,
-                           Socket secondPlayerSocket) throws IOException {
+
+    public MultiPlayerGame(MatchInfo matchInfo, DatagramChannel firstPlayerChannel,
+                           DatagramChannel secondPlayerChannel, SocketAddress firstSocketAddress,
+                           SocketAddress secondSocketAddress) throws IOException {
         AssetLoader.loadFont();
         AssetLoader.load();
 
         gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber());
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
 
-        this.firstPlayerSocket = firstPlayerSocket;
-        this.secondPlayerSocket = secondPlayerSocket;
-        this.firstPlayerInputStream = new DataInputStream(firstPlayerSocket.getInputStream());
-        this.secondPlayerInputStream = new DataInputStream(secondPlayerSocket.getInputStream());
-        this.firstPlayerOutputStream = new DataOutputStream(firstPlayerSocket.getOutputStream());
-        this.secondPlayerOutputStream = new DataOutputStream(secondPlayerSocket.getOutputStream());
+        this.firstPlayerChannel = firstPlayerChannel;
+        this.secondPlayerChannel = secondPlayerChannel;
+        this.firstSocketAddress = firstSocketAddress;
+        this.secondSocketAddress = secondSocketAddress;
 
-        firstPlayerOutputStream.writeUTF("0\n");
-        secondPlayerOutputStream.writeUTF("1\n");
-        firstPlayerOutputStream.flush();
-        secondPlayerOutputStream.flush();
+        firstPlayerChannel.send(ByteBuffer.wrap(("0").getBytes()), firstSocketAddress);
+        secondPlayerChannel.send(ByteBuffer.wrap(("1").getBytes()), secondSocketAddress);
+
 
         initializePlayers();
     }
 
     private void initializePlayers() {
-        players.add(new RemoteHumanPlayer(firstPlayerInputStream));
-        players.add(new RemoteHumanPlayer(secondPlayerInputStream));
+        players.add(new RemoteHumanPlayer(firstPlayerChannel));
+        players.add(new RemoteHumanPlayer(secondPlayerChannel));
     }
 
     private float getDelta() {
@@ -98,10 +96,9 @@ public class MultiPlayerGame implements Runnable {
         return gameWorldFrameSerialization;
     }
 
-    private void sendGameWorldFrame(DataOutputStream outputStream) {
+    private void sendGameWorldFrame(DatagramChannel channel, SocketAddress socketAddress) {
         try {
-            outputStream.writeUTF(serializeGameWorldFrame());
-            outputStream.flush();
+            channel.send(ByteBuffer.wrap(serializeGameWorldFrame().getBytes()), socketAddress);
         } catch (IOException e) {
             Gdx.app.error(LOG_TAG, RUN_ERROR_MESSAGE, e);
         }
@@ -111,16 +108,27 @@ public class MultiPlayerGame implements Runnable {
     @Override
     public void run() {
         while (!gameWorld.isEnded()) {
-            sendGameWorldFrame(firstPlayerOutputStream);
-            sendGameWorldFrame(secondPlayerOutputStream);
-            gameWorld.update(getDelta(),
-                    players.get(0).getMove(), players.get(1).getMove());
+            long start = System.currentTimeMillis();
+            sendGameWorldFrame(firstPlayerChannel, firstSocketAddress);
+            sendGameWorldFrame(secondPlayerChannel, secondSocketAddress);
+            try {
+                Thread.sleep(MILLISECONDS / Constants.FRAMES_PER_SECOND + System.currentTimeMillis() - start);
+            } catch (InterruptedException e) {
+                Gdx.app.error(LOG_TAG, "", e);
+            }
+            for (int i = 0; i < lastMove.length; i++) {
+                Move currentMove = players.get(i).getMove();
+                if (currentMove != null) {
+                    lastMove[i] = currentMove;
+                }
+            }
+            gameWorld.update(getDelta(), lastMove[0], lastMove[1]);
         }
         try {
-            firstPlayerOutputStream.writeUTF(Boolean.toString(gameWorld.isEnded()));
-            firstPlayerOutputStream.flush();
-            secondPlayerOutputStream.writeUTF(Boolean.toString(gameWorld.isEnded()));
-            secondPlayerOutputStream.flush();
+            firstPlayerChannel.send(ByteBuffer.wrap(
+                    Boolean.toString(gameWorld.isEnded()).getBytes()), firstSocketAddress);
+            secondPlayerChannel.send(ByteBuffer.wrap(
+                    Boolean.toString(gameWorld.isEnded()).getBytes()), secondSocketAddress);
         } catch (IOException e) {
             Gdx.app.error(LOG_TAG, "", e);
         }
@@ -128,12 +136,8 @@ public class MultiPlayerGame implements Runnable {
     }
 
     private void close() {
-        try {
-            firstPlayerSocket.close();
-            secondPlayerSocket.close();
-        } catch (IOException e) {
-            Gdx.app.error(LOG_TAG, CLOSE_RESOURCES_ERROR_MESSAGE, e);
-        }
+        firstPlayerChannel.socket().close();
+        secondPlayerChannel.socket().close();
     }
 
 }

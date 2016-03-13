@@ -1,10 +1,11 @@
 package com.nikitosh.headball;
 
 import com.badlogic.gdx.Gdx;
+import com.nikitosh.headball.utils.Constants;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
 
 
 public class Move {
@@ -37,34 +38,44 @@ public class Move {
         }
     }
 
-    public void serialize(DataOutputStream outputStream) {
-        try {
-            byte message = 0;
-            for (int i = 0; i < STATE_NUMBER; i++) {
-                if (footballerState[i]) {
-                    message |= 1 << i;
-                }
+    public byte[] serialize() {
+        byte[] message = new byte[STATE_NUMBER];
+        message[0] = 0;
+        for (int i = 0; i < STATE_NUMBER; i++) {
+            if (footballerState[i]) {
+                message[0] |= 1 << i;
             }
-            outputStream.writeUTF(Byte.toString(message) + '\n');
-        } catch (IOException e) {
-            Gdx.app.error(LOG_TAG, MOVE_SERIALIZE_ERROR_MESSAGE, e);
         }
+        return message;
     }
 
-    public static Move deserialize(DataInputStream inputStream) {
+    public static Move deserialize(DatagramChannel channel) {
+        byte[] message = null;
+        ByteBuffer bb = ByteBuffer.allocate(Constants.BUFFER_SIZE);
+        bb.clear();
         try {
-            byte message = Byte.parseByte(inputStream.readUTF().replaceAll("\n", ""));
-            Move move = new Move();
-            for (int i = 0; i < STATE_NUMBER; i++) {
-                if (message % 2 == 1) {
-                    move.setState(i, true);
+            for (int i = 0; i < Constants.FRAMES_TO_SKIP_NUMBER; i++) {
+                if (channel.receive(bb) != null) {
+                    bb.flip();
+                    message = new byte[bb.limit()];
+                    bb.get(message);
+                    bb.clear();
                 }
-                message /= 2;
             }
-            return move;
         } catch (IOException e) {
-            Gdx.app.error(LOG_TAG, MOVE_DESERIALIZE_ERROR_MESSAGE, e);
+            Gdx.app.error(LOG_TAG, "", e);
         }
-        return null;
+        if (message == null) {
+            Gdx.app.error(LOG_TAG, "Receiving Move failed!");
+            return null;
+        }
+        Move move = new Move();
+        for (int i = 0; i < STATE_NUMBER; i++) {
+            if (message[0] % 2 == 1) {
+                move.setState(i, true);
+            }
+            message[0] /= 2;
+        }
+        return move;
     }
 }

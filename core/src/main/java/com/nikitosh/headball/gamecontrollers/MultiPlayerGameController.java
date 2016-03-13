@@ -15,10 +15,10 @@ import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
 import com.nikitosh.headball.utils.GameSettings;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
+import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
 
 public class MultiPlayerGameController extends GameController {
 
@@ -39,8 +39,8 @@ public class MultiPlayerGameController extends GameController {
     private static final int SCORE_INDEX = 6;
     private static final int GAME_DURATION_INDEX = 7;
 
-    private DataInputStream inputStream;
-    private DataOutputStream outputStream;
+    private DatagramChannel channel;
+    private SocketAddress socketAddress;
     private GameWorld gameWorld;
     private Player player;
     private int[] score;
@@ -52,19 +52,30 @@ public class MultiPlayerGameController extends GameController {
     private final Array<String[]> footballersLegsParameters = new Array<>();
 
     public MultiPlayerGameController(GameScreen gameScreen,
-                                     MatchInfo matchInfo, Socket socket) throws IOException {
+                                     MatchInfo matchInfo, DatagramChannel channel,
+                                     SocketAddress socketAddress) throws IOException {
         super(gameScreen, matchInfo);
-        this.inputStream = new DataInputStream(socket.getInputStream());
-        this.outputStream = new DataOutputStream(socket.getOutputStream());
-        if (inputStream.readUTF().equals("0\n")) {
+
+        this.channel = channel;
+        this.socketAddress = socketAddress;
+
+        ByteBuffer bb = ByteBuffer.allocate(Constants.BUFFER_SIZE);
+        bb.clear();
+        channel.receive(bb);
+        bb.flip();
+        byte[] receiveData = new byte[bb.limit()];
+        bb.get(receiveData);
+
+        if ((new String(receiveData).trim()).equals("0")) {
             playerNumber = 0;
         } else {
             playerNumber = 1;
         }
 
+        channel.configureBlocking(false);
+
         gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber());
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
-
         player = new LocalHumanPlayer(getInputController());
         score = new int[Constants.PLAYERS_NUMBER];
     }
@@ -72,8 +83,23 @@ public class MultiPlayerGameController extends GameController {
     private void deserializeGameWorldFrame() {
         if (isGameNotFinished()) {
             String[] gameWorldFrameSerialization;
+            byte[] gameWorldFrame = null;
             try {
-                gameWorldFrameSerialization = inputStream.readUTF()
+                ByteBuffer bb = ByteBuffer.allocate(Constants.BUFFER_SIZE);
+                bb.clear();
+                for (int i = 0; i < Constants.FRAMES_TO_SKIP_NUMBER; i++)  {
+                    if (channel.receive(bb) != null) {
+                        bb.flip();
+                        gameWorldFrame = new byte[bb.limit()];
+                        bb.get(gameWorldFrame);
+                        bb.clear();
+                    }
+                }
+                if (gameWorldFrame == null) {
+                    Gdx.app.error(LOG_TAG, "Receiving GameWorldFrame failed!");
+                    return;
+                }
+                gameWorldFrameSerialization = (new String(gameWorldFrame)).trim()
                         .split(String.valueOf(Constants.DATA_SEPARATOR));
             } catch (IOException e) {
                 Gdx.app.error(LOG_TAG, DESERIALIZE_ERROR_MESSAGE, e);
@@ -105,7 +131,6 @@ public class MultiPlayerGameController extends GameController {
         deserializeGameWorldFrame();
 
         if (isGameNotFinished()) {
-
 
             gameScreen.drawBall(Float.parseFloat(ballParameters[POSITION_X_INDEX]) * Constants.BOX_TO_WORLD,
                     Float.parseFloat(ballParameters[POSITION_Y_INDEX]) * Constants.BOX_TO_WORLD,
@@ -154,7 +179,12 @@ public class MultiPlayerGameController extends GameController {
             gameScreen.updateScoreLabel(score);
             gameScreen.updateTimerLabel(Integer.parseInt(gameDuration.replaceAll("\n", "")));
 
-            player.getMove().serialize(outputStream);
+            try {
+                byte[] moveSerialization = player.getMove().serialize();
+                channel.send(ByteBuffer.wrap(moveSerialization), socketAddress);
+            } catch (IOException e) {
+                Gdx.app.error(LOG_TAG, "", e);
+            }
         }
 
     }
