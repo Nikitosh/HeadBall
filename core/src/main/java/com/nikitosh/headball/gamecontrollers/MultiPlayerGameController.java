@@ -21,9 +21,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
 public class MultiPlayerGameController extends GameController {
-
     private static final String LOG_TAG = "MultiPlayerGameController";
     private static final String DESERIALIZE_ERROR_MESSAGE = "Deserialization gameWorldFrame failed";
+    private static final String RECEIVE_ERROR_MESSAGE = "Receiving GameWorldFrame failed!";
 
     private static final int POSITION_X_INDEX = 0;
     private static final int POSITION_Y_INDEX = 1;
@@ -39,8 +39,8 @@ public class MultiPlayerGameController extends GameController {
     private static final int SCORE_INDEX = 6;
     private static final int GAME_DURATION_INDEX = 7;
 
-    private DatagramChannel channel;
-    private SocketAddress socketAddress;
+    private final DatagramChannel channel;
+    private final SocketAddress socketAddress;
     private GameWorld gameWorld;
     private Player player;
     private int[] score;
@@ -96,7 +96,7 @@ public class MultiPlayerGameController extends GameController {
                     }
                 }
                 if (gameWorldFrame == null) {
-                    Gdx.app.error(LOG_TAG, "Receiving GameWorldFrame failed!");
+                    Gdx.app.error(LOG_TAG, RECEIVE_ERROR_MESSAGE);
                     return;
                 }
                 gameWorldFrameSerialization = (new String(gameWorldFrame)).trim()

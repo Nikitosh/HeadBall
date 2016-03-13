@@ -12,7 +12,6 @@ public class AIPlayer implements Player {
     protected final int footballerNumber;
 
     protected Footballer[] footballers;
-    private Ball ball;
 
     protected float ballPositionX;
     protected float ballPositionY;
@@ -35,7 +34,7 @@ public class AIPlayer implements Player {
 
     protected void initialize() {
         footballers = gameWorld.getFootballers();
-        ball = gameWorld.getBall();
+        Ball ball = gameWorld.getBall();
 
         ballPositionY = ball.getPosition().y;
         myPositionY = footballers[footballerNumber].getPosition().y;

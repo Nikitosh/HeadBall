@@ -15,6 +15,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
 public class MultiPlayerGame implements Runnable {
+    private static final String LOG_TAG = "MultiPlayerGame";
+    private static final String RUN_ERROR_MESSAGE = "Run failed!";
 
     private final DatagramChannel firstPlayerChannel;
     private final DatagramChannel secondPlayerChannel;
@@ -24,15 +26,10 @@ public class MultiPlayerGame implements Runnable {
     private static final int MILLISECONDS = 1000;
     private long startTime = System.currentTimeMillis();
 
-    private Move[] lastMove = new Move[Constants.PLAYERS_NUMBER];
+    private final Move[] lastMove = new Move[Constants.PLAYERS_NUMBER];
 
-    private static final String RUN_ERROR_MESSAGE = "Run failed!";
-
-    private GameWorld gameWorld;
-    private Array<Player> players = new Array<>();
-
-    private static final String LOG_TAG = "MultiPlayerGame";
-
+    private final GameWorld gameWorld;
+    private final Array<Player> players = new Array<>();
 
     public MultiPlayerGame(MatchInfo matchInfo, DatagramChannel firstPlayerChannel,
                            DatagramChannel secondPlayerChannel, SocketAddress firstSocketAddress,
