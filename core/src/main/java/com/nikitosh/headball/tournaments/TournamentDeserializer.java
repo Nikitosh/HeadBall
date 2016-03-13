@@ -16,7 +16,7 @@ public final class TournamentDeserializer {
     public static Pair<Tournament, Team> deserialize(Class<? extends Tournament> tournamentClass,
                                                      String tournamentName) {
         Json json = new Json();
-        FileHandle file = Gdx.files.internal(Constants.TOURNAMENTS_SAVES_PATH + tournamentName + Constants.JSON);
+        FileHandle file = Gdx.files.local(Constants.TOURNAMENTS_SAVES_PATH + tournamentName + Constants.JSON);
         JsonValue input = new JsonReader().parse(file.readString());
         Tournament tournament = json.readValue(tournamentClass, input.get(0));
         Team team = json.readValue(Team.class, input.get(1));
