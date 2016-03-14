@@ -11,7 +11,7 @@ import java.nio.channels.DatagramChannel;
 
 public final class Server extends Game {
 
-    private static final int PORT = 12346;
+    private static final int PORT = 12345;
     private static final String LOG_TAG = "MultiPlayerScreen";
     private static final String SERVER_WAITING_CLIENTS_MESSAGE = "Waiting for clients";
     private static final String CLIENTS_CONNECT_TO_SERVER_MESSAGE = "Got two clients";
@@ -19,27 +19,28 @@ public final class Server extends Game {
 
     private static void run() {
         try {
-            DatagramSocket serverSocket = new DatagramSocket(PORT);
+            ServerSocket serverSocket = new ServerSocket(PORT);
             int currentClientPort = Constants.FIRST_CLIENT_PORT;
             Gdx.app.log(LOG_TAG, SERVER_WAITING_CLIENTS_MESSAGE);
+            byte[] receiveData = new byte[Constants.BUFFER_SIZE];
             while (currentClientPort < Constants.LAST_CLIENT_PORT) {
 
+                int firstClientPort = currentClientPort++;
+                DatagramChannel firstChannel = DatagramChannel.open();
+                firstChannel.socket().bind(new InetSocketAddress(firstClientPort));
+                int secondClientPort = currentClientPort++;
+                DatagramChannel secondChannel = DatagramChannel.open();
+                secondChannel.socket().bind(new InetSocketAddress(secondClientPort));
 
-                DatagramChannel firstChannel = getChannel(serverSocket, currentClientPort);
-                currentClientPort++;
+                Socket firstSocket = serverSocket.accept();
+                Socket secondSocket = serverSocket.accept();
+                new DataOutputStream(firstSocket.getOutputStream()).writeInt(firstClientPort);
+                new DataOutputStream(secondSocket.getOutputStream()).writeInt(secondClientPort);
 
                 ByteBuffer bbFirst = ByteBuffer.allocate(Constants.BUFFER_SIZE);
                 SocketAddress firstSocketAddress = firstChannel.receive(bbFirst);
-
-                DatagramChannel secondChannel = getChannel(serverSocket, currentClientPort);
-                currentClientPort++;
-                Gdx.app.log(LOG_TAG, CLIENTS_CONNECT_TO_SERVER_MESSAGE);
-
                 ByteBuffer bbSecond = ByteBuffer.allocate(Constants.BUFFER_SIZE);
                 SocketAddress secondSocketAddress = secondChannel.receive(bbSecond);
-
-                firstChannel.configureBlocking(false);
-                secondChannel.configureBlocking(false);
 
                 new Thread(new MultiPlayerGame((new MatchInfo(new Team("", ""),
                         new Team("", ""), false, false)), firstChannel,
@@ -49,23 +50,6 @@ public final class Server extends Game {
         } catch (IOException e) {
             Gdx.app.error(LOG_TAG, SERVER_START_ERROR_MESSAGE, e);
         }
-    }
-
-    private static DatagramChannel getChannel(
-            DatagramSocket serverSocket, int currentClientPort) throws IOException {
-        DatagramChannel channel = DatagramChannel.open();
-        channel.socket().bind(new InetSocketAddress(currentClientPort));
-
-        byte[] receiveData = new byte[Constants.BUFFER_SIZE];
-        DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-        serverSocket.receive(receivePacket);
-
-        SocketAddress socketAddress = receivePacket.getSocketAddress();
-        DatagramPacket sendPacket = new DatagramPacket(Integer.toString(currentClientPort).getBytes(),
-                Integer.toString(currentClientPort).getBytes().length, socketAddress);
-        serverSocket.send(sendPacket);
-
-        return channel;
     }
 
     @Override

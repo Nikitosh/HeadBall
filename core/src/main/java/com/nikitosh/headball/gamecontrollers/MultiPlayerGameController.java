@@ -39,6 +39,8 @@ public class MultiPlayerGameController extends GameController {
     private static final int SCORE_INDEX = 6;
     private static final int GAME_DURATION_INDEX = 7;
 
+    private static final int MILLISECONDS = 1000;
+
     private final DatagramChannel channel;
     private final SocketAddress socketAddress;
     private GameWorld gameWorld;
@@ -58,6 +60,7 @@ public class MultiPlayerGameController extends GameController {
 
         this.channel = channel;
         this.socketAddress = socketAddress;
+        Gdx.app.error(LOG_TAG, "try to receive playerNumber");
 
         ByteBuffer bb = ByteBuffer.allocate(Constants.BUFFER_SIZE);
         bb.clear();
@@ -65,15 +68,14 @@ public class MultiPlayerGameController extends GameController {
         bb.flip();
         byte[] receiveData = new byte[bb.limit()];
         bb.get(receiveData);
-
         if ((new String(receiveData).trim()).equals("0")) {
             playerNumber = 0;
         } else {
             playerNumber = 1;
         }
+        Gdx.app.log(LOG_TAG, "PlayerNumber = " + playerNumber);
 
         channel.configureBlocking(false);
-
         gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber());
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
         player = new LocalHumanPlayer(getInputController());
