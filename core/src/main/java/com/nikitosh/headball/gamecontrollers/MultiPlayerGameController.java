@@ -24,6 +24,7 @@ public class MultiPlayerGameController extends GameController {
     private static final String LOG_TAG = "MultiPlayerGameController";
     private static final String DESERIALIZE_ERROR_MESSAGE = "Deserialization gameWorldFrame failed";
     private static final String RECEIVE_ERROR_MESSAGE = "Receiving GameWorldFrame failed!";
+    private static final String WHITE_SPACE_REGEXP = " ";
 
     private static final int POSITION_X_INDEX = 0;
     private static final int POSITION_Y_INDEX = 1;
@@ -60,7 +61,6 @@ public class MultiPlayerGameController extends GameController {
 
         this.channel = channel;
         this.socketAddress = socketAddress;
-        Gdx.app.error(LOG_TAG, "try to receive playerNumber");
 
         ByteBuffer bb = ByteBuffer.allocate(Constants.BUFFER_SIZE);
         bb.clear();
@@ -73,7 +73,6 @@ public class MultiPlayerGameController extends GameController {
         } else {
             playerNumber = 1;
         }
-        Gdx.app.log(LOG_TAG, "PlayerNumber = " + playerNumber);
 
         channel.configureBlocking(false);
         gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber());
@@ -115,14 +114,17 @@ public class MultiPlayerGameController extends GameController {
 
             footballersParameters.clear();
             footballersLegsParameters.clear();
-            ballParameters = gameWorldFrameSerialization[BALL_PARAMETERS_INDEX].split(" ");
-            footballersParameters.add(gameWorldFrameSerialization[FIRST_PLAYER_PARAMETERS_INDEX].split(" "));
-            footballersLegsParameters.add(
-                    gameWorldFrameSerialization[FIRST_PLAYER_LEG_PARAMETERS_INDEX].split(" "));
-            footballersParameters.add(gameWorldFrameSerialization[SECOND_PLAYER_PARAMETERS_INDEX].split(" "));
-            footballersLegsParameters.add(
-                    gameWorldFrameSerialization[SECOND_PLAYER_LEG_PARAMETERS_INDEX].split(" "));
-            scoreSerialization = gameWorldFrameSerialization[SCORE_INDEX].split(" ");
+            ballParameters = gameWorldFrameSerialization[BALL_PARAMETERS_INDEX].split(WHITE_SPACE_REGEXP);
+            footballersParameters.add(gameWorldFrameSerialization[
+                    FIRST_PLAYER_PARAMETERS_INDEX].split(WHITE_SPACE_REGEXP));
+            footballersLegsParameters.add(gameWorldFrameSerialization[
+                    FIRST_PLAYER_LEG_PARAMETERS_INDEX].split(WHITE_SPACE_REGEXP));
+            footballersParameters.add(gameWorldFrameSerialization[
+                    SECOND_PLAYER_PARAMETERS_INDEX].split(WHITE_SPACE_REGEXP));
+            footballersLegsParameters.add(gameWorldFrameSerialization[
+                    SECOND_PLAYER_LEG_PARAMETERS_INDEX].split(WHITE_SPACE_REGEXP));
+            scoreSerialization = gameWorldFrameSerialization[
+                    SCORE_INDEX].split(WHITE_SPACE_REGEXP);
             gameDuration = gameWorldFrameSerialization[GAME_DURATION_INDEX];
         }
     }

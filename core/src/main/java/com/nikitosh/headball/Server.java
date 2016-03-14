@@ -22,7 +22,6 @@ public final class Server extends Game {
             ServerSocket serverSocket = new ServerSocket(PORT);
             int currentClientPort = Constants.FIRST_CLIENT_PORT;
             Gdx.app.log(LOG_TAG, SERVER_WAITING_CLIENTS_MESSAGE);
-            byte[] receiveData = new byte[Constants.BUFFER_SIZE];
             while (currentClientPort < Constants.LAST_CLIENT_PORT) {
 
                 int firstClientPort = currentClientPort++;
@@ -34,8 +33,30 @@ public final class Server extends Game {
 
                 Socket firstSocket = serverSocket.accept();
                 Socket secondSocket = serverSocket.accept();
-                new DataOutputStream(firstSocket.getOutputStream()).writeInt(firstClientPort);
-                new DataOutputStream(secondSocket.getOutputStream()).writeInt(secondClientPort);
+                DataOutputStream firstOutputStream;
+                while (true) { //Waiting for two currently connected Socket
+                    try {
+                        firstOutputStream = new DataOutputStream(firstSocket.getOutputStream());
+                        firstOutputStream.writeInt(firstClientPort);
+                        firstOutputStream.flush();
+                    } catch (SocketException e) {
+                        Gdx.app.error(LOG_TAG, "", e);
+                        firstSocket = secondSocket;
+                        secondSocket = serverSocket.accept();
+                        continue;
+                    }
+                    try {
+                        DataOutputStream secondOutputStream = new DataOutputStream(secondSocket.getOutputStream());
+                        secondOutputStream.writeInt(secondClientPort);
+                        secondOutputStream.flush();
+                    } catch (SocketException e) {
+                        Gdx.app.error(LOG_TAG, "", e);
+                        secondSocket = serverSocket.accept();
+                        continue;
+                    }
+                    break;
+                }
+                Gdx.app.log(LOG_TAG, CLIENTS_CONNECT_TO_SERVER_MESSAGE);
 
                 ByteBuffer bbFirst = ByteBuffer.allocate(Constants.BUFFER_SIZE);
                 SocketAddress firstSocketAddress = firstChannel.receive(bbFirst);

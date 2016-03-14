@@ -37,7 +37,6 @@ public class MultiPlayerGame implements Runnable {
                            SocketAddress secondSocketAddress) throws IOException {
         AssetLoader.loadFont();
         AssetLoader.load();
-
         gameWorld = LevelReader.loadLevel(matchInfo.getLevelNumber());
         gameWorld.setDrawResultPossible(matchInfo.isDrawResultPossible());
 
@@ -48,10 +47,8 @@ public class MultiPlayerGame implements Runnable {
 
         firstPlayerChannel.send(ByteBuffer.wrap(("0").getBytes()), firstSocketAddress);
         secondPlayerChannel.send(ByteBuffer.wrap(("1").getBytes()), secondSocketAddress);
-
         firstPlayerChannel.configureBlocking(false);
         secondPlayerChannel.configureBlocking(false);
-
         initializePlayers();
     }
 
