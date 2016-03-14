@@ -21,7 +21,7 @@ public class GameFieldGroup extends Group {
     private final Map<String, Float> spriteAngle = new TreeMap<>();
     private final Map<String, Box2DSprite> spriteMap = new TreeMap<>();
 
-    private Array<Array<Float>> walls;
+    private Array<Array<Float>> walls = new Array<>();
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     public GameFieldGroup() {
@@ -35,6 +35,13 @@ public class GameFieldGroup extends Group {
             spriteMap.put(Constants.FOOTBALLER + i, AssetLoader.getFootballerSprite(i));
             spriteMap.put(Constants.LEG + i, AssetLoader.getLegSprite(i));
             spriteMap.put(Constants.GOALS + i, AssetLoader.getGoalsSprite(i));
+        }
+
+        setSpritePosition(Constants.BALL, 0, 0, 0, 0, 0);
+        for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
+            setSpritePosition(Constants.FOOTBALLER + i, 0, 0, 0, 0, 0);
+            setSpritePosition(Constants.LEG + i, 0, 0, 0, 0, 0);
+            setSpritePosition(Constants.GOALS + i, 0, 0, 0, 0, 0);
         }
     }
 

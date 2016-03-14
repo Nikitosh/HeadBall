@@ -11,8 +11,6 @@ import java.nio.channels.DatagramChannel;
 public class Move {
     private static final int STATE_NUMBER = 4;
     private static final String LOG_TAG = "Move";
-    private static final String MOVE_SERIALIZE_ERROR_MESSAGE = "Serialization failed!";
-    private static final String MOVE_DESERIALIZE_ERROR_MESSAGE = "Deserialization failed!";
 
     private final boolean[] footballerState = new boolean[STATE_NUMBER];
 

@@ -135,54 +135,58 @@ public class MultiPlayerGameController extends GameController {
         deserializeGameWorldFrame();
 
         if (isGameNotFinished()) {
+            try {
+                gameScreen.drawBall(Float.parseFloat(
+                                ballParameters[POSITION_X_INDEX]) * Constants.BOX_TO_WORLD,
+                        Float.parseFloat(ballParameters[POSITION_Y_INDEX]) * Constants.BOX_TO_WORLD,
+                        Float.parseFloat(ballParameters[RADIUS_INDEX]),
+                        Float.parseFloat(ballParameters[ANGLE_INDEX]));
 
-            gameScreen.drawBall(Float.parseFloat(ballParameters[POSITION_X_INDEX]) * Constants.BOX_TO_WORLD,
-                    Float.parseFloat(ballParameters[POSITION_Y_INDEX]) * Constants.BOX_TO_WORLD,
-                    Float.parseFloat(ballParameters[RADIUS_INDEX]),
-                    Float.parseFloat(ballParameters[ANGLE_INDEX]));
+                for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
+                    gameScreen.drawFootballer(i,
+                            Float.parseFloat(footballersParameters.get(i)[POSITION_X_INDEX])
+                                    * Constants.BOX_TO_WORLD,
+                            Float.parseFloat(footballersParameters.get(i)[POSITION_Y_INDEX])
+                                    * Constants.BOX_TO_WORLD,
+                            Float.parseFloat(footballersParameters.get(i)[RADIUS_INDEX]),
+                            Float.parseFloat(footballersParameters.get(i)[ANGLE_INDEX]));
 
-            for (int i = 0; i < Constants.PLAYERS_NUMBER; i++) {
-                gameScreen.drawFootballer(i,
-                        Float.parseFloat(footballersParameters.get(i)[POSITION_X_INDEX])
-                                * Constants.BOX_TO_WORLD,
-                        Float.parseFloat(footballersParameters.get(i)[POSITION_Y_INDEX])
-                                * Constants.BOX_TO_WORLD,
-                        Float.parseFloat(footballersParameters.get(i)[RADIUS_INDEX]),
-                        Float.parseFloat(footballersParameters.get(i)[ANGLE_INDEX]));
+                    gameScreen.drawLeg(i,
+                            Float.parseFloat(footballersLegsParameters.get(i)[POSITION_X_INDEX])
+                                    * Constants.BOX_TO_WORLD,
+                            Float.parseFloat(footballersLegsParameters.get(i)[POSITION_Y_INDEX])
+                                    * Constants.BOX_TO_WORLD,
+                            Footballer.LEG_WIDTH, Footballer.LEG_HEIGHT,
+                            Float.parseFloat(footballersLegsParameters.get(i)[ANGLE_INDEX]));
 
-                gameScreen.drawLeg(i,
-                        Float.parseFloat(footballersLegsParameters.get(i)[POSITION_X_INDEX])
-                                * Constants.BOX_TO_WORLD,
-                        Float.parseFloat(footballersLegsParameters.get(i)[POSITION_Y_INDEX])
-                                * Constants.BOX_TO_WORLD,
-                        Footballer.LEG_WIDTH, Footballer.LEG_HEIGHT,
-                        Float.parseFloat(footballersLegsParameters.get(i)[ANGLE_INDEX]));
-
-                Goals[] goals = gameWorld.getGoals();
-                gameScreen.drawGoals(i, goals[i].getPosition().x, goals[i].getPosition().y,
-                        goals[i].getWidth(), goals[i].getHeight(), 0f);
-            }
-
-            Array<RectangleWall> walls = gameWorld.getWalls();
-            Array<Array<Float>> wallRectangles = new Array<>();
-            for (RectangleWall wall : walls) {
-                wallRectangles.add(wall.getRectangle());
-            }
-            gameScreen.drawWall(wallRectangles);
-
-            for (int i = 0; i < score.length; i++) {
-                int newScore = Integer.parseInt(scoreSerialization[i]);
-                if (newScore != score[i]) {
-                    if (GameSettings.getBoolean(Constants.SETTINGS_SOUND)) {
-                        AssetLoader.getGoalSound().play();
-                    }
-                    score[i] = newScore;
+                    Goals[] goals = gameWorld.getGoals();
+                    gameScreen.drawGoals(i, goals[i].getPosition().x, goals[i].getPosition().y,
+                            goals[i].getWidth(), goals[i].getHeight(), 0f);
                 }
+
+                Array<RectangleWall> walls = gameWorld.getWalls();
+                Array<Array<Float>> wallRectangles = new Array<>();
+                for (RectangleWall wall : walls) {
+                    wallRectangles.add(wall.getRectangle());
+                }
+                gameScreen.drawWall(wallRectangles);
+
+                for (int i = 0; i < score.length; i++) {
+                    int newScore = Integer.parseInt(scoreSerialization[i]);
+                    if (newScore != score[i]) {
+                        if (GameSettings.getBoolean(Constants.SETTINGS_SOUND)) {
+                            AssetLoader.getGoalSound().play();
+                        }
+                        score[i] = newScore;
+                    }
+                }
+
+                gameScreen.updateScoreLabel(score);
+                gameScreen.updateTimerLabel(Integer.parseInt(gameDuration.replaceAll("\n", "")));
+
+            } catch (NullPointerException e) {
+                Gdx.app.error(LOG_TAG, "", e);
             }
-
-            gameScreen.updateScoreLabel(score);
-            gameScreen.updateTimerLabel(Integer.parseInt(gameDuration.replaceAll("\n", "")));
-
             try {
                 byte[] moveSerialization = player.getMove().serialize();
                 channel.send(ByteBuffer.wrap(moveSerialization), socketAddress);

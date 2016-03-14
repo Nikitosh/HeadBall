@@ -124,7 +124,7 @@ public class GameScreen extends StageAbstractScreen {
     }
 
     public void updateTimerLabel(int remainingTime) {
-        timerLabel.setText(String.format("%02d", remainingTime));
+        timerLabel.setText(String.format("%02d", Math.max(0, remainingTime)));
     }
 
     public void drawBall(float x, float y, float radius, float angle) {
