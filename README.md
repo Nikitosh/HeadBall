@@ -29,3 +29,6 @@ To build project run following commands:
 * open (open, not import) it in IntelliJ IDEA
 * run configuration you need: ```android``` for Android version and ```DesktopLaucnher``` for PC version
 * for correct build of Android version you should have ```ANDROID_HOME``` variable with path to Android SDK in your environment variables
+
+### Google Play
+To use Google Play Services you should install signed .apk, which is in root directory (headball.apk)
