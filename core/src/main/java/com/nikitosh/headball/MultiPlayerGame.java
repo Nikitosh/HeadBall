@@ -8,6 +8,7 @@ import com.nikitosh.headball.players.Player;
 import com.nikitosh.headball.players.RemoteHumanPlayer;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
+import com.nikitosh.headball.utils.GameSettings;
 
 import java.io.IOException;
 import java.net.SocketAddress;
@@ -89,7 +90,9 @@ public class MultiPlayerGame implements Runnable {
             scoreSerialization += (Integer.toString(gameWorld.getScore()[i]) + ' ');
         }
         gameWorldFrameSerialization += scoreSerialization + Constants.DATA_SEPARATOR;
-        gameWorldFrameSerialization += Integer.toString((int) gameWorld.getGameDuration()) + '\n';
+        gameWorldFrameSerialization += Integer.toString(
+                (int) (GameSettings.getInteger(Constants.GAME_DURATION)
+                        - gameWorld.getGameDuration())) + '\n';
         return gameWorldFrameSerialization;
     }
 

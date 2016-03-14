@@ -10,7 +10,6 @@ import com.nikitosh.headball.gamecontrollers.GameController;
 import com.nikitosh.headball.inputcontrollers.InputController;
 import com.nikitosh.headball.utils.AssetLoader;
 import com.nikitosh.headball.utils.Constants;
-import com.nikitosh.headball.utils.GameSettings;
 import com.nikitosh.headball.widgets.GameFieldGroup;
 
 public class GameScreen extends StageAbstractScreen {
@@ -124,9 +123,8 @@ public class GameScreen extends StageAbstractScreen {
         scoreLabel.setText(Integer.toString(score[0]) + SCORE_SEPARATOR + Integer.toString(score[1]));
     }
 
-    public void updateTimerLabel(int currentTime) {
-        timerLabel.setText(String.format("%02d",
-                Math.max(0, GameSettings.getInteger(Constants.GAME_DURATION) - currentTime)));
+    public void updateTimerLabel(int remainingTime) {
+        timerLabel.setText(String.format("%02d", remainingTime));
     }
 
     public void drawBall(float x, float y, float radius, float angle) {
